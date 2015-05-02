@@ -70,6 +70,17 @@ a.brand
 	padding:15px;
 	min-height: 450px;
 }
+.modal-body .panel-default .panel-heading,.modal-body .head{
+		background-color : #A9D08E;
+	}
+.modal-body .amt{
+		background-color : #E2EFDA;
+}
+.modal-body .table>tbody>.items>td{
+		padding-top : 40px;
+		padding-bottom : 40px;
+}
+
 .gridblock
 {	
 	padding:10px;
