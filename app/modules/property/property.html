@@ -17,7 +17,6 @@
 						<span class="input-group-btn">
 							<button class="btn btn-success" type="button">Go!</button>
 						</span>
-						
 					</div><!-- /input-group -->
 				</div>	
 				
@@ -32,7 +31,7 @@
 				
 				<div class="col-sm-2">
 					<label for="status" class="control-label">Select Status</label>
-					<select id="status" class="form-control" ng-model="status" title="status"  ng-change="changeValue('status',status)" ng-init="status=1">
+					<select id="status" class="form-control" ng-model="status" title="status"  ng-change="changeValue('status',status)" >
 						<option value="" selected>Select Status</option> <!-- add value attribute empty & selected for initial selected option -->
 						<option value="1">Active</option>
 						<option value="0">Deleted</option>   
@@ -40,22 +39,14 @@
 				</div>
 				
 				<div class="col-sm-2">
-					<label for="featured" class="control-label">Filter By Featured</label>
-					<select id="featured" class="form-control" ng-model="featured" ng-init="featured=1" ng-change="changeValue('featured',featured)">
-						<option value="" selected>Select Featured</option> <!-- added value & selected attr -->
-						<option value="1" >Featured</option>
-						<option value="0">Not Featured</option> 
+					<label for="available" class="control-label">Filter By Availability</label>
+					<select id="available" class="form-control" ng-model="available" ng-change="changeValue('available',available)">
+						<option value="" selected>Select Availability</option><!-- added value & selected attr -->
+						<option value="1" >Available</option>
+						<option value="0">Not Available</option> 
 					</select>
-				</div>
-				
-				<div class="col-sm-2">
-					<label for="domain" class="control-label">Select Domain :</label>
-					<select id="domain" class="form-control" ng-model="domain">    
-						<option value="">Select Domain</option>						
-					</select>
-				</div>				
+				</div>	
 			</div>		
-			
 			<h3> Property List</h3>
 			<div class="row" >
 				<div class="col-sm-12 ">
@@ -65,10 +56,10 @@
 								<tr>
 									<th>Sr. No.</th>
 									<th>Image</th>
-									<th> Property Details</th>
-									<th>Featured</th>
+									<th>Property Details</th>
+									<th>Availability</th>
 									<th>Status</th>
-									<th>Manage</th>
+									
 									<th>Manage</th> 
 								</tr>
 							</thead>
@@ -102,40 +93,19 @@
 									</td>	
 									
 									<td><!--tooltip="Owner Name-Trupti Misal Rent Date-5-5-2015 Duration-1Year"-->									
-										<a class="btn btn-success" ng-show="x.featured==0" title="Featured"  popover-placement="top" popover="Owner Name-Trupti Misal">Available</a>
-										
-										<a class="btn btn-warning" ng-show="x.featured==1" title="Not featured" popover-placement="top" popover="Duration-1Year Rent-12000"> Not Available </a>
-										
-										
+										<a class="btn btn-success" ng-show="x.featured==0" title="Featured"  popover-placement="top" popover="Rent-10000 Deposit-40000">Available</a>
+									
+										<a class="btn btn-warning" ng-show="x.featured==1" title="Not featured" popover-placement="top" popover="Duration-1Year Rent-12000 Renter Name- Sagar Misal Rent Date-5-5-2015"> Not Available </a>
 									</td>			
 									<td>
-										<!-- <a class="btn btn-success"  ng-show="x.status==1" title="Active" tooltip="Make Delete">Active</a>
-										
-										<a class="btn btn-warning"  ng-show="x.status==0" title="Delete" tooltip="Make Active">Delete</a> -->
-										
-										<div class="btn-group">
-										<button type="button" tooltip="{{dynamicTooltip(x.status, 'Delete Property', 'Make Active')}}" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'"><span class="glyphicon glyphicon-remove"></span></button>
-								</div>
-									</td>
-									<td>
-										<div class="btn-group">
-											<a type="button" tooltip="Send Notification" class="btn btn-info " ng-model="users.email" ng-click="forgotPass('email', users.email, users.id)">
-											<span class="glyphicon glyphicon-refresh"></span>
-											</a>
-										</div>
+										<button type="button" tooltip="{{dynamicTooltip(x.status, 'Delete This','Make It Active')}}" ng-class="(x.status==1) ? 'btn btn-success glyphicon glyphicon-ok' : 'btn btn-danger glyphicon glyphicon-remove'" ng-model="x.status" ng-change="deleted( x.id,x.status)" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'">
+										</button>
 									</td>
 									<td>
 									<div class="btn-group">
 										<a type="button" tooltip="Rent This Property" class="btn btn-info glyphicon glyphicon-cog" href="#/dashboard/property/setrent/{{x.id}}"></a>	
 										</div>
-										<!--ng-click="getWebsitedetails(config)"-->
 									</td>
-									<!-- <td>										
-										<a href="#/dashboard/property/addproperty/{{x.id}}" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="Edit User Information"> 
-											<span class="glyphicon glyphicon-pencil"></span>
-										</a>
-										<a ng-click="open('modules/property/viewProperty.html', x.id)" class="btn btn-success responsive" title="View">View</a> 
-									</td>	 -->
 								</tr>				
 							</tbody>
 						</table>

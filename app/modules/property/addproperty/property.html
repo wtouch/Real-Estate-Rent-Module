@@ -50,7 +50,7 @@
 		<div class="form-group">
 			<label for="category" class="col-sm-2 control-label">Property Category </label>
 			<div class="col-sm-9">
-				<select  id="category"  name="category" ng-model="property.category" class="form-control" required ng-options="item.category_name as item.type for item in property.category">
+				<select  id="category"  name="category" ng-model="property.category" class="form-control" required ng-options="item.category_name as item.type for item in propconfig.category">
 					<!--ng-options="item.system_name as item.name for item in temp.category"-->
 					<option value="">Select Category</option>			
 				</select>
