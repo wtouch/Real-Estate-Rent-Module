@@ -1,4 +1,5 @@
-
+<<<<<<< HEAD
+<!-- Modal -->
 <div class="modal fade" id="myRent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -28,3 +29,9 @@
     </div>
   </div>
 </div>
+=======
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+ Pay Rent
+</button>
+
+>>>>>>> row.html is modified.
