@@ -1,52 +1,7 @@
 <div class="row">		
 	<div class="col-md-12">
 		<div class="row">
-			<div class="col-md-4 col-lg-3 col-sm-6 col-xs-12">
-				<div class="gridblock">
-					<h4>
-						<span tooltip="Add new business, edit/modify business, add business details like facilities, features etc. Add your customer testimonials. Add/modify your business activities. Create your image gallery! To manage your business click below!" class="glyphicon glyphicon-info-sign"></span> Busines
-						</h4>
-					<a class="btn btn-primary center-block" name="btn1" href="#/dashboard/business/businesslist">Business</a>
-				</div>
-			</div>
-			
-			<div class="col-md-4 col-lg-3 col-sm-6 col-xs-12">
-				<div class="gridblock">
-					<h4>
-						<span tooltip="Add products/services to your business. Add product photo, title, description." class="glyphicon glyphicon-info-sign"></span> Manage Product/Services 
-					</h4>
-					<a class="btn btn-primary center-block" name="btn1" href="#/dashboard/business/products">Manage Products</a>
-				</div>
-			</div>
-				
-			<div class="col-md-4 col-lg-3 col-sm-6 col-xs-12">
-				<div class="gridblock">
-					<h4>
-						<span tooltip="Choose template for your website from available template list. Request for custome template. Customize your template." class="glyphicon glyphicon-info-sign"></span> Template
-					</h4>
-					<a  class="btn btn-primary center-block" name="btn1" href="#/dashboard/templates/listoftemplates">Template</a>
-				</div>
-			</div>
-			
-			<div class="col-md-4 col-lg-3 col-sm-6 col-xs-12">
-				<div class="gridblock">
-					<h4>
-						<span tooltip="Request for website name/domain with free and paid option. Apply business & template to your website. Add google map settings which will show in contact us page." class="glyphicon glyphicon-info-sign"></span> WebSite
-					</h4>
-					<a class="btn btn-primary center-block" name="btn1" href="#/dashboard/websites/websiteslist">Website</a>
-				</div>
-			</div>
-				
-			<div class="col-md-4 col-lg-3 col-sm-6 col-xs-12">
-				<div class="gridblock">
-					<h4>
-						<span tooltip="In this enquiry area you will find all enquiries from your site or portal. Send, reply mail from Enquiry Box!" class="glyphicon glyphicon-info-sign"></span> Enquiry Box 
-					</h4>
-					<a class="btn btn-primary center-block" name="btn1" href="#/dashboard/enquiry">Enquiry Box</a>
-				</div>
-			</div>
-			
-			<div class="col-md-4 col-lg-3 col-sm-6 col-xs-12">
+			<div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
 				<div class="gridblock">
 					<h4>
 						<span tooltip="In this area you will find all properties which you want to buy or sale.You can post your property for sale!" class="glyphicon glyphicon-info-sign"></span> Property
@@ -55,16 +10,9 @@
 				</div>
 			</div>
 			
-			<div class="col-md-4 col-lg-3 col-sm-6 col-xs-12">
-				<div class="gridblock">
-					<h4>
-						<span tooltip="In this area you will find all the projects!" class="glyphicon glyphicon-info-sign"></span> Project 
-					</h4>
-					<a class="btn btn-primary center-block" name="btn1" href="#/dashboard/project">Project</a>
-				</div>
-			</div>
+			
 				
-			<div class="col-md-4 col-lg-3 col-sm-6 col-xs-12">
+			<div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
 				<div class="gridblock" ng-if="userDetails.permission.user_module.user_list">
 					<h4>
 						<span tooltip="List of users you have added!" class="glyphicon glyphicon-info-sign"></span> Users
@@ -72,6 +20,42 @@
 					<a class="btn btn-primary center-block" name="btn1" href="#/dashboard/users/userslist">Users</a>
 				</div>
 			</div>	
+			<div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+				<div class="gridblock" ng-if="userDetails.permission.user_module.user_list">
+					<h4>
+						<span tooltip="View your all property rent details!" class="glyphicon glyphicon-info-sign"></span> View Rent Report</h4>
+					<a class="btn btn-primary center-block" name="btn1" href="#/dashboard/users/userslist">Rent Report</a>
+				</div>
+			</div>	
+		</div>
+		<h3>Property Overview</h3>
+		<div class="row">
+			<div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+				<div class="gridblock" ng-if="userDetails.permission.user_module.user_list">
+					<table class="table table-bordered">
+						<tr><th>Total Properties</th></tr>
+						<tr><td>10</td></tr>
+					</table>
+				</div>
+			</div>	
+			<div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+				<div class="gridblock" ng-if="userDetails.permission.user_module.user_list">
+					
+					
+						<table class="table table-bordered">
+							<tr><th> Total Rent Amount</th></tr>
+								<tr><td>1000000</td></tr>
+						</table>
+				</div>
+			</div>	
+			<div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+				<div class="gridblock" ng-if="userDetails.permission.user_module.user_list">
+						<table class="table table-bordered">
+							<tr><th> Total Due Rent Amount</th></tr>
+								<tr><td>100000</td></tr>
+						</table>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
