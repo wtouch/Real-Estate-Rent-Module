@@ -9,9 +9,6 @@
 					<a class="btn btn-primary center-block" name="btn1" href="#/dashboard/property">Property</a>
 				</div>
 			</div>
-			
-			
-				
 			<div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
 				<div class="gridblock" ng-if="userDetails.permission.user_module.user_list">
 					<h4>
@@ -24,14 +21,14 @@
 				<div class="gridblock" ng-if="userDetails.permission.user_module.user_list">
 					<h4>
 						<span tooltip="View your all property rent details!" class="glyphicon glyphicon-info-sign"></span> View Rent Report</h4>
-					<a class="btn btn-primary center-block" name="btn1" href="#/dashboard/users/userslist">Rent Report</a>
+					<a class="btn btn-primary center-block" name="btn1" href="#/dashboard/rentreport/rentreport">Rent Report</a>
 				</div>
 			</div>	
 		</div>
 		<h3>Property Overview</h3>
 		<div class="row">
 			<div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
-				<div class="gridblock" ng-if="userDetails.permission.user_module.user_list">
+				<div class="overview-block" ng-if="userDetails.permission.user_module.user_list">
 					<table class="table table-bordered">
 						<tr><th>Total Properties</th></tr>
 						<tr><td>10</td></tr>
@@ -39,17 +36,15 @@
 				</div>
 			</div>	
 			<div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
-				<div class="gridblock" ng-if="userDetails.permission.user_module.user_list">
-					
-					
-						<table class="table table-bordered">
+				<div class="overview-block" ng-if="userDetails.permission.user_module.user_list">
+					<table class="table table-bordered">
 							<tr><th> Total Rent Amount</th></tr>
 								<tr><td>1000000</td></tr>
-						</table>
+					</table>
 				</div>
 			</div>	
 			<div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
-				<div class="gridblock" ng-if="userDetails.permission.user_module.user_list">
+				<div class="overview-block" ng-if="userDetails.permission.user_module.user_list">
 						<table class="table table-bordered">
 							<tr><th> Total Due Rent Amount</th></tr>
 								<tr><td>100000</td></tr>

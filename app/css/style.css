@@ -79,6 +79,13 @@ a.brand
 	background-color:#EAEAEA;
 	/* border-radius: 5px; */
 }
+.overview-block
+{	
+	padding:10px;
+	margin-bottom:20px;
+	border: 1px solid #C2C2C2;
+	box-shadow: 2px 2px 5px #bbb;
+}
 .border-bottom 
 { 
 	border-bottom: 1px solid #ccc;
