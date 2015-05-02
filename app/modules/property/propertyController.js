@@ -153,14 +153,16 @@ define(['app'], function (app) {
 		};	//end of modal function		
 				
 		
-		/* dataService.post("post/rent")
+		$scope.postData = function(setrent) {
+				 dataService.post("post/rent",setrent)
 				.then(function(response) {  
 					if(response.status == "success"){
 						$scope.reset();
 					}
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$notification[response.status]("Submit Template", response.message);
-				});  */
+					$notification[response.status]("Submit Rent Data", response.message);
+				});
+		} 
 				
 		//date picker
 		$scope.today = function() {
