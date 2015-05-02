@@ -6,6 +6,13 @@ define(['app'], function (app) {
     // This is controller for this view
 	var rentreportController = function ($scope,$rootScope,$injector,$location,$routeParams,dataService,upload,modalService,$notification) {
 		
+	$scope.open = function (size) {
+		var modalInstance = $modal.open({
+			templateUrl: 'payrentmodal.html',
+			controller: 'rentreportController',
+			size: size,
+		});
+		
     console.log("rentreportController");
 	};
 	// Inject controller's dependencies
