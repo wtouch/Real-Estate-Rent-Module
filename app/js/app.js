@@ -90,7 +90,10 @@ define(['angular',
 				.when('/dashboard/property', route.resolve({controller: 'property', template: 'property',
 				 label: "Property"}, 'property/'))
 				 
-				.when('/dashboard/property/addproperty/:id?', route.resolve({controller: 'addproperty', template: 'addproperty',label: "Add Property"}, 'property/addproperty/'))
+				 .when('/dashboard/property/addproperty/:id?', route.resolve({controller: 'addproperty', template: 'addproperty',label: "Add Property"}, 'property/addproperty/'))
+				
+				.when('/dashboard/rentreport', route.resolve({controller: 'rentreport', template: 'rentreport',
+				 label: "View rent report"}, 'rentreport/'))
 				 
 				.when('/dashboard/project', route.resolve({controller: 'project',template: 'project',
 					label: "Project"}, 'project/'))
