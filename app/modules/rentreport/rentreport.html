@@ -1,6 +1,38 @@
 <div class="main-content">
 	<ng-include src="'modules/component/toolbar.html'"></ng-include>
 	<h3 class="text-center">Details About RENT</h3>
+	<div class="row">
+		<div class="col-sm-3"> 
+			<div class="bottomspace">
+				<label for="search" class="control-label">Search</label>		
+					<input id="search" type="text" class="form-control" ng-change="searchFilter('template_name', searchProp)" ng-model="searchProp" placeholder="search"/>
+			</div>
+		</div>			 				  
+		<div class="col-sm-3">
+			<div class="bottomspace">
+				<label for="sort" class="control-label">View Rent By User</label>
+					<select id="sort" class="form-control" ng-model="sort"> 
+						<option value="">Select Order</option>	<!-- added value & selected attr -->						
+						<option value="Aarti">Aarti</option>
+						<option value="Trupti">Trupti</option> 
+						<option value="Ramakant">Ramakant</option>  
+						<option value="Sunita">Sunita</option>  
+						<option value="Dnyaneshwar">Dnyaneshwar</option>  
+					</select>
+			</div>
+		</div>
+		<div class="col-sm-3">
+			<div class="bottomspace">
+				<label for="status" class="control-label">Select type</label>
+					<select id="status" class="form-control" 
+					ng-change="changeStatus('status',showStatus)" ng-model="showStatus">
+						<option value="">Select type</option>
+						<option value="1">Paid Rent</option>
+						<option value="0">Due Rent</option>
+					</select>
+			</div>
+		</div>
+	</div>
 	<div class="table-responsive">
 		<table class="table table-bordered">
 			<tr>
@@ -24,7 +56,7 @@
 				<td>
 					<button class="btn btn-primary" data-target="#myRent" data-toggle="modal">Pay Rent</button>
 					<button class="btn btn-info">Sent Notification</button>
-					<button class="btn btn-warning">Print Receipt</button>
+					<a class="btn btn-warning" href="#/dashboard/rentreport/invoice">Print Receipt</a>
 				</td>
 			</tr>
 			<tr>
@@ -38,7 +70,7 @@
 				<td>
 					<button class="btn btn-primary" data-target="#myRent" data-toggle="modal">Pay Rent</button>
 					<button class="btn btn-info">Sent Notification</button>
-					<button class="btn btn-warning">Print Receipt</button>
+					<a class="btn btn-warning" href="#/dashboard/rentreport/invoice">Print Receipt</a>
 				</td>
 			</tr>
 			<tr>
@@ -52,13 +84,13 @@
 				<td>
 					<button class="btn btn-primary" data-target="#myRent" data-toggle="modal">Pay Rent</button>
 					<button class="btn btn-info">Sent Notification</button>
-					<button class="btn btn-warning">Print Receipt</button>
+					<a class="btn btn-warning" href="#/dashboard/rentreport/invoice">Print Receipt</a>
 				</td>
 			</tr>
 			<tr>
 				<td>4</td>
 				<td>Hinjawadi</td>
-				<td>Dn</td>
+				<td>Trupti Misal</td>
 				<td>03/05/2014</td>
 				<td>03/07/2015</td>
 				<td>8000</td>
@@ -66,13 +98,13 @@
 				<td>
 					<button class="btn btn-primary" data-target="#myRent" data-toggle="modal">Pay Rent</button>
 					<button class="btn btn-info">Sent Notification</button>
-					<button class="btn btn-warning">Print Receipt</button>
+					<a class="btn btn-warning" href="#/dashboard/rentreport/invoice">Print Receipt</a>
 				</td>
 			</tr>
 			<tr>
 				<td>5</td>
-				<td>Pimpari-Chinchwad Flat</td>
-				<td>Ramakant Desai</td>
+				<td>Jagtapdairy</td>
+				<td>Dnyaneshwar Shetkar</td>
 				<td>03/05/2014</td>
 				<td>03/07/2015</td>
 				<td>8000</td>
@@ -80,9 +112,13 @@
 				<td>
 					<button class="btn btn-primary" data-target="#myRent" data-toggle="modal">Pay Rent</button>
 					<button class="btn btn-info">Sent Notification</button>
-					<button class="btn btn-warning">Print Receipt</button>
+					<a class="btn btn-warning" href="#/dashboard/rentreport/invoice">Print Receipt</a>
 				</td>
 			</tr>
 		</table>
 	</div>
+</div>
+<div class="text-center">				
+	<pagination total-items="totalRecords" items-per-page="pageItems"  ng-model="rentreportCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged(rentreportCurrentPage,template_type)"></pagination>
+	<pre>Page: {{rentreportCurrentPage}} / {{numPages}}</pre>
 </div>
