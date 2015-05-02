@@ -97,9 +97,6 @@ define(['angular',
 				.when('/dashboard/rentreport', route.resolve({controller: 'rentreport', template: 'rentreport',
 				 label: "View rent report"}, 'rentreport/'))
 				 
-				 .when('/dashboard/rentreport/:id?', route.resolve({controller: 'rentreport', template: 'invoice',
-				 label: "View Invoice"}, 'rentreport/'))
-				 
 				.when('/dashboard/project', route.resolve({controller: 'project',template: 'project',
 					label: "Project"}, 'project/'))
 					
