@@ -21,12 +21,28 @@ define(['app'], function (app) {
 			 $scope.alerts.push({type: 'error', msg: "Error to load data"});
 			 $scope.closeAlert = function(index) {
 				$scope.alerts.splice(index, 1);
-			 };
+			 }; 
 		}	 
 		//function for close alert
 		$scope.closeAlert = function(index) {
 			$scope.alerts.splice(index, 1);
-		}; 		
+		}; 	
+
+		$scope.dynamicTooltip = function(status, active, notActive){
+			return (status==1) ? active : notActive;
+		};	
+
+		
+		//function for Users list response
+		dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
+		.then(function(response) {  
+			if(response.status == 'success'){
+				$scope.customerList = response.data;
+			}else{
+				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+				$notification[response.status]("Get Customers", response.message);
+			}
+		});
 		
 		//code for pagination		
 		$scope.pageChanged = function(page) {	
@@ -136,6 +152,30 @@ define(['app'], function (app) {
 			$modalOptions.close('ok');
 		};	//end of modal function		
 				
+		
+		/* dataService.post("post/rent")
+				.then(function(response) {  
+					if(response.status == "success"){
+						$scope.reset();
+					}
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Submit Template", response.message);
+				});  */
+				
+		//date picker
+		$scope.today = function() {
+			$scope.date = new Date();
+		};
+		$scope.open = function($event,rentdate){
+			$event.preventDefault();
+			$event.stopPropagation();
+			$scope.rentdate = ($scope.rentdate==true)?false:true;
+		};
+		$scope.opendate = function($event,selectDate){
+			$event.preventDefault();
+			$event.stopPropagation();
+			$scope.selectDate = ($scope.selectDate==true)?false:true;
+		};
 /**************************************************************************************/				
 		//view multiple records
 			$scope.propertyParam = {status : 1};			

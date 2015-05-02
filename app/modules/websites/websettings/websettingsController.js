@@ -15,7 +15,7 @@ define(['app'], function (app) {
 		dataService.get("getsingle/website/"+$routeParams.id)
 		.then(function(response) {  
 			dataService.get("getmultiple/business/1/100",{user_id : response.data.user_id})
-			.then(function(business) {  
+			.then(function(business) {   
 				if(business.status == 'success'){
 					$scope.businessList = business.data;
 				}else{

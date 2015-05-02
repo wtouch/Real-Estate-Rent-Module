@@ -1,6 +1,6 @@
 
  <!-- ng-controller removed from here. No need ng-controller on each page. Bcoz we add it through main angular module(mean from app.js-route provider) -->
-<div class="row">
+<div class="row"> 
 	<div class="col-sm-12">	
 		<div class="main-content">	
 			<ng-include src="'modules/component/toolbar.html'"></ng-include>
@@ -68,8 +68,8 @@
 									<th> Property Details</th>
 									<th>Featured</th>
 									<th>Status</th>
-									<th>Other Domains</th>
 									<th>Manage</th>
+									<th>Manage</th> 
 								</tr>
 							</thead>
 							<tbody>
@@ -101,23 +101,41 @@
 										</table>
 									</td>	
 									
-									<td>										
-										<a class="btn btn-success" ng-show="x.featured==0" title="Featured">Featured </a>
+									<td><!--tooltip="Owner Name-Trupti Misal Rent Date-5-5-2015 Duration-1Year"-->									
+										<a class="btn btn-success" ng-show="x.featured==0" title="Featured"  popover-placement="top" popover="Owner Name-Trupti Misal">Available</a>
 										
-										<a class="btn btn-warning" ng-show="x.featured==1" title="Not featured"> Not Featured </a>
+										<a class="btn btn-warning" ng-show="x.featured==1" title="Not featured" popover-placement="top" popover="Duration-1Year Rent-12000"> Not Available </a>
+										
+										
 									</td>			
 									<td>
-										<a class="btn btn-success"  ng-show="x.status==1" title="Active">Active</a>
+										<!-- <a class="btn btn-success"  ng-show="x.status==1" title="Active" tooltip="Make Delete">Active</a>
 										
-										<a class="btn btn-warning"  ng-show="x.status==0" title="Delete">Delete</a>
+										<a class="btn btn-warning"  ng-show="x.status==0" title="Delete" tooltip="Make Active">Delete</a> -->
+										
+										<div class="btn-group">
+										<button type="button" tooltip="{{dynamicTooltip(x.status, 'Delete Property', 'Make Active')}}" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'"><span class="glyphicon glyphicon-remove"></span></button>
+								</div>
 									</td>
-									<td>{{x.domain}}</td>				
-									<td>										
+									<td>
+										<div class="btn-group">
+											<a type="button" tooltip="Send Notification" class="btn btn-info " ng-model="users.email" ng-click="forgotPass('email', users.email, users.id)">
+											<span class="glyphicon glyphicon-refresh"></span>
+											</a>
+										</div>
+									</td>
+									<td>
+									<div class="btn-group">
+											<a type="button" tooltip="Rent This Property" class="btn btn-info glyphicon glyphicon-cog" ng-click="getWebsitedetails(config)" href="#/dashboard/property/setrent/{{x.id}}"></a>	
+										</div>
+							
+									</td>
+									<!-- <td>										
 										<a href="#/dashboard/property/addproperty/{{x.id}}" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="Edit User Information"> 
 											<span class="glyphicon glyphicon-pencil"></span>
 										</a>
 										<a ng-click="open('modules/property/viewProperty.html', x.id)" class="btn btn-success responsive" title="View">View</a> 
-									</td>	
+									</td>	 -->
 								</tr>				
 							</tbody>
 						</table>

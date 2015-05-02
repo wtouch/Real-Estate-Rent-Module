@@ -578,7 +578,7 @@ define(['app'], function (app) {
 		var requestcustomtemplates = function(){
 			$scope.reset = function() {
 				$scope.reqtemp = {};
-			};
+			}; 
 			$scope.reqtemp.date = $scope.currentDate;
 			$scope.postData = function(reqtemp) {
 				 dataService.post("post/template",reqtemp)

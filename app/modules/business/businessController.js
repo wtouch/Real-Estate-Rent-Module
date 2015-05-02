@@ -4,7 +4,7 @@ define(['app'], function (app) {
     var injectParams = ['$scope', '$rootScope','$injector','$routeParams','$location','dataService','modalService','$notification'];
 
 	var businessController = function ($scope,$rootScope,$injector, $routeParams,$location,dataService,modalService,$notification)
-	{
+	{ 
 		//all $scope object goes here
 		$scope.permission = $rootScope.userDetails.permission.business_module;
 		$scope.maxSize = 5;

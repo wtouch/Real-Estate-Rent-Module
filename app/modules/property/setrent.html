@@ -1,0 +1,154 @@
+<h3 class="col-sm-offset-2 col-sm-9">Rent this Property</h3>
+	<form name="setrentForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="setrentForm.$valid">
+		<div class="form-group">
+			<label  class="col-sm-2"></label>
+			<div class="col-sm-7">
+				<p>Note that Fields Marked * are Required.</p>		
+			</div>
+		</div>
+		<div class="form-group" ng-if="userDetails.group_name != 'customer'">
+			<label for="customer" class="col-sm-2 control-label">User*</label>
+			<div class="col-sm-7">
+				<select class="form-control" name="customer" id="customer"  ng-model="setrent.user_id" ng-options="item.id as item.name for item in customerList | filter: { group_name : 'customer'} " required>
+					<option value="">Select User</option>
+				</select>
+				<span class="help-block" ng-show="setrentForm.customer.$dirty && setrentForm.customer.$invalid">
+				<span ng-show="setrentForm.customer.$error.required" class="text-danger">User is required.</span>
+				</span>	
+			</div>
+			<div class="col-sm-2">
+				<a href="#/dashboard/users/adduser" class="btn btn-default">Add New User</a>
+			</div>
+		</div>
+		
+		<span ng-if="userDetails.group_name == 'customer'">
+			<input type="hidden" class="form-control" ng-model="setrent.user_id" ng-init="setrent.user_id = userDetails.id" readonly/>
+		</span> 
+			
+			<div class="form-group">
+				<label for="Property_name" class="col-sm-2 control-label">Property Name *</label>		
+				<div class="col-sm-9">
+					<input type="text" id="Property_name" class="form-control" name="Property_name" placeholder="Property Name" ng-model="setrent.Property_name" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
+					
+					<span class="text-danger" ng-show="setrentForm.Property_name.$dirty && setrentForm.Property_name.$invalid">
+						<span ng-show="setrentForm.Property_name.$error.required">Template Name is required.</span>
+						
+					</span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="tax" class="col-sm-2 control-label">Set Tax *</label>		
+				<div class="col-sm-9">
+					<input type="text" id="tax" class="form-control" name="tax" placeholder="Set Tax" ng-model="setrent.tax" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
+
+					<span class="text-danger" ng-show="setrentForm.tax.$dirty && setrentForm.tax.$invalid">
+						<span ng-show="setrentForm.tax.$error.required">Tax is required.</span>
+					</span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="deposit" class="col-sm-2 control-label">Deposit *</label>		
+				<div class="col-sm-9">
+					<input type="text" id="deposit" class="form-control" name="deposit" placeholder="Deposit" ng-model="setrent.deposit" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
+					
+					<span class="text-danger" ng-show="setrentForm.deposit.$dirty && setrentForm.deposit.$invalid">
+						<span ng-show="setrentForm.deposit.$error.required">Deposit is required.</span>
+					</span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+			<label  for="date" class="col-sm-2 control-label">Date*</label>
+			<div class="col-sm-9">
+				<p class="input-group">
+			  <input class="form-control" type="text" id="date" name="date" datepicker-popup="yyyy-MM-dd" ng-model="testimonials.desc.date" is-open="rentdate" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate')">
+						<i class="glyphicon glyphicon-calendar"></i></button>
+					</span>
+				</p>
+			</div>
+		</div>	
+			
+		<div class="form-group">
+			<label for="rent" class="col-sm-2 control-label">Rent*</label>
+			<div class="col-sm-9">
+				<select class="form-control" name="rent" id="rent"  ng-model="setrent.rent" required>
+						<option value="" selected>Select Rent</option><!-- added value & selected attr -->
+						<option value="1000" >1000</option>
+						<option value="2000">2000</option>
+						<option value="3000">3000</option>
+						<option value="4000">4000</option>
+						<option value="5000">5000</option>
+						<option value="6000">6000</option>
+						<option value="7000">7000</option>
+						<option value="8000">8000</option>
+						<option value="9000">9000</option>
+						<option value="10000">10000</option>
+				</select>
+				<span class="help-block" ng-show="setrentForm.rent.$dirty && setrentForm.rent.$invalid">
+				<span ng-show="setrentForm.rent.$error.required" class="text-danger">Rent is required.</span>
+				</span>	
+			</div>
+			
+		</div>
+		
+		<div class="form-group">	
+			<label  for="duration" class="col-sm-2 control-label">Duration</label>
+				<div class="col-sm-3">
+					<label  for="year" class="col-sm-3 control-label">Year</label>
+						<select id="year" class="form-control" ng-model="year">
+						<option value="" selected>Select Year</option><!-- added value & selected attr -->
+						<option value="1" >1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						</select>
+				</div>
+						
+				<div class="col-sm-3">
+					<label  for="month" class="col-sm-3 control-label">Month</label>
+						<select id="month" class="form-control" ng-model="month">
+						<option value="" selected>Select Month</option><!-- added value & selected attr -->
+						<option value="1" >1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						</select>
+				</div>
+						
+						
+		</div>
+					
+			
+	
+			
+			
+			
+			
+			
+			
+			
+			
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-9">
+					<button type="submit" class="btn btn-success" ng-disabled="setrentForm.$dirty && setrentForm.$invalid" ng-click="postData(setrent)">Submit</button>
+					<button type="reset" class="btn btn-danger">Reset</button>
+				</div>
+			</div>					
+	</form>
+			
