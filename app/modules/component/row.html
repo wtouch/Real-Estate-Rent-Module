@@ -31,15 +31,15 @@
 				<div class="overview-block" ng-if="userDetails.permission.user_module.user_list">
 					<table class="table table-bordered">
 						<tr><th>Total Properties</th></tr>
-						<tr><td>10</td></tr>
+						<tr><td>  <span popover="Number of properties" popover-trigger="mouseenter" >10</span> * <span popover="Per property rent" popover-trigger="mouseenter" >7000 </span>= <span popover="Average rent amount" popover-trigger="mouseenter" >70000</span></td></tr>
 					</table>
 				</div>
 			</div>	
 			<div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
 				<div class="overview-block" ng-if="userDetails.permission.user_module.user_list">
 					<table class="table table-bordered">
-							<tr><th> Total Rent Amount</th></tr>
-								<tr><td>1000000</td></tr>
+							<tr><th> Received Rent Amount</th></tr>
+							<tr><td>   <span popover="Average rent amount" popover-trigger="mouseenter" >50000</span></td></tr>
 					</table>
 				</div>
 			</div>	
@@ -47,7 +47,7 @@
 				<div class="overview-block" ng-if="userDetails.permission.user_module.user_list">
 						<table class="table table-bordered">
 							<tr><th> Total Due Rent Amount</th></tr>
-								<tr><td>100000</td></tr>
+							<tr><td> <span popover="Total property rent" popover-trigger="mouseenter" >70000 </span>- <span popover="Received rent amount" popover-trigger="mouseenter" >50000</span>  =<span popover="Due Amount" popover-trigger="mouseenter" >20000</span> </td></tr>
 						</table>
 				</div>
 			</div>
