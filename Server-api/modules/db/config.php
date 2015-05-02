@@ -2,9 +2,9 @@
 /**
  * Database configuration
  */
-define('DB_USERNAME', 'wtoucct8_biz');              
-define('DB_PASSWORD', 'smallbusiness');
-define('DB_HOST', 'wtouch.in');
-define('DB_NAME', 'wtoucct8_biztest');
+define('DB_USERNAME', '');              
+define('DB_PASSWORD', '');
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'realrent');
 
 ?>
