@@ -1,26 +1,24 @@
-<div ng-controller="rentreportController">
-    <script type="text/ng-template" id="myModalContent.html">
-        <div class="modal-header">
-            <h3 class="modal-title">I'm a modal!</h3>
-        </div>
-        <div class="modal-body">
-           <div class="form-group">
+<div class="modal-header">
+		<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
+		<h3>Pay Rent</h3>
+	</div>
+	
+		<div class="modal-body">
+			<div class="form-group">
 				<label for="amount" class="col-md-2">Enter Rent</label>
 				<input type="text" class="form-control col-md-6" id="amount" placeholder="Enter Rent Amount">
 				<select class="form-control col-md-4">
 					<option value="Rupees">Rupees</option>
 					<option value="Rupees">Thousand</option>
 					<option value="Rupees">Lakh</option>
-					<option value="Rupees">Carror</option>
+					<option value="Rupees">Corror</option>
 					<option value="Rupees">Million</option>
 					<option value="Rupees">Billion</option>
 					<option value="Rupees">Trilion</option>
 				</select>
 			</div>
+		</div>
+		<div class="modal-footer">
+			 <button class="btn btn-primary" ng-click="ok()">OK</button>
         </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-        </div>
-    </script>
-</div>
+	
