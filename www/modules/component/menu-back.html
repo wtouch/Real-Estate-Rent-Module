@@ -1,4 +1,7 @@
 <div class="pull-right">
+
+	<a type="button" tooltip="Rent This Property" class="btn btn-info glyphicon glyphicon-cog" href="#/dashboard/property/rentsetting/{{x.id}}"></a>
+	
 	<a class="btn btn-primary" type="button" go-back tooltip="Back"> <!-- created go-back directive for go back one step like back btn on browser -->
 		<span class="glyphicon glyphicon glyphicon-arrow-left">	</span>
 	</a> 
@@ -6,6 +9,7 @@
 		<button class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled" tooltip="List">
 			<span class="glyphicon glyphicon-th-large dropdown-toggle"></span>
 		</button>
+		
 		
 		<ul  class="dropdown-menu dropd" role="menu" aria-labelledby="dropdownMenu1">
 			<li role="presentation">
@@ -29,7 +33,25 @@
 			<li role="presentation" ng-if="userDetails.permission.user_module.user_list">
 				<a role="menuitem" tabindex="-1" href="#/dashboard/rentreport">View Rent Report</a>
 			</li>
-							
+				
+			<li role="presentation">
+				<a role="menuitem" tabindex="-1" href="#/editprofile">
+					<span class="glyphicon glyphicon-pencil"></span> Edit Profile
+				</a>
+			</li>
+			
+			<li role="presentation">
+						<a role="menuitem" tabindex="-1" href="#/changepass">
+							<span class="glyphicon glyphicon-pencil"></span> Change Password
+						</a>
+					</li>
+					<li class="divider"></li>
+					<li role="presentation">
+						<a role="menuitem" tabindex="-1" href="#/logout">
+							<span class="glyphicon glyphicon-off"></span> Sign Out
+						</a>
+					</li>
+
 		</ul>
 	</div>
 </div>

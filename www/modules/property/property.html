@@ -66,7 +66,7 @@
 									<th>Sr. No.</th>
 									<th>Image</th>
 									<th> Property Details</th>
-									<th>Featured</th>
+									<th>Availability</th>
 									<th>Status</th>
 									<th>Manage</th>
 									<th>Manage</th> 
@@ -75,7 +75,7 @@
 							<tbody>
 								<tr ng-repeat="x in properties | orderBy:sort">
 									<td>{{((currentPage - 1) * pageItems) + $index + 1}}</td>
-									 <td>
+									<td>
 										{{x.property_images}}									
 										 <!-- <img ng-src="{{x.property_images}}" ng-click="open(x.property_images)" class="img-thumbnail   img-responsive prop-img" title="Property image">  -->
 										 <img class="img-responsive" ng-model="x.property_images" ng-src="{{appConfig.assetPath + x.property_images.file_relative_path}}"/>
@@ -101,13 +101,17 @@
 										</table>
 									</td>	
 									
-									<td><!--tooltip="Owner Name-Trupti Misal Rent Date-5-5-2015 Duration-1Year"-->									
-										<a class="btn btn-success" ng-show="x.featured==0" title="Featured"  popover-placement="top" popover="Owner Name-Trupti Misal">Available</a>
+									<!-- <td><!--tooltip="Owner Name-Trupti Misal Rent Date-5-5-2015 Duration-1Year"- ->									
+										<a class="btn btn-success" ng-show="x.available==0" title="Available"  popover-placement="top" popover="Owner Name-Trupti Misal">Available</a>
 										
-										<a class="btn btn-warning" ng-show="x.featured==1" title="Not featured" popover-placement="top" popover="Duration-1Year Rent-12000"> Not Available </a>
-										
-										
-									</td>			
+										<a class="btn btn-warning" ng-show="x.available==1" title="Not available" popover-placement="top" popover="Duration-1Year Rent-12000"> Not Available </a>
+									</td>-->
+									
+									<td>										
+		<a class="btn btn-success" ng-show="x.featured==0" title="Featured">Featured </a>
+		
+		<a class="btn btn-warning" ng-show="x.featured==1" title="Not featured"> Not Featured </a>
+	</td>	 	
 									<td>
 										<!-- <a class="btn btn-success"  ng-show="x.status==1" title="Active" tooltip="Make Delete">Active</a>
 										
