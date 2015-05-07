@@ -6,40 +6,30 @@
 		<div class="modal-body">
 			<form class="form-horizontal" name="receiptForm">
 				<div class="form-group">
-					<label for="amount" class="col-md-2 control-label">* Enter Rent</label>
+					<label for="amount" class="col-md-2 control-label">*  Rent</label>
 					<div class="col-sm-6">
 						<input type="text" class="form-control col-md-6" id="amount" placeholder="Enter Rent Amount" required>
-					</div>
-					<div class="col-sm-4">
-						<select class="form-control col-md-4">
-							<option value="Rupees">Rupees</option>
-							<option value="Rupees">Thousand</option>
-							<option value="Rupees">Lakh</option>
-							<option value="Rupees">Corror</option>
-							<option value="Rupees">Million</option>
-							<option value="Rupees">Billion</option>
-							<option value="Rupees">Trilion</option>
-						</select>
-					</div>
+					</div><span><b>Rupee
+					
 					<span class="text-danger" ng-show="receiptForm.amount.$dirty && receiptForm.amount.$invalid">
 						<span ng-show="receiptForm.amount.$error.required">Rent is required .</span>
 					</span>
 				</div>
 				
 				<div class="form-group">
-					<label for="electric" class="col-md-2 control-label">* Enter Electricity Bill</label>
+					<label for="electric" class="col-md-2 control-label">* Electricity Bill</label>
 					<div class="col-sm-6">
 						<input type="text" class="form-control col-md-6" id="electric" placeholder="Enter Bill Amount">
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="water" class="col-md-2 control-label">* Enter Water Bill</label>
+					<label for="water" class="col-md-2 control-label">*  Water Bill</label>
 					<div class="col-sm-6">
 						<input type="text" class="form-control col-md-6" id="water" placeholder="Enter Water Amount">
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="maintainance" class="col-md-2 control-label">* Enter Maintainance </label>
+					<label for="maintainance" class="col-md-2 control-label">*  Maintainance </label>
 					<div class="col-sm-6">
 						<input type="text" class="form-control col-md-6" id="maintainance" placeholder="Enter Maintainance Amount">
 					</div>
