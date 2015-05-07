@@ -4,7 +4,7 @@
 	$reqMethod = $app->request->getMethod();
 	
 	//getMethod
-	if($reqMethod=="GET"){
+	if($reqMethod=="GET"){ 
 		try{
 			$table = $_GET['table'];
 			$limit[0] = 1;
