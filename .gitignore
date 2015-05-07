@@ -1,11 +1,3 @@
 debug.log
-webcache/
-debug.log
-webcache/Cookies
-webcache/Cookies-journal
-webcache/data_0
-webcache/data_1
-webcache/GPUCache/data_0
-webcache/GPUCache/data_1
-webcache/GPUCache/data_2
-webcache/GPUCache/index
+webcache/*
+debug.*
