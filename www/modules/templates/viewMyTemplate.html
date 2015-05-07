@@ -1,0 +1,23 @@
+<div class="modal-content">		
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-sm-12">
+				<button type="button" class="close" ng-click="modalOptions.close()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h3>My Template Images</h3>
+				<div class="table-responsive" ng-if="modalOptions.tempLists.template_image">
+					<table class="table table-bordered" ng-if="modalOptions.tempLists.template_image">
+						<tr "modalOptions.templates">
+							<span class="thumbs" ng-repeat="(key, value) in modalOptions.tempLists.template_image">
+								<img class="img-thumbnail" width="40px" ng-src="{{appConfig.assetPath + value.file_relative_path}}" ng-click="modalOptions.tempLists.imgkey = key"/>
+							</span>
+							
+							<img class="img-responsive" ng-model="modalOptions.tempLists.imgkey" ng-src="{{appConfig.assetPath + modalOptions.tempLists.template_image[modalOptions.tempLists.imgkey].file_relative_path}}" ng-init="modalOptions.tempLists.imgkey = 0"/>							
+						</tr>		
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>			

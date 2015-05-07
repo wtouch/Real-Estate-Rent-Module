@@ -1,8 +1,8 @@
 'use strict';
 define(['app'], function (app) {
-    var injectParams = ['$scope', '$injector','$routeParams','$location','$http','$rootScope','upload', '$timeout', 'dataService'];
+    var injectParams = ['$scope', '$injector','$routeParams','$http','$rootScope','upload', '$timeout', 'dataService'];
     // This is controller for this view
-	var addpropertyController = function ($scope, $injector,$routeParams,$location,$http,$rootScope, upload, $timeout,dataService) {
+	var addpropertyController = function ($scope, $injector,$routeParams,$http,$rootScope, upload, $timeout,dataService) {
 		$rootScope.metaTitle = "Add Real Estate Property";
 		
 		// all $scope object goes here
@@ -11,27 +11,12 @@ define(['app'], function (app) {
 		$scope.currentDate = dataService.currentDate;
 		$scope.property = dataService.config.property;
 		$scope.property={};
-		$scope.property = {address:{}};
-		//$scope.location={};
+		
+		//$scope.property = {};
 		dataService.config('config', {config_name : "property"}).then(function(response){
-			$scope.propconfig = response.config_data;
+			$scope.property = response.config_data;
 		});
-		$scope.getData = function(location){
-			$scope.readOnly = true;
-			$scope.property.address.location = location.location;
-			$scope.property.address.city = location.city;
-			$scope.property.state = location.state;
-			$scope.property.country = location.country;
-			$scope.property.address.area = location.area;
-			$scope.property.address.pincode = location.pincode;
-		}
-		$scope.getTypeaheadData = function(table, searchColumn, searchValue){
-			var locationParams = {search : {}}
-			locationParams.search[searchColumn] = searchValue;
-			return dataService.config('locations', locationParams).then(function(response){
-				return response;
-			});
-		}
+		
 		
 		//function for Users list response
 		dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
@@ -69,7 +54,10 @@ define(['app'], function (app) {
 		
 	/**********************************************************************/
 		//display records from config.js to combo
+		
 		$scope.propertyConfig = dataService.config.property;					
+		
+		
 	/*********************************************************************/
 		
 		// Add Business multi part form show/hide operation from here! {pooja}

@@ -1,0 +1,77 @@
+<form name="businessDescForm" role="form" class="form-horizontal">
+<!-- This block for current user id -->
+	<div class="form-group" ng-if="userDetails.group_name != 'customer'">
+		<label for="customer" class="col-sm-3 control-label">Customer*</label>
+		<div class="col-sm-7">
+				<select class="form-control" name="customer" id="customer"  ng-model="addbusiness.user_id" ng-options="item.id as item.name for item in customerList | filter: { group_name : 'customer'} " required>
+					<option value="">Select Customer</option>
+				</select>
+			<span class="help-block" ng-show="businessDescForm.customer.$dirty && businessDescForm.customer.$invalid">
+				<span ng-show="businessDescForm.customer.$error.required" class="text-danger">Customer is required.</span>
+			</span>	
+		</div>
+		<div class="col-sm-2">
+			<a href="#/dashboard/users/adduser" class="btn btn-default">Add New User</a>
+		</div>
+	</div>
+	<span ng-if="userDetails.group_name == 'customer'">
+		<input type="hidden" class="form-control" ng-model="addbusiness.user_id" ng-init="addbusiness.user_id = userDetails.id" readonly/>
+	</span> 
+<!-- This block for current user id -->
+<div class="form-group">
+	<label  for="business_name" class="col-sm-3 control-label">Organization/Firm Name*</label>
+	<div class="col-sm-9">
+		<input type="hidden" ng-model="addbusiness.created_date">
+		<input type="text" ng-disabled="bizId" id="business_name" class="form-control" name="business_name" placeholder="Organization/Firm Name" ng-model="addbusiness.business_name" required>
+		<span class="help-block" ng-show="businessDescForm.business_name.$dirty && businessDescForm.business_name.$invalid">
+			<span ng-show="businessDescForm.business_name.$error.required" class="text-danger">Organization Name is required.</span>
+		</span>
+	</div>						
+</div>
+<div class="form-group" >
+	<label  for="business_logo" class="col-sm-3 control-label">Logo*</label>
+	<div class="col-sm-9">
+		<input type="file" id="business_logo" name="business_logo" ng-file-select ng-multiple="false" accept="image/jpeg,image/png, image/gif" ng-file-change="generateThumb($files)" ng-model="business_logo" >	
+		<!-- This will show thumbnails & progress of images -->
+			<file-preview url="business_logo"></file-preview>
+			<!-- This button will show if file/s selected -->
+			<button ng-show="business_logo" ng-click="upload(business_logo,path,userInfo,'business_logo')" type="button">Upload</button>
+			<!-- This hidden input will store image path in array after successful uploading -->
+			<input type="hidden" ng-model="addbusiness.business_logo" required>
+	</div>
+</div>	
+
+
+<div class="form-group">
+	<label for="ownership" class="col-sm-3 control-label" name="ownership">Ownership Type*</label>
+	<div class="col-sm-9">
+		<select class="form-control" name="ownership" id="ownership"  ng-model="addbusiness.ownership" required ng-model="addbusiness.ownership" required ng-options="item as item for item in biz.ownership">		
+			<option value="">Select Ownership Type</option>
+		</select>
+		<span class="help-block" ng-show="businessDescForm.ownership.$dirty && businessDescForm.ownership.$invalid">
+		<span ng-show="businessDescForm.ownership.$error.required" class="text-danger">Ownership Type is required.</span>
+		</span>				
+	</div>
+</div>
+
+<div class="form-group">
+	<label for="shortdescription" class="col-sm-3 control-label">Detailed Description*</br>
+	<small>This will show on Website Home Page</small></label>
+	<div class="col-sm-9">
+		<textarea type="text" class="form-control" id="shortdescription" name="shortdescription" ng-model="addbusiness.business_info.description" cols="30" rows="4" ng-maxlength="5000" placeholder="Detailed Description of Company" ui-tinymce required></textarea>
+			<p ng-hide="businessDescForm.shortdescription.$error.maxlength">
+				{{ 5000 - addbusiness.business_info.description.length + " Chars left"}} 
+			</p>
+			<span class="help-block" ng-show="businessDescForm.shortdescription.$dirty && businessDescForm.shortdescription.$invalid">
+				<span class="text-danger" ng-show="businessDescForm.shortdescription.$error.maxlength">Sorry You are Exceeding the Limit</span>
+				<span ng-show="businessDescForm.shortdescription.$error.required" class="text-danger">Detailed Description of company is required.</span>
+			</span>		
+	</div>
+</div>  
+<div class="form-group">
+	<div class="col-sm-offset-3 col-sm-9">
+		<button type="submit" class="btn btn-primary" title="Save" ng-disabled="businessDescForm.$invalid" ng-click="showFormPart('business',1)">Next</button>
+		<button ng-if="id" type="submit" class="btn btn-success" ng-disabled="businessDescForm.$invalid" ng-click="updateData(addbusiness)">Update</button> 
+	</div>
+</div>
+</form>

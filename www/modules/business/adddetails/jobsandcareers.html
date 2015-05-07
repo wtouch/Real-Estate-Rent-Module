@@ -1,0 +1,71 @@
+	<div class="row">
+		<div class="col-sm-12 text-right">
+			<button ng-if="!infra" type="button" class="btn btn-default btn-primary" title="next" ng-click="update(businessData)">Save Details</button>
+			<button ng-if="!infra" class="btn btn-default btn-info" ng-click="showForm('infra', 'job_careers')">Add New Job/Career</button>
+		</div>
+	</div>
+	 
+	<form name="jobsandcareersForm" role="form" class="form-horizontal" ng-if="infra" ng-submit="jobsandcareersForm.$valid" novalidate="novalidate">
+		<div class="form-group" >
+			<div class="col-sm-9 col-sm-offset-3">
+				<button ng-if="infra && !headingDisabled" class="btn btn-default btn-primary" ng-click=	"addToObject(job_careers, businessData.job_careers, 'job_careers')" ng-disabled="jobsandcareersForm.$invalid">Add Job/Career</button>
+				
+				<button ng-if="infra && headingDisabled" class="btn btn-default btn-info" ng-click="addToObject(job_careers, businessData.job_careers, 'job_careers')" title="Add Job/Career">Edit Details</button>
+				
+				<button ng-if="infra" class="btn btn-default btn-danger" ng-click="showForm('infra')"><span ng-show="infra">Cancel</span></button>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="jobTitle" class="col-sm-3 control-label">Job Title*</label>
+			<div class="col-sm-9">
+				<input type="text" id="jobTitle" class="form-control" ng-model="job_careers.heading" name="jobTitle" placeholder="Job Title" required>
+				<span class="help-block" ng-show="jobsandcareersForm.jobTitle.$dirty && jobsandcareersForm.jobTitle.$invalid">
+					<span ng-show="jobsandcareersForm.jobTitle.$error.required" class="text-danger">Plz enter job title.</span>
+				</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="jobDescription" class="col-sm-3 control-label">Job Description* </label>
+			<div class="col-sm-9">
+				<textarea type="text" class="form-control" id="jobDescription" name="jobDescription" ng-model="job_careers.desc.description" cols="30" rows="4" ng-maxlength="1500" placeholder="Enter Job Description" ui-tinymce required></textarea>
+				
+				<p ng-hide="jobsandcareersForm.jobDescription.$error.maxlength">
+					{{ 1500 - job_careers.desc.description.length + " Chars left" }}</p>
+					
+				<span class="help-block" ng-show="jobsandcareersForm.jobDescription.$dirty && jobsandcareersForm.jobDescription.$invalid">
+					<span class="text-danger" ng-show="jobsandcareersForm.jobDescription.$error.maxlength">Sorry You are Exceeding the Limit</span>
+					<span ng-show="jobsandcareersForm.jobDescription.$error.required" class="text-danger">Job Description is required.</span>
+				</span>	
+			</div>
+		</div>
+
+		<div>
+			<input type="hidden" name="job_careers" ng-model="businessData.job_careers" />
+			<span class="help-block" ng-show="jobsandcareersForm.job_careers.$dirty && jobsandcareersForm.job_careers.$invalid">
+				<span ng-show="jobsandcareersForm.job_careers.$error.required" class="text-danger">Infrastucture Description is required.</span>
+			</span>
+		</div>
+	</form>
+
+	<div class="row">
+		<div class="col-sm-12">
+			<table class="table table-bordered table-responsive " ng-if="businessData.job_careers">
+				<tr>
+					<th>Job Title</th>
+					<th>Job Description</th>
+					<th>Remove </th>
+				</tr>
+				<tr ng-repeat="(key, value) in businessData.job_careers">
+					<td>{{key}}</td>
+					<td class="tdwidth">
+						<div class="pull-left" ng-bind-html="value.description"></div>
+					</td>
+					<td>
+						<button class="btn btn-success glyphicon glyphicon-pencil" ng-click="editObject(key,businessData.job_careers, job_careers); showForm('infra')" tooltip="Edit Details"></button>
+						<button class="btn btn-warning glyphicon glyphicon-trash" ng-click="removeObject(key,businessData.job_careers)" tooltip="Remove"></button>			
+					</td>					
+				</tr>
+			</table>
+		</div>
+	</div>
