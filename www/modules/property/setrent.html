@@ -28,16 +28,37 @@
 			<div class="form-group">
 				<label for="Property_name" class="col-sm-2 control-label">Property Name *</label>		
 				<div class="col-sm-9">
-					<input type="text" id="Property_name" class="form-control" name="Property_name" placeholder="Property Name" ng-model="setrent.Property_name" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
-					
-					<span class="text-danger" ng-show="setrentForm.Property_name.$dirty && setrentForm.Property_name.$invalid">
+					<input type="text" id="Property_name" class="form-control" name="Property_name" placeholder="Property Name" ng-model="setrent.Property_name" readonly ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
+					<!-- <span class="text-danger" ng-show="setrentForm.Property_name.$dirty && setrentForm.Property_name.$invalid">
 						<span ng-show="setrentForm.Property_name.$error.required">Template Name is required.</span>
 						
-					</span>
+					</span> -->
 				</div>
 			</div>
+			
 			<div class="form-group">
-				<label for="tax" class="col-sm-2 control-label">Set Tax *</label>		
+			<label for="deposit" class="col-sm-2 control-label">Deposit *</label>		
+			<div class="col-sm-9">
+				<input type="text" id="deposit" class="form-control" name="deposit" placeholder="Deposit" ng-model="setrent.deposit" required>
+				
+				<span class="text-danger" ng-show="setrentForm.deposit.$dirty && setrentForm.deposit.$invalid">
+					<span ng-show="setrentForm.deposit.$error.required">Deposit is required.</span>
+				</span>
+			</div>
+		</div>
+		
+		<div class="form-group">
+				<label for="rent" class="col-sm-2 control-label">Rent *</label>		
+				<div class="col-sm-9">
+					<input type="text" id="rent" class="form-control" name="rent" placeholder="Set Rent" ng-model="setrent.rent" readonly ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
+					<!-- <span class="text-danger" ng-show="setrentForm.rent.$dirty && setrentForm.rent.$invalid">
+						<span ng-show="setrentForm.rent.$error.required">Rent is required.</span>
+					</span> -->
+				</div>
+		</div>
+		
+			<div class="form-group">
+				<label for="tax" class="col-sm-2 control-label">Tax *</label>		
 				<div class="col-sm-9">
 					<input type="text" id="tax" class="form-control" name="tax" placeholder="Set Tax" ng-model="setrent.tax" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
 
@@ -70,16 +91,29 @@
 			</div>
 			
 			<div class="form-group">
-				<label for="deposit" class="col-sm-2 control-label">Deposit *</label>		
+				<label for="maintenance" class="col-sm-2 control-label">Maintenance *</label>		
 				<div class="col-sm-9">
-					<input type="text" id="deposit" class="form-control" name="deposit" placeholder="Deposit" ng-model="setrent.deposit" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
+					<input type="text" id="maintenance" class="form-control" name="maintenance" placeholder="Maintenance" ng-model="setrent.maintenance" required>
 					
-					<span class="text-danger" ng-show="setrentForm.deposit.$dirty && setrentForm.deposit.$invalid">
-						<span ng-show="setrentForm.deposit.$error.required">Deposit is required.</span>
+					<span class="text-danger" ng-show="setrentForm.maintenance.$dirty && setrentForm.maintenance.$invalid">
+						<span ng-show="setrentForm.maintenance.$error.required">Maintenance is required.</span>
 					</span>
 				</div>
 			</div>
+			
 			<div class="form-group">
+			<label for="electricity" class="col-sm-2 control-label">Electricity Bill</label>
+			<div class="col-sm-9">
+				<label class="radio-inline">
+					<input type="radio" name="Owner" id="Owner" value="Owner" ng-model="setrent.given_by" ng-init="setrent.given_by='Owner'">Given By Owner
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="Renter" id="Renter" value="Renter"  ng-model="setrent.given_by">Renter
+				</label>
+			</div>
+		</div>
+		
+		<div class="form-group">
 			<label  for="date" class="col-sm-2 control-label">Date*</label>
 			<div class="col-sm-9">
 				<p class="input-group">
@@ -91,27 +125,7 @@
 				</p>
 			</div>
 		</div>	
-		<div class="form-group">
-			<label for="rent" class="col-sm-2 control-label">Rent*</label>
-			<div class="col-sm-9">
-				<select class="form-control" name="rent" id="rent"  ng-model="setrent.rent" required>
-						<option value="" selected>Select Rent</option><!-- added value & selected attr -->
-						<option value="1000" >1000</option>
-						<option value="2000">2000</option>
-						<option value="3000">3000</option>
-						<option value="4000">4000</option>
-						<option value="5000">5000</option>
-						<option value="6000">6000</option>
-						<option value="7000">7000</option>
-						<option value="8000">8000</option>
-						<option value="9000">9000</option>
-						<option value="10000">10000</option>
-				</select>
-				<span class="help-block" ng-show="setrentForm.rent.$dirty && setrentForm.rent.$invalid">
-				<span ng-show="setrentForm.rent.$error.required" class="text-danger">Rent is required.</span>
-				</span>	
-			</div>
-		</div>
+			
 		<div class="form-group">	
 			<label  for="duration" class="col-sm-2 control-label">Duration</label>
 				<div class="col-sm-3">
@@ -183,9 +197,21 @@
 						</select>
 				</div>		
 		</div>
+		
+		<div class="form-group">
+				<label for="escalation_per" class="col-sm-2 control-label">Escalation In % *</label>		
+				<div class="col-sm-9">
+					<input type="text" id="escalation_per" class="form-control" name="escalation_per" placeholder="Set Escalation Percentage" ng-model="setrent.escalation_per" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
+
+					<span class="text-danger" ng-show="setrentForm.escalation_per.$dirty && setrentForm.escalation_per.$invalid">
+						<span ng-show="setrentForm.escalation_per.$error.required">Percentage are required.</span>
+					</span>
+				</div>
+			</div>
+			
 			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-9">
-					<button type="submit" class="btn btn-success" ng-disabled="setrentForm.$dirty && setrentForm.$invalid" ng-click="postData(setrent)">Submit</button>
+				<div class="col-sm-offset-2 col-sm-9"><!--ng-disabled="setrentForm.$invalid"-->
+					<button type="submit" class="btn btn-success"  ng-click="postData(setrent)">Submit</button>
 					<button type="reset" class="btn btn-danger">Reset</button>
 				</div>
 			</div>					

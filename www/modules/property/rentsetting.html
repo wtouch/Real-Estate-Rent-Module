@@ -1,0 +1,57 @@
+<div class="main-content">
+	<ng-include src="'modules/component/toolbar.html'"></ng-include>
+<h3 class="col-sm-offset-2 col-sm-9">Setting</h3>
+<form name="rentsettingForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="rentsettingForm.$valid">
+	<div class="form-group">
+		<label for="service_tax" class="col-sm-2 control-label">Service Tax *</label>		
+		<div class="col-sm-9">
+			<input type="text" id="service_tax" class="form-control" name="service_tax" placeholder="Set Service Tax" ng-model="setting.service_tax" required>
+			<span class="text-danger" ng-show="rentsettingForm.service_tax.$dirty && rentsettingForm.service_tax.$invalid">
+				<span ng-show="rentsettingForm.service_tax.$error.required">Service Tax is required.</span>
+			</span>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="tds" class="col-sm-2 control-label">TDS*</label>		
+		<div class="col-sm-9">
+			<input type="text" id="tds" class="form-control" name="tds" placeholder="TDS" ng-model="setting.tds" required>
+			<span class="text-danger" ng-show="rentsettingForm.tds.$dirty && rentsettingForm.tds.$invalid">
+				<span ng-show="rentsettingForm.tds.$error.required">Service Tax is required.</span>
+			</span>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="other_tax" class="col-sm-2 control-label">Other Tax*</label>		
+		<div class="col-sm-9">
+			<input type="text" id="other_tax" class="form-control" name="other_tax" placeholder="Other Tax" ng-model="setting.other_tax" required>
+			<span class="text-danger" ng-show="rentsettingForm.other_tax.$dirty && rentsettingForm.other_tax.$invalid">
+				<span ng-show="rentsettingForm.other_tax.$error.required">Other Tax is required.</span>
+			</span>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="pan_no" class="col-sm-2 control-label">Pan No *</label>		
+		<div class="col-sm-9">
+			<input type="text" id="pan_no" class="form-control" name="pan_no" placeholder="Pan No" ng-model="setting.pan_no" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
+
+			<span class="text-danger" ng-show="rentsettingForm.pan_no.$dirty && rentsettingForm.pan_no.$invalid">
+				<span ng-show="rentsettingForm.pan_no.$error.required">Pan No is required.</span>
+			</span>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="tin_no" class="col-sm-2 control-label">Tin No *</label>		
+		<div class="col-sm-9">
+			<input type="text" id="tin_no" class="form-control" name="tin_no" placeholder="Tin No" ng-model="setting.tin_no" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
+
+			<span class="text-danger" ng-show="rentsettingForm.tin_no.$dirty && rentsettingForm.tin_no.$invalid">
+				<span ng-show="rentsettingForm.tin_no.$error.required">Tin No is required.</span>
+			</span>
+		</div>
+	</div>
+	</form>
+</div>
