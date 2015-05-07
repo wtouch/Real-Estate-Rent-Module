@@ -222,3 +222,671 @@
 - 23:05:05.457 DEBUG: OnBrowserDestroyed()
 - 23:05:05.018 INFO: Ended application
 - 23:05:05.018 INFO: --------------------------------------------------------
+- 10:59:22.015 INFO: --------------------------------------------------------
+- 10:59:22.015 INFO: Started application
+- 10:59:22.015 INFO: Logging to: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log
+- 10:59:22.015 INFO: Log level = DEBUG4
+- 10:59:22.015 INFO: Starting Mongoose 3.9c web server
+- 10:59:22.015 INFO: WWW directory: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\www
+- 10:59:22.015 INFO: Index files: index.html,index.php
+- 10:59:22.015 INFO: CGI interpreter: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\php\php-cgi.exe
+- 10:59:22.031 INFO: CGI pattern: **.php$
+- 10:59:22.031 INFO: CGI environment variables set: TMP=C:\Users\vilas\AppData\Local\Temp\,TEMP=C:\Users\vilas\AppData\Local\Temp\,TMPDIR=C:\Users\vilas\AppData\Local\Temp\,SERVER_NAME=127.0.0.1,PHPDESKTOP_VERSION=31.8
+- 10:59:22.031 INFO: Web server url: http://127.0.0.1:56654/
+- 10:59:22.031 INFO: remote_debugging_port = 55645
+- 10:59:22.031 DEBUG: Command line string for the browser process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --remote-debugging-port=55645 --no-sandbox
+[0507/105922:ERROR:gpu_info_collector_win.cc(102)] Can't retrieve a valid WinSAT assessment.
+- 10:59:22.047 DEBUG: App::OnContextInitialized()
+- 10:59:22.047 DEBUG: Window max width/height = 1286/680
+- 10:59:22.047 DEBUG: Window max size exceeded, new width/height = 1024/680
+- 10:59:22.047 DEBUG: GetBrowserWindow(): not found, hwnd = 1049946
+- 10:59:22.047 DEBUG: WindowProc(): event WM_GETMINMAXINFO: could not fetch BrowserWindow
+- 10:59:22.047 DEBUG: BrowserWindow::CreateBrowserControl()
+- 10:59:22.047 DEBUG: StoreBrowserWindow(): hwnd = 1049946
+- 10:59:22.062 DEBUG: BrowserWindow::OnSize() failed: CefBrowser object not created yet
+- 10:59:22.078 DEBUG: ClientHandler::OnAfterCreated()
+- 10:59:22.078 DEBUG: SetCefBrowser() called in ClientHandler::OnAfterCreated()
+- 10:59:22.078 INFO: DPI, ppix = 96, ppiy = 96
+- 10:59:22.078 INFO: DPI, browser zoom level = 0
+- 10:59:22.000 DEBUG: Command line string for the gpu-process process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --type=gpu-process --channel="9632.0.1072118071\2139544753" --no-sandbox --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --disable-d3d11 --supports-dual-gpus=false --gpu-driver-bug-workarounds=0,3,5,12,22 --gpu-vendor-id=0x8086 --gpu-device-id=0x0152 --gpu-driver-vendor="Intel Corporation" --gpu-driver-version=10.18.10.3345 --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" /prefetch:822062411
+- 10:59:22.078 DEBUG: OnLoadingStateChange: loading=1, url=
+- 10:59:22.000 DEBUG: Command line string for the renderer process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --type=renderer --no-sandbox --lang=en-US --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --channel="9632.1.1042354071\345054987" /prefetch:673131151
+- 10:59:22.000 DEBUG: OnBrowserCreated()
+- 10:59:58.332 INFO: DevTools url: http://127.0.0.1:55645/devtools/devtools.html?ws=127.0.0.1:55645/devtools/page/94fc42c5b70f681a51419deb40a09e55
+- 10:59:58.332 DEBUG: Window max width/height = 1286/680
+- 10:59:58.332 DEBUG: Window max size exceeded, new width/height = 1024/680
+- 10:59:58.332 DEBUG: BrowserWindow::BrowserWindow() created for Popup
+- 10:59:58.332 DEBUG: StoreBrowserWindow(): hwnd = 1049914
+- 10:59:58.332 DEBUG: BrowserWindow::OnSize() failed: CefBrowser object not created yet
+- 10:59:58.332 DEBUG: ClientHandler::OnAfterCreated()
+- 10:59:58.332 DEBUG: SetCefBrowser() called in ClientHandler::OnAfterCreated()
+- 10:59:58.348 DEBUG: OnLoadingStateChange: loading=1, url=
+- 10:59:58.000 DEBUG: Command line string for the renderer process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --type=renderer --no-sandbox --lang=en-US --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --channel="9632.2.1808325798\2114012456" /prefetch:673131151
+- 10:59:58.000 DEBUG: OnBrowserCreated()
+- 11:00:05.274 DEBUG: WM_DESTROY
+- 11:00:05.274 DEBUG: RemoveBrowserWindow(): hwnd = 1049914
+- 11:00:05.274 DEBUG: RemoveBrowserWindow(): hwnd = 1901860
+- 11:00:05.274 DEBUG: GetBrowserWindow(): not found, hwnd = 1901860
+- 11:00:05.274 WARNING: RemoveBrowserWindow() failed: GetBrowserWindow() failed
+- 11:00:06.820 DEBUG: WM_DESTROY
+- 11:00:06.820 DEBUG: RemoveBrowserWindow(): hwnd = 1049946
+- 11:00:06.820 INFO: Stopping Mongoose web server
+- 11:00:06.820 DEBUG: Mongoose webserver stopped immediately
+- 11:00:06.820 DEBUG: RemoveBrowserWindow(): hwnd = 1246504
+- 11:00:06.820 DEBUG: GetBrowserWindow(): not found, hwnd = 1246504
+- 11:00:06.820 WARNING: RemoveBrowserWindow() failed: GetBrowserWindow() failed
+- 11:00:06.727 DEBUG: OnBrowserDestroyed()
+- 11:00:06.961 INFO: Ended application
+- 11:00:06.961 INFO: --------------------------------------------------------
+- 11:00:11.016 INFO: --------------------------------------------------------
+- 11:00:11.016 INFO: Started application
+- 11:00:11.016 INFO: Logging to: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log
+- 11:00:11.016 INFO: Log level = DEBUG4
+- 11:00:11.016 INFO: Starting Mongoose 3.9c web server
+- 11:00:11.016 INFO: WWW directory: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\www
+- 11:00:11.016 INFO: Index files: index.html,index.php
+- 11:00:11.016 INFO: CGI interpreter: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\php\php-cgi.exe
+- 11:00:11.016 INFO: CGI pattern: **.php$
+- 11:00:11.016 INFO: CGI environment variables set: TMP=C:\Users\vilas\AppData\Local\Temp\,TEMP=C:\Users\vilas\AppData\Local\Temp\,TMPDIR=C:\Users\vilas\AppData\Local\Temp\,SERVER_NAME=127.0.0.1,PHPDESKTOP_VERSION=31.8
+- 11:00:11.016 INFO: Web server url: http://127.0.0.1:56695/
+- 11:00:11.016 INFO: remote_debugging_port = 57044
+- 11:00:11.016 DEBUG: Command line string for the browser process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --remote-debugging-port=57044 --no-sandbox
+[0507/110011:ERROR:gpu_info_collector_win.cc(102)] Can't retrieve a valid WinSAT assessment.
+- 11:00:11.047 DEBUG: App::OnContextInitialized()
+- 11:00:11.047 DEBUG: Window max width/height = 1286/680
+- 11:00:11.047 DEBUG: Window max size exceeded, new width/height = 1024/680
+- 11:00:11.047 DEBUG: GetBrowserWindow(): not found, hwnd = 2229694
+- 11:00:11.047 DEBUG: WindowProc(): event WM_GETMINMAXINFO: could not fetch BrowserWindow
+- 11:00:11.047 DEBUG: BrowserWindow::CreateBrowserControl()
+- 11:00:11.047 DEBUG: StoreBrowserWindow(): hwnd = 2229694
+- 11:00:11.063 DEBUG: BrowserWindow::OnSize() failed: CefBrowser object not created yet
+- 11:00:11.063 DEBUG: ClientHandler::OnAfterCreated()
+- 11:00:11.063 DEBUG: SetCefBrowser() called in ClientHandler::OnAfterCreated()
+- 11:00:11.063 INFO: DPI, ppix = 96, ppiy = 96
+- 11:00:11.063 INFO: DPI, browser zoom level = 0
+- 11:00:11.063 DEBUG: OnLoadingStateChange: loading=1, url=
+s process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --type=gpu-process --channel="5228.0.1824121649\410915692" --no-sandbox --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --disable-d3d11 --supports-dual-gpus=false --gpu-driver-bug-workarounds=0,3,5,12,22 --gpu-vendor-id=0x8086 --gpu-device-id=0x0152 --gpu-driver-vendor="Intel Corporation" --gpu-driver-version=10.18.10.3345 --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" /prefetch:822062411
+- 11:00:11.000 DEBUG: Command line string for the renderer process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --type=renderer --no-sandbox --lang=en-US --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --channel="5228.1.1175552464\1479568024" /prefetch:673131151
+- 11:00:11.015 DEBUG: OnBrowserCreated()
+- 11:02:02.681 DEBUG: WM_DESTROY
+- 11:02:02.681 DEBUG: RemoveBrowserWindow(): hwnd = 2229694
+- 11:02:02.681 INFO: Stopping Mongoose web server
+- 11:02:02.681 DEBUG: Mongoose webserver stopped immediately
+- 11:02:02.681 DEBUG: RemoveBrowserWindow(): hwnd = 657014
+- 11:02:02.681 DEBUG: GetBrowserWindow(): not found, hwnd = 657014
+- 11:02:02.681 WARNING: RemoveBrowserWindow() failed: GetBrowserWindow() failed
+- 11:02:02.697 INFO: Ended application
+- 11:02:02.697 INFO: --------------------------------------------------------
+- 11:02:02.603 DEBUG: OnBrowserDestroyed()
+- 11:02:19.016 INFO: --------------------------------------------------------
+- 11:02:19.016 INFO: Started application
+- 11:02:19.016 INFO: Logging to: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log
+- 11:02:19.016 INFO: Log level = DEBUG4
+- 11:02:19.016 INFO: Starting Mongoose 3.9c web server
+- 11:02:19.016 INFO: WWW directory: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\www
+- 11:02:19.016 INFO: Index files: index.html,index.php
+- 11:02:19.016 INFO: CGI interpreter: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\php\php-cgi.exe
+- 11:02:19.016 INFO: CGI pattern: **.php$
+- 11:02:19.016 INFO: CGI environment variables set: TMP=C:\Users\vilas\AppData\Local\Temp\,TEMP=C:\Users\vilas\AppData\Local\Temp\,TMPDIR=C:\Users\vilas\AppData\Local\Temp\,SERVER_NAME=127.0.0.1,PHPDESKTOP_VERSION=31.8
+- 11:02:19.016 INFO: Web server url: http://127.0.0.1:56739/
+- 11:02:19.031 INFO: remote_debugging_port = 63387
+- 11:02:19.031 DEBUG: Command line string for the browser process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --remote-debugging-port=63387 --no-sandbox
+[0507/110219:ERROR:gpu_info_collector_win.cc(102)] Can't retrieve a valid WinSAT assessment.
+- 11:02:19.047 DEBUG: App::OnContextInitialized()
+- 11:02:19.047 DEBUG: Window max width/height = 1286/680
+- 11:02:19.047 DEBUG: Window max size exceeded, new width/height = 1024/680
+- 11:02:19.047 DEBUG: GetBrowserWindow(): not found, hwnd = 1181018
+- 11:02:19.047 DEBUG: WindowProc(): event WM_GETMINMAXINFO: could not fetch BrowserWindow
+- 11:02:19.047 DEBUG: BrowserWindow::CreateBrowserControl()
+- 11:02:19.047 DEBUG: StoreBrowserWindow(): hwnd = 1181018
+- 11:02:19.078 DEBUG: BrowserWindow::OnSize() failed: CefBrowser object not created yet
+- 11:02:19.078 DEBUG: ClientHandler::OnAfterCreated()
+- 11:02:19.078 DEBUG: SetCefBrowser() called in ClientHandler::OnAfterCreated()
+- 11:02:19.078 INFO: DPI, ppix = 96, ppiy = 96
+- 11:02:19.094 INFO: DPI, browser zoom level = 0
+- 11:02:19.000 DEBUG: Command line string for the gpu-process process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --type=gpu-process --channel="11208.0.1247247934\2044581844" --no-sandbox --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --disable-d3d11 --supports-dual-gpus=false --gpu-driver-bug-workarounds=0,3,5,12,22 --gpu-vendor-id=0x8086 --gpu-device-id=0x0152 --gpu-driver-vendor="Intel Corporation" --gpu-driver-version=10.18.10.3345 --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" /prefetch:822062411
+- 11:02:19.094 DEBUG: OnLoadingStateChange: loading=1, url=
+- 11:02:19.000 DEBUG: Command line string for the renderer process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --type=renderer --no-sandbox --lang=en-US --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --channel="11208.1.1381803784\57033904" /prefetch:673131151
+- 11:02:19.016 DEBUG: OnBrowserCreated()
+- 11:02:45.302 INFO: DevTools url: http://127.0.0.1:63387/devtools/devtools.html?ws=127.0.0.1:63387/devtools/page/f0f2631da0fdd9b05f14046c6237a72f
+- 11:02:45.302 DEBUG: Window max width/height = 1286/680
+- 11:02:45.302 DEBUG: Window max size exceeded, new width/height = 1024/680
+- 11:02:45.302 DEBUG: BrowserWindow::BrowserWindow() created for Popup
+- 11:02:45.302 DEBUG: StoreBrowserWindow(): hwnd = 722526
+- 11:02:45.317 DEBUG: BrowserWindow::OnSize() failed: CefBrowser object not created yet
+- 11:02:45.317 DEBUG: ClientHandler::OnAfterCreated()
+- 11:02:45.317 DEBUG: SetCefBrowser() called in ClientHandler::OnAfterCreated()
+- 11:02:45.317 DEBUG: OnLoadingStateChange: loading=1, url=
+- 11:02:45.000 DEBUG: Command line string for the renderer process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --type=renderer --no-sandbox --lang=en-US --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --channel="11208.2.852323661\865910301" /prefetch:673131151
+- 11:02:45.016 DEBUG: OnBrowserCreated()
+- 11:02:50.529 DEBUG: WM_DESTROY
+- 11:02:50.529 DEBUG: RemoveBrowserWindow(): hwnd = 722526
+- 11:02:50.529 DEBUG: RemoveBrowserWindow(): hwnd = 1115550
+- 11:02:50.529 DEBUG: GetBrowserWindow(): not found, hwnd = 1115550
+- 11:02:50.529 WARNING: RemoveBrowserWindow() failed: GetBrowserWindow() failed
+- 11:02:50.091 DEBUG: WM_DESTROY
+- 11:02:50.091 DEBUG: RemoveBrowserWindow(): hwnd = 1181018
+- 11:02:50.091 INFO: Stopping Mongoose web server
+- 11:02:50.091 DEBUG: Mongoose webserver stopped immediately
+- 11:02:50.091 DEBUG: RemoveBrowserWindow(): hwnd = 1901892
+- 11:02:50.091 DEBUG: GetBrowserWindow(): not found, hwnd = 1901892
+- 11:02:50.091 WARNING: RemoveBrowserWindow() failed: GetBrowserWindow() failed
+- 11:02:50.998 DEBUG: OnBrowserDestroyed()
+- 11:02:50.107 INFO: Ended application
+- 11:02:50.107 INFO: --------------------------------------------------------
+- 11:03:13.015 INFO: --------------------------------------------------------
+- 11:03:13.015 INFO: Started application
+- 11:03:13.015 INFO: Logging to: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log
+- 11:03:13.015 INFO: Log level = DEBUG4
+- 11:03:13.015 INFO: Starting Mongoose 3.9c web server
+- 11:03:13.015 INFO: WWW directory: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\www
+- 11:03:13.015 INFO: Index files: index.html,index.php
+- 11:03:13.015 INFO: CGI interpreter: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\php\php-cgi.exe
+- 11:03:13.015 INFO: CGI pattern: **.php$
+- 11:03:13.015 INFO: CGI environment variables set: TMP=C:\Users\vilas\AppData\Local\Temp\,TEMP=C:\Users\vilas\AppData\Local\Temp\,TMPDIR=C:\Users\vilas\AppData\Local\Temp\,SERVER_NAME=127.0.0.1,PHPDESKTOP_VERSION=31.8
+- 11:03:13.031 INFO: Web server url: http://127.0.0.1:56796/
+- 11:03:13.031 INFO: remote_debugging_port = 52844
+- 11:03:13.031 DEBUG: Command line string for the browser process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --remote-debugging-port=52844 --no-sandbox
+[0507/110313:ERROR:gpu_info_collector_win.cc(102)] Can't retrieve a valid WinSAT assessment.
+- 11:03:13.031 DEBUG: App::OnContextInitialized()
+- 11:03:13.031 DEBUG: Window max width/height = 1286/680
+- 11:03:13.031 DEBUG: Window max size exceeded, new width/height = 1024/680
+- 11:03:13.046 DEBUG: GetBrowserWindow(): not found, hwnd = 1705478
+- 11:03:13.046 DEBUG: WindowProc(): event WM_GETMINMAXINFO: could not fetch BrowserWindow
+- 11:03:13.046 DEBUG: BrowserWindow::CreateBrowserControl()
+- 11:03:13.046 DEBUG: StoreBrowserWindow(): hwnd = 1705478
+- 11:03:13.062 DEBUG: BrowserWindow::OnSize() failed: CefBrowser object not created yet
+- 11:03:13.062 DEBUG: ClientHandler::OnAfterCreated()
+- 11:03:13.062 DEBUG: SetCefBrowser() called in ClientHandler::OnAfterCreated()
+- 11:03:13.062 INFO: DPI, ppix = 96, ppiy = 96
+- 11:03:13.062 INFO: DPI, browser zoom level = 0
+- 11:03:13.000 DEBUG: Command line string for the gpu-process process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --type=gpu-process --channel="8976.0.227938086\363985627" --no-sandbox --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --disable-d3d11 --supports-dual-gpus=false --gpu-driver-bug-workarounds=0,3,5,12,22 --gpu-vendor-id=0x8086 --gpu-device-id=0x0152 --gpu-driver-vendor="Intel Corporation" --gpu-driver-version=10.18.10.3345 --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" /prefetch:822062411
+- 11:03:13.062 DEBUG: OnLoadingStateChange: loading=1, url=
+- 11:03:13.000 DEBUG: Command line string for the renderer process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --type=renderer --no-sandbox --lang=en-US --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --channel="8976.1.1045336228\1431356886" /prefetch:673131151
+- 11:03:13.000 DEBUG: OnBrowserCreated()
+- 11:03:14.154 INFO: GET 200 /
+- 11:03:14.077 DEBUG: OnContextCreated()
+- 11:03:14.170 INFO: GET 200 /lib/requirejs/require.js
+- 11:03:14.170 INFO: GET 200 /img/loader-leaf-purple.gif
+- 11:03:14.185 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56796/
+- 11:03:14.201 INFO: GET 200 /js/main.js
+- 11:03:14.216 INFO: GET 200 /js/app.js
+- 11:03:14.216 INFO: GET 200 /lib/css/css.min.js
+- 11:03:14.232 INFO: GET 200 /css/style.css
+- 11:03:14.232 INFO: GET 200 /lib/angular/angular.min.js
+- 11:03:14.248 INFO: GET 200 /css/bootstrap.min.css
+- 11:03:14.248 INFO: GET 200 /lib/lodash.js
+- 11:03:14.263 INFO: GET 200 /lib/angular/angular-cookies.min.js
+- 11:03:14.263 INFO: GET 200 /js/services.js
+- 11:03:14.263 INFO: GET 200 /js/directives.js
+- 11:03:14.263 INFO: GET 200 /lib/angular/angular-sanitize.js
+- 11:03:14.263 INFO: GET 200 /lib/angular/angular-route.js
+- 11:03:14.263 INFO: GET 200 /js/filters.js
+- 11:03:14.263 INFO: GET 200 /lib/bootstrap/ui-bootstrap.js
+- 11:03:14.279 INFO: GET 200 /lib/upload/angular-file-upload.min.js
+- 11:03:14.279 INFO: GET 200 /lib/upload/angular-file-upload-shim.min.js
+- 11:03:14.294 INFO: GET 200 /lib/google-map/angular-google-maps.min.js
+- 11:03:14.310 INFO: GET 200 /lib/tinymce/tinymce.min.js
+- 11:03:14.326 INFO: GET 200 /js/routeResolver.js
+- 11:03:15.497 INFO: GET 200 /modules/component/header.html
+- 11:03:15.497 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56796/
+- 11:03:15.497 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56796/#/
+- 11:03:15.544 INFO: GET 200 /modules/users/login/login.html
+- 11:03:15.622 INFO: GET 200 /img/user1.png
+- 11:03:15.622 INFO: GET 200 /img/logo.png
+- 11:03:15.638 INFO: GET 200 /modules/users/login/loginController.js
+- 11:03:15.638 INFO: GET 200 /fonts/glyphicons-halflings-regular.woff
+- 11:03:15.653 INFO: GET 200 /server-api/index.php/login/logout
+- 11:03:57.680 INFO: POST 200 /server-api/index.php/post/user/login
+- 11:03:57.680 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56796/#/
+- 11:03:57.680 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56796/#/dashboard
+- 11:03:57.680 INFO: GET 404 /uploads/user/profile/Penguins.jpg
+- 11:03:57.696 INFO: GET 200 /modules/dashboard/dashboard.html
+- 11:03:57.711 INFO: GET 200 /modules/dashboard/dashboardController.js
+- 11:03:57.727 INFO: GET 200 /modules/component/toolbar.html
+- 11:03:57.727 INFO: GET 200 /modules/component/row.html
+- 11:03:57.758 INFO: GET 200 /modules/component/breadcrumb.html
+- 11:03:57.758 INFO: GET 200 /modules/component/menu-back.html
+[0507/110400:INFO:CONSOLE(0)] "event.returnValue is deprecated. Please use the standard event.preventDefault() instead.", source:  (0)
+- 11:04:00.330 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56796/#/dashboard
+- 11:04:00.330 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56796/#/logout
+- 11:04:00.330 INFO: GET 200 /modules/users/login/logout.html
+- 11:04:00.408 INFO: GET 200 /server-api/index.php/login/logout
+- 11:04:02.078 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56796/#/logout
+- 11:04:02.078 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56796/
+- 11:04:02.078 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56796/
+- 11:04:02.078 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56796/#/
+- 11:04:05.589 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56796/#/
+- 11:04:05.589 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56796/
+- 11:04:05.589 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56796/
+- 11:04:05.589 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56796/#/
+- 11:04:05.322 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56796/#/
+- 11:04:05.322 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56796/
+- 11:04:05.322 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56796/
+- 11:04:05.322 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56796/#/
+- 11:04:06.603 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56796/#/
+- 11:04:06.603 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56796/
+- 11:04:06.619 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56796/
+- 11:04:06.619 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56796/#/
+- 11:04:06.775 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56796/#/
+- 11:04:06.775 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56796/
+- 11:04:06.790 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56796/
+- 11:04:06.790 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56796/#/
+- 11:04:06.931 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56796/#/
+- 11:04:06.931 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56796/
+- 11:04:06.931 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56796/
+- 11:04:06.931 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56796/#/
+- 11:04:11.266 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56796/#/
+- 11:04:11.266 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56796/#/register
+- 11:04:11.266 INFO: GET 200 /modules/users/register/register.html
+- 11:04:11.266 INFO: GET 200 /modules/users/register/registerController.js
+- 11:04:12.296 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56796/#/register
+- 11:04:12.296 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56796/#/login
+- 11:04:13.310 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56796/#/login
+- 11:04:13.310 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56796/#/register
+- 11:04:15.573 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56796/#/register
+- 11:04:15.573 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56796/#/login
+- 11:04:16.774 DEBUG: WM_DESTROY
+- 11:04:16.774 DEBUG: RemoveBrowserWindow(): hwnd = 1705478
+- 11:04:16.774 INFO: Stopping Mongoose web server
+- 11:04:16.774 DEBUG: Mongoose webserver stopped immediately
+- 11:04:16.774 DEBUG: RemoveBrowserWindow(): hwnd = 1377568
+- 11:04:16.774 DEBUG: GetBrowserWindow(): not found, hwnd = 1377568
+- 11:04:16.774 WARNING: RemoveBrowserWindow() failed: GetBrowserWindow() failed
+- 11:04:16.697 DEBUG: OnBrowserDestroyed()
+- 11:04:16.837 INFO: Ended application
+- 11:04:16.837 INFO: --------------------------------------------------------
+- 11:07:32.031 INFO: --------------------------------------------------------
+- 11:07:32.031 INFO: Started application
+- 11:07:32.031 INFO: Logging to: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log
+- 11:07:32.031 INFO: Log level = DEBUG4
+- 11:07:32.031 INFO: Starting Mongoose 3.9c web server
+- 11:07:32.031 INFO: WWW directory: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\www
+- 11:07:32.031 INFO: Index files: index.html,index.php
+- 11:07:32.031 INFO: CGI interpreter: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\php\php-cgi.exe
+- 11:07:32.031 INFO: CGI pattern: **.php$
+- 11:07:32.031 INFO: CGI environment variables set: TMP=C:\Users\vilas\AppData\Local\Temp\,TEMP=C:\Users\vilas\AppData\Local\Temp\,TMPDIR=C:\Users\vilas\AppData\Local\Temp\,SERVER_NAME=127.0.0.1,PHPDESKTOP_VERSION=31.8
+- 11:07:32.046 INFO: Web server url: http://127.0.0.1:56969/
+- 11:07:32.046 INFO: remote_debugging_port = 60900
+- 11:07:32.046 DEBUG: Command line string for the browser process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --remote-debugging-port=60900 --no-sandbox
+[0507/110732:ERROR:gpu_info_collector_win.cc(102)] Can't retrieve a valid WinSAT assessment.
+- 11:07:32.078 DEBUG: App::OnContextInitialized()
+- 11:07:32.078 DEBUG: Window max width/height = 1286/680
+- 11:07:32.078 DEBUG: Window max size exceeded, new width/height = 1024/680
+- 11:07:32.078 DEBUG: GetBrowserWindow(): not found, hwnd = 788088
+- 11:07:32.078 DEBUG: WindowProc(): event WM_GETMINMAXINFO: could not fetch BrowserWindow
+- 11:07:32.078 DEBUG: BrowserWindow::CreateBrowserControl()
+- 11:07:32.078 DEBUG: StoreBrowserWindow(): hwnd = 788088
+- 11:07:32.093 DEBUG: BrowserWindow::OnSize() failed: CefBrowser object not created yet
+- 11:07:32.093 DEBUG: ClientHandler::OnAfterCreated()
+- 11:07:32.093 DEBUG: SetCefBrowser() called in ClientHandler::OnAfterCreated()
+- 11:07:32.093 INFO: DPI, ppix = 96, ppiy = 96
+- 11:07:32.093 INFO: DPI, browser zoom level = 0
+- 11:07:32.000 DEBUG: Command line string for the gpu-process process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --type=gpu-process --channel="5788.0.1535783487\786801514" --no-sandbox --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --disable-d3d11 --supports-dual-gpus=false --gpu-driver-bug-workarounds=0,3,5,12,22 --gpu-vendor-id=0x8086 --gpu-device-id=0x0152 --gpu-driver-vendor="Intel Corporation" --gpu-driver-version=10.18.10.3345 --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" /prefetch:822062411
+- 11:07:32.093 DEBUG: OnLoadingStateChange: loading=1, url=
+- 11:07:32.000 DEBUG: Command line string for the renderer process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --type=renderer --no-sandbox --lang=en-US --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --channel="5788.1.314649673\1000321840" /prefetch:673131151
+- 11:07:32.000 DEBUG: OnBrowserCreated()
+- 11:07:33.154 INFO: GET 200 /
+- 11:07:33.046 DEBUG: OnContextCreated()
+- 11:07:33.170 INFO: GET 200 /lib/requirejs/require.js
+- 11:07:33.185 INFO: GET 200 /img/loader-leaf-purple.gif
+- 11:07:33.201 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56969/
+- 11:07:33.216 INFO: GET 200 /js/main.js
+- 11:07:33.232 INFO: GET 200 /js/app.js
+- 11:07:33.232 INFO: GET 200 /lib/css/css.min.js
+- 11:07:33.248 INFO: GET 200 /css/style.css
+- 11:07:33.248 INFO: GET 200 /lib/angular/angular.min.js
+- 11:07:33.263 INFO: GET 200 /css/bootstrap.min.css
+- 11:07:33.263 INFO: GET 200 /lib/lodash.js
+- 11:07:33.466 INFO: GET 200 /lib/angular/angular-sanitize.js
+- 11:07:33.466 INFO: GET 200 /lib/angular/angular-cookies.min.js
+- 11:07:33.466 INFO: GET 200 /js/directives.js
+- 11:07:33.466 INFO: GET 200 /js/services.js
+- 11:07:33.466 INFO: GET 200 /lib/angular/angular-route.js
+- 11:07:33.482 INFO: GET 200 /js/filters.js
+- 11:07:33.482 INFO: GET 200 /lib/upload/angular-file-upload.min.js
+- 11:07:33.482 INFO: GET 200 /lib/upload/angular-file-upload-shim.min.js
+- 11:07:33.528 INFO: GET 200 /lib/bootstrap/ui-bootstrap.js
+- 11:07:33.528 INFO: GET 200 /js/routeResolver.js
+- 11:07:33.591 INFO: GET 200 /lib/google-map/angular-google-maps.min.js
+- 11:07:33.622 INFO: GET 200 /lib/tinymce/tinymce.min.js
+- 11:07:33.778 INFO: GET 200 /modules/component/header.html
+- 11:07:33.778 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56969/
+- 11:07:33.778 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56969/#/
+- 11:07:33.856 INFO: GET 200 /modules/users/login/login.html
+- 11:07:33.856 INFO: GET 200 /modules/users/login/loginController.js
+- 11:07:33.856 INFO: GET 200 /fonts/glyphicons-halflings-regular.woff
+- 11:07:34.903 INFO: GET 200 /img/user1.png
+- 11:07:34.903 INFO: GET 200 /img/logo.png
+- 11:07:34.934 INFO: GET 200 /server-api/index.php/login/logout
+- 11:07:39.800 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56969/#/
+- 11:07:39.815 INFO: GET 200 /
+- 11:07:39.691 DEBUG: OnContextCreated()
+- 11:07:39.831 INFO: GET 200 /img/loader-leaf-purple.gif
+- 11:07:39.831 INFO: GET 200 /lib/requirejs/require.js
+- 11:07:39.831 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56969/#/
+- 11:07:40.018 INFO: GET 200 /server-api/index.php/login/logout
+- 11:07:41.438 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56969/#/
+- 11:07:41.453 INFO: GET 200 /
+- 11:07:41.329 DEBUG: OnContextCreated()
+- 11:07:41.453 INFO: GET 200 /lib/requirejs/require.js
+- 11:07:41.453 INFO: GET 200 /img/loader-leaf-purple.gif
+- 11:07:41.469 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56969/#/
+- 11:07:41.640 INFO: GET 200 /server-api/index.php/login/logout
+- 11:07:43.341 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:56969/#/
+- 11:07:43.356 INFO: GET 200 /
+- 11:07:43.232 DEBUG: OnContextCreated()
+- 11:07:43.372 INFO: GET 200 /img/loader-leaf-purple.gif
+- 11:07:43.372 INFO: GET 200 /lib/requirejs/require.js
+- 11:07:43.372 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:56969/#/
+- 11:07:43.544 INFO: GET 200 /server-api/index.php/login/logout
+- 11:07:44.760 DEBUG: WM_DESTROY
+- 11:07:44.760 DEBUG: RemoveBrowserWindow(): hwnd = 788088
+- 11:07:44.760 INFO: Stopping Mongoose web server
+- 11:07:44.760 DEBUG: Mongoose webserver stopped immediately
+- 11:07:44.760 DEBUG: RemoveBrowserWindow(): hwnd = 3343606
+- 11:07:44.760 DEBUG: GetBrowserWindow(): not found, hwnd = 3343606
+- 11:07:44.760 WARNING: RemoveBrowserWindow() failed: GetBrowserWindow() failed
+- 11:07:44.776 INFO: Ended application
+- 11:07:44.776 INFO: --------------------------------------------------------
+- 11:07:44.652 DEBUG: OnBrowserDestroyed()
+- 11:07:46.031 INFO: --------------------------------------------------------
+- 11:07:46.031 INFO: Started application
+- 11:07:46.031 INFO: Logging to: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log
+- 11:07:46.031 INFO: Log level = DEBUG4
+- 11:07:46.031 INFO: Starting Mongoose 3.9c web server
+- 11:07:46.031 INFO: WWW directory: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\www
+- 11:07:46.031 INFO: Index files: index.html,index.php
+- 11:07:46.031 INFO: CGI interpreter: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\php\php-cgi.exe
+- 11:07:46.031 INFO: CGI pattern: **.php$
+- 11:07:46.031 INFO: CGI environment variables set: TMP=C:\Users\vilas\AppData\Local\Temp\,TEMP=C:\Users\vilas\AppData\Local\Temp\,TMPDIR=C:\Users\vilas\AppData\Local\Temp\,SERVER_NAME=127.0.0.1,PHPDESKTOP_VERSION=31.8
+- 11:07:46.031 INFO: Web server url: http://127.0.0.1:57015/
+- 11:07:46.031 INFO: remote_debugging_port = 57678
+- 11:07:46.031 DEBUG: Command line string for the browser process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --remote-debugging-port=57678 --no-sandbox
+[0507/110746:ERROR:gpu_info_collector_win.cc(102)] Can't retrieve a valid WinSAT assessment.
+- 11:07:46.063 DEBUG: App::OnContextInitialized()
+- 11:07:46.063 DEBUG: Window max width/height = 1286/680
+- 11:07:46.063 DEBUG: Window max size exceeded, new width/height = 1024/680
+- 11:07:46.063 DEBUG: GetBrowserWindow(): not found, hwnd = 2753886
+- 11:07:46.063 DEBUG: WindowProc(): event WM_GETMINMAXINFO: could not fetch BrowserWindow
+- 11:07:46.063 DEBUG: BrowserWindow::CreateBrowserControl()
+- 11:07:46.063 DEBUG: StoreBrowserWindow(): hwnd = 2753886
+- 11:07:46.063 DEBUG: BrowserWindow::OnSize() failed: CefBrowser object not created yet
+- 11:07:46.063 DEBUG: ClientHandler::OnAfterCreated()
+- 11:07:46.063 DEBUG: SetCefBrowser() called in ClientHandler::OnAfterCreated()
+- 11:07:46.063 INFO: DPI, ppix = 96, ppiy = 96
+- 11:07:46.063 INFO: DPI, browser zoom level = 0
+- 11:07:46.078 DEBUG: OnLoadingStateChange: loading=1, url=
+- 11:07:46.000 DEBUG: Command line string for the gpu-process process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --type=gpu-process --channel="11240.0.45965138\1963798424" --no-sandbox --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --disable-d3d11 --supports-dual-gpus=false --gpu-driver-bug-workarounds=0,3,5,12,22 --gpu-vendor-id=0x8086 --gpu-device-id=0x0152 --gpu-driver-vendor="Intel Corporation" --gpu-driver-version=10.18.10.3345 --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" /prefetch:822062411
+- 11:07:46.000 DEBUG: Command line string for the renderer process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --type=renderer --no-sandbox --lang=en-US --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --channel="11240.1.1397950438\900666369" /prefetch:673131151
+- 11:07:46.015 DEBUG: OnBrowserCreated()
+- 11:07:47.186 INFO: GET 200 /
+- 11:07:47.092 DEBUG: OnContextCreated()
+- 11:07:47.201 INFO: GET 200 /lib/requirejs/require.js
+- 11:07:47.201 INFO: GET 200 /img/loader-leaf-purple.gif
+- 11:07:47.217 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:57015/
+- 11:07:47.248 INFO: GET 200 /js/main.js
+- 11:07:47.248 INFO: GET 200 /js/app.js
+- 11:07:47.248 INFO: GET 200 /lib/css/css.min.js
+- 11:07:47.264 INFO: GET 200 /css/style.css
+- 11:07:47.264 INFO: GET 200 /lib/angular/angular.min.js
+- 11:07:47.264 INFO: GET 200 /css/bootstrap.min.css
+- 11:07:47.279 INFO: GET 200 /lib/lodash.js
+- 11:07:47.295 INFO: GET 200 /lib/angular/angular-cookies.min.js
+- 11:07:47.295 INFO: GET 200 /js/directives.js
+- 11:07:47.295 INFO: GET 200 /js/services.js
+- 11:07:47.295 INFO: GET 200 /lib/angular/angular-sanitize.js
+- 11:07:47.295 INFO: GET 200 /lib/angular/angular-route.js
+- 11:07:47.295 INFO: GET 200 /lib/bootstrap/ui-bootstrap.js
+- 11:07:47.295 INFO: GET 200 /js/filters.js
+- 11:07:47.295 INFO: GET 200 /lib/upload/angular-file-upload-shim.min.js
+- 11:07:47.295 INFO: GET 200 /lib/upload/angular-file-upload.min.js
+- 11:07:47.326 INFO: GET 200 /lib/google-map/angular-google-maps.min.js
+- 11:07:47.342 INFO: GET 200 /js/routeResolver.js
+- 11:07:47.342 INFO: GET 200 /lib/tinymce/tinymce.min.js
+- 11:07:47.529 INFO: GET 200 /modules/component/header.html
+- 11:07:47.529 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:57015/
+- 11:07:47.529 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:57015/#/
+- 11:07:47.529 INFO: GET 200 /modules/users/login/login.html
+- 11:07:47.607 INFO: GET 200 /server-api/index.php/login/logout
+- 11:07:47.607 INFO: GET 200 /img/user1.png
+- 11:07:47.607 INFO: GET 200 /img/logo.png
+- 11:07:47.638 INFO: GET 200 /modules/users/login/loginController.js
+- 11:07:47.654 INFO: GET 200 /fonts/glyphicons-halflings-regular.woff
+- 11:07:50.462 DEBUG: WM_DESTROY
+- 11:07:50.462 DEBUG: RemoveBrowserWindow(): hwnd = 2753886
+- 11:07:50.462 INFO: Stopping Mongoose web server
+- 11:07:50.462 DEBUG: Mongoose webserver stopped immediately
+- 11:07:50.462 DEBUG: RemoveBrowserWindow(): hwnd = 3671392
+- 11:07:50.462 DEBUG: GetBrowserWindow(): not found, hwnd = 3671392
+- 11:07:50.462 WARNING: RemoveBrowserWindow() failed: GetBrowserWindow() failed
+- 11:07:50.477 INFO: Ended application
+- 11:07:50.477 INFO: --------------------------------------------------------
+- 11:07:50.399 DEBUG: OnBrowserDestroyed()
+- 11:07:51.031 INFO: --------------------------------------------------------
+- 11:07:51.031 INFO: Started application
+- 11:07:51.031 INFO: Logging to: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log
+- 11:07:51.031 INFO: Log level = DEBUG4
+- 11:07:51.031 INFO: Starting Mongoose 3.9c web server
+- 11:07:51.031 INFO: WWW directory: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\www
+- 11:07:51.031 INFO: Index files: index.html,index.php
+- 11:07:51.031 INFO: CGI interpreter: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\php\php-cgi.exe
+- 11:07:51.031 INFO: CGI pattern: **.php$
+- 11:07:51.031 INFO: CGI environment variables set: TMP=C:\Users\vilas\AppData\Local\Temp\,TEMP=C:\Users\vilas\AppData\Local\Temp\,TMPDIR=C:\Users\vilas\AppData\Local\Temp\,SERVER_NAME=127.0.0.1,PHPDESKTOP_VERSION=31.8
+- 11:07:51.031 INFO: Web server url: http://127.0.0.1:57046/
+- 11:07:51.031 INFO: remote_debugging_port = 62717
+- 11:07:51.031 DEBUG: Command line string for the browser process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --remote-debugging-port=62717 --no-sandbox
+[0507/110751:ERROR:gpu_info_collector_win.cc(102)] Can't retrieve a valid WinSAT assessment.
+- 11:07:51.063 DEBUG: App::OnContextInitialized()
+- 11:07:51.063 DEBUG: Window max width/height = 1286/680
+- 11:07:51.063 DEBUG: Window max size exceeded, new width/height = 1024/680
+- 11:07:51.063 DEBUG: GetBrowserWindow(): not found, hwnd = 2622752
+- 11:07:51.063 DEBUG: WindowProc(): event WM_GETMINMAXINFO: could not fetch BrowserWindow
+- 11:07:51.063 DEBUG: BrowserWindow::CreateBrowserControl()
+- 11:07:51.063 DEBUG: StoreBrowserWindow(): hwnd = 2622752
+- 11:07:51.063 DEBUG: BrowserWindow::OnSize() failed: CefBrowser object not created yet
+- 11:07:51.078 DEBUG: ClientHandler::OnAfterCreated()
+- 11:07:51.078 DEBUG: SetCefBrowser() called in ClientHandler::OnAfterCreated()
+- 11:07:51.078 INFO: DPI, ppix = 96, ppiy = 96
+- 11:07:51.078 INFO: DPI, browser zoom level = 0
+- 11:07:51.078 DEBUG: OnLoadingStateChange: loading=1, url=
+- 11:07:51.000 DEBUG: Command line string for the gpu-process process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --type=gpu-process --channel="10216.0.520454865\1403052431" --no-sandbox --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --disable-d3d11 --supports-dual-gpus=false --gpu-driver-bug-workarounds=0,3,5,12,22 --gpu-vendor-id=0x8086 --gpu-device-id=0x0152 --gpu-driver-vendor="Intel Corporation" --gpu-driver-version=10.18.10.3345 --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" /prefetch:822062411
+- 11:07:51.000 DEBUG: Command line string for the renderer process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --type=renderer --no-sandbox --lang=en-US --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --channel="10216.1.1983400782\1385470021" /prefetch:673131151
+- 11:07:51.000 DEBUG: OnBrowserCreated()
+- 11:07:52.186 INFO: GET 200 /
+- 11:07:52.077 DEBUG: OnContextCreated()
+- 11:07:52.201 INFO: GET 200 /img/loader-leaf-purple.gif
+- 11:07:52.201 INFO: GET 200 /lib/requirejs/require.js
+- 11:07:52.201 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:57046/
+- 11:07:52.217 INFO: GET 200 /js/main.js
+- 11:07:52.233 INFO: GET 200 /js/app.js
+- 11:07:52.233 INFO: GET 200 /lib/css/css.min.js
+- 11:07:52.233 INFO: GET 200 /lib/angular/angular.min.js
+- 11:07:52.248 INFO: GET 200 /css/style.css
+- 11:07:52.248 INFO: GET 200 /lib/lodash.js
+- 11:07:52.248 INFO: GET 200 /css/bootstrap.min.css
+- 11:07:52.264 INFO: GET 200 /lib/angular/angular-sanitize.js
+- 11:07:52.264 INFO: GET 200 /js/directives.js
+- 11:07:52.264 INFO: GET 200 /lib/angular/angular-cookies.min.js
+- 11:07:52.279 INFO: GET 200 /lib/angular/angular-route.js
+- 11:07:52.279 INFO: GET 200 /js/services.js
+- 11:07:52.279 INFO: GET 200 /js/filters.js
+- 11:07:52.279 INFO: GET 200 /lib/upload/angular-file-upload.min.js
+- 11:07:52.279 INFO: GET 200 /lib/upload/angular-file-upload-shim.min.js
+- 11:07:52.279 INFO: GET 200 /lib/bootstrap/ui-bootstrap.js
+- 11:07:52.311 INFO: GET 200 /lib/google-map/angular-google-maps.min.js
+- 11:07:52.326 INFO: GET 200 /js/routeResolver.js
+- 11:07:52.326 INFO: GET 200 /lib/tinymce/tinymce.min.js
+- 11:07:53.513 INFO: GET 200 /modules/component/header.html
+- 11:07:53.513 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:57046/
+- 11:07:53.513 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:57046/#/
+- 11:07:53.513 INFO: GET 200 /modules/users/login/login.html
+- 11:07:53.623 INFO: GET 200 /img/logo.png
+- 11:07:53.623 INFO: GET 200 /img/user1.png
+- 11:07:53.623 INFO: GET 200 /modules/users/login/loginController.js
+- 11:07:53.638 INFO: GET 200 /fonts/glyphicons-halflings-regular.woff
+- 11:07:53.638 INFO: GET 200 /server-api/index.php/login/logout
+- 11:08:00.142 DEBUG: WM_DESTROY
+- 11:08:00.142 DEBUG: RemoveBrowserWindow(): hwnd = 2622752
+- 11:08:00.142 INFO: Stopping Mongoose web server
+- 11:08:00.142 DEBUG: Mongoose webserver stopped immediately
+- 11:08:00.142 DEBUG: RemoveBrowserWindow(): hwnd = 3736928
+- 11:08:00.142 DEBUG: GetBrowserWindow(): not found, hwnd = 3736928
+- 11:08:00.142 WARNING: RemoveBrowserWindow() failed: GetBrowserWindow() failed
+- 11:08:00.158 INFO: Ended application
+- 11:08:00.158 INFO: --------------------------------------------------------
+- 11:08:02.015 INFO: --------------------------------------------------------
+- 11:08:02.015 INFO: Started application
+- 11:08:02.015 INFO: Logging to: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log
+- 11:08:02.015 INFO: Log level = DEBUG4
+- 11:08:02.015 INFO: Starting Mongoose 3.9c web server
+- 11:08:02.015 INFO: WWW directory: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\www
+- 11:08:02.015 INFO: Index files: index.html,index.php
+- 11:08:02.015 INFO: CGI interpreter: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\php\php-cgi.exe
+- 11:08:02.015 INFO: CGI pattern: **.php$
+- 11:08:02.015 INFO: CGI environment variables set: TMP=C:\Users\vilas\AppData\Local\Temp\,TEMP=C:\Users\vilas\AppData\Local\Temp\,TMPDIR=C:\Users\vilas\AppData\Local\Temp\,SERVER_NAME=127.0.0.1,PHPDESKTOP_VERSION=31.8
+- 11:08:02.031 INFO: Web server url: http://127.0.0.1:57096/
+- 11:08:02.031 INFO: remote_debugging_port = 60963
+- 11:08:02.031 DEBUG: Command line string for the browser process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --remote-debugging-port=60963 --no-sandbox
+[0507/110802:ERROR:gpu_info_collector_win.cc(102)] Can't retrieve a valid WinSAT assessment.
+- 11:08:02.062 DEBUG: App::OnContextInitialized()
+- 11:08:02.062 DEBUG: Window max width/height = 1286/680
+- 11:08:02.062 DEBUG: Window max size exceeded, new width/height = 1024/680
+- 11:08:02.062 DEBUG: GetBrowserWindow(): not found, hwnd = 1246802
+- 11:08:02.062 DEBUG: WindowProc(): event WM_GETMINMAXINFO: could not fetch BrowserWindow
+- 11:08:02.062 DEBUG: BrowserWindow::CreateBrowserControl()
+- 11:08:02.062 DEBUG: StoreBrowserWindow(): hwnd = 1246802
+- 11:08:02.078 DEBUG: BrowserWindow::OnSize() failed: CefBrowser object not created yet
+- 11:08:02.078 DEBUG: ClientHandler::OnAfterCreated()
+- 11:08:02.078 DEBUG: SetCefBrowser() called in ClientHandler::OnAfterCreated()
+- 11:08:02.078 INFO: DPI, ppix = 96, ppiy = 96
+- 11:08:02.078 INFO: DPI, browser zoom level = 0
+- 11:08:02.000 DEBUG: Command line string for the gpu-process process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --type=gpu-process --channel="3540.0.750091496\550341150" --no-sandbox --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --disable-d3d11 --supports-dual-gpus=false --gpu-driver-bug-workarounds=0,3,5,12,22 --gpu-vendor-id=0x8086 --gpu-device-id=0x0152 --gpu-driver-vendor="Intel Corporation" --gpu-driver-version=10.18.10.3345 --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" /prefetch:822062411
+- 11:08:02.093 DEBUG: OnLoadingStateChange: loading=1, url=
+- 11:08:02.000 DEBUG: Command line string for the renderer process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --type=renderer --no-sandbox --lang=en-US --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --channel="3540.1.1859204495\519110515" /prefetch:673131151
+- 11:08:02.000 DEBUG: OnBrowserCreated()
+- 11:08:03.201 INFO: GET 200 /
+- 11:08:03.092 DEBUG: OnContextCreated()
+- 11:08:03.217 INFO: GET 200 /img/loader-leaf-purple.gif
+- 11:08:03.217 INFO: GET 200 /lib/requirejs/require.js
+- 11:08:03.232 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:57096/
+- 11:08:03.248 INFO: GET 200 /js/main.js
+- 11:08:03.263 INFO: GET 200 /js/app.js
+- 11:08:03.263 INFO: GET 200 /lib/css/css.min.js
+- 11:08:03.279 INFO: GET 200 /css/style.css
+- 11:08:03.279 INFO: GET 200 /lib/angular/angular.min.js
+- 11:08:03.295 INFO: GET 200 /css/bootstrap.min.css
+- 11:08:03.373 INFO: GET 200 /lib/angular/angular-cookies.min.js
+- 11:08:03.373 INFO: GET 200 /lib/lodash.js
+- 11:08:03.373 INFO: GET 200 /js/directives.js
+- 11:08:03.373 INFO: GET 200 /lib/angular/angular-sanitize.js
+- 11:08:03.373 INFO: GET 200 /js/services.js
+- 11:08:03.388 INFO: GET 200 /lib/angular/angular-route.js
+- 11:08:03.388 INFO: GET 200 /js/filters.js
+- 11:08:03.388 INFO: GET 200 /lib/upload/angular-file-upload-shim.min.js
+- 11:08:03.388 INFO: GET 200 /lib/bootstrap/ui-bootstrap.js
+- 11:08:03.388 INFO: GET 200 /lib/upload/angular-file-upload.min.js
+- 11:08:03.404 INFO: GET 200 /lib/google-map/angular-google-maps.min.js
+- 11:08:03.419 INFO: GET 200 /js/routeResolver.js
+- 11:08:03.419 INFO: GET 200 /lib/tinymce/tinymce.min.js
+- 11:08:03.591 INFO: GET 200 /modules/component/header.html
+- 11:08:03.591 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:57096/
+- 11:08:03.591 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:57096/#/
+- 11:08:03.607 INFO: GET 200 /modules/users/login/login.html
+- 11:08:03.669 INFO: GET 200 /modules/users/login/loginController.js
+- 11:08:03.669 INFO: GET 200 /fonts/glyphicons-halflings-regular.woff
+- 11:08:03.669 INFO: GET 200 /img/logo.png
+- 11:08:03.669 INFO: GET 200 /img/user1.png
+- 11:08:03.685 INFO: GET 200 /server-api/index.php/login/logout
+- 11:08:06.461 DEBUG: WM_DESTROY
+- 11:08:06.477 DEBUG: RemoveBrowserWindow(): hwnd = 1246802
+- 11:08:06.477 INFO: Stopping Mongoose web server
+- 11:08:06.477 DEBUG: Mongoose webserver stopped immediately
+- 11:08:06.477 DEBUG: RemoveBrowserWindow(): hwnd = 3212496
+- 11:08:06.477 DEBUG: GetBrowserWindow(): not found, hwnd = 3212496
+- 11:08:06.477 WARNING: RemoveBrowserWindow() failed: GetBrowserWindow() failed
+- 11:08:06.477 INFO: Ended application
+- 11:08:06.477 INFO: --------------------------------------------------------
+- 12:22:43.047 INFO: --------------------------------------------------------
+- 12:22:43.047 INFO: Started application
+- 12:22:43.047 INFO: Logging to: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log
+- 12:22:43.047 INFO: Log level = DEBUG4
+- 12:22:43.047 INFO: Starting Mongoose 3.9c web server
+- 12:22:43.047 INFO: WWW directory: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\www
+- 12:22:43.047 INFO: Index files: index.html,index.php
+- 12:22:43.047 INFO: CGI interpreter: E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\php\php-cgi.exe
+- 12:22:43.047 INFO: CGI pattern: **.php$
+- 12:22:43.047 INFO: CGI environment variables set: TMP=C:\Users\vilas\AppData\Local\Temp\,TEMP=C:\Users\vilas\AppData\Local\Temp\,TMPDIR=C:\Users\vilas\AppData\Local\Temp\,SERVER_NAME=127.0.0.1,PHPDESKTOP_VERSION=31.8
+- 12:22:43.047 INFO: Web server url: http://127.0.0.1:59524/
+- 12:22:43.047 INFO: remote_debugging_port = 57475
+- 12:22:43.047 DEBUG: Command line string for the browser process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --remote-debugging-port=57475 --no-sandbox
+[0507/122243:ERROR:gpu_info_collector_win.cc(102)] Can't retrieve a valid WinSAT assessment.
+- 12:22:43.078 DEBUG: App::OnContextInitialized()
+- 12:22:43.078 DEBUG: Window max width/height = 1286/680
+- 12:22:43.078 DEBUG: Window max size exceeded, new width/height = 1024/680
+- 12:22:43.078 DEBUG: GetBrowserWindow(): not found, hwnd = 1312132
+- 12:22:43.078 DEBUG: WindowProc(): event WM_GETMINMAXINFO: could not fetch BrowserWindow
+- 12:22:43.078 DEBUG: BrowserWindow::CreateBrowserControl()
+- 12:22:43.078 DEBUG: StoreBrowserWindow(): hwnd = 1312132
+- 12:22:43.094 DEBUG: BrowserWindow::OnSize() failed: CefBrowser object not created yet
+- 12:22:43.094 DEBUG: ClientHandler::OnAfterCreated()
+- 12:22:43.094 DEBUG: SetCefBrowser() called in ClientHandler::OnAfterCreated()
+- 12:22:43.094 INFO: DPI, ppix = 96, ppiy = 96
+- 12:22:43.094 INFO: DPI, browser zoom level = 0
+- 12:22:43.000 DEBUG: Command line string for the gpu-process process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --type=gpu-process --channel="10952.0.164788087\366522088" --no-sandbox --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --disable-d3d11 --supports-dual-gpus=false --gpu-driver-bug-workarounds=0,3,5,12,22 --gpu-vendor-id=0x8086 --gpu-device-id=0x0152 --gpu-driver-vendor="Intel Corporation" --gpu-driver-version=10.18.10.3345 --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" /prefetch:822062411
+- 12:22:43.109 DEBUG: OnLoadingStateChange: loading=1, url=
+- 12:22:43.000 DEBUG: Command line string for the renderer process: "E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\phpdesktop-chrome.exe" --type=renderer --no-sandbox --lang=en-US --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Estate-Rent-Module\debug.log" --channel="10952.1.1301316783\931206107" /prefetch:673131151
+- 12:22:43.000 DEBUG: OnBrowserCreated()
+- 12:22:44.201 INFO: GET 200 /
+- 12:22:44.060 DEBUG: OnContextCreated()
+- 12:22:44.217 INFO: GET 200 /img/loader-leaf-purple.gif
+- 12:22:44.233 INFO: GET 200 /lib/requirejs/require.js
+- 12:22:44.248 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:59524/
+- 12:22:44.248 INFO: GET 200 /js/main.js
+- 12:22:44.279 INFO: GET 200 /js/app.js
+- 12:22:44.279 INFO: GET 200 /lib/css/css.min.js
+- 12:22:45.311 INFO: GET 200 /lib/angular/angular.min.js
+- 12:22:45.311 INFO: GET 200 /css/style.css
+- 12:22:45.389 INFO: GET 200 /lib/angular/angular-cookies.min.js
+- 12:22:45.389 INFO: GET 200 /lib/angular/angular-sanitize.js
+- 12:22:45.389 INFO: GET 200 /css/bootstrap.min.css
+- 12:22:45.404 INFO: GET 200 /js/directives.js
+- 12:22:45.420 INFO: GET 200 /lib/angular/angular-route.js
+- 12:22:45.435 INFO: GET 200 /js/filters.js
+- 12:22:45.435 INFO: GET 200 /lib/bootstrap/ui-bootstrap.js
+- 12:22:45.435 INFO: GET 200 /lib/upload/angular-file-upload.min.js
+- 12:22:45.435 INFO: GET 200 /js/services.js
+- 12:22:45.435 INFO: GET 200 /lib/lodash.js
+- 12:22:45.435 INFO: GET 200 /lib/upload/angular-file-upload-shim.min.js
+- 12:22:45.498 INFO: GET 200 /js/routeResolver.js
+- 12:22:45.560 INFO: GET 200 /lib/tinymce/tinymce.min.js
+- 12:22:45.607 INFO: GET 200 /lib/google-map/angular-google-maps.min.js
+- 12:22:45.732 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:59524/
+- 12:22:45.732 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:59524/#/
+- 12:22:45.732 INFO: GET 200 /modules/component/header.html
+- 12:22:45.779 INFO: GET 200 /modules/users/login/login.html
+- 12:22:45.810 INFO: GET 200 /fonts/glyphicons-halflings-regular.woff
+- 12:22:45.825 INFO: GET 200 /modules/users/login/loginController.js
+- 12:22:45.825 INFO: GET 200 /img/user1.png
+- 12:22:45.825 INFO: GET 200 /img/logo.png
+- 12:22:45.137 INFO: GET 200 /server-api/index.php/login/logout
+- 12:22:51.894 INFO: POST 200 /server-api/index.php/post/user/login
+- 12:22:51.894 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:59524/#/
+- 12:22:51.894 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:59524/#/dashboard
+- 12:22:51.894 INFO: GET 404 /uploads/user/profile/Penguins.jpg
+- 12:22:51.894 INFO: GET 200 /modules/dashboard/dashboard.html
+- 12:22:51.910 INFO: GET 200 /modules/dashboard/dashboardController.js
+- 12:22:51.925 INFO: GET 200 /modules/component/toolbar.html
+- 12:22:51.925 INFO: GET 200 /modules/component/row.html
+- 12:22:51.941 INFO: GET 200 /modules/component/breadcrumb.html
+- 12:22:51.941 INFO: GET 200 /modules/component/menu-back.html
+- 12:22:54.624 DEBUG: WM_DESTROY
+- 12:22:54.624 DEBUG: RemoveBrowserWindow(): hwnd = 1312132
+- 12:22:54.624 INFO: Stopping Mongoose web server
+- 12:22:54.624 DEBUG: Mongoose webserver stopped immediately
+- 12:22:54.624 DEBUG: RemoveBrowserWindow(): hwnd = 1836192
+- 12:22:54.624 DEBUG: GetBrowserWindow(): not found, hwnd = 1836192
+- 12:22:54.624 WARNING: RemoveBrowserWindow() failed: GetBrowserWindow() failed
+- 12:22:54.499 DEBUG: OnBrowserDestroyed()
+- 12:22:54.827 INFO: Ended application
+- 12:22:54.827 INFO: --------------------------------------------------------
