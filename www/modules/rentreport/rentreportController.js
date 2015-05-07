@@ -13,6 +13,8 @@ define(['app'], function (app) {
 			$modalInstance.dismiss('cancel');
 		};
 		$scope.openRent = function (url) {
+				//date picker
+			
 			var modalDefaults = {
 					templateUrl: url,	
 					size : 'lg'
@@ -20,8 +22,21 @@ define(['app'], function (app) {
 			
 			modalService.showModal(modalDefaults).then(function (result) {
 				console.log("modal opened")	
+				$scope.today = function() {
+					$scope.date = new Date();
+				};
+				$scope.open = function($event,rentdate){
+					$event.preventDefault();
+					$event.stopPropagation();
+					$scope.rentdate = ($scope.rentdate==true)?false:true;
+				};
+				$scope.opendate = function($event,selectDate){
+					$event.preventDefault();
+					$event.stopPropagation();
+					$scope.selectDate = ($scope.selectDate==true)?false:true;
+				};
 				$scope.ok = function(){
-					$modalOption.close("ok");
+					$modalInstance.close("ok");
 				}
 			});
 		};
@@ -31,14 +46,15 @@ define(['app'], function (app) {
 					templateUrl: url,	
 					size : 'lg'
 			};
-			
 			modalService.showModal(modalDefaults).then(function (result) {
 				console.log("modal opened")	
 				$scope.ok = function(){
-					$modalOption.close("ok");
+					$modalInstance.close("ok");
 				}
 			});
 		};
+		
+		
 	};
 		
 	// Inject controller's dependencies

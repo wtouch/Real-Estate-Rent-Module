@@ -1,0 +1,184 @@
+<div class="main-content">
+	<ng-include src="'modules/component/toolbar.html'"></ng-include>
+	<h3 class="text-center">Rent Details  </h3>
+	<div class="row">
+			<div class="col-sm-3"> 
+			<div class="bottomspace">
+				<label for="search" class="control-label">Search </label>		
+					<input id="search" type="text" class="form-control" ng-change="searchFilter('template_name', searchProp)" ng-model="searchProp" placeholder="search"/>
+			</div>
+		</div>			 				  
+		<div class="col-sm-3">
+			<div class="bottomspace">
+				<label for="year" class="control-label">View Report</label>
+					<select id="year" class="form-control" ng-model="year"> 
+						<option value="">Select Order</option>	
+						<option value="Daily Report">Daily Report</option>	
+						<option value="Monthly Report">Monthly Report</option>	
+						<option value="Yearly Report">Yearly Report</option>	
+					</select>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="bottomspace">
+				<label for="year" class="control-label">View Periodic Report</label>
+					<select id="year" class="form-control" ng-model="year"> 
+						<option value="">Select Year</option>	
+						<option value="2010">2010</option>	
+						<option value="2011">2011</option>	
+						<option value="2012">2012</option>	
+					</select>
+					<select id="month" class="form-control" ng-model="month"> 
+						<option value="">Select Month</option>	
+						<option value="1">1</option>	
+						<option value="2">2</option>	
+						<option value="3">3</option>	
+						<option value="4">4</option>	
+						<option value="5">5</option>	
+						<option value="6">6</option>	
+						<option value="7">7</option>	
+					</select>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			
+			<div class="table-responsive">
+				<table class="table table-bordered">
+				<thead><th>Income</th></thead>
+				<tbody>
+					<tr>
+						<th>Sr.No.</th>
+						<th>Income Type</th>
+						<th>User name</th>
+						<th>Amount</th>
+						<th>Total</th>
+						
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>Rent</td>
+						<td>Ramakant Desai</td>
+						<td>20000</td>
+						<td>20000</td>
+						
+						<td>
+							<a class="btn btn-primary"  ng-click="openRent('modules/viewreport/payrentmodal.html')">Pay Rent</a> 
+							
+						</td>
+					</tr>
+					
+					<tr>
+						<td>2</td>
+						<td>Rent</td>
+						<td>Ram Desai</td>
+						<td>40000</td>
+						<td>90000</td>
+						
+						<td>
+							<a class="btn btn-primary"  ng-click="openRent('modules/viewreport/payrentmodal.html')">Pay Rent</a> 
+							
+						</td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td>Rent</td>
+						<td>Sujata Sagar</td>
+						<td>10000</td>
+						<td>80000</td>
+						
+						<td>
+							<a class="btn btn-primary"  ng-click="openRent('modules/viewreport/payrentmodal.html')">Pay Rent</a> 
+							
+						</td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td>Rent</td>
+						<td>Smita Dev</td>
+						<td>30000</td>
+						<td>120000</td>
+						
+						<td>
+							<a class="btn btn-primary"  ng-click="openRent('modules/rentreport/payrentmodal.html')">Pay Rent</a> 
+							
+						</td>
+					</tr>
+				</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-md-6">
+			
+			<div class="table-responsive">
+				<table class="table table-bordered">
+				<thead><th>Expences</th></thead>
+					<tbody>
+					<tr>
+						<th>Sr.No.</th>
+						<th>Income Type</th>
+						
+						<th>Amount</th>
+						<th>Total</th>
+						
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>Rent</td>
+						
+						<td>20000</td>
+						<td>20000</td>
+						
+						<td>
+							<a class="btn btn-primary"  ng-click="openRent('modules/viewreport/payrentmodal.html')">Pay Rent</a> 
+							
+						</td>
+					</tr>
+					
+					<tr>
+						<td>2</td>
+						<td>Rent</td>
+						
+						<td>40000</td>
+						<td>90000</td>
+						
+						<td>
+							<a class="btn btn-primary"  ng-click="openRent('modules/viewreport/payrentmodal.html')">Pay Rent</a> 
+							
+						</td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td>Rent</td>
+						
+						<td>10000</td>
+						<td>80000</td>
+						
+						<td>
+							<a class="btn btn-primary"  ng-click="openRent('modules/viewreport/payrentmodal.html')">Pay Rent</a> 
+							
+						</td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td>Rent</td>
+						
+						<td>30000</td>
+						<td>120000</td>
+						
+						<td>
+							<a class="btn btn-primary"  ng-click="openRent('modules/rentreport/payrentmodal.html')">Pay Rent</a> 
+							
+						</td>
+					</tr>
+				</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="text-center">				
+	<pagination total-items="totalRecords" items-per-page="pageItems"  ng-model="rentreportCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged(rentreportCurrentPage,template_type)"></pagination>
+	<pre>Page: {{rentreportCurrentPage}} / {{numPages}}</pre>
+</div>

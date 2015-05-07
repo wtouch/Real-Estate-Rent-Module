@@ -1,0 +1,64 @@
+<div class="modal-header" ng-controller="rentreportController">
+		<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
+		<h3>Generate Rent Receipt</h3>
+	</div>
+	
+		<div class="modal-body">
+			<form class="form-horizontal" name="receiptForm">
+				<div class="form-group">
+					<label for="amount" class="col-md-2 control-label">* Enter Rent</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control col-md-6" id="amount" placeholder="Enter Rent Amount" required>
+					</div>
+					<div class="col-sm-4">
+						<select class="form-control col-md-4">
+							<option value="Rupees">Rupees</option>
+							<option value="Rupees">Thousand</option>
+							<option value="Rupees">Lakh</option>
+							<option value="Rupees">Corror</option>
+							<option value="Rupees">Million</option>
+							<option value="Rupees">Billion</option>
+							<option value="Rupees">Trilion</option>
+						</select>
+					</div>
+					<span class="text-danger" ng-show="receiptForm.amount.$dirty && receiptForm.amount.$invalid">
+						<span ng-show="receiptForm.amount.$error.required">Rent is required .</span>
+					</span>
+				</div>
+				
+				<div class="form-group">
+					<label for="electric" class="col-md-2 control-label">* Enter Electricity Bill</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control col-md-6" id="electric" placeholder="Enter Bill Amount">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="water" class="col-md-2 control-label">* Enter Water Bill</label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control col-md-6" id="water" placeholder="Enter Water Amount">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="maintainance" class="col-md-2 control-label">* Enter Maintainance </label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control col-md-6" id="maintainance" placeholder="Enter Maintainance Amount">
+					</div>
+				</div>
+				<div class="form-group">
+					<label  for="rentdate" class="col-sm-2 control-label">* Date</label>
+					<div class="col-sm-6">
+						<p class="input-group">
+					  <input class="form-control" type="text" id="rentdate" name="rentdate" datepicker-popup="yyyy-MM-dd" ng-model="rentdate" is-open="rentdate" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate')">
+								<i class="glyphicon glyphicon-calendar"></i></button>
+							</span>
+						</p>
+					</div>
+				</div>	
+			</form>
+		</div>
+		<div class="modal-footer">
+			 <button class="btn btn-primary" ng-click="ok()">OK</button>
+        </div>
+	
