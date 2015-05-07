@@ -1,3 +1,0 @@
-Custom Directives for Projects:
-1) TinyMCE implemented - wherever you want formatting toolbar just use 'ui-tinymce' directive
-2) goBack Directive - This directive used to go one step back history.back

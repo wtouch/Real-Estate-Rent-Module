@@ -1,9 +1,0 @@
-{
-  "globalstrict": true,
-  "browser": true,
-  "predef": [
-    "require",
-    "define",
-    "notify"
-  ]
-}

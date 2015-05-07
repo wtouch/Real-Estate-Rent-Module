@@ -1,0 +1,224 @@
+- 22:58:45.171 INFO: --------------------------------------------------------
+- 22:58:45.171 INFO: Started application
+- 22:58:45.171 INFO: Logging to: E:\Users\Vilas\Project Code\Real-Rent\phpdesktop-chrome-31.8-php-5.6.1\debug.log
+- 22:58:45.171 INFO: Log level = DEBUG4
+- 22:58:45.171 INFO: Starting Mongoose 3.9c web server
+- 22:58:45.171 INFO: WWW directory: E:\Users\Vilas\Project Code\Real-Rent\phpdesktop-chrome-31.8-php-5.6.1\www
+- 22:58:45.171 INFO: Index files: index.html,index.php
+- 22:58:45.171 INFO: CGI interpreter: E:\Users\Vilas\Project Code\Real-Rent\phpdesktop-chrome-31.8-php-5.6.1\php\php-cgi.exe
+- 22:58:45.171 INFO: CGI pattern: **.php$
+- 22:58:45.171 INFO: CGI environment variables set: TMP=C:\Users\vilas\AppData\Local\Temp\,TEMP=C:\Users\vilas\AppData\Local\Temp\,TMPDIR=C:\Users\vilas\AppData\Local\Temp\,SERVER_NAME=127.0.0.1,PHPDESKTOP_VERSION=31.8
+- 22:58:45.171 INFO: Web server url: http://127.0.0.1:55973/
+- 22:58:45.171 INFO: remote_debugging_port = 57710
+- 22:58:45.171 DEBUG: Command line string for the browser process: "E:\Users\Vilas\Project Code\Real-Rent\phpdesktop-chrome-31.8-php-5.6.1\phpdesktop-chrome.exe" --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Rent\phpdesktop-chrome-31.8-php-5.6.1\debug.log" --remote-debugging-port=57710 --no-sandbox
+[0504/225845:ERROR:gpu_info_collector_win.cc(102)] Can't retrieve a valid WinSAT assessment.
+- 22:58:45.202 DEBUG: App::OnContextInitialized()
+- 22:58:45.202 DEBUG: Window max width/height = 1286/680
+- 22:58:45.202 DEBUG: Window max size exceeded, new width/height = 1024/680
+- 22:58:45.202 DEBUG: GetBrowserWindow(): not found, hwnd = 2756208
+- 22:58:45.202 DEBUG: WindowProc(): event WM_GETMINMAXINFO: could not fetch BrowserWindow
+- 22:58:45.202 DEBUG: BrowserWindow::CreateBrowserControl()
+- 22:58:45.202 DEBUG: StoreBrowserWindow(): hwnd = 2756208
+- 22:58:45.218 DEBUG: BrowserWindow::OnSize() failed: CefBrowser object not created yet
+- 22:58:45.218 DEBUG: ClientHandler::OnAfterCreated()
+- 22:58:45.218 DEBUG: SetCefBrowser() called in ClientHandler::OnAfterCreated()
+- 22:58:45.218 INFO: DPI, ppix = 96, ppiy = 96
+- 22:58:45.218 INFO: DPI, browser zoom level = 0
+- 22:58:45.000 DEBUG: Command line string for the gpu-process process: "E:\Users\Vilas\Project Code\Real-Rent\phpdesktop-chrome-31.8-php-5.6.1\phpdesktop-chrome.exe" --type=gpu-process --channel="6260.0.1630855836\1453815583" --no-sandbox --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Rent\phpdesktop-chrome-31.8-php-5.6.1\debug.log" --disable-d3d11 --supports-dual-gpus=false --gpu-driver-bug-workarounds=0,3,5,12,22 --gpu-vendor-id=0x8086 --gpu-device-id=0x0152 --gpu-driver-vendor="Intel Corporation" --gpu-driver-version=10.18.10.3345 --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Rent\phpdesktop-chrome-31.8-php-5.6.1\debug.log" /prefetch:822062411
+- 22:58:45.234 DEBUG: OnLoadingStateChange: loading=1, url=
+- 22:58:45.000 DEBUG: Command line string for the renderer process: "E:\Users\Vilas\Project Code\Real-Rent\phpdesktop-chrome-31.8-php-5.6.1\phpdesktop-chrome.exe" --type=renderer --no-sandbox --lang=en-US --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Rent\phpdesktop-chrome-31.8-php-5.6.1\debug.log" --channel="6260.1.1366417700\1324846857" /prefetch:673131151
+- 22:58:45.016 DEBUG: OnBrowserCreated()
+- 22:58:47.277 INFO: GET 200 /
+- 22:58:48.044 DEBUG: OnContextCreated()
+- 22:58:48.324 INFO: GET 200 /lib/requirejs/require.js
+- 22:58:48.324 INFO: GET 200 /img/loader-leaf-purple.gif
+- 22:58:48.340 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:55973/
+- 22:58:48.355 INFO: GET 200 /js/main.js
+- 22:58:48.386 INFO: GET 200 /js/app.js
+- 22:58:48.386 INFO: GET 200 /lib/angular/angular.min.js
+- 22:58:48.386 INFO: GET 200 /lib/css/css.min.js
+- 22:58:48.496 INFO: GET 200 /lib/angular/angular-cookies.min.js
+- 22:58:48.496 INFO: GET 200 /js/directives.js
+- 22:58:48.496 INFO: GET 200 /lib/angular/angular-sanitize.js
+- 22:58:48.496 INFO: GET 200 /lib/angular/angular-route.js
+- 22:58:48.496 INFO: GET 200 /js/services.js
+- 22:58:48.511 INFO: GET 200 /js/filters.js
+- 22:58:48.511 INFO: GET 200 /lib/upload/angular-file-upload-shim.min.js
+- 22:58:48.511 INFO: GET 200 /lib/upload/angular-file-upload.min.js
+- 22:58:48.511 INFO: GET 200 /lib/bootstrap/ui-bootstrap.js
+- 22:58:48.542 INFO: GET 200 /css/style.css
+- 22:58:48.542 INFO: GET 200 /js/routeResolver.js
+- 22:58:48.558 INFO: GET 200 /lib/lodash.js
+- 22:58:48.558 INFO: GET 200 /css/bootstrap.min.css
+- 22:58:48.558 INFO: GET 200 /lib/tinymce/tinymce.min.js
+- 22:58:48.667 INFO: GET 200 /lib/google-map/angular-google-maps.min.js
+- 22:58:48.135 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:55973/
+- 22:58:48.151 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:55973/#/
+- 22:58:48.151 INFO: GET 200 /modules/component/header.html
+- 22:58:49.307 INFO: GET 200 /modules/users/login/login.html
+- 22:58:50.321 INFO: GET 200 /img/logo.png
+- 22:58:50.321 INFO: GET 200 /img/user1.png
+- 22:58:50.399 INFO: GET 200 /server-api/index.php/login/logout
+- 22:58:50.477 INFO: GET 200 /modules/users/login/loginController.js
+- 22:58:50.492 INFO: GET 200 /fonts/glyphicons-halflings-regular.woff
+- 22:58:53.722 DEBUG: F12 pressed, opening developer tools
+- 22:58:53.722 INFO: DevTools url: http://127.0.0.1:57710/devtools/devtools.html?ws=127.0.0.1:57710/devtools/page/46333981c3abbe2e0b176bd64bcf3b51
+- 22:58:53.737 DEBUG: Window max width/height = 1286/680
+- 22:58:53.737 DEBUG: Window max size exceeded, new width/height = 1024/680
+- 22:58:53.737 DEBUG: BrowserWindow::BrowserWindow() created for Popup
+- 22:58:53.737 DEBUG: StoreBrowserWindow(): hwnd = 1311738
+- 22:58:53.737 DEBUG: BrowserWindow::OnSize() failed: CefBrowser object not created yet
+- 22:58:53.737 DEBUG: ClientHandler::OnAfterCreated()
+- 22:58:53.737 DEBUG: SetCefBrowser() called in ClientHandler::OnAfterCreated()
+- 22:58:53.737 DEBUG: OnLoadingStateChange: loading=1, url=
+- 22:58:53.000 DEBUG: Command line string for the renderer process: "E:\Users\Vilas\Project Code\Real-Rent\phpdesktop-chrome-31.8-php-5.6.1\phpdesktop-chrome.exe" --type=renderer --no-sandbox --lang=en-US --lang=en-US --log-file="E:\Users\Vilas\Project Code\Real-Rent\phpdesktop-chrome-31.8-php-5.6.1\debug.log" --channel="6260.2.1822968910\526540518" /prefetch:673131151
+- 22:58:53.000 DEBUG: OnBrowserCreated()
+- 22:58:53.094 DEBUG: OnContextCreated()
+- 22:58:53.174 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:57710/devtools/devtools.html?ws=127.0.0.1:57710/devtools/page/46333981c3abbe2e0b176bd64bcf3b51
+- 22:58:54.408 INFO: GET 200 /lib/angular/angular-cookies.min.js.map
+- 22:58:54.424 INFO: GET 200 /lib/angular/angular.min.js.map
+- 22:59:09.743 INFO: POST 200 /server-api/index.php/post/user/login
+- 22:59:19.867 INFO: POST 200 /server-api/index.php/post/user/login
+- 23:00:16.792 INFO: POST 200 /server-api/index.php/post/user/login
+- 23:00:17.134 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:57710/devtools/devtools.html?ws=127.0.0.1:57710/devtools/page/46333981c3abbe2e0b176bd64bcf3b51
+- 23:00:17.381 DEBUG: OnContextCreated()
+- 23:00:17.149 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:57710/devtools/devtools.html?ws=127.0.0.1:57710/devtools/page/46333981c3abbe2e0b176bd64bcf3b51
+- 23:00:35.183 INFO: POST 200 /server-api/index.php/post/user/login
+- 23:00:37.650 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:57710/devtools/devtools.html?ws=127.0.0.1:57710/devtools/page/46333981c3abbe2e0b176bd64bcf3b51
+- 23:00:37.882 DEBUG: OnContextCreated()
+- 23:00:37.665 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:57710/devtools/devtools.html?ws=127.0.0.1:57710/devtools/page/46333981c3abbe2e0b176bd64bcf3b51
+- 23:01:26.852 INFO: POST 200 /server-api/index.php/post/user/login
+- 23:01:29.284 INFO: POST 200 /server-api/index.php/post/user/login
+- 23:01:34.933 INFO: POST 200 /server-api/index.php/post/user/login
+- 23:01:54.073 INFO: POST 200 /server-api/index.php/post/user/login
+- 23:01:55.196 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:57710/devtools/devtools.html?ws=127.0.0.1:57710/devtools/page/46333981c3abbe2e0b176bd64bcf3b51
+- 23:01:55.444 DEBUG: OnContextCreated()
+- 23:01:55.212 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:57710/devtools/devtools.html?ws=127.0.0.1:57710/devtools/page/46333981c3abbe2e0b176bd64bcf3b51
+- 23:02:56.161 INFO: POST 200 /server-api/index.php/post/user/login
+- 23:02:57.035 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:57710/devtools/devtools.html?ws=127.0.0.1:57710/devtools/page/46333981c3abbe2e0b176bd64bcf3b51
+- 23:02:57.267 DEBUG: OnContextCreated()
+- 23:02:57.035 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:57710/devtools/devtools.html?ws=127.0.0.1:57710/devtools/page/46333981c3abbe2e0b176bd64bcf3b51
+- 23:03:32.275 INFO: POST 200 /server-api/index.php/post/user/login
+- 23:03:33.291 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:55973/#/
+- 23:03:33.291 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:55973/#/dashboard
+- 23:03:33.307 INFO: GET 404 /uploads/user/profile/Penguins.jpg
+- 23:03:33.307 INFO: GET 200 /modules/dashboard/dashboard.html
+- 23:03:33.307 INFO: GET 200 /modules/dashboard/dashboardController.js
+- 23:03:33.353 INFO: GET 200 /modules/component/toolbar.html
+- 23:03:33.353 INFO: GET 200 /modules/component/row.html
+- 23:03:33.369 INFO: GET 200 /modules/component/breadcrumb.html
+- 23:03:33.369 INFO: GET 200 /modules/component/menu-back.html
+- 23:03:45.255 DEBUG: WM_DESTROY
+- 23:03:45.255 DEBUG: RemoveBrowserWindow(): hwnd = 1311738
+- 23:03:45.255 DEBUG: RemoveBrowserWindow(): hwnd = 528646
+- 23:03:45.255 DEBUG: GetBrowserWindow(): not found, hwnd = 528646
+- 23:03:45.255 WARNING: RemoveBrowserWindow() failed: GetBrowserWindow() failed
+[0504/230347:INFO:CONSOLE(0)] "event.returnValue is deprecated. Please use the standard event.preventDefault() instead.", source:  (0)
+- 23:03:47.737 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:55973/#/dashboard
+- 23:03:47.737 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:55973/#/dashboard/users/userslist
+- 23:03:47.768 INFO: GET 200 /modules/users/manageuser/manageuser.html
+- 23:03:47.768 INFO: GET 200 /modules/users/manageuser/manageuserController.js
+- 23:03:47.799 INFO: GET 200 /modules/users/manageuser/usertoolbar.html
+- 23:03:47.830 INFO: GET 200 /modules/users/manageuser/userslist.html
+- 23:03:47.018 INFO: GET 200 /server-api/index.php/getmultiple/config/1/1?config_name=manage_user&table=config
+- 23:03:47.080 INFO: GET 200 /server-api/index.php/getmultiple/usergroup/1/200
+- 23:03:47.252 INFO: GET 200 /server-api/index.php/getmultiple/user/1/100?user_id=1
+- 23:03:48.298 INFO: GET 200 /server-api/index.php/getmultiple/user/1/500?status=1&user_id=1
+- 23:03:48.298 INFO: GET 200 /server-api/index.php/getmultiple/user/1/10?user_id=1
+- 23:03:55.474 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:55973/#/dashboard/users/userslist
+- 23:03:55.490 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:55973/#/dashboard
+- 23:04:03.540 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:55973/#/dashboard
+- 23:04:03.540 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:55973/#/dashboard/rentreport
+- 23:04:03.571 INFO: GET 200 /modules/rentreport/rentreport.html
+- 23:04:03.571 INFO: GET 200 /modules/rentreport/rentreportController.js
+- 23:04:08.719 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:55973/#/dashboard/rentreport
+- 23:04:08.719 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:55973/#/dashboard
+- 23:04:09.936 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:55973/#/dashboard
+- 23:04:09.936 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:55973/#/dashboard/property
+- 23:04:09.951 INFO: GET 200 /modules/property/property.html
+- 23:04:09.951 INFO: GET 200 /modules/property/propertyController.js
+[0504/230409:INFO:CONSOLE(17)] "2015-5-4 22:58:48", source: http://127.0.0.1:55973/modules/property/propertyController.js (17)
+- 23:04:09.138 INFO: GET 200 /server-api/index.php/getmultiple/property/1/10?status=1&user_id=1
+- 23:04:09.138 INFO: GET 200 /server-api/index.php/getmultiple/user/1/500?status=1&user_id=1
+[0504/230409:INFO:CONSOLE(85)] "ReferenceError: $notification is not defined
+    at http://127.0.0.1:55973/modules/property/propertyController.js:43:5
+    at B (http://127.0.0.1:55973/lib/angular/angular.min.js:94:5)
+    at http://127.0.0.1:55973/lib/angular/angular.min.js:95:173
+    at h.$eval (http://127.0.0.1:55973/lib/angular/angular.min.js:103:456)
+    at h.$digest (http://127.0.0.1:55973/lib/angular/angular.min.js:101:218)
+    at h.$apply (http://127.0.0.1:55973/lib/angular/angular.min.js:104:264)
+    at g (http://127.0.0.1:55973/lib/angular/angular.min.js:68:23)
+    at I (http://127.0.0.1:55973/lib/angular/angular.min.js:72:109)
+    at XMLHttpRequest.y.onreadystatechange (http://127.0.0.1:55973/lib/angular/angular.min.js:73:154)", source: http://127.0.0.1:55973/lib/angular/angular.min.js (85)
+- 23:04:11.480 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:55973/#/dashboard/property
+- 23:04:11.480 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:55973/#/dashboard/property/addproperty
+- 23:04:11.496 INFO: GET 200 /modules/property/addproperty/addpropertyController.js
+- 23:04:11.496 INFO: GET 200 /modules/property/addproperty/addproperty.html
+- 23:04:11.558 INFO: GET 200 /modules/property/addproperty/property.html
+- 23:04:11.574 INFO: GET 200 /modules/property/addproperty/property_Information.html
+- 23:04:11.589 INFO: GET 200 /modules/property/addproperty/propertyStructure.html
+- 23:04:11.620 INFO: GET 200 /modules/property/addproperty/propertyLocation.html
+- 23:04:11.620 INFO: GET 200 /modules/property/addproperty/contactDetails.html
+- 23:04:11.636 INFO: GET 200 /modules/property/addproperty/optionalPropertyDt.html
+- 23:04:11.667 INFO: GET 200 /modules/property/addproperty/landmarkDetails.html
+- 23:04:11.683 INFO: GET 200 /modules/property/addproperty/amenities.html
+- 23:04:11.776 INFO: GET 200 /server-api/index.php/getmultiple/project/1/50?user_id=1
+- 23:04:11.776 INFO: GET 200 /server-api/index.php/getmultiple/website/1/200?user_id=1
+- 23:04:11.776 INFO: GET 200 /server-api/index.php/getmultiple/property/1/50?user_id=1
+- 23:04:11.776 INFO: GET 200 /server-api/index.php/getmultiple/config/1/1?config_name=property&table=config
+- 23:04:11.776 INFO: GET 200 /server-api/index.php/getmultiple/user/1/500?status=1&user_id=1
+[0504/230411:INFO:CONSOLE(85)] "ReferenceError: $notification is not defined
+    at http://127.0.0.1:55973/modules/property/addproperty/addpropertyController.js:43:5
+    at B (http://127.0.0.1:55973/lib/angular/angular.min.js:94:5)
+    at http://127.0.0.1:55973/lib/angular/angular.min.js:95:173
+    at h.$eval (http://127.0.0.1:55973/lib/angular/angular.min.js:103:456)
+    at h.$digest (http://127.0.0.1:55973/lib/angular/angular.min.js:101:218)
+    at h.$apply (http://127.0.0.1:55973/lib/angular/angular.min.js:104:264)
+    at g (http://127.0.0.1:55973/lib/angular/angular.min.js:68:23)
+    at I (http://127.0.0.1:55973/lib/angular/angular.min.js:72:109)
+    at XMLHttpRequest.y.onreadystatechange (http://127.0.0.1:55973/lib/angular/angular.min.js:73:154)", source: http://127.0.0.1:55973/lib/angular/angular.min.js (85)
+- 23:04:24.068 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:55973/#/dashboard/property/addproperty
+- 23:04:24.068 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:55973/#/logout
+- 23:04:24.083 INFO: GET 200 /modules/users/login/logout.html
+- 23:04:24.177 INFO: GET 200 /server-api/index.php/login/logout
+- 23:04:26.018 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:55973/#/logout
+- 23:04:26.018 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:55973/
+- 23:04:26.033 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:55973/
+- 23:04:26.033 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:55973/#/
+- 23:04:36.939 INFO: POST 200 /server-api/index.php/post/user/login
+- 23:04:36.955 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:55973/#/
+- 23:04:36.955 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:55973/#/dashboard
+- 23:04:36.955 INFO: GET 404 /uploads/user/profile/Penguins.jpg
+- 23:04:43.335 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:55973/#/dashboard
+- 23:04:43.335 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:55973/#/dashboard/property
+[0504/230443:INFO:CONSOLE(17)] "2015-5-4 22:58:48", source: http://127.0.0.1:55973/modules/property/propertyController.js (17)
+- 23:04:43.523 INFO: GET 200 /server-api/index.php/getmultiple/property/1/10?status=1&user_id=1
+- 23:04:43.523 INFO: GET 200 /server-api/index.php/getmultiple/user/1/500?status=1&user_id=1
+[0504/230443:INFO:CONSOLE(85)] "ReferenceError: $notification is not defined
+    at http://127.0.0.1:55973/modules/property/propertyController.js:43:5
+    at B (http://127.0.0.1:55973/lib/angular/angular.min.js:94:5)
+    at http://127.0.0.1:55973/lib/angular/angular.min.js:95:173
+    at h.$eval (http://127.0.0.1:55973/lib/angular/angular.min.js:103:456)
+    at h.$digest (http://127.0.0.1:55973/lib/angular/angular.min.js:101:218)
+    at h.$apply (http://127.0.0.1:55973/lib/angular/angular.min.js:104:264)
+    at g (http://127.0.0.1:55973/lib/angular/angular.min.js:68:23)
+    at I (http://127.0.0.1:55973/lib/angular/angular.min.js:72:109)
+    at XMLHttpRequest.y.onreadystatechange (http://127.0.0.1:55973/lib/angular/angular.min.js:73:154)", source: http://127.0.0.1:55973/lib/angular/angular.min.js (85)
+- 23:04:46.346 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:55973/#/dashboard/property
+- 23:04:46.346 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:55973/#/dashboard
+- 23:04:47.532 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:55973/#/dashboard
+- 23:04:47.532 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:55973/#/dashboard/rentreport
+- 23:04:50.746 INFO: GET 200 /modules/rentreport/invoice.html
+- 23:04:57.391 INFO: GET 200 /modules/rentreport/payrentmodal.html
+- 23:05:03.974 DEBUG: OnLoadingStateChange: loading=1, url=http://127.0.0.1:55973/#/dashboard/rentreport
+- 23:05:03.974 DEBUG: OnLoadingStateChange: loading=0, url=http://127.0.0.1:55973/#/dashboard
+- 23:05:05.612 DEBUG: WM_DESTROY
+- 23:05:05.612 DEBUG: RemoveBrowserWindow(): hwnd = 2756208
+- 23:05:05.612 INFO: Stopping Mongoose web server
+- 23:05:05.612 DEBUG: Mongoose webserver stopped immediately
+- 23:05:05.612 DEBUG: RemoveBrowserWindow(): hwnd = 2166468
+- 23:05:05.612 DEBUG: GetBrowserWindow(): not found, hwnd = 2166468
+- 23:05:05.612 WARNING: RemoveBrowserWindow() failed: GetBrowserWindow() failed
+- 23:05:05.457 DEBUG: OnBrowserDestroyed()
+- 23:05:05.018 INFO: Ended application
+- 23:05:05.018 INFO: --------------------------------------------------------
