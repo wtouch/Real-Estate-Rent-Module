@@ -1,19 +1,11 @@
-  <!--Amenities-->	
-		<h3>Amenities:</h3>
-		<div class="form-group">
-			<div class="col-sm-12">
-				<div class="table-responsive">
-					<table class="table table-bordered ">
-						<tr>
-							<td class="checkbox">
-								<label class="col-sm-3" ng-repeat="x in propertyConfig.amenities">
-									<input type="checkbox" checklist-model="property.amenities" checklist-value="x"/ required>
-									{{x}}
-								</label>								
-							</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div> <!--end Amenities-->		
-	
+
+<h3>Amenities:</h3>
+	<div class="form-group row">
+		<div class="checkbox col-sm-12">
+			<label class="col-sm-3" ng-repeat="x in propertyConfig.amenities">
+				<input type="checkbox" checklist-model="property.amenities" checklist-value="x"/ required>
+							{{x}}
+			</label>
+		</div>					
+	</div>
+		

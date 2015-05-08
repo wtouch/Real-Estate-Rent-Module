@@ -1,3 +1,5 @@
+
+<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 <div class="main-content">
 	<ng-include src="'modules/component/toolbar.html'"></ng-include>
 <h3 class="col-sm-offset-2 col-sm-9">Rent this Property</h3>
@@ -25,21 +27,23 @@
 		<span ng-if="userDetails.group_name == 'customer'">
 			<input type="hidden" class="form-control" ng-model="setrent.user_id" ng-init="setrent.user_id = userDetails.id" readonly/>
 		</span> 
-			<div class="form-group">
+		
+		<div class="form-group">
 				<label for="Property_name" class="col-sm-2 control-label">Property Name *</label>		
 				<div class="col-sm-9">
-					<input type="text" id="Property_name" class="form-control" name="Property_name" placeholder="Property Name" ng-model="setrent.Property_name" readonly ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
+					<input type="text" id="Property_name" class="form-control" name="Property_name" placeholder="Property Name" ng-model="setrent.Property_name" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
 					<!-- <span class="text-danger" ng-show="setrentForm.Property_name.$dirty && setrentForm.Property_name.$invalid">
 						<span ng-show="setrentForm.Property_name.$error.required">Template Name is required.</span>
 						
 					</span> -->
 				</div>
-			</div>
+		</div>  
 			
-			<div class="form-group">
+			
+		<div class="form-group">
 			<label for="deposit" class="col-sm-2 control-label">Deposit *</label>		
 			<div class="col-sm-9">
-				<input type="text" id="deposit" class="form-control" name="deposit" placeholder="Deposit" ng-model="setrent.deposit" required>
+				<input type="text" id="deposit" class="form-control" name="deposit" ng-model="setrent.deposit"placeholder="Deposit" required>
 				
 				<span class="text-danger" ng-show="setrentForm.deposit.$dirty && setrentForm.deposit.$invalid">
 					<span ng-show="setrentForm.deposit.$error.required">Deposit is required.</span>
@@ -47,53 +51,24 @@
 			</div>
 		</div>
 		
+		<input type="hidden" ng-model="setrent.property.id">
 		<div class="form-group">
 				<label for="rent" class="col-sm-2 control-label">Rent *</label>		
 				<div class="col-sm-9">
-					<input type="text" id="rent" class="form-control" name="rent" placeholder="Set Rent" ng-model="setrent.rent" readonly ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
+					<input type="text" id="rent" class="form-control" name="rent" placeholder="Set Rent"  ng-pattern="/^[a-zA-Z0-9(_)]*$/" ng-model="setrent.rent" required><!--ng-model="setrent.rent"-->
+					<p ng-show="setrent.rent.$error.pattern && (setrent.rent.$dirty || submitted)" class="text-danger">Enter Number only</p>
 					<!-- <span class="text-danger" ng-show="setrentForm.rent.$dirty && setrentForm.rent.$invalid">
 						<span ng-show="setrentForm.rent.$error.required">Rent is required.</span>
 					</span> -->
 				</div>
 		</div>
 		
-			<div class="form-group">
-				<label for="tax" class="col-sm-2 control-label">Tax *</label>		
-				<div class="col-sm-9">
-					<input type="text" id="tax" class="form-control" name="tax" placeholder="Set Tax" ng-model="setrent.tax" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
-
-					<span class="text-danger" ng-show="setrentForm.tax.$dirty && setrentForm.tax.$invalid">
-						<span ng-show="setrentForm.tax.$error.required">Tax is required.</span>
-					</span>
-				</div>
-			</div>
 			
-			<div class="form-group">
-				<label for="other_tax" class="col-sm-2 control-label">Other Tax *</label>		
-				<div class="col-sm-9">
-					<input type="text" id="other_tax" class="form-control" name="other_tax" placeholder="Set OtherTax" ng-model="setrent.other_tax" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
-
-					<span class="text-danger" ng-show="setrentForm.other_tax.$dirty && setrentForm.other_tax.$invalid">
-						<span ng-show="setrentForm.other_tax.$error.required">Other Tax is required.</span>
-					</span>
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label for="tds" class="col-sm-2 control-label">TDS *</label>		
-				<div class="col-sm-9">
-					<input type="text" id="tds" class="form-control" name="tds" placeholder="Set TDS" ng-model="setrent.tds" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
-
-					<span class="text-danger" ng-show="setrentForm.tds.$dirty && setrentForm.tds.$invalid">
-						<span ng-show="setrentForm.tds.$error.required">TDS is required.</span>
-					</span>
-				</div>
-			</div>
 			
 			<div class="form-group">
 				<label for="maintenance" class="col-sm-2 control-label">Maintenance *</label>		
 				<div class="col-sm-9">
-					<input type="text" id="maintenance" class="form-control" name="maintenance" placeholder="Maintenance" ng-model="setrent.maintenance" required>
+					<input type="text" id="maintenance" class="form-control" name="maintenance" placeholder="Maintenance"  required><!-- ng-model="setrent.maintenance"-->
 					
 					<span class="text-danger" ng-show="setrentForm.maintenance.$dirty && setrentForm.maintenance.$invalid">
 						<span ng-show="setrentForm.maintenance.$error.required">Maintenance is required.</span>
@@ -101,23 +76,23 @@
 				</div>
 			</div>
 			
-			<div class="form-group">
+		<div class="form-group">
 			<label for="electricity" class="col-sm-2 control-label">Electricity Bill</label>
 			<div class="col-sm-9">
 				<label class="radio-inline">
-					<input type="radio" name="Owner" id="Owner" value="Owner" ng-model="setrent.given_by" ng-init="setrent.given_by='Owner'">Given By Owner
+					<input type="radio" name="Owner" id="Owner" value="Owner"  ng-model="setrent.given_by" ng-init="setrent.given_by='Owner'">Given By Owner
 				</label>
 				<label class="radio-inline">
 					<input type="radio" name="Renter" id="Renter" value="Renter"  ng-model="setrent.given_by">Renter
 				</label>
 			</div>
-		</div>
+		</div>  
 		
 		<div class="form-group">
 			<label  for="date" class="col-sm-2 control-label">Date*</label>
 			<div class="col-sm-9">
 				<p class="input-group">
-			  <input class="form-control" type="text" id="date" name="date" datepicker-popup="yyyy-MM-dd" ng-model="testimonials.desc.date" is-open="rentdate" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
+			  <input class="form-control" type="text" id="date" name="date" datepicker-popup="yyyy-MM-dd" ng-model="setrent.date" is-open="rentdate" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
 					<span class="input-group-btn">
 						<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate')">
 						<i class="glyphicon glyphicon-calendar"></i></button>
@@ -125,12 +100,12 @@
 				</p>
 			</div>
 		</div>	
-			
-		<div class="form-group">	
+			<input type="text" ng-model="setrent.result"/>
+		<div class="form-group">
 			<label  for="duration" class="col-sm-2 control-label">Duration</label>
 				<div class="col-sm-3">
 					<label  for="year" class="col-sm-3 control-label">Year</label>
-						<select id="year" class="form-control" ng-model="year">
+						<select id="year" class="form-control" ng-model="year" ng-change="duration()">
 						<option value="" selected>Select Year</option><!-- added value & selected attr -->
 						<option value="1" >1</option>
 						<option value="2">2</option>
@@ -142,10 +117,10 @@
 						<option value="8">8</option>
 						<option value="9">9</option>
 						</select>
-				</div>	
+				</div>
 				<div class="col-sm-3">
 					<label  for="month" class="col-sm-3 control-label">Month</label>
-						<select id="month" class="form-control" ng-model="month">
+						<select id="month" class="form-control" ng-model="month" ng-change="setrent.duration = setrent.duration + month">
 						<option value="" selected>Select Month</option><!-- added value & selected attr -->
 						<option value="1" >1</option>
 						<option value="2">2</option>
@@ -165,8 +140,8 @@
 		<div class="form-group">	
 			<label  for="escalation" class="col-sm-2 control-label">Escalation Period</label>
 				<div class="col-sm-3">
-					<label  for="year" class="col-sm-3 control-label">Year</label>
-						<select id="year" class="form-control" ng-model="year">
+					<label  for="year1" class="col-sm-3 control-label">Year</label>
+						<select id="year1" class="form-control" ng-model="year1">
 						<option value="" selected>Select Year</option><!-- added value & selected attr -->
 						<option value="1" >1</option>
 						<option value="2">2</option>
@@ -180,8 +155,8 @@
 						</select>
 				</div>	
 				<div class="col-sm-3">
-					<label  for="month" class="col-sm-3 control-label">Month</label>
-						<select id="month" class="form-control" ng-model="month">
+					<label  for="month1" class="col-sm-3 control-label">Month</label>
+						<select id="month1" class="form-control" ng-model="month1">
 						<option value="" selected>Select Month</option><!-- added value & selected attr -->
 						<option value="1" >1</option>
 						<option value="2">2</option>
@@ -201,13 +176,13 @@
 		<div class="form-group">
 				<label for="escalation_per" class="col-sm-2 control-label">Escalation In % *</label>		
 				<div class="col-sm-9">
-					<input type="text" id="escalation_per" class="form-control" name="escalation_per" placeholder="Set Escalation Percentage" ng-model="setrent.escalation_per" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
+					<input type="text" id="escalation_per" class="form-control" name="escalation_per" placeholder="Set Escalation Percentage" ng-model="setrent.escalation_amount" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
 
 					<span class="text-danger" ng-show="setrentForm.escalation_per.$dirty && setrentForm.escalation_per.$invalid">
 						<span ng-show="setrentForm.escalation_per.$error.required">Percentage are required.</span>
 					</span>
 				</div>
-			</div>
+		</div> 
 			
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-9"><!--ng-disabled="setrentForm.$invalid"-->

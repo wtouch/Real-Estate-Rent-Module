@@ -92,4 +92,9 @@
 		$update = $db->update("rent", $body, $where);
 		echo json_encode($update);
 	}*/
+	
+	if($reqMethod=="POST"){
+		$insert = $db->insert("rent", $body);
+		echo json_encode($insert);
+	}
  ?>

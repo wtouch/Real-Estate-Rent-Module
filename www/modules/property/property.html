@@ -58,7 +58,7 @@
 								<tr>
 									<th>Sr. No.</th>
 									<th>Image</th>
-									<th> Property Details</th>
+									<th>Property Details</th>
 									<th>Availability</th>
 									<th>Status</th>
 									<th>Manage</th>
@@ -133,7 +133,6 @@
 										<!-- <a class="btn btn-success"  ng-show="x.status==1" title="Active" tooltip="Make Delete">Active</a>
 										
 										<a class="btn btn-warning"  ng-show="x.status==0" title="Delete" tooltip="Make Active">Delete</a> -->
-										
 										<div class="btn-group">
 											<button type="button" tooltip="{{dynamicTooltip(x.status, 'Delete Property', 'Make Active')}}" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'"><span class="glyphicon glyphicon-remove"></span></button>
 										</div>
@@ -146,8 +145,8 @@
 										</div>
 									</td>
 									<td>
-									<div class="btn-group">
-										<a type="button" tooltip="Rent This Property" class="btn btn-info glyphicon glyphicon-cog" href="#/dashboard/property/setrent/{{x.id}}"></a>	
+										<div class="btn-group">
+											<a type="button" tooltip="Rent This Property" class="btn btn-info glyphicon glyphicon-open" href="#/dashboard/property/setrent/{{x.id}}"></a>	
 										</div>
 										<!--ng-click="getWebsitedetails(config)"-->
 									</td>

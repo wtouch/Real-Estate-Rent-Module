@@ -1,24 +1,4 @@
 	<h3>Property</h3>
-	<!-- This block for current user id -->
-	<div class="form-group" ng-if="userDetails.group_name != 'customer'">
-		<label for="customer" class="col-sm-2 control-label">Customer*</label>
-		<div class="col-sm-7">
-				<select class="form-control" name="customer" id="customer"  ng-model="property.user_id" ng-options="item.id as item.name for item in customerList | filter: { group_name : 'customer'} " required>
-					<option value="">Select Customer</option>
-				</select>
-			<span class="help-block" ng-show="addProperty.customer.$dirty && addProperty.customer.$invalid">
-				<span ng-show="addProperty.customer.$error.required" class="text-danger">Customer is required.</span>
-			</span>	
-		</div>
-		<div class="col-sm-3">
-			<a href="#/dashboard/users/adduser" class="btn btn-default">Add New User</a>
-		</div> 
-	</div>
-	<span ng-if="userDetails.group_name == 'customer'">
-		<input type="hidden" class="form-control" ng-model="property.user_id" ng-init="property.user_id = userDetails.id" readonly/>
-	</span> 
-<!-- This block for current user id -->
-		
 		<div class="form-group">
 			<label for="title" class="col-sm-2 control-label">* Property Title </label>
 			<div class="col-sm-9">
@@ -29,28 +9,11 @@
 				</span>											 
 			</div>				
 		</div>
-	
-		<div class="form-group">							
-			<label for="property_for" class="col-sm-2  control-label">* Property for</label>	
-			<div class="col-sm-9"> 
-				<label class="radio-inline">
-					<input type="radio" name="property_for"   id="Sale" value="Sale"  ng-model="property.property_for" checked="true" required>Sale
-				</label>
-				
-				<label class="radio-inline">
-				  <input type="radio" name="property_for" id="Rent" value="Rent" ng-model="property.property_for" required> Rent
-				</label>
-				
-				<label class="radio-inline">
-				  <input type="radio" name="property_for" id="PG" value="PG" ng-model="property.property_for" required> PG	
-				</label>										
-			</div>	
-		</div> 	
-
+		
 		<div class="form-group">
-			<label for="category" class="col-sm-2 control-label">Property Category </label>
-			<div class="col-sm-9">
-				<select  id="category"  name="category" ng-model="property.category" class="form-control" required ng-options="item.category_name as item.type for item in property.category">
+			<label for="category" class="col-sm-2 control-label">Property Category *</label>
+			<div class="col-sm-3">
+				<select id="category" name="category" ng-model="property.category" class="form-control" required ng-options="item.category_name as item.category_name for item in propertyConfig.category">
 					<!--ng-options="item.system_name as item.name for item in temp.category"-->
 					<option value="">Select Category</option>			
 				</select>
@@ -59,17 +22,17 @@
 					<span ng-show="addProperty.category.$error.required">Property selection is required .</span>
 				</span>				 
 			</div>
+			 <label for="type" class="col-sm-2  control-label">Property Type *</label>
+				<div class="col-sm-4">
+					<select  id="type"  name="type" ng-model="property.type" class="form-control" required ng-options="item.type as item.type for item in propertyConfig.types" >
+						<option value=""> Select Property Type</option>		
+					</select>
+						<span class="text-danger" ng-show="addProperty.type.$dirty && addProperty.type.$invalid">
+							<span ng-show="addProperty.type.$error.required">Project Type is required .</span>
+						</span>	
+				</div>
 		</div>
-	
-		<div class="form-group">
-			<label for="projectName" class="col-sm-2 control-label">* Project Name </label>
-			<div class="col-sm-9">
-				<select class="form-control" id="projectName" name="projectName" ng-model="property.project_name" ng-options="item.title as item.title for item in addProjName" required>
-					<option value="">Select Project Name</option>
-				</select>
-			</div>
-		</div>
-	
+		
 		<div class="form-group">
 			<label for="prop_desc" class="col-sm-2 control-label">* Property Discription  </label>
 			<div class="col-sm-9">
@@ -79,10 +42,73 @@
 				
 				 <span class="text-danger" ng-show="addProperty.property_description.$error.maxlength">
 					Sorry You are Exceeding the Limit
-				</span>	
+				</span>	 
+			
+				<span class="text-danger" ng-show="addProperty.property_description.$dirty && addProperty.property_description.$invalid">
 				
 				<span class="text-danger" ng-show="addProperty.property_description.$dirty && addProperty.property_description.$invalid">
-					<span ng-show="addProperty.property_description.$error.required">Property Discription is required .</span>
-				</span>							
+					<span ng-show="addProperty.property_description.$error.required">property_description is required .</span>
+				</span>	
+					 			
 			</div>				
-		</div><!-- property discription -->						
+		</div>
+
+	
+	<div class="form-group">
+		<label for="buildup_area" class="col-sm-2 control-label">* Built Up Area </label>
+		<div class="col-sm-6">
+			<input type="text"  id="buildup_area" class="form-control help-block" name="buildup_area" ng-model="property.property_info.buildup_area" ng-pattern="/^\d{0,9}[0-9]$/" required>
+			
+			<p ng-show="addProperty.buildup_area.$error.pattern && (addProperty.buildup_area.$dirty || submitted)" class="text-danger">Enter Number only</p>
+		</div>							
+		<div class="col-sm-3">
+			<select class="form-control" ng-model="property.property_info.build_unit"  title="" required >
+				<option selected value="">Unit Area</option>
+				<option value="Feet">Sq. Feet</option>
+				<option value="Cent">Cent</option>
+				<option value="Yard">Sq. Yard</option>					
+			</select>
+			<span class="text-danger" ng-show="addProperty.buildup_area.$dirty && addProperty.buildup_area.$invalid">
+			  <span ng-show="addProperty.buildup_area.$error.required">Built Area is required .</span>
+			</span>				 
+		</div>
+	</div>	
+	
+	<div class="form-group">
+		<label for="land_area" class="col-sm-2 control-label ">* Plot/ Land Area</label>
+		<div class="col-sm-6">
+			<input type="text" id="land_area" class="form-control" name="land_area" ng-model="property.property_info.land_area"  ng-pattern="/^\d{0,9}[0-9]$/" required>
+			<p ng-show="addProperty.land_area.$error.pattern && (addProperty.land_area.$dirty || submitted)" class="help-block">Enter Number only.</p>
+		</div>
+		<div class="col-sm-3">
+			<select class="form-control" ng-model="property.property_info.land_unit" required>
+				<option selected value="">Unit Area</option>
+				<option value="Feet">Sq. Feet</option>
+				<option value="Cent">Cent</option>
+				<option value="Yard">Sq. Yard</option>					
+			</select>
+			<span class="text-danger" ng-show="addProperty.land_area.$dirty && addProperty.land_area.$invalid">
+			  <span ng-show="addProperty.land_area.$error.required">Land Area is required .</span>
+			</span>				 
+		</div>				
+	</div>		  
+	<div class="form-group">
+		<label for="carpet_area" class="col-sm-2 control-label">Carpet Area </label>
+		<div class="col-sm-6">
+			<input type="text" id="carpet_area" class="form-control" name="carpet_area" ng-model="property.property_info.carpet_area" ng-pattern="/^\d{0,9}[0-9]$/" required>
+			<p ng-show="addProperty.carpet_area.$error.pattern && (addProperty.carpet_area.$dirty || submitted)" class="help-block">Enter Number only.</p>				 
+		</div>
+		<div class="col-sm-3">
+			<select class="form-control" ng-model="property.property_info.carpet_unit" required>
+				<option selected value="">Unit Area</option>
+					<option value="Feet">Sq. Feet</option>
+					<option value="Cent">Cent</option>
+					<option value="Yard">Sq. Yard</option>				
+			</select>
+			
+			<span class="text-danger" ng-show="addProperty.carpet_area.$dirty && addProperty.carpet_area.$invalid">
+				<span ng-show="addProperty.carpet_area.$error.required">Carpet Area is required .</span>
+			</span>				 
+		</div>				
+	</div>	  
+				

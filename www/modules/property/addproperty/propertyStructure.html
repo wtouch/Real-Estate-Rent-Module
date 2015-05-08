@@ -6,7 +6,7 @@
 				<select class="form-control" id="bedrooms" name="bedrooms" ng-model="property.property_info.bedrooms"  ng-options="item as item for item in propertyConfig.Bedrooms" required>
 					<option value="" selected>Select one</option>						
 				</select>
-			 <span class="text-danger" ng-show="addProperty.bedrooms.$dirty && addProperty.bedrooms.$invalid">
+				<span class="text-danger" ng-show="addProperty.bedrooms.$dirty && addProperty.bedrooms.$invalid">
 				  <span ng-show="addProperty.bedrooms.$error.required">Select Number of Bedrooms  .</span>
 				</span>
 			</div>										
@@ -43,21 +43,16 @@
 		</div>
 	
 		<div class="form-group">
-		  <label for="property_images" class="col-sm-2" >* Property Images </label>
+		  <label for="property_images" class="col-sm-2 control-label" >*Property Images</label>
 			<div class="col-sm-9">
-				<!-- Changed by Vilas -->
 				<!-- This is file input for select images -->
 				<input type="file" id="property_images" ng-file-select ng-multiple="true" accept="image/jpeg,image/png, image/gif" ng-file-change="generateThumb($files)" ng-model="property_images" required>		
 				<!-- This will show thumbnails & progress of images -->
 				<file-preview url="property_images" ng-model="property.property_images"></file-preview>
 				<!-- This button will show if file/s selected -->
-				<button ng-show="property_images" ng-click="uploadMultiple(property_images,path,userInfo,property.property_images)" type="button">Upload</button>
+				<button ng-show="property_images" ng-click="upload(property_images,path,userInfo,property.property_images)" type="button">Upload</button>
 				<!-- This hidden input will store image path in array after successful uploading -->
 				<input type="hidden" ng-model="property.property_images">
-			<!-- Changed by pooja - ->
-			</div>			 
-			
-			
-			
-		</div>	 <!-- end property  -->		
+			</div>	 <!-- end property  -->	
+		</div>
 		

@@ -7,16 +7,14 @@ define(['app'], function (app) {
 		
 		// all $scope object goes here
 		$scope.alerts = [];
-		$scope.userinfo = {user_id : $rootScope.userDetails.id};
+		$scope.userInfo = {user_id : $rootScope.userDetails.id};
 		$scope.currentDate = dataService.currentDate;
 		$scope.property = dataService.config.property;
 		$scope.property={};
 		
-		//$scope.property = {};
 		dataService.config('config', {config_name : "property"}).then(function(response){
-			$scope.property = response.config_data;
+			$scope.propertyConfig = response.config_data;
 		});
-		
 		
 		//function for Users list response
 		dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
@@ -35,8 +33,8 @@ define(['app'], function (app) {
 			};
 			
 			// this function for uploading files
-			$scope.upload = function(files,path,userinfo, picArr){ 
-				upload.upload(files,path,userinfo,function(data){
+			$scope.upload = function(files,path,userInfo, picArr){ 
+				upload.upload(files,path,userInfo,function(data){
 					var picArrKey = 0, x;
 					for(x in picArr) picArrKey++;
 					if(data.status === 'success'){
@@ -99,14 +97,14 @@ define(['app'], function (app) {
 	/*********************************************************************/
 	
 	//display dynamic list from project table 
-		dataService.get('getmultiple/project/1/50', $scope.userinfo)
+		dataService.get('getmultiple/project/1/50', $scope.userInfo)
 			.then(function(response){
 												
 				$scope.addProjName = response.data;				
 			});
 
          
-		dataService.get('getmultiple/property/1/50', $scope.userinfo)
+		dataService.get('getmultiple/property/1/50', $scope.userInfo)
 			.then(function(response){
 												
 				$scope.addPropStruct = response.data;				
@@ -118,7 +116,7 @@ define(['app'], function (app) {
 		$scope.addPropertyFun = function(property){	
 			
 			$scope.property.date = $scope.currentDate;
-			dataService.post("post/property",property,$scope.userinfo)
+			dataService.post("post/property",property,$scope.userInfo)
 			.then(function(response) {
 				
 				if(response.status=="success"){
@@ -152,9 +150,9 @@ define(['app'], function (app) {
 					};	 
 			}			
 	/*********************************************************************/	
-	//display websites-domain into checkbox $scope.userinfo $routeParams.id
+	//display websites-domain into checkbox $scope.userInfo $routeParams.id
 	
-		dataService.get('getmultiple/website/1/200',$scope.userinfo)
+		dataService.get('getmultiple/website/1/200',$scope.userInfo)
 		.then(function(response) {
 			var websites = [];
 			for(var id in response.data){
@@ -163,11 +161,7 @@ define(['app'], function (app) {
 			}
 			$scope.websites = websites;
 		})  
-		 /* $scope.websites = [
-			{id:1, domain_name:"google.com"},
-			{id:2, domain_name:"wtouch.in"},
-		]; */
-		 $scope.$watchCollection('websites', function(newNames, oldNames) {	
+		$scope.$watchCollection('websites', function(newNames, oldNames) {	
 		}); 
 		$scope.checkAll = function(websites, checkValue) {			
 			if(checkValue){
@@ -177,8 +171,6 @@ define(['app'], function (app) {
 	/*********************************************************************/	
 		
 	};		
-	
-	
 	
 	// Inject controller's dependencies
 	addpropertyController.$inject = injectParams;

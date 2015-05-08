@@ -6,6 +6,7 @@ define(['app'], function (app) {
 		$rootScope.metaTitle = "Real Estate Properties";
 		
 		//Code For Pagination
+		
 		$scope.maxSize = 5;
 		$scope.totalRecords = "";
 		$scope.currentPage = 1;
@@ -151,18 +152,57 @@ define(['app'], function (app) {
 		$scope.ok = function () {
 			$modalOptions.close('ok');
 		};	//end of modal function		
-				
+	
+		 //setrent
 		
-		$scope.postData = function(setrent) {
-				 dataService.post("post/rent",setrent)
+		 $scope.postData = function(setrent) {
+				 dataService.post("post/rent/setrent",setrent)
 				.then(function(response) {  
 					if(response.status == "success"){
 						$scope.reset();
 					}
-					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$notification[response.status]("Submit Rent Data", response.message);
+					$scope.alerts.push({type: response.status, msg: response.message});
 				});
-		} 
+		}   
+		
+		$scope.duration=function(){
+			setrent.duration = 0;
+			setrent.duration = year * 12;
+			$scope.result  = setrent.duration + month;
+		}
+		
+			if($routeParams.id){
+					dataService.get("getsingle/property/"+$routeParams.id)
+					.then(function(response) {
+						$scope.reset = function() {
+							/* $scope.setrent = {
+								modified_date : dataService.currentDate,
+							}; */
+							$scope.setrent = dataService.parse(response.data);
+						angular.extend(response.data, $scope.setrent);
+						$scope.setrent = response.data;
+					};
+					$scope.reset();
+				})
+			}
+		$scope.updateData = function(setrent) {
+				setrent.modified_date = dataService.currentDate;
+				//console.log($scope.setrent.modified_date);
+				delete setrent.id;
+				dataService.put("put/rent/"+$scope.rentId,setrent, {postParams:'setrent'})
+				.then(function(response) {
+					if(response.status == "success"){
+						$scope.reset();
+						/*setTimeout(function(){*/
+							 $location.path("/dashboard/templates/custometemplates"); 
+						/*},500); */
+					 }
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Submit Custom Template", response.message);
+				});
+			} 
+		//end setrent 
+		
 				
 		//date picker
 		$scope.today = function() {
@@ -196,6 +236,36 @@ define(['app'], function (app) {
 			
 	};		
 /***************************************************************************************/
+
+/**************************************************************************************/
+  /* //update into property
+			if($routeParams.id){//Update user
+			//$routeParams.id
+				console.log($routeParams.id);	
+				dataService.get("getsingle/property/"+$routeParams.id)
+				.then(function(response) {
+						$scope.setrent = response.data;	
+						console.log($scope.setrent);					
+					});	
+					
+					$scope.update = function(setrent){				
+												
+						dataService.put("put/rent/"+$routeParams.id,setrent)
+						.then(function(response) { //function for response of request temp
+							if(response.status == 'success'){
+								$scope.submitted = true;
+								if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+								$notification[response.status]("Put Rent", response.message);						
+							}else{
+								if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+								$notification[response.status]("Put Rent", response.message);
+							}	
+						});	  
+					};	 
+			}			   */
+	/*********************************************************************/	
+	
+	
 	
 	// Inject controller's dependencies
 	propertyController.$inject = injectParams;

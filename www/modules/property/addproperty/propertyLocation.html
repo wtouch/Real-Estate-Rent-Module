@@ -4,11 +4,9 @@
 		<div class="form-group">
 			<label for="country" class="col-sm-2 control-label">Country</label>
 			<div class="col-sm-9">
-				<select class="form-control" id="country" name="country" ng-model="property.property_location.country" required ng-change="getState(property.property_location)" ng-options="item.country_name as item.country_name for item in contries">
-					<option value="" selected="selected">Select Country</option>	
-				</select> 
+				<input type="text" class="form-control" id="country" name="country" ng-model="property.property_location.country" required ng-change="getState(property.property_location)" ng-options="item.country_name as item.country_name for item in contries">
 				<span class="text-danger" ng-show="addProperty.country.$dirty && addProperty.country.$invalid">
-				  <span ng-show="addProperty.country.$error.required">State is required .</span>
+				  <span ng-show="addProperty.country.$error.required">Country is required .</span>
 				</span>
 			</div>			
 		</div>
@@ -17,10 +15,7 @@
 			<label for="state" class="col-sm-2 control-label ">* State </label>
 			<div class="col-sm-9">
 			
-				<select class="form-control" id="state" name="state" ng-model="property.property_location.state" ng-change="getState(property.property_location)"  ng-options="item.state_name as item.state_name for item in states" required>		
-					<option value="">Select State</option>
-				</select>
-				
+				<input type="text" class="form-control" id="state" name="state" ng-model="property.property_location.state" ng-change="getState(property.property_location)"  ng-options="item.state_name as item.state_name for item in states" required>		
 				<span class="text-danger" ng-show="addProperty.state.$dirty && addProperty.state.$invalid">
 				  <span ng-show="addProperty.state.$error.required">State is required .</span>
 				</span>
@@ -30,10 +25,7 @@
 	  <div class="form-group">
 			<label for="city" class="col-sm-2 control-label">* City</label>
 			<div class="col-sm-9">
-				<select class="form-control" id="city" name="city" ng-model="property.property_location.city" required ng-options="item.city_name as item.city_name for item in cities">		
-						<option value="">Select city</option>
-				</select>
-				
+				<input type="text" class="form-control" id="city" name="city" ng-model="property.property_location.city" required ng-options="item.city_name as item.city_name for item in cities">		
 				<span class="text-danger" ng-show="addProperty.city.$dirty && addProperty.city.$invalid">
 				  <span ng-show="addProperty.city.$error.required">City is required .</span>
 				</span> 
@@ -45,10 +37,10 @@
 			<div class="col-sm-9">
 				<textarea type="text"  id="address" class="form-control" name="address" ng-model="property.property_location.address" cols="30" rows="4" ng-maxlength="356"  required></textarea>
 				<p ng-hide="addProperty.address.$error.maxlength">{{ 356 - property.address.length + " Chars left" }}</p>
-				 <span class="text-danger" ng-show="addProperty.address.$error.maxlength">
+				<span class="text-danger" ng-show="addProperty.address.$error.maxlength">
 					Sorry You are Exceeding the Limit</span>
 					<span class="text-danger" ng-show="addProperty.address.$dirty && addProperty.address.$invalid">
-				  <span ng-show="addProperty.address.$error.required">Address is required .</span>	 
+				<span ng-show="addProperty.address.$error.required">Address is required .</span>	 
 			</div>				
 	  </div>		
 	  
@@ -60,5 +52,35 @@
 				  <span ng-show="addProperty.location.$error.required">Area is required .</span>
 				</span>				
 			</div>				
-	  </div>				  
+	  </div>	
+
+
+	
+	<!--Land  Mark -->				
+		<h3>Land Mark:</h3>
+		<div class="form-group">
+				<label for="hospital" class="col-sm-2 control-label">Hospitals </label>
+				<div class="col-sm-9">
+					<input type="text"  id="hospital" class="form-control" name="hospital" ng-model="property.landmarks.hospitals" required /> kms						
+				</div>							
+		  </div>
+		  <div class="form-group">
+				<label for="airport" class="col-sm-2 control-label">  Airport </label>
+				<div class="col-sm-9">
+					<input type="text" id="airport" class="form-control"  name="airport" ng-model="property.landmarks.airport" required >	kms						 
+				</div>											
+		  </div>
+		  <div class="form-group">
+				<label for="railway" class="col-sm-2 control-label">Railway Station</label>
+				<div class="col-sm-9">
+					<input type="text" id="railway" class="form-control" name="railway" ng-model="property.landmarks.railway" required>kms	
+				</div>											
+		  </div>
+		  <div class="form-group">
+				<label for="school" class="col-sm-2 control-label">School </label>
+				<div class="col-sm-9">
+					<input type="text" id="school" class="form-control" name="school" ng-model="property.landmarks.school" required>kms	
+				</div>											
+		  </div>
+		  
 	
