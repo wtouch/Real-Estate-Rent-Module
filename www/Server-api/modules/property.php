@@ -42,7 +42,7 @@
 	if($reqMethod=="GET"){
 		if(isset($id)){
 			$where['id'] = $id;
-			$t0 = $db->setTable($table);
+			$t0 = $db->setTable("property");
 			$db->setWhere($where, $t0);
 			$data = $db->selectSingle();
 			echo json_encode($data);

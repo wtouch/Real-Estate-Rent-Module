@@ -29,17 +29,18 @@
 		</span> 
 		
 		<div class="form-group">
-				<label for="Property_name" class="col-sm-2 control-label">Property Name *</label>		
+				<label for="title" class="col-sm-2 control-label">Property Name *</label>		
 				<div class="col-sm-9">
-					<input type="text" id="Property_name" class="form-control" name="Property_name" placeholder="Property Name" ng-model="setrent.Property_name" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
-					<!-- <span class="text-danger" ng-show="setrentForm.Property_name.$dirty && setrentForm.Property_name.$invalid">
-						<span ng-show="setrentForm.Property_name.$error.required">Template Name is required.</span>
+					<input type="text" id="title" class="form-control" name="title" placeholder="title" ng-model="setrent.title" readonly ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
+					<!-- <span class="text-danger" ng-show="setrentForm.title.$dirty && setrentForm.title.$invalid">
+						<span ng-show="setrentForm.title.$error.required">Template Name is required.</span>
 						
-					</span> -->
+					</span> --> 
 				</div>
-		</div>  
+		</div>
 			
-			
+		<!-- <input type="hidden" ng-model="setrent.property_id"> -->
+		
 		<div class="form-group">
 			<label for="deposit" class="col-sm-2 control-label">Deposit *</label>		
 			<div class="col-sm-9">
@@ -76,7 +77,7 @@
 				</div>
 			</div>
 			
-		<div class="form-group">
+		<!-- <div class="form-group">
 			<label for="electricity" class="col-sm-2 control-label">Electricity Bill</label>
 			<div class="col-sm-9">
 				<label class="radio-inline">
@@ -86,9 +87,9 @@
 					<input type="radio" name="Renter" id="Renter" value="Renter"  ng-model="setrent.given_by">Renter
 				</label>
 			</div>
-		</div>  
+		</div>   -->
 		
-		<div class="form-group">
+		<!-- <div class="form-group">
 			<label  for="date" class="col-sm-2 control-label">Date*</label>
 			<div class="col-sm-9">
 				<p class="input-group">
@@ -99,13 +100,13 @@
 					</span>
 				</p>
 			</div>
-		</div>	
-			<input type="text" ng-model="setrent.result"/>
+		</div>	 -->
+			
 		<div class="form-group">
 			<label  for="duration" class="col-sm-2 control-label">Duration</label>
 				<div class="col-sm-3">
 					<label  for="year" class="col-sm-3 control-label">Year</label>
-						<select id="year" class="form-control" ng-model="year" ng-change="duration()">
+						<select id="year" class="form-control" ng-model="duration.year">
 						<option value="" selected>Select Year</option><!-- added value & selected attr -->
 						<option value="1" >1</option>
 						<option value="2">2</option>
@@ -120,7 +121,7 @@
 				</div>
 				<div class="col-sm-3">
 					<label  for="month" class="col-sm-3 control-label">Month</label>
-						<select id="month" class="form-control" ng-model="month" ng-change="setrent.duration = setrent.duration + month">
+						<select id="month" class="form-control" ng-model="duration.month">
 						<option value="" selected>Select Month</option><!-- added value & selected attr -->
 						<option value="1" >1</option>
 						<option value="2">2</option>
@@ -136,12 +137,13 @@
 						</select>
 				</div>		
 		</div>
+		<input type="hidden" ng-model="setrent.duration"/>
 		
 		<div class="form-group">	
 			<label  for="escalation" class="col-sm-2 control-label">Escalation Period</label>
 				<div class="col-sm-3">
-					<label  for="year1" class="col-sm-3 control-label">Year</label>
-						<select id="year1" class="form-control" ng-model="year1">
+					<label  for="esc_year" class="col-sm-3 control-label">Year</label>
+						<select id="esc_year" class="form-control" ng-model="duration.esc_year">
 						<option value="" selected>Select Year</option><!-- added value & selected attr -->
 						<option value="1" >1</option>
 						<option value="2">2</option>
@@ -155,8 +157,8 @@
 						</select>
 				</div>	
 				<div class="col-sm-3">
-					<label  for="month1" class="col-sm-3 control-label">Month</label>
-						<select id="month1" class="form-control" ng-model="month1">
+					<label  for="esc_month" class="col-sm-3 control-label">Month</label>
+						<select id="esc_month" name="esc_month" class="form-control" ng-model="duration.esc_month">
 						<option value="" selected>Select Month</option><!-- added value & selected attr -->
 						<option value="1" >1</option>
 						<option value="2">2</option>
@@ -172,6 +174,8 @@
 						</select>
 				</div>		
 		</div>
+		<input type="hidden" ng-model="setrent.escduration"/>
+		
 		
 		<div class="form-group">
 				<label for="escalation_per" class="col-sm-2 control-label">Escalation In % *</label>		
@@ -186,7 +190,7 @@
 			
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-9"><!--ng-disabled="setrentForm.$invalid"-->
-					<button type="submit" class="btn btn-success"  ng-click="postData(setrent)">Submit</button>
+					<button type="submit" class="btn btn-success"  ng-click="postData(setrent,duration)">Submit</button>
 					<button type="reset" class="btn btn-danger">Reset</button>
 				</div>
 			</div>					

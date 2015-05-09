@@ -16,7 +16,7 @@ define(['app'], function (app) {
 		$scope.userInfo = {user_id : $rootScope.userDetails.id};
 		$scope.currentDate = dataService.currentDate;
 		console.log($scope.currentDate);
-		
+		$scope.setrent={};
 		 //for alert 		 
 		if($scope.status=="warning"){     
 			 $scope.alerts.push({type: 'error', msg: "Error to load data"});
@@ -155,36 +155,39 @@ define(['app'], function (app) {
 	
 		 //setrent
 		
-		 $scope.postData = function(setrent) {
-				 dataService.post("post/rent/setrent",setrent)
+		$scope.postData = function(setrent,duration) {
+			 console.log(duration);
+				
+				var year = duration.year;
+				var month = duration.month;
+				
+				setrent.duration = parseInt((year * 12) + parseInt(month));
+				
+				var esc_year = duration.esc_year;
+				var esc_month = duration.esc_month;
+				
+				var escduration = parseInt((esc_year * 12) + parseInt(esc_month));
+				setrent.escduration = escduration;
+				console.log(escduration);
+				
+				dataService.post("post/rent/setrent",setrent)
 				.then(function(response) {  
 					if(response.status == "success"){
 						$scope.reset();
 					}
 					$scope.alerts.push({type: response.status, msg: response.message});
-				});
+				}); 
 		}   
 		
-		$scope.duration=function(){
-			setrent.duration = 0;
-			setrent.duration = year * 12;
-			$scope.result  = setrent.duration + month;
-		}
-		
-			if($routeParams.id){
+			 if($routeParams.id){
 					dataService.get("getsingle/property/"+$routeParams.id)
 					.then(function(response) {
-						$scope.reset = function() {
-							/* $scope.setrent = {
-								modified_date : dataService.currentDate,
-							}; */
-							$scope.setrent = dataService.parse(response.data);
-						angular.extend(response.data, $scope.setrent);
-						$scope.setrent = response.data;
-					};
-					$scope.reset();
+						if(response.status == "success"){
+							$scope.setrent.title = response.data.title;
+							$scope.setrent.property_id = response.data.id; 
+						}
 				})
-			}
+			} 
 		$scope.updateData = function(setrent) {
 				setrent.modified_date = dataService.currentDate;
 				//console.log($scope.setrent.modified_date);
