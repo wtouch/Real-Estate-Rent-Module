@@ -1,10 +1,10 @@
 'use strict';
 
 define(['app'], function (app) {
-    var injectParams = ['$scope','$rootScope','$injector','modalService'];
+    var injectParams = ['$scope','$rootScope','$injector','modalService','$rootParams' ,'$notification'];
     
     // This is controller for this view
-	var viewreportController = function ($scope,$rootScope,$injector,modalService) {
+	var viewreportController = function ($scope,$rootScope,$injector,modalService, $rootParams,$notification) {
 		$scope.ok = function () {
 			$modalInstance.close();
 		};
@@ -25,6 +25,18 @@ define(['app'], function (app) {
 				}
 			});
 		};
+		
+		//function for Users list response
+		dataService.get("getmultiple/account/1/500", {status: 1, user_id : 1})
+		.then(function(response) {  
+		console.log(response)
+			/* if(response.status == 'success'){
+				$scope.rentreport = response.data;
+			}else{
+				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+				$notification[response.status]("View rent rteport", response.message);
+			} */
+		});
 	};
 		
 	// Inject controller's dependencies

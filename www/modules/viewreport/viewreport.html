@@ -48,7 +48,6 @@
 	</div>
 	<div class="row">
 		<div class="col-md-6">
-			
 			<div class="table-responsive">
 				<table class="table table-bordered">
 				<thead><th colspan ="6" class="text-center">Income</th></thead>
@@ -61,8 +60,8 @@
 						
 						
 					</tr>
-					<tr>
-						<td>1</td>
+					<tr ng-repeat="x in rentreport | orderBy:sort">
+						<td>{{ $index + 1}}</td>
 						<td>Rent</td>
 						<td>Ramakant Desai</td>
 						<td>20000</td>

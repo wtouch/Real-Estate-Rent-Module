@@ -3,18 +3,17 @@
 	$db = new dbHelper();
 	$reqMethod = $app->request->getMethod();
 	
-		$table = "rent";
 	//getMethod
 	if($reqMethod=="GET"){
 		if(isset($id)){
 			$where['id'] = $id;
-			$t0 = $db->setTable($table);
+			
+			$t0 = $db->setTable("account");
 			$db->setWhere($where, $t0);
 			$data = $db->selectSingle();
 			echo json_encode($data);
 			
 		}else{
-			
 			$like = array();
 			$userId = 0;
 			$limit[0] = $pageNo;
@@ -22,24 +21,26 @@
 			$where = array();
 			if(isset($_GET['user_id'])) $userId = $_GET['user_id'];
 			
+			/* if(isset($_GET['search']) && $_GET['search'] == true){
+				 
+				 (isset($_GET['template_name'])) ? $like['template_name'] = $_GET['template_name'] : "";
+			}
+			(isset($_GET['template_type'])) ? $where['template_type'] = $_GET['template_type'] : ""; */
 			(isset($_GET['status'])) ? $where['status'] = $_GET['status'] : "";
-			
+		
 			$userCols['name'] = "name";
 			$userCols['username'] = "username";
 			$user = $db->getUsers($userId,$userCols);
 			$db->setLimit($limit);
-			$table = $db->setJoinString("INNER JOIN", "rent", array("user_id"=>$user.".id"));
+			$table = $db->setJoinString("INNER JOIN", "account", array("rent_id"=>$user.".id"));
 			$db->setWhere($where, $table);
 			$db->setWhere($like, $table, true);
 			$selectInnerJoinCols[0] = "*";
 			$db->setColumns($table, $selectInnerJoinCols);
 			$data = $db->select();
-			
 			echo json_encode($data);
 		}
 	}//end get
-	
-	
 	if($reqMethod=="PUT" || $reqMethod=="DELETE"){
 		$where['id'] = $id; // need where clause to update/delete record
 		$update = $db->update("rent", $body, $where);

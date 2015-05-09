@@ -1,11 +1,11 @@
-<div class="main-content">
+<div class="main-content" >
 	<ng-include src="'modules/component/toolbar.html'"></ng-include>
 	<h3 class="text-center">Details About RENT</h3>
 	<div class="row">
 		<div class="col-sm-3"> 
 			<div class="bottomspace">
 				<label for="search" class="control-label">Search</label>		
-					<input id="search" type="text" class="form-control" ng-change="searchFilter('template_name', searchProp)" ng-model="searchProp" placeholder="search"/>
+					<input id="search" type="text" class="form-control" ng-change="searchFilter('title', searchProp)" ng-model="searchProp" placeholder="search"/>
 			</div>
 		</div>			 				  
 		<div class="col-sm-3">
@@ -45,78 +45,18 @@
 				<th>Due Rent</th>
 				<th>Manage</th>
 			</tr>
-			<tr>
-				<td>1</td>
-				<td>Pimpari-Chinchwad</td>
-				<td>Ramakant Desai</td>
-				<td>03/05/2014</td>
-				<td>03/07/2015</td>
-				<td>8000</td>
-				<td>4000</td>
+			<tr ng-repeat="x in rentData">
+				<td>{{$index + 1 }}</td>
+				<td>{{x.title}}</td>
+				<td>{{x.name}}</td>
+				<td>{{x.taken_date}}</td>
+				<td>{{x.leaving_date}}</td>
+				<td>{{x.paid_rent}}</td>
+				<td>{{x.due_rent}}</td>
 				<td>
 					<!-- <a class="btn btn-primary"  ng-click="openRent('modules/rentreport/payrentmodal.html')">Pay Rent</a> -->
 					<a class="btn btn-primary"  ng-click="openRent('modules/rentreport/receiptmodal.html')">Generate Receipt </a>
 						<!-- <button class="btn btn-info">Sent Notification</button> -->
-					<a class="btn btn-warning" ng-click="open('modules/rentreport/invoice.html')">View Receipt</a>
-				</td>
-			</tr>
-			<tr>
-				<td>2</td>
-				<td>Aundh</td>
-				<td>Sunita Karle</td>
-				<td>03/05/2014</td>
-				<td>03/07/2015</td>
-				<td>8000</td>
-				<td>4000</td>
-				<td>
-					<!-- <a class="btn btn-primary"  ng-click="openRent('modules/rentreport/payrentmodal.html')">Pay Rent</a> -->
-					<a class="btn btn-primary"  ng-click="openRent('modules/rentreport/receiptmodal.html')">Generate Receipt </a>
-						<!-- <button class="btn btn-info">Sent Notification</button> -->
-					<a class="btn btn-warning" ng-click="open('modules/rentreport/invoice.html')">View Receipt</a>
-				</td>
-			</tr>
-			<tr>
-				<td>3</td>
-				<td>DangeChowk</td>
-				<td>Aarti Kulkarni</td>
-				<td>03/05/2014</td>
-				<td>03/07/2015</td>
-				<td>8000</td>
-				<td>4000</td>
-				<td>
-					<!-- <a class="btn btn-primary"  ng-click="openRent('modules/rentreport/payrentmodal.html')">Pay Rent</a> -->
-					<a class="btn btn-primary"  ng-click="openRent('modules/rentreport/receiptmodal.html')">Generate Receipt </a>
-						<!-- <button class="btn btn-info">Sent Notification</button> -->
-					<a class="btn btn-warning" ng-click="open('modules/rentreport/invoice.html')">View Receipt</a>
-				</td>
-			</tr>
-			<tr>
-				<td>4</td>
-				<td>Hinjawadi</td>
-				<td>Trupti Misal</td>
-				<td>03/05/2014</td>
-				<td>03/07/2015</td>
-				<td>8000</td>
-				<td>4000</td>
-				<td>
-					<!-- <a class="btn btn-primary"  ng-click="openRent('modules/rentreport/payrentmodal.html')">Pay Rent</a> -->
-					<a class="btn btn-primary"  ng-click="openRent('modules/rentreport/receiptmodal.html')">Generate Receipt </a>
-						<!-- <button class="btn btn-info">Sent Notification</button> -->
-					<a class="btn btn-warning" ng-click="open('modules/rentreport/invoice.html')">View Receipt</a>
-				</td>
-			</tr>
-			<tr>
-				<td>5</td>
-				<td>Jagtapdairy</td>
-				<td>Dnyaneshwar Shetkar</td>
-				<td>03/05/2014</td>
-				<td>03/07/2015</td>
-				<td>8000</td>
-				<td>4000</td>
-				<td>
-					<!-- <a class="btn btn-primary"  ng-click="openRent('modules/rentreport/payrentmodal.html')">Pay Rent</a> -->
-					<a class="btn btn-primary"  ng-click="openRent('modules/rentreport/receiptmodal.html')">Generate Receipt </a>
-					<!-- <button class="btn btn-info">Sent Notification</button> -->
 					<a class="btn btn-warning" ng-click="open('modules/rentreport/invoice.html')">View Receipt</a>
 				</td>
 			</tr>
@@ -124,6 +64,6 @@
 	</div>
 </div>
 <div class="text-center">				
-	<pagination total-items="totalRecords" items-per-page="pageItems"  ng-model="rentreportCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged(rentreportCurrentPage,template_type)"></pagination>
-	<pre>Page: {{rentreportCurrentPage}} / {{numPages}}</pre>
-</div>
+		<pagination total-items="totalRecords" items-per-page="pageItems"  ng-model="rentListCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged(rentListCurrentPage)"></pagination>				
+		<pre>Page: {{rentListCurrentPage}} / {{numPages}}</pre>
+	</div>	
