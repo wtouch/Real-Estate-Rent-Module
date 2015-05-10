@@ -1,8 +1,8 @@
 'use strict';
 define(['app'], function (app) {
-    var injectParams = ['$scope', '$injector','$routeParams','$http','$log', 'modalService', '$rootScope','dataService','upload'];
+    var injectParams = ['$scope', '$injector','$routeParams','$http','$log', 'modalService', '$rootScope','dataService','upload','$notification'];
     // This is controller for this view
-	var propertyController = function ($scope, $injector,$routeParams,$http, $log, modalService, $rootScope,dataService,upload) {
+	var propertyController = function ($scope, $injector,$routeParams,$http, $log, modalService, $rootScope,dataService,upload,$notification) {
 		$rootScope.metaTitle = "Real Estate Properties";
 		
 		//Code For Pagination
@@ -209,7 +209,8 @@ define(['app'], function (app) {
 					if(response.status == "success"){
 						//$scope.reset();
 					}
-					$scope.alerts.push({type: response.status, msg: response.message});
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Add record", response.message);
 				});  
 		}   
 		

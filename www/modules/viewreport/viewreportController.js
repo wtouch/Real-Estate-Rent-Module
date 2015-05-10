@@ -1,10 +1,15 @@
 'use strict';
 
 define(['app'], function (app) {
-    var injectParams = ['$scope','$rootScope','$injector','modalService','$rootParams' ,'$notification'];
+    var injectParams = ['$scope','$rootScope','$injector','modalService','$routeParams' ,'$notification', 'dataService'];
     
     // This is controller for this view
-	var viewreportController = function ($scope,$rootScope,$injector,modalService, $rootParams,$notification) {
+	var viewreportController = function ($scope,$rootScope,$injector,modalService, $routeParams,$notification,dataService) {
+		
+		//global scope objects
+		$scope.addincome ={};
+		$scope.addincome.date=$scope.currentDate;
+		
 		$scope.ok = function () {
 			$modalInstance.close();
 		};
@@ -25,6 +30,17 @@ define(['app'], function (app) {
 				}
 			});
 		};
+		
+		//function for Users list response
+		dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
+		.then(function(response) {  
+			if(response.status == 'success'){
+				$scope.customerList = response.data;
+			}else{
+				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+				$notification[response.status]("Get Customers", response.message);
+			}
+		});
 		
 		//function for Users list response
 		dataService.get("getmultiple/account/1/500", {status: 1, user_id : 1})

@@ -103,6 +103,14 @@ define(['angular',
 				 .when('/dashboard/viewreport', route.resolve({controller: 'viewreport', template: 'viewreport',
 				 label: "Property Rent Report"}, 'viewreport/'))
 				 
+				 .when('/dashboard/viewreport/addincome', route.resolve({controller: 'viewreport', template: 'addincome',
+				 label: "Add Income"}, 'viewreport/'))
+				 
+				 
+				  .when('/dashboard/viewreport/addexpenses', route.resolve({controller: 'viewreport', template: 'addexpenses',
+				 label: "Add Expenses"}, 'viewreport/'))
+				 
+				 
 				.when('/dashboard/project', route.resolve({controller: 'project',template: 'project',
 					label: "Project"}, 'project/'))
 					
