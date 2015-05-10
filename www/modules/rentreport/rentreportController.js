@@ -156,8 +156,7 @@ define(['app'], function (app) {
 		};
 		
 		// code for invoice
-		
-		$scope.invoiceyear = [];
+		/* $scope.invoiceyear = [];
 		var date = new Date();
 		var todayYear = date.getFullYear();
 		for (var value = 2010; value <= todayYear;value++){
@@ -167,7 +166,8 @@ define(['app'], function (app) {
 		$scope.invoicemonth = [];
 		for (var value = 1; value <= 12;value++){
 			$scope.invoicemonth.push(value);
-		}
+		} */
+		/*  */
 		
 	};
 		

@@ -5,13 +5,27 @@
 			<div class="form-group">
 				<label for="amount" class="col-md-2 control-label">* Select Year</label>
 				<div class="col-sm-5">
-					<select class="form-control" name="year" id="year"  ng-model="year" ng-options="item as item for item in modalOptions.invoiceyear" ng-init="year = 2014">	
-						<option value="">Select  Year</option>	{{modalOptions.invoiceyear}}	
+					<select class="form-control ">
+						<option value="">Select Year</option>
+						<option value="2010">2010</option>
+						<option value="2011">2011</option>
+						<option value="2012">2012</option>
+						<option value="2013">2013</option>
+						<option value="2014">2014</option>
+						<option value="2015">2015</option>
+						<option value="2016">2016</option>
 					</select>
 				</div>
 				<div class="col-sm-5">
-					<select class="form-control" name="month" id="month"  ng-model="month" ng-options="item as item for item in invoicemonth" ng-init="month = 5">	
-						<option value="">Select  Year</option>		
+					<select id="month" class="form-control " ng-model="month"> 
+						<option value="">Select Month</option>	
+						<option value="1">1</option>	
+						<option value="2">2</option>	
+						<option value="3">3</option>	
+						<option value="4">4</option>	
+						<option value="5">5</option>	
+						<option value="6">6</option>	
+						<option value="7">7</option>	
 					</select>
 				</div>
 			</div>
