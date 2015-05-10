@@ -11,7 +11,7 @@
 			</div>
 		</div>
 		<div class="form-group" ng-if="userDetails.group_name != 'customer'">
-			<label for="customer" class="col-sm-2 control-label">User*</label>
+			<label for="customer" class="col-sm-2 control-label">* User</label>
 			<div class="col-sm-7">
 				<select class="form-control" name="customer" id="customer"  ng-model="setrent.user_id" ng-options="item.id as item.name for item in customerList | filter: { group_name : 'customer'} " required>
 					<option value="">Select User</option>
@@ -29,14 +29,14 @@
 		</span> 
 		
 		<div class="form-group">
-				<label for="title" class="col-sm-2 control-label">Property Name *</label>		
+				<label for="title" class="col-sm-2 control-label">* Property Name</label>		
 				<div class="col-sm-9">
 					<input type="text" id="title" class="form-control" name="title" placeholder="title" ng-model="setrent.title" readonly ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
 				</div>
 		</div>
 		
 		<div class="form-group">
-			<label for="deposit" class="col-sm-2 control-label">Deposit *</label>		
+			<label for="deposit" class="col-sm-2 control-label">* Deposit</label>		
 			<div class="col-sm-9">
 				<input type="text" id="deposit" class="form-control" name="deposit" ng-model="setrent.deposit"placeholder="Deposit" required>
 				
@@ -49,7 +49,7 @@
 		<input type="hidden" ng-model="setrent.property.id">
 		
 		<div class="form-group">
-				<label for="rent" class="col-sm-2 control-label">Rent *</label>		
+				<label for="rent" class="col-sm-2 control-label">* Rent</label>		
 				<div class="col-sm-9">
 					<input type="text" id="rent" class="form-control" name="rent" placeholder="Set Rent"  ng-pattern="/^[a-zA-Z0-9(_)]*$/" ng-model="setrent.rent" required><!--ng-model="setrent.rent"-->
 					<p ng-show="setrent.rent.$error.pattern && (setrent.rent.$dirty || submitted)" class="text-danger">Enter Number only</p>
@@ -66,15 +66,12 @@
 			</div>						
 		</div>
 		
+		 <input type="hidden" id="date1" class="form-control" name="date1" ng-model="setrent.leaving_date"  placeholder="date">
 		
-				<!-- <input type="hidden" id="date1" class="form-control" name="date1"   ng-model="setrent.leaving_date"  placeholder="date"> -->
-		
-			
 		<div class="form-group">
-			<label for="maintainance" class="col-sm-2 control-label">Maintainance *</label>		
+			<label for="maintainance" class="col-sm-2 control-label">* Maintainance</label>		
 			<div class="col-sm-9">
-				<input type="text" id="maintainance" class="form-control" name="maintainance" placeholder="Maintainance"   ng-model="setrent.maintainance"required><!-- ng-model="setrent.maintainance"-->
-				
+				<input type="text" id="maintainance" class="form-control" name="maintainance" placeholder="Maintainance"  ng-model="setrent.maintainance" required>
 				<span class="text-danger" ng-show="setrentForm.maintainance.$dirty && setrentForm.maintainance.$invalid">
 					<span ng-show="setrentForm.maintainance.$error.required">Maintainance is required.</span>
 				</span>
@@ -172,7 +169,7 @@
 		<input type="hidden" ng-model="setrent.escduration"/>
 		
 		<div class="form-group">
-			<label for="escalation_per" class="col-sm-2 control-label">Escalation In % *</label>		
+			<label for="escalation_per" class="col-sm-2 control-label">* Escalation In %</label>		
 				<div class="col-sm-9">
 					<input type="text" id="escalation_per" class="form-control" name="escalation_per" placeholder="Set Escalation Percentage" ng-model="setrent.escalation_amount" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
 

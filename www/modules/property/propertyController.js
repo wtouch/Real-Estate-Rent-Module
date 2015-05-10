@@ -20,6 +20,19 @@ define(['app'], function (app) {
 		$scope.dates.date=$scope.currentDate;
 		console.log($scope.dates.date);
 		$scope.setrent={};
+		
+			
+		
+		/* var taken_date = new Date();
+		
+		console.log('the original date is '+taken_date);
+		var leaving_date = new Date(taken_date);
+
+		leaving_date.setMonth(leaving_date.getMonth() + 12); // minus the date
+
+		var nd = new Date(leaving_date);
+		console.log('the new date is '+nd); */
+		
 		 //for alert 		 
 		if($scope.status=="warning"){     
 			 $scope.alerts.push({type: 'error', msg: "Error to load data"});
@@ -159,8 +172,10 @@ define(['app'], function (app) {
 		 //setrent
 		
 		$scope.postData = function(setrent,duration) {
-			 console.log(duration);
-			 
+			//console.log(duration);
+			
+				
+				
 				//setrent.leaving_date = taken_date + duration;
 				
 				var year = duration.year;
@@ -175,13 +190,27 @@ define(['app'], function (app) {
 				setrent.escduration = escduration;
 				console.log(escduration);
 				
+				//
+				var taken_date = new Date();
+		
+				console.log('the original date is '+taken_date);
+				var leaving_date = new Date(taken_date); //
+				
+				$scope.setrent.leaving_date=leaving_date;
+				
+				leaving_date.setMonth(leaving_date.getMonth() + setrent.duration); // minus the date
+
+				var nd = new Date(leaving_date);
+				console.log('the leaving date is '+nd);
+				
+				
 				dataService.post("post/rent/setrent",setrent)
 				.then(function(response) {  
 					if(response.status == "success"){
-						$scope.reset();
+						//$scope.reset();
 					}
 					$scope.alerts.push({type: response.status, msg: response.message});
-				}); 
+				});  
 		}   
 		
 			 if($routeParams.id){
