@@ -41,8 +41,8 @@
 				<th>Owner Name</th>
 				<th>Taken Date</th>
 				<th>Leaving Date</th>
-				<th>Paid Rent</th>
-				<th>Due Rent</th>
+				<!-- <th>Paid Rent</th>
+				<th>Due Rent</th> -->
 				<th>Manage</th>
 			</tr>
 			<tr ng-repeat="x in rentData">
@@ -51,8 +51,8 @@
 				<td>{{x.name}}</td>
 				<td>{{x.taken_date}}</td>
 				<td>{{x.leaving_date}}</td>
-				<td>{{x.paid_rent}}</td>
-				<td>{{x.due_rent}}</td>
+				<!-- <td>{{x.paid_rent}}</td>
+				<td>{{x.due_rent}}</td> -->
 				<td>
 					<!-- <a class="btn btn-primary"  ng-click="openRent('modules/rentreport/payrentmodal.html')">Pay Rent</a> -->
 					<a class="btn btn-primary"  ng-click="openRent('modules/rentreport/receiptmodal.html')">Generate Receipt </a>

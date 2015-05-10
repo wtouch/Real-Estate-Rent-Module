@@ -36,7 +36,7 @@
 		<h3>Property Overview</h3>
 		<div class="row">
 			<div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
-				<div class="gridblock" ng-if="userDetails.permission.user_module.user_list">
+				<div class="overview-block" ng-if="userDetails.permission.user_module.user_list">
 					<table class="table table-bordered">
 						<tr><th>Total Properties</th></tr>
 						<tr><td>10</td></tr>
@@ -44,7 +44,7 @@
 				</div>
 			</div>	
 			<div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
-				<div class="gridblock" ng-if="userDetails.permission.user_module.user_list">
+				<div class="overview-block" ng-if="userDetails.permission.user_module.user_list">
 					
 					
 						<table class="table table-bordered">
@@ -54,7 +54,7 @@
 				</div>
 			</div>	
 			<div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
-				<div class="gridblock" ng-if="userDetails.permission.user_module.user_list">
+				<div class="overview-block" ng-if="userDetails.permission.user_module.user_list">
 						<table class="table table-bordered">
 							<tr><th> Total Due Rent Amount</th></tr>
 								<tr><td>100000</td></tr>

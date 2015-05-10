@@ -51,7 +51,7 @@ define(['app'], function (app) {
 		};
 		$scope.pageChanged = function(page) {
 			//function for Users list response
-			dataService.get("getmultiple/rent/1/500", {status: 1, user_id : 1})
+			dataService.get("getmultiple/rent/1/10", {status: 1, user_id : 1})
 			.then(function(response) {  
 				$scope.rentData = response.data;
 				console.log(response);
