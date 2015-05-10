@@ -11,6 +11,7 @@ define(['app'], function (app) {
 		$scope.pageItems = 10;
 		$scope.numPages = "";
 		$scope.userInfo = {user_id : $rootScope.userDetails.id};
+		$scope.currentDate = dataService.currentDate;
 		
 		$scope.ok = function () {
 			$modalInstance.close();
@@ -18,6 +19,7 @@ define(['app'], function (app) {
 		$scope.cancel = function () {
 			$modalInstance.dismiss('cancel');
 		};
+		$scope.rentDate = {};
 		
 		$scope.openRent = function (url,rentId) {
 			dataService.get("getsingle/rent/"+rentId).then(function(response) {
@@ -27,14 +29,17 @@ define(['app'], function (app) {
 				};
 				var modalOptions = {
 					rentList : response.data,
+					rentDate:{ date :$scope.currentDate },
 					formData : function(rentList){
 						modalOptions.rentList = rentList;
 					},
 				};
-				modalService.showModal(modalDefaults).then(function (result) {
-					console.log("modal opened")	
+				modalService.showModal(modalDefaults,modalOptions,$scope.rentDate).then(function (result) {
+					
+					console.log($scope.modalOptions.rentList.date_of_rent);
 				});
 				console.log(modalOptions.rentList);
+				
 			});
 		};
 		
@@ -62,15 +67,6 @@ define(['app'], function (app) {
 			});
 		}; 
 		
-		$scope.today = function() {
-			$scope.date = new Date();
-		};
-		$scope.open = function($event,opened){
-			$event.preventDefault();
-			$event.stopPropagation();
-			$scope.opened = ($scope.opened==true)?false:true;
-		};
-		
 		$scope.rentParams = {status: 1};
 		angular.extend($scope.rentParams, $scope.userInfo);
 		dataService.get("getmultiple/rent/"+$scope.rentListCurrentPage+"/"+$scope.pageItems, $scope.rentParams)
@@ -97,6 +93,28 @@ define(['app'], function (app) {
 				$notification[response.status]("Get Users", response.message);
 			}
 		});
+		
+		//this is global method for filter 
+		$scope.changeStatus = function(statusCol, showStatus) {
+			$scope.filterStatus= {};
+			(showStatus =="") ? delete $scope.title[statusCol] : $scope.filterStatus[statusCol] = showStatus;
+			angular.extend($scope.title, $scope.filterStatus);
+			if(statusCol == 'user_id' && showStatus == null) {
+				angular.extend($scope.title, $scope.userInfo);
+			}
+			dataService.get("getmultiple/rent/1/"+$scope.pageItems, $scope.title)
+			.then(function(response) {  
+				if(response.status == 'success'){
+					$scope.rentData = response.data;
+					$scope.totalRecords = response.totalRecords;
+				}else{
+					$scope.rentData = {};
+					$scope.totalRecords = {};
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Get Rent List", response.message);
+				}
+			});
+		};
 		
 		//function to search filter
 		$scope.searchFilter = function(statusCol, colValue) {
