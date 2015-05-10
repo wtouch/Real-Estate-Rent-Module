@@ -3,15 +3,17 @@
 	<h3>Generate Rent Receipt</h3>
 </div>
 	
-<div class="modal-body">{{modalOptions.rentList}}
+<div class="modal-body">
 	<form class="form-horizontal" name="receiptForm" name="applyTemplateForm"  novalidate="novalidate" 	ng-submit="receiptForm.$valid">
 		<div class="form-group">
 			<label for="amount" class="col-md-2 control-label">* Rent</label>
 			<div class="col-sm-6">
 				<input type="text" class="form-control" id="amount" ng-model="rentData.rent"   ng-init="rentData.rent = modalOptions.rentList.rent">
 			</div><span><b>Rupee</b></span>
-			<input type="hidden" ng-model="rentData.date" ng-init="rentData.date = modalOptions.rentList.date_of_rent" >
-			<input type="hidden" ng-model="rentData.property_id" ng-init="rentData.rent = modalOptions.rentList.rent">
+			<input type="hidden" ng-model="rentData.due_date" ng-init="rentData.due_date = modalOptions.rentList.date_of_rent" >
+			<input type="hidden" ng-model="rentData.user_id">
+			<input type="hidden" ng-model="rentData.property_id" ng-init="rentData.property_id = modalOptions.rentList.property_id">
+			<input type="hidden" ng-model="rentData.total_amount" >
 		</div>
 		
 		<div class="form-group">

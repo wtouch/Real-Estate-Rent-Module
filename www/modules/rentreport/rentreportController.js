@@ -11,6 +11,7 @@ define(['app'], function (app) {
 		$scope.pageItems = 10;
 		$scope.numPages = "";
 		$scope.userInfo = {user_id : $rootScope.userDetails.id};
+		$scope.userData = $rootScope.userDetails.id ;
 		$scope.currentDate = dataService.currentDate;
 		
 		$scope.ok = function () {
@@ -28,18 +29,34 @@ define(['app'], function (app) {
 						size : 'lg'
 				};
 				var modalOptions = {
+					
 					rentList : response.data,
 					rentDate:{ date :$scope.currentDate },
-					formData : function(rentList){
-						modalOptions.rentList = rentList;
+					formData : function(rentData){
+						rentData.user_id = $scope.userData;
+						var d_date = new Date(rentData.due_date); //
+						d_date.setDate(d_date.getDate() + 10);
+						rentData.due_date = d_date;
+						
+						var total = parseInt(rentData.rent ) +  parseInt(rentData.electricity_bill )+  parseInt(rentData.water_charge )+  parseInt(rentData.maintainance);
+						rentData.total_amount = total;
+						modalOptions.rentReceipt = rentData;
 					},
 				};
-				modalService.showModal(modalDefaults,modalOptions,$scope.rentDate).then(function (result) {
-					
-					console.log($scope.modalOptions.rentList.date_of_rent);
-				});
-				console.log(modalOptions.rentList);
+				modalService.showModal(modalDefaults,modalOptions).then(function (result) {
+				 console.log(modalOptions.rentReceipt);
 				
+					dataService.post("post/rentreceipt",modalOptions.rentReceipt)
+					.then(function(response) {  
+						if(response.status == "success"){
+							
+							 console.log(response);
+						}
+						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+						$notification[response.status]("Rent Receipt Generated", response.message);
+					});  
+						
+				});
 			});
 		};
 		
@@ -137,6 +154,21 @@ define(['app'], function (app) {
 				});
 			}
 		};
+		
+		// code for invoice
+		
+		$scope.invoiceyear = [];
+		var date = new Date();
+		var todayYear = date.getFullYear();
+		for (var value = 2010; value <= todayYear;value++){
+			$scope.invoiceyear.push(value);
+		}
+		
+		$scope.invoicemonth = [];
+		for (var value = 1; value <= 12;value++){
+			$scope.invoicemonth.push(value);
+		}
+		
 	};
 		
 	// Inject controller's dependencies
