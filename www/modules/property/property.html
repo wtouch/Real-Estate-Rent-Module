@@ -61,7 +61,7 @@
 									<th>Property Details</th>
 									<th>Availability</th>
 									<th>Status</th>
-									<th>Manage</th>
+									<!-- <th>Manage</th> -->
 									<th>Manage</th> 
 								</tr>
 							</thead>
@@ -137,13 +137,13 @@
 											<button type="button" tooltip="{{dynamicTooltip(x.status, 'Delete Property', 'Make Active')}}" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'"><span class="glyphicon glyphicon-remove"></span></button>
 										</div>
 									</td>
-									<td>
+									<!-- <td>
 										<div class="btn-group">
 											<a type="button" tooltip="Send Notification" class="btn btn-info " ng-model="users.email" ng-click="forgotPass('email', users.email, users.id)">
 											<span class="glyphicon glyphicon-refresh"></span>
 											</a>
 										</div>
-									</td>
+									</td> -->
 									<td>
 										<div class="btn-group">
 											<a type="button" tooltip="Rent This Property" class="btn btn-info glyphicon glyphicon-open" href="#/dashboard/property/setrent/{{x.id}}"></a>	

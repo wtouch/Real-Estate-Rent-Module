@@ -16,6 +16,9 @@ define(['app'], function (app) {
 		$scope.userInfo = {user_id : $rootScope.userDetails.id};
 		$scope.currentDate = dataService.currentDate;
 		console.log($scope.currentDate);
+		$scope.dates ={};
+		$scope.dates.date=$scope.currentDate;
+		console.log($scope.dates.date);
 		$scope.setrent={};
 		 //for alert 		 
 		if($scope.status=="warning"){     
@@ -157,6 +160,8 @@ define(['app'], function (app) {
 		
 		$scope.postData = function(setrent,duration) {
 			 console.log(duration);
+			 
+				//setrent.leaving_date = taken_date + duration;
 				
 				var year = duration.year;
 				var month = duration.month;

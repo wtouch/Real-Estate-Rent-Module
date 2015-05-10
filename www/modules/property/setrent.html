@@ -32,14 +32,8 @@
 				<label for="title" class="col-sm-2 control-label">Property Name *</label>		
 				<div class="col-sm-9">
 					<input type="text" id="title" class="form-control" name="title" placeholder="title" ng-model="setrent.title" readonly ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
-					<!-- <span class="text-danger" ng-show="setrentForm.title.$dirty && setrentForm.title.$invalid">
-						<span ng-show="setrentForm.title.$error.required">Template Name is required.</span>
-						
-					</span> --> 
 				</div>
 		</div>
-			
-		<!-- <input type="hidden" ng-model="setrent.property_id"> -->
 		
 		<div class="form-group">
 			<label for="deposit" class="col-sm-2 control-label">Deposit *</label>		
@@ -53,6 +47,7 @@
 		</div>
 		
 		<input type="hidden" ng-model="setrent.property.id">
+		
 		<div class="form-group">
 				<label for="rent" class="col-sm-2 control-label">Rent *</label>		
 				<div class="col-sm-9">
@@ -64,44 +59,42 @@
 				</div>
 		</div>
 		
+		<div class="form-group">	
+			<label  for="date" class="col-sm-2 control-label">Taken Date</label>
+			<div class="col-sm-9">
+				<input type="text" id="date" class="form-control" name="date"  value="{{dates.date}}" ng-model="setrent.taken_date"  ng-init="setrent.taken_date = dates.date" readonly  placeholder="date" >
+			</div>						
+		</div>
+		
+		
+				<!-- <input type="hidden" id="date1" class="form-control" name="date1"   ng-model="setrent.leaving_date"  placeholder="date"> -->
+		
 			
-			
-			<div class="form-group">
-				<label for="maintenance" class="col-sm-2 control-label">Maintenance *</label>		
-				<div class="col-sm-9">
-					<input type="text" id="maintenance" class="form-control" name="maintenance" placeholder="Maintenance"  required><!-- ng-model="setrent.maintenance"-->
-					
-					<span class="text-danger" ng-show="setrentForm.maintenance.$dirty && setrentForm.maintenance.$invalid">
-						<span ng-show="setrentForm.maintenance.$error.required">Maintenance is required.</span>
-					</span>
-				</div>
+		<div class="form-group">
+			<label for="maintainance" class="col-sm-2 control-label">Maintainance *</label>		
+			<div class="col-sm-9">
+				<input type="text" id="maintainance" class="form-control" name="maintainance" placeholder="Maintainance"   ng-model="setrent.maintainance"required><!-- ng-model="setrent.maintainance"-->
+				
+				<span class="text-danger" ng-show="setrentForm.maintainance.$dirty && setrentForm.maintainance.$invalid">
+					<span ng-show="setrentForm.maintainance.$error.required">Maintainance is required.</span>
+				</span>
 			</div>
+		</div>
+		
+		<!-- <input type="text" ng-model="setrent.leavedate"> -->
 			
-		<!-- <div class="form-group">
+		<div class="form-group">
 			<label for="electricity" class="col-sm-2 control-label">Electricity Bill</label>
 			<div class="col-sm-9">
 				<label class="radio-inline">
-					<input type="radio" name="Owner" id="Owner" value="Owner"  ng-model="setrent.given_by" ng-init="setrent.given_by='Owner'">Given By Owner
+					<input type="radio" name="Owner" id="Owner" value="Owner" ng-model="setrent.electricity_bill" ng-init="setrent.electricity_bill='Owner'">Owner
 				</label>
 				<label class="radio-inline">
-					<input type="radio" name="Renter" id="Renter" value="Renter"  ng-model="setrent.given_by">Renter
+					<input type="radio" name="renter" id="renter" value="renter"  ng-model="setrent.electricity_bill">Renter
 				</label>
 			</div>
-		</div>   -->
-		
-		<!-- <div class="form-group">
-			<label  for="date" class="col-sm-2 control-label">Date*</label>
-			<div class="col-sm-9">
-				<p class="input-group">
-			  <input class="form-control" type="text" id="date" name="date" datepicker-popup="yyyy-MM-dd" ng-model="setrent.date" is-open="rentdate" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
-					<span class="input-group-btn">
-						<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate')">
-						<i class="glyphicon glyphicon-calendar"></i></button>
-					</span>
-				</p>
-			</div>
-		</div>	 -->
-			
+		</div>
+	
 		<div class="form-group">
 			<label  for="duration" class="col-sm-2 control-label">Duration</label>
 				<div class="col-sm-3">
@@ -137,6 +130,7 @@
 						</select>
 				</div>		
 		</div>
+		
 		<input type="hidden" ng-model="setrent.duration"/>
 		
 		<div class="form-group">	
@@ -174,11 +168,11 @@
 						</select>
 				</div>		
 		</div>
+		
 		<input type="hidden" ng-model="setrent.escduration"/>
 		
-		
 		<div class="form-group">
-				<label for="escalation_per" class="col-sm-2 control-label">Escalation In % *</label>		
+			<label for="escalation_per" class="col-sm-2 control-label">Escalation In % *</label>		
 				<div class="col-sm-9">
 					<input type="text" id="escalation_per" class="form-control" name="escalation_per" placeholder="Set Escalation Percentage" ng-model="setrent.escalation_amount" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
 
@@ -188,11 +182,11 @@
 				</div>
 		</div> 
 			
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-9"><!--ng-disabled="setrentForm.$invalid"-->
-					<button type="submit" class="btn btn-success"  ng-click="postData(setrent,duration)">Submit</button>
-					<button type="reset" class="btn btn-danger">Reset</button>
-				</div>
-			</div>					
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-9"><!--ng-disabled="setrentForm.$invalid"-->
+				<button type="submit" class="btn btn-success"  ng-click="postData(setrent,duration)">Submit</button>
+				<button type="reset" class="btn btn-danger">Reset</button>
+			</div>
+		</div>					
 	</form>
 </div>		
