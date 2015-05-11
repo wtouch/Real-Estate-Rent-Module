@@ -10,8 +10,8 @@
 		</div>			 				  
 		<div class="col-sm-3">
 			<div class="bottomspace">
-				<label for="sort" class="control-label">View Rent By User</label>
-					<select id="filterbyuserid"  ng-model="filterbyuserid" class="form-control"ng-change="changeStatus('user_id', filterbyuserid)" ng-options="user.id as user.name for user in userList"> 
+				<label for="username" class="control-label">View Rent By User</label>
+					<select id="username"  ng-model="filterName" class="form-control"  ng-click="changestatus(filterName, $index)" ng-options="user.id as user.name for user in userList"> 
 						<option value="">Select User</option>	
 					</select>
 			</div>
@@ -31,7 +31,7 @@
 			<div class="bottomspace">
 				<label for="sort" class="control-label">Sort by Order</label>
 					<select id="sort" class="form-control" ng-model="sort"> 
-						<option value="">Select Order</option>	<!-- added value & selected attr -->	
+						<option value="">Select Order</option>	
 						<option value="-title">Desending</option>
 						<option value="title">Asending</option>  
 					</select>
@@ -56,7 +56,7 @@
 				<td>{{x.leaving_date}}</td>
 				<td>
 					<a class="btn btn-primary"  ng-click="openRent('modules/rentreport/receiptmodal.html',x.id)">Generate Receipt </a>
-					<a class="btn btn-warning" ng-click="open('modules/rentreport/invoice.html')">View Receipt</a>
+					<a class="btn btn-warning" ng-click="openInvoice('modules/rentreport/invoice.html',x.id)">View Receipt</a>
 				</td>
 			</tr>
 		</table>

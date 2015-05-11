@@ -305,7 +305,7 @@ class dbHelper {
             if($affected_rows <= 0 || !is_array($rows)){
                 $response["status"] = "warning";
                 $response["message"] = "No data found.";
-				$response["data"] = null;
+				$response["data"] = $this->getQueryString();
 				$response["totalRecords"] = $totalRecords['totalRecords'];
             }else{
 				//$response['totalRecords']= $totalRecords;

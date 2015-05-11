@@ -1,31 +1,30 @@
 <div class="modal-header">
 		<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
 		<h3>Pay Rent</h3>
-		<form class="form-horizontal">
+		<form class="form-horizontal">{{modalOptions.receiptList}}
 			<div class="form-group">
-				<label for="amount" class="col-md-2 control-label">* Select Year</label>
 				<div class="col-sm-5">
-					<select class="form-control ">
-						<option value="">Select Year</option>
+				<label for="year" class="control-label">Generate Invoice by Year</label>
+					<select class="form-control" name="year" id="year"  ng-model="rentYear.year" ng-init="rentYear.year = rentrentYear.curYear">
+						<option value="">Select Year</option>	
 						<option value="2010">2010</option>
 						<option value="2011">2011</option>
 						<option value="2012">2012</option>
 						<option value="2013">2013</option>
 						<option value="2014">2014</option>
 						<option value="2015">2015</option>
-						<option value="2016">2016</option>
 					</select>
 				</div>
 				<div class="col-sm-5">
-					<select id="month" class="form-control " ng-model="month"> 
-						<option value="">Select Month</option>	
-						<option value="1">1</option>	
-						<option value="2">2</option>	
-						<option value="3">3</option>	
-						<option value="4">4</option>	
-						<option value="5">5</option>	
-						<option value="6">6</option>	
-						<option value="7">7</option>	
+					<label for="year" class="control-label">Generate Invoice by Month</label>
+					<select ng-change="modalOptions.getReceiptByMonth(rentYear)" class="form-control" name="establishment" id="establishment"  ng-model="rentYear.month" >	
+						<option value="">Select Month</option>		
+						<option value="01">1</option>
+						<option value="02">2</option>
+						<option value="03">3</option>
+						<option value="04">4</option>
+						<option value="05">5</option>
+						<option value="06">6</option>
 					</select>
 				</div>
 			</div>
@@ -38,9 +37,9 @@
 		<div class="panel-body row">
 			<div class="col-xs-6">
 				<address class="text-center">
-					Mr. Vijay Lodha<br>
-					147 Kothrud Pune 38<br>
-					E-Mail : vijaylodha2@gmail.com
+					{{modalOptions.receiptList.name}}<br>
+					{{modalOptions.receiptList.address.address}}<br>
+					E-Mail : {{modalOptions.receiptList.email}}
 				</address>
 				<hr>
 				<p>To,<br>
@@ -55,29 +54,18 @@
 					<table class="table table-bordered">
 						<tr class="amt">
 							<td>Invoice No.<br>
-							AD/01/2015-16</td>
+							{{modalOptions.receiptList.id}}</td>
 							<td>Dated<br>
-							01.04.2015</td>
+							{{modalOptions.receiptList.generated_date}}</td>
 						</tr>
-						<tr>
-							<td></td>
-							<td>Mode/Terms of Payment<br>
-							Advance</td>
-						</tr>
+						
 						<tr>
 							<td>Reference Number<br>
-							April 2015</td>
+							Invoice - {{modalOptions.receiptList.due_date}}</td>
 							<td>Other Reference(S)<br>
-							Advance</td>
+							</td>
 						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td></td>
-						</tr>
+						
 					</table>
 				</div>
 			</div>
@@ -85,29 +73,51 @@
 				<table class="table table-bordered">
 					<thead>
 						<tr class="head">
-							<th class="text-center col-xs-8">Particulars</th>
-							<th class="text-center col-xs-2"></th>
-							<th class="text-center col-xs-2">Amount</th>
+							<th class=" col-xs-8">Particulars</th>
+							
+							<th class=" col-xs-2">Amount</th>
 						</tr>
 					</thead>
 					<tfoot>
 						<tr>
-							<td class="text-right">Total</td>
-							<td></td>
-							<td class="amt text-center">22,433.00</td>
+							<td class="text-right"><b>Total</b></td>
+							
+							<td class="amt text-center">{{modalOptions.receiptList.total_amount}}</td>
 						</tr>
 					</tfoot>
 					<tbody>
-						<tr>
-							<td>LICENSE FEE-COMMERCIAL</td>
-							<td></td>
-							<td>19965.00</td>
+						<tr ng-show="{{modalOptions.receiptList.rent}}">
+							<td>Rent</td>
+							
+							<td>{{modalOptions.receiptList.rent}}</td>
 						</tr>
-						<tr>
-							<td>SERVICE TAX @12% (00440298)</td>
-							<td></td>
-							<td>19965.00</td>
+						<tr ng-show="{{modalOptions.receiptList.maintainance}}">
+							<td>Maintainance</td>
+							
+							<td>{{modalOptions.receiptList.maintainance}}</td>
 						</tr>
+						<tr ng-show="{{modalOptions.receiptList.electricity_bill}}">
+							<td>Electricity Bill</td>
+							
+							<td>{{modalOptions.receiptList.electricity_bill}}</td>
+						</tr>
+						<tr ng-show="{{modalOptions.receiptList.water_charge}}">
+							<td>Water Charge</td>
+							
+							<td>{{modalOptions.receiptList.water_charge}}</td>
+						</tr>
+						<!-- <tr ng-show="{{modalOptions.receiptList.tax}}">
+							<td>Tax</td>
+							<td>{{modalOptions.receiptList.tax}}</td>
+						</tr>
+						<tr ng-show="{{modalOptions.receiptList.other_tax}}">
+							<td>Other tax</td>
+							<td>{{modalOptions.receiptList.other_tax}}</td>
+						</tr>
+						<tr ng-show="{{modalOptions.receiptList.previous_due}}">
+							<td>Previous Due</td>
+							<td>{{modalOptions.receiptList.previous_due}}</td>
+						</tr> -->
 					</tbody>
 				</table>
 			</div>
@@ -115,10 +125,10 @@
 				<b><p>Amount Chargeable(in words) : 
 				<i>INR Twenty Two Thousand Four Hundred Thiry Three Only.</i>
 				<p>Remarks :</b>
-				<p>Being Invoice for Feb, 2015 Licence Fee against Agr. Dtd.11.10.2013 for 4th floor part premises at PAYKO Tower, Kothrud, Pune-38.
-				<p>Company's Service Tax No.: <b>AAFPL1404NST001</b>
+				<p>{{modalOptions.receiptList.remark}}
+				<p>Company's Service Tax No.: <b>{{modalOptions.receiptList.remark}}</b>
 				<p>Company's PAN : <b>AAFPL1404N
-				<p class="text-right">For Mr. Vijay Lodha<br><br><br><br>
+				<p class="text-right">For {{modalOptions.receiptList.name}}<br><br><br><br>
 				Authorised Signatory</b>
 			</div>
 		</div>
@@ -126,5 +136,5 @@
 </div>
 <div class="modal-footer">
 	<button class="btn btn-primary" ng-click="ok()">PRINT</button>
-	<button class="btn btn-success" ng-click="ok()">OK</button>
+	<button class="btn btn-success" ng-click="modalOptions.ok()">OK</button>
 </div>

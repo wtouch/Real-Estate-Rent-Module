@@ -13,7 +13,7 @@ define(['app'], function (app) {
 		$scope.userInfo = {user_id : $rootScope.userDetails.id};
 		$scope.userData = $rootScope.userDetails.id ;
 		$scope.currentDate = dataService.currentDate;
-		
+		console.log($rootScope.userDetails);
 		$scope.ok = function () {
 			$modalInstance.close();
 		};
@@ -22,14 +22,27 @@ define(['app'], function (app) {
 		};
 		$scope.rentDate = {};
 		
+		/* //to get year list
+		$scope.invoiceyear = [];
+		var date = new Date();
+		var todayYear = date.getFullYear();
+		for (var value = 2010; value <= todayYear;value++){
+			$scope.invoiceyear.push(value);
+		}
+		//to get month list
+		$scope.invoicemonth = [];
+		for (var value = 1; value <= 12;value++){
+			$scope.invoicemonth.push(value);
+		}  */
+		
 		$scope.openRent = function (url,rentId) {
+			$scope.rentYear = [];
 			dataService.get("getsingle/rent/"+rentId).then(function(response) {
 				var modalDefaults = {
 						templateUrl: url,	
 						size : 'lg'
 				};
 				var modalOptions = {
-					
 					rentList : response.data,
 					rentDate:{ date :$scope.currentDate },
 					formData : function(rentData){
@@ -37,15 +50,14 @@ define(['app'], function (app) {
 						var d_date = new Date(rentData.due_date); //
 						d_date.setDate(d_date.getDate() + 10);
 						rentData.due_date = d_date;
-						
-						var total = parseInt(rentData.rent ) +  parseInt(rentData.electricity_bill )+  parseInt(rentData.water_charge )+  parseInt(rentData.maintainance);
+					
+ 						var total = parseInt(rentData.rent ) +  parseInt(rentData.electricity_bill )+  parseInt(rentData.water_charge )+  parseInt(rentData.maintainance);
 						rentData.total_amount = total;
 						modalOptions.rentReceipt = rentData;
+						
 					},
 				};
 				modalService.showModal(modalDefaults,modalOptions).then(function (result) {
-				 console.log(modalOptions.rentReceipt);
-				
 					dataService.post("post/rentreceipt",modalOptions.rentReceipt)
 					.then(function(response) {  
 						if(response.status == "success"){
@@ -55,25 +67,52 @@ define(['app'], function (app) {
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 						$notification[response.status]("Rent Receipt Generated", response.message);
 					});  
-						
 				});
 			});
 		};
 		
-		$scope.open= function (url) {
-			var modalDefaults = {
-				templateUrl: url,	
-				size : 'lg'
-			};
+		$scope.openInvoice = function (url,receiptId) {
+			var curDate = new Date();
+			$scope.rentYear = {};
+			$scope.rentYear.curYear = curDate.getFullYear();
+			$scope.rentYear.curMonth = curDate.getMonth() + 1;
 			
-			$scope.ok = function(){
-				$modalInstance.close("ok");
+			if($scope.rentYear.curMonth <= 10){
+				$scope.rentYear.curMonth = '0' + $scope.rentYear.curMonth;
 			}
-			modalService.showModal(modalDefaults).then(function (result) {
-				console.log("modal opened")	
-				$scope.ok = function(){
-					$modalInstance.close("ok");
-				}
+			$scope.generated_date = $scope.rentYear.curYear + "-" + $scope.rentYear.curMonth;
+			$scope.rentParams = {property_id : receiptId, user_id : $rootScope.userDetails.id, generated_date : $scope.generated_date};
+			dataService.get("getmultiple/rentreceipt/1/1000",$scope.rentParams).then(function(response) {
+				var modalDefaults = {
+					templateUrl: url,	
+					size : 'lg'
+				};
+				
+				var modalOptions = {	
+					//receiptList : ,
+					receiptList : response.data,
+					rentDate:{ date :$scope.currentDate },
+					formData : function(receiptList){
+						modalOptions.rentReceipt = receiptList;
+					},
+					getReceiptByMonth : function(generatedDate){
+						var generated_date = generatedDate.year + '-' + generatedDate.month;
+						angular.extend($scope.rentParams, {generated_date : generated_date});
+						dataService.get("getmultiple/rentreceipt/1/1000",$scope.rentParams).then(function(response) {
+							console.log(modalOptions.receiptList);
+							modalOptions.receiptList = response.data;
+							console.log(modalOptions.receiptList);
+						});
+					}
+				};
+				modalService.showModal(modalDefaults,modalOptions).then(function (result) {
+					
+					$scope.ok = function(){
+						$modalInstance.close("ok");
+					}
+				});
+				console.log(modalOptions.receiptList);
+				
 			});
 		};
 		
@@ -114,12 +153,12 @@ define(['app'], function (app) {
 		//this is global method for filter 
 		$scope.changeStatus = function(statusCol, showStatus) {
 			$scope.filterStatus= {};
-			(showStatus =="") ? delete $scope.title[statusCol] : $scope.filterStatus[statusCol] = showStatus;
-			angular.extend($scope.title, $scope.filterStatus);
+			(showStatus =="") ? delete $scope.user_id[statusCol] : $scope.filterStatus[statusCol] = showStatus;
+			angular.extend($scope.user_id, $scope.filterStatus);
 			if(statusCol == 'user_id' && showStatus == null) {
-				angular.extend($scope.title, $scope.userInfo);
+				angular.extend($scope.user_id, $scope.userInfo);
 			}
-			dataService.get("getmultiple/rent/1/"+$scope.pageItems, $scope.title)
+			dataService.get("getmultiple/rent/1/"+$scope.pageItems, $scope.user_id)
 			.then(function(response) {  
 				if(response.status == 'success'){
 					$scope.rentData = response.data;
@@ -128,7 +167,7 @@ define(['app'], function (app) {
 					$scope.rentData = {};
 					$scope.totalRecords = {};
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$notification[response.status]("Get Rent List", response.message);
+					$notification[response.status]("Get Enquiry List", response.message);
 				}
 			});
 		};
@@ -155,20 +194,13 @@ define(['app'], function (app) {
 			}
 		};
 		
-		// code for invoice
-		/* $scope.invoiceyear = [];
-		var date = new Date();
-		var todayYear = date.getFullYear();
-		for (var value = 2010; value <= todayYear;value++){
-			$scope.invoiceyear.push(value);
-		}
-		
-		$scope.invoicemonth = [];
-		for (var value = 1; value <= 12;value++){
-			$scope.invoicemonth.push(value);
-		} */
-		/*  */
-		
+		/* switch($scope.rentView) {
+			case 'invoice':
+				openInvoice();
+				break;
+			default:
+				businesslist();
+		}; */
 	};
 		
 	// Inject controller's dependencies

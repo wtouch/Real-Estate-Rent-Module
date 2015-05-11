@@ -21,16 +21,16 @@
 			$limit[1] = $records;
 			$where = array();
 			if(isset($_GET['user_id'])) $userId = $_GET['user_id'];
-			if(isset($_GET['search']) && $_GET['search'] == true){
-				(isset($_GET['title'])) ? $like['title'] = $_GET['title'] : "";
-			}
-			(isset($_GET['username'])) ? $like['username'] = $_GET['username'] : "";
-			(isset($_GET['status'])) ? $where['status'] = $_GET['status'] : "";
+			if(isset($_GET['property_id'])) $where['property_id'] = $_GET['property_id'];
+			if(isset($_GET['generated_date'])) $like['generated_date'] = $_GET['generated_date'];
+			
 			$userCols['name'] = "name";
 			$userCols['username'] = "username";
+			$userCols['address'] = "address";
+			$userCols['email'] = "email";
 			$user = $db->getUsers($userId,$userCols);
 			$db->setLimit($limit);
-			$table = $db->setJoinString("INNER JOIN", "rent_receipt", array("user_id"=>$user.".id"));
+			$table = $db->setJoinString("left JOIN", "rent_receipt", array("user_id"=>$user.".id"));
 			$db->setWhere($where, $table);
 			$db->setWhere($like, $table, true);
 			$selectInnerJoinCols[0] = "*";
