@@ -3,6 +3,10 @@
     border-color: rgba(138, 109, 59, 0.52);
 }
 
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+   border : none; 
+}
+
 /* .navbar-collapse {
    padding-right: 0px;
   padding-left: 0px;  */
@@ -10,14 +14,15 @@
  /* .navbar-nav>li>a {
   padding:none;
 } */
+
 .navbar-collapse {
-		  padding-right: 15px;
-		  padding-left: none; 
-		  overflow-x: visible;
-		  -webkit-overflow-scrolling: touch;
-		  border-top: 1px solid transparent;
-		  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.1);
-		  box-shadow: inset 0 1px 0 rgba(255,255,255,.1);
+  padding-right: 7px;
+  padding-left: 0px;
+  overflow-x: visible;
+  -webkit-overflow-scrolling: touch;
+  border-top: 1px solid transparent;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.1);
 }
 
 .container-fluid {
