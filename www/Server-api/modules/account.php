@@ -43,12 +43,12 @@
 	}//end get
 	if($reqMethod=="PUT" || $reqMethod=="DELETE"){
 		$where['id'] = $id; // need where clause to update/delete record
-		$update = $db->update("rent", $body, $where);
+		$update = $db->update("account", $body, $where);
 		echo json_encode($update);
 	}
 	
 	if($reqMethod=="POST"){
-		$insert = $db->insert("rent", $body);
+		$insert = $db->insert("account", $body);
 		echo json_encode($insert);
 	}
  ?>

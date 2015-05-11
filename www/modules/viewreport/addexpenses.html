@@ -6,11 +6,11 @@
 			<div class="form-group" ng-if="userDetails.group_name != 'customer'">
 				<label for="customer" class="col-sm-2 control-label">* User</label>
 					<div class="col-sm-7">
-						<select class="form-control" name="customer" id="customer"  ng-model="setrent.user_id" ng-options="item.id as item.name for item in customerList | filter: { group_name : 'customer'} " required>
+						<select class="form-control" name="customer" id="customer"  ng-model="addexpence.user_id" ng-options="item.id as item.name for item in customerList | filter: { group_name : 'customer'} " required>
 							<option value="">Select User</option>
 						</select>
-						<span class="help-block" ng-show="setrentForm.customer.$dirty && setrentForm.customer.$invalid">
-						<span ng-show="setrentForm.customer.$error.required" class="text-danger">User is required.</span>
+						<span class="help-block" ng-show="addExpenceForm.customer.$dirty && addExpenceForm.customer.$invalid">
+						<span ng-show="addExpenceForm.customer.$error.required" class="text-danger">User is required.</span>
 						</span>	
 					</div>
 					<div class="col-sm-2">
@@ -18,13 +18,13 @@
 					</div>
 			</div>
 			<span ng-if="userDetails.group_name == 'customer'">
-				<input type="hidden" class="form-control" ng-model="addexpence.user_id" ng-init="setrent.user_id = userDetails.id" readonly/>
+				<input type="hidden" class="form-control" ng-model="addexpence.user_id" ng-init="addexpence.user_id = userDetails.id" readonly/>
 			</span> 
 			
 			<div class="form-group">
-				<label for="expence_type" class="col-sm-2 control-label">Expenses Type</label>
+				<label for="income_expence_type" class="col-sm-2 control-label">Expenses Type</label>
 					<div class="col-sm-9">
-							<select id="expence_type" class="form-control" ng-model="expence_type">
+							<select id="income_expence_type" class="form-control" ng-model="addexpence.income_expence_type">
 							<option value="" selected>Select Type</option><!-- added value & selected attr -->
 							<option value="electricity_bill" >Electricity Bill</option>
 							<option value="water_bill">Water Bill</option>
@@ -33,11 +33,32 @@
 							</select>
 					</div>
 			</div>
+			<div class="form-group">
+				<label for="expence_month" class="col-sm-2 control-label">Expence Of Month</label>
+					<div class="col-sm-9">
+							<select id="expence_month" class="form-control">
+							<option value="" selected>Select Month</option><!-- added value & selected attr -->
+							<option value="January" >January</option>
+							<option value="February">February</option>
+							<option value="March">March</option>
+							<option value="April">April</option>
+							<option value="May">May</option>
+							<option value="June">June</option>
+							<option value="July">July</option>
+							<option value="August">August</option>
+							<option value="September">September</option>
+							<option value="October">October</option>
+							<option value="November">November</option>
+							<option value="December">December</option>
+							</select>
+					</div>
+			</div>
+			
 			
 			<div class="form-group">	
 				<label  for="date" class="col-sm-2 control-label">Date</label>
 					<div class="col-sm-9">
-						<input type="text" id="date" class="form-control" name="date" readonly 
+						<input type="text" id="date" class="form-control" value="{{dates.date}}"  ng-model="addexpence.date"  ng-init="addexpence.date = dates.date" name="date" readonly 
 						placeholder="date" >
 					</div>						
 			</div>
@@ -45,14 +66,17 @@
 			<div class="form-group">
 				<label  for="amount" class="col-sm-2 control-label">Amount</label>
 					<div class="col-sm-9">
-						<input type="text" id="amount" class="form-control" name="amount" placeholder="Amount" >
+						<input type="text" id="amount" class="form-control" ng-model="addexpence.amount" name="amount" placeholder="Amount" >
 					</div>						
 			</div>
+			
+			<input type="hidden" ng-model="addexpence.balancesheet_type" ng-init="addexpence.balancesheet_type = 'expence'" />
+			
 			
 			<div class="form-group">
 				<label for="payment_type" class="col-sm-2 control-label">Payment Type </label>
 					<div class="col-sm-9">
-							<select id="payment_type" class="form-control" ng-model="addexpence.payment_type">
+							<select id="payment_type" class="form-control" ng-model="addexpence.description.payment_type">
 							<option value="" selected>Select Type</option><!-- added value & selected attr -->
 							<option value="Cash" >Cash</option>
 							<option value="Cheque">Cheque</option>
@@ -62,21 +86,18 @@
 					</div>
 			</div>
 			
-			<div class="form-group">
+			<div class="form-group" ng-if="addexpence.description.payment_type != 'cash'">
 				<label for="refferance no" class="col-sm-2 control-label">Refference No</label>
 					<div class="col-sm-9">
-						<input type="text" id="refferance no" class="form-control" ng-model="addexpence.refferance no" name="refferance no"   placeholder="refferance no" >
+						<input type="text" id="refferance no" class="form-control" name="refferance no"   placeholder="Enter Refferance No" >
 					</div>		
 			</div>
-			
-		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-9"><!--ng-disabled="setrentForm.$invalid"-->
-				<button type="submit" class="btn btn-success"  ng-click="postData()">Submit</button>
-				<button type="reset" class="btn btn-danger">Reset</button>
-			</div>
-		</div>		
-			
-			
-			
+		
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-9"><!-- ng-disabled="addExpenceForm.$invalid"-->
+					<button type="submit" class="btn btn-success"  ng-click="postDataExpence(addexpence)">Submit</button>
+					<button type="reset" class="btn btn-danger">Reset</button>
+				</div>
+			</div>	
 		</form>
 </div>

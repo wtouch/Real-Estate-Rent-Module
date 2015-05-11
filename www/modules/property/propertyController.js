@@ -18,7 +18,6 @@ define(['app'], function (app) {
 		console.log($scope.currentDate);
 		$scope.dates ={};
 		$scope.dates.date=$scope.currentDate;
-		console.log($scope.dates.date);
 		$scope.setrent={};
 		
 			

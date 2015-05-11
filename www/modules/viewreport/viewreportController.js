@@ -7,8 +7,9 @@ define(['app'], function (app) {
 	var viewreportController = function ($scope,$rootScope,$injector,modalService, $routeParams,$notification,dataService) {
 		
 		//global scope objects
-		$scope.addincome ={};
-		$scope.addincome.date=$scope.currentDate;
+		$scope.currentDate = dataService.currentDate;
+		$scope.dates ={};
+		$scope.dates.date = $scope.currentDate;
 		
 		$scope.ok = function () {
 			$modalInstance.close();
@@ -41,6 +42,31 @@ define(['app'], function (app) {
 				$notification[response.status]("Get Customers", response.message);
 			}
 		});
+		
+		$scope.postData = function(addincome) {
+				 dataService.post("post/account/addincome",addincome)
+				.then(function(response) {  
+					if(response.status == "success"){
+						//$scope.reset();
+					}
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Add record", response.message);
+				});   
+				console.log(addincome);
+		}   
+		
+		 $scope.postDataExpence = function(addexpence) {
+				 dataService.post("post/account/addexpence",addexpence)
+				.then(function(response) {  
+					if(response.status == "success"){
+					
+					}
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Add record", response.message);
+				});   
+				console.log(addexpence);
+		}   
+			
 		
 		//function for Users list response
 		dataService.get("getmultiple/account/1/500", {status: 1, user_id : 1})
