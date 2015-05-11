@@ -4,9 +4,7 @@ define(['app'], function (app) {
     // This is controller for this view
 	var propertyController = function ($scope, $injector,$routeParams,$http, $log, modalService, $rootScope,dataService,upload,$notification) {
 		$rootScope.metaTitle = "Real Estate Properties";
-		
-		//Code For Pagination
-		
+	
 		$scope.maxSize = 5;
 		$scope.totalRecords = "";
 		$scope.currentPage = 1;
@@ -20,45 +18,23 @@ define(['app'], function (app) {
 		$scope.dates.date=$scope.currentDate;
 		$scope.setrent={};
 		
-			
-		
-		/* var taken_date = new Date();
-		
-		console.log('the original date is '+taken_date);
-		var leaving_date = new Date(taken_date);
-
-		leaving_date.setMonth(leaving_date.getMonth() + 12); // minus the date
-
-		var nd = new Date(leaving_date);
-		console.log('the new date is '+nd); */
-		
-		 //for alert 		 
+		//for alert 		 
 		if($scope.status=="warning"){     
 			 $scope.alerts.push({type: 'error', msg: "Error to load data"});
 			 $scope.closeAlert = function(index) {
 				$scope.alerts.splice(index, 1);
 			 }; 
-		}	 
+		}	
+		
 		//function for close alert
 		$scope.closeAlert = function(index) {
 			$scope.alerts.splice(index, 1);
 		}; 	
 
+		//for dynamic tooltip
 		$scope.dynamicTooltip = function(status, active, notActive){
 			return (status==1) ? active : notActive;
 		};	
-
-		
-		//function for Users list response
-		dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
-		.then(function(response) {  
-			if(response.status == 'success'){
-				$scope.customerList = response.data;
-			}else{
-				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-				$notification[response.status]("Get Customers", response.message);
-			}
-		});
 		
 		//code for pagination		
 		$scope.pageChanged = function(page) {	
@@ -68,8 +44,7 @@ define(['app'], function (app) {
 				$scope.properties = response.data;
 				//console.log(response.data);				
 			});			
-		};	//end pagination
-		
+		};//end pagination
 		
 		//search filter function
 		$scope.searchFilter = function(statusCol, searchProp) {
@@ -89,10 +64,20 @@ define(['app'], function (app) {
 					$scope.totalRecords = {};
 					$scope.alerts.push({type: response.status, msg: response.message});
 				}
-				//console.log($scope.properties);
 			});
 		};
-
+/**************************************************************************************/
+		//function for Users list response
+		dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
+		.then(function(response) {  
+			if(response.status == 'success'){
+				$scope.customerList = response.data;
+			}else{
+				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+				$notification[response.status]("Get Customers", response.message);
+			}
+		});
+/**************************************************************************************/			
 		//upload method for multiple images
 		$scope.uploadMultiple = function(files,path,userInfo,picArr){ //this function for uploading files
 			 upload.upload(files,path,userInfo,function(data){
@@ -106,25 +91,9 @@ define(['app'], function (app) {
 				}
 			}); 
 		};    
-		
-
-/***************************************************************************************/
-		/* $scope.changeStatus = {};
-		$scope.changeStatusFn = function(colName, colValue, id){
-			$scope.changeStatus[colName] = colValue;				
-			//console.log($scope.changeStatus);
-			
-				 dataService.put("put/property/"+id,$scope.changeStatus)			
-				.then(function(response) {					
-					if(colName=='title'){					
-					}
-					$scope.alerts.push({type: response.status,msg: response.message});
-				}); 
-		}		 */
-		
-/***************************************************************************************/	
+/**************************************************************************************/					
+		//changevalue function
 		$scope.changeValue = function(statusCol,status) {
-			//console.log($scope.propertyParam);
 			$scope.filterStatus= {};
 			(status =="") ? delete $scope.propertyParam[statusCol] : $scope.filterStatus[statusCol] = status;
 			angular.extend($scope.propertyParam, $scope.filterStatus);
@@ -143,7 +112,6 @@ define(['app'], function (app) {
 			});
 		};
 /*****************************************************************************************/		
-
 	//view single property modal		 
 		$scope.open = function (url, propId) {
 			dataService.get("getsingle/property/"+ propId)
@@ -167,64 +135,57 @@ define(['app'], function (app) {
 		$scope.ok = function () {
 			$modalOptions.close('ok');
 		};	//end of modal function		
-	
-		 //setrent
-		
+/*****************************************************************************************/			
+		//setrent form post data to rent table
 		$scope.postData = function(setrent,duration) {
-			//console.log(duration);
+				
+			//calculate duration in months
+			var year = duration.year;
+			var month = duration.month;
 			
-				
-				
-				//setrent.leaving_date = taken_date + duration;
-				
-				var year = duration.year;
-				var month = duration.month;
-				
-				setrent.duration = parseInt((year * 12) + parseInt(month));
-				
-				var esc_year = duration.esc_year;
-				var esc_month = duration.esc_month;
-				
-				var escduration = parseInt((esc_year * 12) + parseInt(esc_month));
-				setrent.escduration = escduration;
-				console.log(escduration);
-				
-				//
-				var taken_date = new Date();
-		
-				console.log('the original date is '+taken_date);
-				var leaving_date = new Date(taken_date); //
-				
-				$scope.setrent.leaving_date=leaving_date;
-				
-				leaving_date.setMonth(leaving_date.getMonth() + setrent.duration); // minus the date
+			setrent.duration = parseInt((year * 12) + parseInt(month));
+			
+			var esc_year = duration.esc_year;
+			var esc_month = duration.esc_month;
+			
+			var escduration = parseInt((esc_year * 12) + parseInt(esc_month));
+			setrent.escduration = escduration;
+			console.log(escduration);
+			
+			//calculate leaving date from starting date
+			var taken_date = new Date();
+	
+			console.log('the original date is '+taken_date);
+			var leaving_date = new Date(taken_date); //
+			
+			$scope.setrent.leaving_date=leaving_date;
+			
+			leaving_date.setMonth(leaving_date.getMonth() + setrent.duration); // minus the date
 
-				var nd = new Date(leaving_date);
-				console.log('the leaving date is '+nd);
-				
-				
-				dataService.post("post/rent/setrent",setrent)
-				.then(function(response) {  
-					if(response.status == "success"){
-						//$scope.reset();
-					}
-					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$notification[response.status]("Add record", response.message);
-				});  
+			var nd = new Date(leaving_date);
+			console.log('the leaving date is '+nd);
+			
+			dataService.post("post/rent/setrent",setrent)
+			.then(function(response) {  
+				if(response.status == "success"){
+					//$scope.reset();
+				}
+				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+				$notification[response.status]("Add record", response.message);
+			});  
 		}   
 		
-			 if($routeParams.id){
-					dataService.get("getsingle/property/"+$routeParams.id)
-					.then(function(response) {
-						if(response.status == "success"){
-							$scope.setrent.title = response.data.title;
-							$scope.setrent.property_id = response.data.id; 
-						}
-				})
-			} 
+		 if($routeParams.id){
+				dataService.get("getsingle/property/"+$routeParams.id)
+				.then(function(response) {
+					if(response.status == "success"){
+						$scope.setrent.title = response.data.title;
+						$scope.setrent.property_id = response.data.id; 
+					}
+			})
+		} 
 		$scope.updateData = function(setrent) {
 				setrent.modified_date = dataService.currentDate;
-				//console.log($scope.setrent.modified_date);
 				delete setrent.id;
 				dataService.put("put/rent/"+$scope.rentId,setrent, {postParams:'setrent'})
 				.then(function(response) {
@@ -237,10 +198,8 @@ define(['app'], function (app) {
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 					$notification[response.status]("Submit Custom Template", response.message);
 				});
-			} 
-		//end setrent 
-		
-				
+		} 
+/**************************************************************************************/						
 		//date picker
 		$scope.today = function() {
 			$scope.date = new Date();
@@ -273,37 +232,6 @@ define(['app'], function (app) {
 			
 	};		
 /***************************************************************************************/
-
-/**************************************************************************************/
-  /* //update into property
-			if($routeParams.id){//Update user
-			//$routeParams.id
-				console.log($routeParams.id);	
-				dataService.get("getsingle/property/"+$routeParams.id)
-				.then(function(response) {
-						$scope.setrent = response.data;	
-						console.log($scope.setrent);					
-					});	
-					
-					$scope.update = function(setrent){				
-												
-						dataService.put("put/rent/"+$routeParams.id,setrent)
-						.then(function(response) { //function for response of request temp
-							if(response.status == 'success'){
-								$scope.submitted = true;
-								if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-								$notification[response.status]("Put Rent", response.message);						
-							}else{
-								if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-								$notification[response.status]("Put Rent", response.message);
-							}	
-						});	  
-					};	 
-			}			   */
-	/*********************************************************************/	
-	
-	
-	
 	// Inject controller's dependencies
 	propertyController.$inject = injectParams;
 	// Register/apply controller dynamically
