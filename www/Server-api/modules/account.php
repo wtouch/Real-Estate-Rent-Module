@@ -21,11 +21,20 @@
 			$limit[1] = $records;
 			$where = array();
 			if(isset($_GET['user_id'])) $where['user_id'] = $_GET['user_id'];
+			if(isset($_GET['balancesheet_type'])) $where['balancesheet_type'] = $_GET['balancesheet_type'];
 			
+			//if(isset($_GET['user_id'])) $userId = $_GET['user_id'];
+			if(isset($_GET['search']) && $_GET['search'] == true){
+				(isset($_GET['income_expence_type'])) ? $like['income_expence_type'] = $_GET['income_expence_type'] : "";
+			}
+			
+			if(isset($_GET['startDt']) && isset($_GET['endtDt'])){
+				$db->setWhere(array("(date BETWEEN '".$_GET['startDt']."' AND '".$_GET['endtDt']."')"), "account", false, true);
+			}
 			$t0 = $db->setTable("account");
 			$db->setWhere($where, $t0);
 			$db->setWhere($like, "account", true);
-			$db->setLimit($limit);
+			//$db->setLimit($limit);
 			
 			$data = $db->select();
 			echo json_encode($data);
