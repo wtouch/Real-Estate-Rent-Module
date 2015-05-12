@@ -1,7 +1,6 @@
 <div class="main-content">
 	<ng-include src="'modules/component/toolbar.html'"></ng-include>
 	<h3 class="text-center">Report View</h3>
-	
 	<div class="row">
 		<div class="col-sm-3"> 
 			<div class="bottomspace">
@@ -16,21 +15,65 @@
 						<option value="">Select Order</option>	
 						<option value="Daily Report">Daily Report</option>	
 						<option value="Monthly Report">Monthly Report</option>	
-						<option value="Yearly Report">Yearly Report</option>	
+						<option value="Yearly Report">Yearly Report</option>
+						<option value="Duration">Duration</option>
 					</select>
 			</div>
 		</div>
-		<div class="col-sm-3">
+		<!-- Date picker -->
+		
+		
+			<div class="col-sm-3">
+				<div class="bottomspace">
+				<label for="date" class="control-label">Date</label>
+				<p class="input-group">
+					<input class="form-control" type="text" id="date" name="date" datepicker-popup="yyyy-MM-dd" ng-model="rentreport.date" is-open="rentdate" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="opendate($event, 'rentdate')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"/>
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="opendate($event, 'rentdate')">
+							<i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
+				</p>
+				</div>
+			</div>
+		
+		<!-- <div class="col-sm-3">
 			<div class="bottomspace">
-				<label for="year" class="control-label">View  duration report</label>
-					<select id="year" class="form-control " ng-model="year"> 
+				<label for="year1" class="control-label">View  duration report</label>
+					<select id="year1" class="form-control " ng-model="year1"> 
 					<option value="">Select Year</option>	
 						<option value="2010">2010</option>	
 						<option value="2011">2011</option>	
 						<option value="2012">2012</option>	
 					</select> 
 			</div>
-		</div>
+		</div> -->
+		
+		<!-- <!--from- ->
+		<div class="col-sm-3">
+			<div class="bottomspace">
+				<label for="year1" class="control-label">View  duration report</label>
+					<select id="year1" class="form-control " ng-model="year1"> 
+					<option value="">Select Year</option>	
+						<option value="2010">2010</option>	
+						<option value="2011">2011</option>	
+						<option value="2012">2012</option>	
+					</select> 
+			</div>
+		</div> -->
+		
+		<!-- <!--to- ->
+		<div class="col-sm-3">
+			<div class="bottomspace">
+				<label for="year1" class="control-label">View  duration report</label>
+					<select id="year1" class="form-control " ng-model="year1"> 
+					<option value="">Select Year</option>	
+						<option value="2010">2010</option>	
+						<option value="2011">2011</option>	
+						<option value="2012">2012</option>	
+					</select> 
+			</div>
+		</div> -->
+		
 		<div class="col-sm-3">
 			<div class="bottomspace">
 			<label for="year" class="control-label"></label>
@@ -46,6 +89,7 @@
 				</select>
 			</div>
 		</div>
+		
 	</div>
 	<div class="row">
 		<div class="col-md-6">
@@ -56,49 +100,19 @@
 					<tr>
 						<th>Sr.No.</th>
 						<th>Income Type</th>
-						<th>User name</th>
+						<th>User Id</th>
 						<th>Amount</th>
-						
-						
 					</tr>
-					<tr ng-repeat="x in rentreport | orderBy:sort">
+					<tr ng-repeat="x in account">
 						<td>{{ $index + 1}}</td>
-						<td>Rent</td>
-						<td>Ramakant Desai</td>
-						<td>20000</td>
-						
-						
-						
-					</tr>
-					
-					<tr>
-						<td>2</td>
-						<td>Rent</td>
-						<td>Ram Desai</td>
-						<td>40000</td>
-						
-						
-						
+						<td>{{x.income_expence_type}}</td>
+						<td>{{x.use_id}}</td>
+						<td>{{x.amount}}</td>
 					</tr>
 					<tr>
-						<td>3</td>
-						<td>Rent</td>
-						<td>Sujata Sagar</td>
-						<td>10000</td>
-						
-						
-					</tr>
-					<tr>
-						<td>4</td>
-						<td>Rent</td>
-						<td>Smita Dev</td>
-						<td>30000</td>
-						
-						
-					</tr>
-						<tr>
 					<th> Total Income :</th>
-					<td colspan="5">100000</td></tr>
+					<td colspan="5">100000</td>
+					</tr>
 				</tbody>
 				</table>
 			</div>
@@ -111,40 +125,20 @@
 					<tbody>
 					<tr>
 						<th>Sr.No.</th>
-						<th>Income Type</th>
-						
+						<th>Expenses Type</th>
+						<th>User Id</th>
 						<th>Amount</th>
-						
-						
 					</tr>
-					<tr>
-						<td>1</td>
-						<td>Electricity Bill</td>
-						<td>20000</td>
-						
-					</tr>
-					
-					<tr>
-						<td>2</td>
-						<td>Drawing</td>
-						<td>40000</td>
-						
-					</tr>
-					<tr>
-						<td>3</td>
-						<td>Service Tax</td>
-						<td>10000</td>
-						
-					</tr>
-					<tr>
-						<td>4</td>
-						<td>EMI</td>
-						<td>30000</td>
-						
+					<tr ng-repeat="x in account">
+						<td>{{$index + 1}}</td>
+						<td>{{x.income_expence_type}}</td>
+						<td>{{x.use_id}}</td>
+						<td>{{x.amount}}</td>
 					</tr>
 					<tr>
 					<th> Total Expences :</th>
-					<td colspan="3">100000</td></tr>
+					<td colspan="3">100000</td>
+					</tr>
 				</tbody>
 				</table>
 			</div>
