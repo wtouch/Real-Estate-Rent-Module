@@ -1,10 +1,10 @@
 'use strict';
 
 define(['app'], function (app) {
-    var injectParams = ['$scope','$rootScope','$injector','modalService','dataService','$notification'];
+    var injectParams = ['$scope','$rootScope','$injector','$routeParams','modalService','dataService','$notification'];
     
     // This is controller for this view
-	var rentreportController = function ($scope,$rootScope,$injector,modalService,dataService,$notification) {
+	var rentreportController = function ($scope,$rootScope,$injector,$routeParams,modalService,dataService,$notification) {
 		$scope.maxSize = 5;
 		$scope.totalRecords = "";
 		$scope.rentListCurrentPage = 1;
@@ -13,7 +13,9 @@ define(['app'], function (app) {
 		$scope.userInfo = {user_id : $rootScope.userDetails.id};
 		$scope.userData = $rootScope.userDetails.id ;
 		$scope.currentDate = dataService.currentDate;
-		console.log($rootScope.userDetails);
+		
+		
+		
 		$scope.ok = function () {
 			$modalInstance.close();
 		};
@@ -21,101 +23,105 @@ define(['app'], function (app) {
 			$modalInstance.dismiss('cancel');
 		};
 		$scope.rentDate = {};
-		
-		/* //to get year list
-		$scope.invoiceyear = [];
-		var date = new Date();
-		var todayYear = date.getFullYear();
-		for (var value = 2010; value <= todayYear;value++){
-			$scope.invoiceyear.push(value);
-		}
-		//to get month list
-		$scope.invoicemonth = [];
-		for (var value = 1; value <= 12;value++){
-			$scope.invoicemonth.push(value);
-		}  */
-		
 		$scope.openRent = function (url,rentId) {
 			$scope.rentYear = [];
-			dataService.get("getsingle/rent/"+rentId).then(function(response) {
 				var modalDefaults = {
-						templateUrl: url,	
-						size : 'lg'
+					templateUrl: url,	
+					size : 'lg'
 				};
 				var modalOptions = {
-					rentList : response.data,
+					rentList : rentId,
 					rentDate:{ date :$scope.currentDate },
+					accountConfig : $rootScope.userDetails.config.rentsetting,
 					formData : function(rentData){
 						rentData.user_id = $scope.userData;
 						var d_date = new Date(rentData.due_date); //
 						d_date.setDate(d_date.getDate() + 10);
 						rentData.due_date = d_date;
 					
- 						var total = parseInt(rentData.rent ) +  parseInt(rentData.electricity_bill )+  parseInt(rentData.water_charge )+  parseInt(rentData.maintainance);
+ 						var total = parseInt(rentData.rent ) +  parseInt(rentData.electricity_bill )+parseInt(rentData.water_charge )+  parseInt(rentData.maintainance);
 						rentData.total_amount = total;
 						modalOptions.rentReceipt = rentData;
-						
 					},
 				};
 				modalService.showModal(modalDefaults,modalOptions).then(function (result) {
 					dataService.post("post/rentreceipt",modalOptions.rentReceipt)
 					.then(function(response) {  
 						if(response.status == "success"){
-							
-							 console.log(response);
+							console.log(response);
 						}
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 						$notification[response.status]("Rent Receipt Generated", response.message);
 					});  
 				});
-			});
 		};
 		
-		$scope.openInvoice = function (url,receiptId) {
+		// code for generate invoice
+		if($routeParams.id) {
+			
+			
+			$scope.invoiceyear = [];
+			$scope.invoicemonth = [];			
 			var curDate = new Date();
 			$scope.rentYear = {};
+			$scope.receiptList ={};
 			$scope.rentYear.curYear = curDate.getFullYear();
-			$scope.rentYear.curMonth = curDate.getMonth() + 1;
+			for (var value = $scope.rentYear.curYear-5; value <= $scope.rentYear.curYear; value++){
+				$scope.invoiceyear.push(value);
+			}
+			
+			$scope.rentYear.curMonth = curDate.getMonth()+1 ;
+			for (var value = 1; value <= 12; value++){
+				if(value<10){
+					$scope.invoicemonth.push('0' + value);
+				}
+				else{
+					$scope.invoicemonth.push(value);
+				}
+				
+			}
 			
 			if($scope.rentYear.curMonth <= 10){
 				$scope.rentYear.curMonth = '0' + $scope.rentYear.curMonth;
 			}
 			$scope.generated_date = $scope.rentYear.curYear + "-" + $scope.rentYear.curMonth;
-			$scope.rentParams = {property_id : receiptId, user_id : $rootScope.userDetails.id, generated_date : $scope.generated_date};
+			$scope.rentParams = {property_id : $routeParams.id, user_id : $rootScope.userDetails.id, generated_date : $scope.generated_date};
 			dataService.get("getmultiple/rentreceipt/1/1000",$scope.rentParams).then(function(response) {
-				var modalDefaults = {
-					templateUrl: url,	
-					size : 'lg'
-				};
-				
-				var modalOptions = {	
-					//receiptList : ,
-					receiptList : response.data,
-					rentDate:{ date :$scope.currentDate },
-					formData : function(receiptList){
-						modalOptions.rentReceipt = receiptList;
-					},
-					getReceiptByMonth : function(generatedDate){
-						var generated_date = generatedDate.year + '-' + generatedDate.month;
+				if(response.status == 'success'){
+					$scope.receiptList = response.data[0];
+						var a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
+						var b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
+						var num = $scope.receiptList.total_amount;
+						
+						if ((num = num.toString()).length > 9) return 'overflow';
+						var n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+						if (!n) return; var str = '';
+						str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'crore ' : '';
+						str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'lakh ' : '';
+						str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'thousand ' : '';
+						str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
+						str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only! ' : '';
+					$scope.amountInWords = str;
+						
+					$scope.getReceiptByMonth = function(generatedDate){
+						var generated_date = $scope.generatedDate.year + '-' + $scope.generatedDate.month;
 						angular.extend($scope.rentParams, {generated_date : generated_date});
 						dataService.get("getmultiple/rentreceipt/1/1000",$scope.rentParams).then(function(response) {
-							console.log(modalOptions.receiptList);
-							modalOptions.receiptList = response.data;
-							console.log(modalOptions.receiptList);
+							if(response.status == 'success'){
+								$scope.receiptList = response.data[0];
+								
+							}else{
+								if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+								$notification[response.status]("No Data Found", response.message);
+							}
 						});
 					}
-				};
-				modalService.showModal(modalDefaults,modalOptions).then(function (result) {
-					
-					$scope.ok = function(){
-						$modalInstance.close("ok");
-					}
-				});
-				console.log(modalOptions.receiptList);
-				
+				}else{
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Rent Receipt not generated", response.message);
+				}
 			});
 		};
-		
 		$scope.pageChanged = function(page, rentParams) {
 			dataService.get("getmultiple/rent/"+page+"/"+$scope.pageItems, $scope.rentParams)
 			.then(function(response) { 
@@ -150,16 +156,16 @@ define(['app'], function (app) {
 			}
 		});
 		
-		//this is global method for filter 
-		$scope.changeStatus = function(statusCol, showStatus) {
+		//global method for filter 
+		$scope.changeStatus = function(statusCol, colValue) {
 			$scope.filterStatus= {};
-			(showStatus =="") ? delete $scope.user_id[statusCol] : $scope.filterStatus[statusCol] = showStatus;
-			angular.extend($scope.user_id, $scope.filterStatus);
-			if(statusCol == 'user_id' && showStatus == null) {
-				angular.extend($scope.user_id, $scope.userInfo);
+			(colValue == "") ? delete $scope.rentParams[statusCol] : $scope.filterStatus[statusCol] = colValue;
+			angular.extend($scope.rentParams, $scope.filterStatus);
+			if(statusCol == 'user_id' && colValue == null) {
+				angular.extend($scope.rentParams, $scope.userInfo);
 			}
-			dataService.get("getmultiple/rent/1/"+$scope.pageItems, $scope.user_id)
-			.then(function(response) {  
+			dataService.get("getmultiple/rent/1/"+$scope.pageItems, $scope.rentParams)
+			.then(function(response) {  //function for templatelist response
 				if(response.status == 'success'){
 					$scope.rentData = response.data;
 					$scope.totalRecords = response.totalRecords;
@@ -167,10 +173,11 @@ define(['app'], function (app) {
 					$scope.rentData = {};
 					$scope.totalRecords = {};
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$notification[response.status]("Get Enquiry List", response.message);
+					$notification[response.status]("Get Rent", response.message);
 				}
 			});
 		};
+		
 		
 		//function to search filter
 		$scope.searchFilter = function(statusCol, colValue) {
@@ -194,13 +201,6 @@ define(['app'], function (app) {
 			}
 		};
 		
-		/* switch($scope.rentView) {
-			case 'invoice':
-				openInvoice();
-				break;
-			default:
-				businesslist();
-		}; */
 	};
 		
 	// Inject controller's dependencies

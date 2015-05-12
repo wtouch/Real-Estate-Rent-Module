@@ -71,7 +71,6 @@
 						<td><span ng-if="x.admin==null">-</span><span ng-if="x.admin!=null">{{x.admin}}</span></td>
 						<td class="tdwidth">
 							<div class="btn-toolbar" role="toolbar" aria-label="...">
-							
 								<!--add/edit details button-->
 								<div class="btn-group">
 									<a href="#/dashboard/business/adddetails/{{x.id}}" class="btn btn-primary  glyphicon glyphicon-info-sign" tooltip="Add/Edit Details"></a>
@@ -79,7 +78,8 @@
 								
 								<!--ng-if="userDetails.permission.verify_business"-->
 								<div class="btn-group" ng-if="userDetails.group_name == 'superadmin'" >
-										<button type="button" tooltip="{{dynamicTooltip(x.verified, 'No Verify', 'Make Verify')}}" ng-class="(x.verified==1) ? 'btn btn-primary' : 'btn btn-warning'" ng-model="x.verified" ng-change="verify(x.id, x.verified)" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'"><span class="glyphicon glyphicon-ok"></span></button>
+									<button type="button" tooltip="{{dynamicTooltip(x.verified, 'No Verify', 'Make Verify')}}" ng-class="(x.verified==1) ? 'btn btn-primary' : 'btn btn-warning'" ng-model="x.verified" ng-change="verify(x.id, x.verified)" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'"><span class="glyphicon glyphicon-ok"></span>
+									</button>
 								</div>
 								<div class="btn-group" ng-if="permission.featured_business">
 										<button type="button" tooltip="{{dynamicTooltip(x.featured, 'Non Featured', 'Featured')}}" ng-class="(x.featured==1) ? 'btn btn-info' : 'btn btn-danger'" ng-model="x.featured" ng-change="feature(x.id, x.featured)" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'"><span class="glyphicon glyphicon-star"></span></button>

@@ -100,6 +100,8 @@ define(['angular',
 				.when('/dashboard/rentreport/:id?', route.resolve({controller: 'rentreport', template: 'rentreport',
 				 label: "View Rent Report"}, 'rentreport/'))
 				 
+				.when('/dashboard/rentreport/invoice/:id?', route.resolve({controller:'rentreport', template: 'invoice',label:"Generate Invoice "}, 'rentreport/'))
+				 
 				 .when('/dashboard/viewreport', route.resolve({controller: 'viewreport', template: 'viewreport',
 				 label: "Property Rent Report"}, 'viewreport/'))
 				 

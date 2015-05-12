@@ -1,6 +1,4 @@
-<div class="main-content" >
-	<ng-include src="'modules/component/toolbar.html'"></ng-include>
-	<h3 class="text-center">Details About RENT</h3>
+<h3 class="text-center">Details About RENT</h3>
 	<div class="row">
 		<div class="col-sm-3"> 
 			<div class="bottomspace">
@@ -11,12 +9,8 @@
 		<div class="col-sm-3">
 			<div class="bottomspace">
 				<label for="username" class="control-label">View Rent By User</label>
-					<!-- <select id="filterbycustomerid"  ng-model="filterbycustomerid" class="form-control"  ng-click="changestatus(filterName, $index)" ng-options="user.id as user.name for user in userList"> 
+					<select id="username"  ng-model="filterName" class="form-control"  ng-click="changestatus(filterName, $index)" ng-options="user.id as user.name for user in userList"> 
 						<option value="">Select User</option>	
-					</select> -->
-					
-					<select id="filterbycustomerid" class="form-control" ng-model="filterbycustomerid"  ng-change="changeStatus('user_id', filterbycustomerid)" ng-options="user.id as user.name for user in userList">
-						<option value="">Select User</option>
 					</select>
 			</div>
 		</div>
@@ -59,8 +53,8 @@
 				<td>{{x.taken_date}}</td>
 				<td>{{x.leaving_date}}</td>
 				<td>
-					<a class="btn btn-primary"  ng-click="openRent('modules/rentreport/receiptmodal.html',x)">Generate Receipt </a>
-					<a class="btn btn-warning" href="#/dashboard/rentreport/invoice/{{x.id}}">View Receipt</a>
+					<a class="btn btn-primary"  ng-click="openRent('modules/rentreport/receiptmodal.html',x.id)">Generate Receipt </a>
+					<a class="btn btn-warning" href="modules/rentreport/invoice/{{x.id}}">View Receipt</a>
 				</td>
 			</tr>
 		</table>

@@ -29,6 +29,7 @@
 			(isset($_GET['status'])) ? $where['status'] = $_GET['status'] : "";
 			$userCols['name'] = "name";
 			$userCols['username'] = "username";
+			$userCols['address'] = "address";
 			$user = $db->getUsers($userId,$userCols);
 			$db->setLimit($limit);
 			$table = $db->setJoinString("INNER JOIN", "rent", array("user_id"=>$user.".id"));

@@ -134,13 +134,13 @@ a.brand
 	padding:15px;
 	min-height: 450px;
 }
-.modal-body .panel-default .panel-heading,.modal-body .head{
+.main-content .panel-default .panel-heading,.main-content  .head{
 		background-color : #A9D08E;
 	}
-.modal-body .amt{
+ .main-content .amt{
 		background-color : #E2EFDA;
 }
-.modal-body .table>tbody>.items>td{
+.main-content .table>tbody>.items>td{
 		padding-top : 40px;
 		padding-bottom : 40px;
 }

@@ -1,7 +1,8 @@
-<div class="modal-header" >
+<div class="modal-header" ng-init="modalOptions.getAccountConfig()">
 	<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
 	<h3>Generate Rent Receipt</h3>
 </div>
+{{modalOptions.accountConfig}}
 	
 <div class="modal-body">
 	<form class="form-horizontal" name="receiptForm" name="applyTemplateForm"  novalidate="novalidate" 	ng-submit="receiptForm.$valid">
