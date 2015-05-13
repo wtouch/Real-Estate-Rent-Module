@@ -14,8 +14,6 @@ define(['app'], function (app) {
 		$scope.userData = $rootScope.userDetails.id ;
 		$scope.currentDate = dataService.currentDate;
 		
-		
-		
 		$scope.ok = function () {
 			$modalInstance.close();
 		};
@@ -38,9 +36,17 @@ define(['app'], function (app) {
 						var d_date = new Date(rentData.due_date); //
 						d_date.setDate(d_date.getDate() + 10);
 						rentData.due_date = d_date;
-					
- 						var total = parseInt(rentData.rent ) +  parseInt(rentData.electricity_bill )+parseInt(rentData.water_charge )+  parseInt(rentData.maintainance);
-						rentData.total_amount = total;
+						rentData.tax = modalOptions.accountConfig.service_tax;
+						rentData.tds = modalOptions.accountConfig.tds;
+						rentData.other_tax = modalOptions.accountConfig.other_tax;
+						var totalRent = parseInt(rentData.rent ) +  parseInt(rentData.electricity_bill )+parseInt(rentData.water_charge )+  parseInt(rentData.maintainance);
+						
+						var totalservice = totalRent * parseFloat(parseFloat(modalOptions.accountConfig.service_tax)/100);
+						var toatltds =  totalRent * parseFloat(parseFloat(modalOptions.accountConfig.tds)/100);
+						var othertax =  totalRent * parseFloat(parseFloat(modalOptions.accountConfig.other_tax)/100);
+						var totalAmount = parseInt(totalRent + totalservice + toatltds + othertax);
+						rentData.total_amount = totalAmount;
+						console.log(rentData.total_amount);
 						modalOptions.rentReceipt = rentData;
 					},
 				};
@@ -109,6 +115,8 @@ define(['app'], function (app) {
 						dataService.get("getmultiple/rentreceipt/1/1000",$scope.rentParams).then(function(response) {
 							if(response.status == 'success'){
 								$scope.receiptList = response.data[0];
+								$scope.totalDue = response.data[0].total_paid;
+								console.log($scope.totalDue);
 								
 							}else{
 								if(response.status == undefined) response = {status :"error", message:"Unknown Error"};

@@ -30,12 +30,31 @@
 			$userCols['email'] = "email";
 			$user = $db->getUsers($userId,$userCols);
 			$db->setLimit($limit);
-			$table = $db->setJoinString("left JOIN", "rent_receipt", array("user_id"=>$user.".id"));
+			$table = $db->setJoinString("INNER JOIN", "rent_receipt", array("user_id"=>$user.".id"));
 			$db->setWhere($where, $table);
 			$db->setWhere($like, $table, true);
 			$selectInnerJoinCols[0] = "*";
 			$db->setColumns($table, $selectInnerJoinCols);
+			
+			$paid = $db->setJoinString("LEFT JOIN", "account", array("receipt_id"=>$table.".id"));
+			$db->setColumns($paid, array("ifnull(".$paid.".amount, 0) as paid") , true);
+			$db->setColumns($paid, array("ifnull(".$table.".total_amount, 0) - ifnull(".$paid.".amount, 0) as due_amount"), true);
+			
 			$data = $db->select();
+			if($data['status'] == "success"){
+				
+				$total_due = 0;
+				$total_rent = 0;
+				$total_paid = 0;
+				foreach($data['data'] as $row){
+					$total_rent += (int) $row['total_amount'];
+					$total_due += (int) $row['due_amount'];
+					$total_paid += (int) $row['paid'];
+				}
+				$data['data']['total_paid'] = $total_paid;
+				$data['data']['total_due'] = $total_due;
+				$data['data']['total_rent'] = $total_rent;
+			}
 			echo json_encode($data);
 		}
 	}//end get

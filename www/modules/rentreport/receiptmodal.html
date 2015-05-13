@@ -36,6 +36,24 @@
 			</div>
 		</div>
 		<div class="form-group">
+			<label  for="service_tax" class="col-sm-2 control-label">* Service Tax</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control "  id="service_tax" name="service_tax" ng-model="service_tax" ng-init="service_tax = modalOptions.accountConfig.service_tax" readonly/>
+			</div>
+		</div>	
+		<div class="form-group">
+			<label  for="tds" class="col-sm-2 control-label">* TDS</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control "  id="tds" name="tds" ng-model="tds" ng-init="tds = modalOptions.accountConfig.tds" readonly/>
+			</div>
+		</div>	
+		<div class="form-group">
+			<label  for="other_tax" class="col-sm-2 control-label">* Other Tax</label>
+			<div class="col-sm-6">
+				<input type="text" class="form-control "  id="other_tax" name="other_tax" ng-model="other_tax" ng-init="other_tax = modalOptions.accountConfig.other_tax" readonly/>
+			</div>
+		</div>	
+		<div class="form-group">
 			<label  for="due_date" class="col-sm-2 control-label">* Date</label>
 			<div class="col-sm-6">
 				<input type="text" class="form-control " placeholder="YYYY-DD-MM" id="due_date" name="due_date" ng-model="rent_date" ng-init="rent_date = modalOptions.rentDate.date" readonly/>
