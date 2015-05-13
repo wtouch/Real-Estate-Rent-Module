@@ -10,7 +10,7 @@
 					<a href="#/dashboard/property/addproperty" class="btn btn-primary" title="Add new property">Add New Property</a>				
 				</div>	
 		 		
-				 <div class="col-sm-2"> 
+				<div class="col-sm-2"> 
 					<label for="searchProp" class="control-label">Search </label>		
 					<div class="input-group">					
 						<input id="searchProp" type="text" class="form-control" placeholder="Search for..." ng-model="searchProp" ng-change="searchFilter('title', searchProp)">
@@ -92,70 +92,27 @@
 												<td>{{x.property_location}}</td>
 											</tr>
 										</table>  
-										<!-- <table class="table table-bordered table-responsive">
-											<tr>
-												<td><b>Property Title</b></td>
-												<td>{{x.title}}</td>
-											</tr>
-											<tr>
-												<td><b>Property For</b></td>
-												<td>{{x.property_for}}</td>
-											</tr>
-											<tr>
-												<td><b>Property Type</b></td>
-												<td>{{x.type}}</td>		
-											</tr>
-											<tr ng-if="x.address">
-												<td><b>Address</b></td>
-												<td>{{x.address}}</td>
-											</tr>
-											<tr ng-if="x.city">
-												<td><b>City</b></td>
-												<td>{{x.city}}</td>
-											</tr>
-											<tr ng-if="x.state">
-												<td ><b>State</b></td>
-												<td>{{x.state}}</td>
-											</tr>
-											<tr ng-if="x.country">
-												<td><b>Country</b></td>
-												<td>{{x.country}}</td>
-											</tr>
-										</table>   -->
 									</td>	
-									
 									<td>								
 										<a class="btn btn-success" ng-show="x.availability==0" title="Available"  popover-placement="top" popover="Owner Name-Trupti Misal">Available</a>
 										
 										<a class="btn btn-warning" ng-show="x.availability==1" title="Not available" popover-placement="top" popover="Duration-1Year Rent-12000"> Not Available </a>
 									</td>
 									<td>
-										<!-- <a class="btn btn-success"  ng-show="x.status==1" title="Active" tooltip="Make Delete">Active</a>
-										
-										<a class="btn btn-warning"  ng-show="x.status==0" title="Delete" tooltip="Make Active">Delete</a> -->
 										<div class="btn-group">
 											<button type="button" tooltip="{{dynamicTooltip(x.status, 'Delete Property', 'Make Active')}}" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'"><span class="glyphicon glyphicon-remove"></span></button>
 										</div>
 									</td>
-									<!-- <td>
+									
+									<td style="max-width:150px">
 										<div class="btn-group">
-											<a type="button" tooltip="Send Notification" class="btn btn-info " ng-model="users.email" ng-click="forgotPass('email', users.email, users.id)">
-											<span class="glyphicon glyphicon-refresh"></span>
-											</a>
+											<a type="button" tooltip="Rent This Property" class="btn btn-info" href="#/dashboard/property/setrent/{{x.id}}">Rent This</a>	
 										</div>
-									</td> -->
-									<td>
-										<div class="btn-group">
-											<a type="button" tooltip="Rent This Property" class="btn btn-info glyphicon glyphicon-open" href="#/dashboard/property/setrent/{{x.id}}"></a>	
-										</div>
-										<!--ng-click="getWebsitedetails(config)"-->
-									</td>
-									<!-- <td>										
 										<a href="#/dashboard/property/addproperty/{{x.id}}" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="Edit User Information"> 
 											<span class="glyphicon glyphicon-pencil"></span>
 										</a>
-										<a ng-click="open('modules/property/viewProperty.html', x.id)" class="btn btn-success responsive" title="View">View</a> 
-									</td>	 -->
+										<a ng-click="openProperty('modules/property/viewProperty.html', x.id)" class="btn btn-success responsive" title="View">View</a> 
+									</td>
 								</tr>				
 							</tbody>
 						</table>

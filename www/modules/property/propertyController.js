@@ -46,6 +46,19 @@ define(['app'], function (app) {
 			});			
 		};//end pagination
 		
+		// code for delete button 
+			$scope.deleted = function(id, status){
+				$scope.deletedData = {status : status};
+				dataService.put("put/property/"+id, $scope.deletedData)
+				.then(function(response) { 
+					if(response.status == 'success'){
+						$scope.hideDeleted = 1;
+					}
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Delete Property", response.message);
+				});
+			};			
+			
 		//search filter function
 		$scope.searchFilter = function(statusCol, searchProp) {
 			$scope.search = {search: true};
@@ -113,7 +126,7 @@ define(['app'], function (app) {
 		};
 /*****************************************************************************************/		
 	//view single property modal		 
-		$scope.open = function (url, propId) {
+		$scope.openProperty = function (url, propId) {
 			dataService.get("getsingle/property/"+ propId)
 			.then(function(response) {
 				
@@ -208,7 +221,7 @@ define(['app'], function (app) {
 			$event.preventDefault();
 			$event.stopPropagation();
 			$scope.rentdate = ($scope.rentdate==true)?false:true;
-		};
+		}; 
 		$scope.opendate = function($event,selectDate){
 			$event.preventDefault();
 			$event.stopPropagation();

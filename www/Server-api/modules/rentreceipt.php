@@ -51,9 +51,9 @@
 					$total_due += (int) $row['due_amount'];
 					$total_paid += (int) $row['paid'];
 				}
-				$data['data']['total_paid'] = $total_paid;
-				$data['data']['total_due'] = $total_due;
-				$data['data']['total_rent'] = $total_rent;
+				$data['total_paid'] = $total_paid;
+				$data['total_due'] = $total_due;
+				$data['total_rent'] = $total_rent;
 			}
 			echo json_encode($data);
 		}

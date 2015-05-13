@@ -181,7 +181,7 @@
 			
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-9"><!--ng-disabled="setrentForm.$invalid"-->
-				<button type="submit" class="btn btn-success"  ng-click="postData(setrent,duration)">Submit</button>
+				<button type="submit" class="btn btn-success" ng-disabled="setrentForm.$invalid" ng-click="postData(setrent,duration)">Submit</button>
 				<button type="reset" class="btn btn-danger">Reset</button>
 			</div>
 		</div>					

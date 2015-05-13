@@ -96,6 +96,17 @@ define(['app'], function (app) {
 			}
 		});
 		
+		//get data from rent-receipt table
+		$scope.getPropertylist = function(userId){
+			var user_id = {user_id : userId};
+			dataService.get("getmultiple/rentreceipt/1/1000", user_id)
+				.then(function(response) {
+					if(response.status == "success"){
+						$scope.receiptList = response.data;
+					}
+			})
+		}
+		
 		$scope.postData = function(addincome) {
 				 dataService.post("post/account/addincome",addincome)
 				.then(function(response) {  
@@ -209,18 +220,6 @@ define(['app'], function (app) {
 		$scope.today = new Date();
 		$scope.today = $scope.today.getFullYear() + "-" + ($scope.today.getMonth() + 1) + "-" + $scope.today.getDate();
 		$scope.calcDuration('daily', {start : $scope.today});
-		
-		/* //function for Users list response
-		dataService.get("getmultiple/account/1/500", {status: 1, user_id : 1})
-		.then(function(response) {  
-		//console.log(response)
-			/* if(response.status == 'success'){
-				$scope.rentreport = response.data;
-			}else{
-				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-				$notification[response.status]("View rent rteport", response.message);
-			} 
-		}); */
 		
 	};
 		

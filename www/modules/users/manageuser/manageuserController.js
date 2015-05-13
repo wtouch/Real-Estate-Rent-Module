@@ -206,29 +206,6 @@ define(['app'], function (app) {
 			$scope[opened] = ($scope[opened] ===true) ? false : true;
 		};
 		
-		//this is global method for filter 
-		$scope.changeStatus = function(statusCol, showStatus) {
-			$scope.filterStatus= {};
-			(showStatus =="") ? delete $scope.username[statusCol] : $scope.filterStatus[statusCol] = showStatus;
-			angular.extend($scope.username, $scope.filterStatus);
-			if(statusCol == 'user_id' && showStatus == null) {
-				angular.extend($scope.username, $scope.userInfo);
-			}
-			dataService.get("getmultiple/users/1/"+$scope.pageItems, $scope.username)
-			.then(function(response) {  
-				if(response.status == 'success'){
-					$scope.users = response.data;
-					$scope.totalRecords = response.totalRecords;
-				}else{
-					$scope.users = {};
-					$scope.totalRecords = {};
-					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$notification[response.status]("Get Template List", response.message);
-				}
-			});
-		};
-		
-		
 		
 		//code for forgot password
 		$scope.forgotPass = function(colName, colValue, id){

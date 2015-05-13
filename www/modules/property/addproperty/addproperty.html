@@ -78,9 +78,9 @@
 					
 					<ng-include ng-show="formPart=='amenities'" src="'modules/property/addproperty/amenities.html'">
 					</ng-include> 
-					{{property.user_id}}
-					<div class="form-group" ng-if="property.user_id">
-						<div class="col-sm-12">					
+					
+					<!-- <div class="form-group" ng-if="property.user_id">
+						<div class="col-sm-12">			{{property.user_id}}		
 							<h3>Select Sites</h3>
 							<div class="table-responsive">
 								<table class="table table-bordered">
@@ -100,7 +100,7 @@
 							</div>
 						</div>
 					</div>
-						
+						 -->
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-9">
 							<button type="submit" ng-click="addPropertyFun(property)" class="btn btn-primary" title="Add new property">Add New Property</button>
