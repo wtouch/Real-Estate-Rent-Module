@@ -107,6 +107,18 @@ define(['app'], function (app) {
 			})
 		}
 		
+		//get data from rent-receipt table
+	
+			dataService.get("getmultiple/property/1/1000", $scope.userInfo)
+				.then(function(response) {
+					console.log(response);
+					if(response.status == "success"){
+						$scope.propertyList = response.data;
+						console.log($scope.propertyList);
+					}
+			});
+		
+		
 		$scope.postData = function(addincome) {
 				 dataService.post("post/account/addincome",addincome)
 				.then(function(response) {  

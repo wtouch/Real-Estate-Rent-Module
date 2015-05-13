@@ -16,16 +16,13 @@
 			<div ng-if = "type =='Rent'">
 				<div class="form-group" ng-if="userDetails.group_name != 'customer'">
 					<label for="customer" class="col-sm-2 control-label">* User</label>
-						<div class="col-sm-7">
+						<div class="col-sm-9">
 							<select class="form-control" name="customer" id="customer"  ng-model="addincome.description.user_id" ng-options="item.id as item.name for item in customerList | filter: { group_name : 'customer'} " ng-change="getPropertylist(addincome.description.user_id)" required>
 								<option value="">Select User</option>
 							</select>
 							<span class="help-block" ng-show="addIncomeForm.customer.$dirty && addIncomeForm.customer.$invalid">
 							<span ng-show="addIncomeForm.customer.$error.required" class="text-danger">User is required.</span>
 							</span>	
-						</div>
-						<div class="col-sm-2">
-							<a href="#/dashboard/users/adduser" class="btn btn-default">Add New User</a>
 						</div>
 				</div>
 				<span ng-if="userDetails.group_name == 'customer'">
@@ -111,7 +108,7 @@
 			
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-9"><!--ng-disabled="addIncomeForm.$invalid"-->
-					<button type="submit" class="btn btn-success" ng-click="postData(addincome)">Submit</button>
+					<button type="submit" class="btn btn-success" ng-disabled="addIncomeForm.$invalid" ng-click="postData(addincome)">Submit</button>
 					<button type="reset" class="btn btn-danger">Reset</button>
 				</div>
 			</div>			

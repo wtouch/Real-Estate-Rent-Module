@@ -13,41 +13,28 @@
 				<label for="year" class="control-label" >View Report</label>
 					<select id="year" class="form-control" ng-model="type">
 						<option value="">Select Order</option>	
-						<option value="daily">User Report</option>	
-						<option value="month">Property Report</option>	
+						<option value="user">User Report</option>	
+						<option value="property">Property Report</option>	
 					</select>
 			</div>
 		</div>
 
-		<div class="col-sm-3" ng-if="type == 'daily'"><!--ng-model="duration.start"-->
+		<div class="col-sm-3" ng-if="type == 'user'"><!--ng-model="duration.start"-->
 			<div class="bottomspace">
 			<label for="year" class="control-label"></label>
-					<p class="input-group">
-					  <input class="form-control" type="text" ng-change="calcDuration(type,duration)" id="date" name="date" datepicker-popup="yyyy-MM-dd" ng-model="duration.start" is-open="rentdate" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
-							<span class="input-group-btn">
-								<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate')">
-								<i class="glyphicon glyphicon-calendar"></i></button>
-							</span>
-					</p>
+					<select class="form-control" name="customer" id="customer"  ng-model="addincome.description.user_id" ng-options="item.id as item.name for item in customerList | filter: { group_name : 'customer'} " ng-change="getPropertylist(addincome.description.user_id)" required>
+						<option value="">Select User</option>
+					</select>	
+					
 			</div>
 		</div>
-		<div class="col-sm-3" ng-if="type == 'month'">
+		
+		<div class="col-sm-3" ng-if="type == 'property'">
 			<div class="bottomspace">
-			<label for="year" class="control-label"></label>
-				<select id="month"  class="form-control " ng-model="duration" ng-change="calcDuration(type, duration)"> 
-					<option value="1" selected>January</option>	
-					<option value="2">February</option>	
-					<option value="3">March</option>	
-					<option value="4">April</option>	
-					<option value="5">May</option>	
-					<option value="6">June</option>	
-					<option value="7">July</option>
-					<option value="8">August</option>
-					<option value="9">September</option>
-					<option value="10">October</option>
-					<option value="11">November</option>
-					<option value="12">December</option>
-				</select>
+			<label for="property" class="control-label"></label>
+				<select class="form-control" name="property" id="property"  ng-model="addincome.id" ng-options="item.id as item.property_for for item in propertyList" ng-change="getProperty(id)" required>
+					<option value="">Select Property Id</option>
+				</select>	
 			</div>
 		</div> 
 		
@@ -69,10 +56,7 @@
 					</select> 
 			</div>
 		</div> 
-		
-		<!-- For Custom -->
-		<!--<input  ng-if="type == 'custom'" type="text" ng-model="duration.start" /><!--datepicker- ->
-		<input ng-if="type == 'custom'" type="text" ng-model="duration.end" ng-change="calcDuration(type, duration)" />  --><!-- datepicker -->
+	
 	<div  ng-if="type == 'custom'">
 		<div class="col-sm-3"><!--ng-model="duration.start"-->
 				<div class="bottomspace">
@@ -101,7 +85,7 @@
 	</div>
 	</div>
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-12">
 			<div class="table-responsive" ng-if="incomTotal">
 				<table class="table table-bordered">
 				<thead><th colspan ="6" class="text-center">Income</th></thead>
@@ -121,40 +105,11 @@
 					<tr>
 					<th> Total Income :</th>
 					<td colspan="5">{{incomTotal}}</td>
-					</tr>
+					</tr> 
 				</tbody>
 				</table>
 			</div>
 			<div ng-if="!incomTotal">
-			<h2>No Data Found</h2>
-			</div>
-		</div>
-		<div class="col-md-6">
-			
-			<div ng-if="expenceTotal" class="table-responsive">
-				<table class="table table-bordered">
-				<thead><th colspan ="6" class="text-center">Expences</th></thead>
-					<tbody>
-					<tr>
-						<th>Sr.No.</th>
-						<th>Expenses Type</th>
-						<th>User Id</th>
-						<th>Amount</th>
-					</tr>
-					<tr ng-repeat="x in expence">
-						<td>{{$index + 1}}</td>
-						<td>{{x.income_expence_type}}</td>
-						<td>{{x.user_id}}</td>
-						<td>{{x.amount}}</td>
-					</tr>
-					<tr>
-					<th> Total Expences :</th>
-					<td colspan="3">{{expenceTotal}}</td>
-					</tr>
-				</tbody>
-				</table>
-			</div>
-			<div ng-if="!expenceTotal">
 			<h2>No Data Found</h2>
 			</div>
 		</div>

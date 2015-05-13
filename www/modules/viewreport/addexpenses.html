@@ -2,25 +2,6 @@
 	<ng-include src="'modules/component/toolbar.html'"></ng-include>
 	<h3 class="col-sm-offset-2 col-sm-9">Add Expenses</h3>
 		<form name="addExpenceForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="addExpenceForm.$valid">
-			
-			<div class="form-group" ng-if="userDetails.group_name != 'customer'">
-				<label for="customer" class="col-sm-2 control-label">* User</label>
-					<div class="col-sm-7">
-						<select class="form-control" name="customer" id="customer"  ng-model="addexpence.description.user_id" ng-options="item.id as item.name for item in customerList | filter: { group_name : 'customer'} " required>
-							<option value="">Select User</option>
-						</select>
-						<span class="help-block" ng-show="addExpenceForm.customer.$dirty && addExpenceForm.customer.$invalid">
-						<span ng-show="addExpenceForm.customer.$error.required" class="text-danger">User is required.</span>
-						</span>	
-					</div>
-					<div class="col-sm-2">
-						<a href="#/dashboard/users/adduser" class="btn btn-default">Add New User</a>
-					</div>
-			</div>
-			<span ng-if="userDetails.group_name == 'customer'">
-				<input type="hidden" class="form-control" ng-model="addexpence.description.user_id"  readonly/>
-			</span> 
-			
 			<div class="form-group">
 				<label for="income_expence_type" class="col-sm-2 control-label">Expenses Type</label>
 					<div class="col-sm-9">
