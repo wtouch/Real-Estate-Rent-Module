@@ -9,7 +9,7 @@
 			</div>
 		</div>		 -->	 				  
 		<div class="col-sm-3">
-			<div class="bottomspace" ng-init="type = 'daily'">
+			<div class="bottomspace" ng-init="type = 'daily'; calcDuration(type, duration);">
 				<label for="year" class="control-label" >View Report</label>
 					<select id="year" class="form-control" ng-model="type">
 						<option value="">Select Order</option>	
@@ -25,9 +25,9 @@
 			<div class="bottomspace">
 			<label for="year" class="control-label"></label>
 					<p class="input-group">
-					  <input class="form-control" type="text" ng-change="calcDuration(type,duration)" id="date" name="date" datepicker-popup="yyyy-MM-dd" ng-model="duration.start" is-open="rentdate" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
+					  <input class="form-control" type="text" ng-change="calcDuration(type,duration)" id="date" name="date" datepicker-popup="yyyy-MM-dd" ng-model="duration.start" is-open="rentdate1" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate1')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
 							<span class="input-group-btn">
-								<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate')">
+								<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate1')">
 								<i class="glyphicon glyphicon-calendar"></i></button>
 							</span>
 					</p>
@@ -77,9 +77,9 @@
 					<div class="bottomspace">
 					<label for="date1" class="control-label"></label><!--ng-change="calcDuration(type,start)"-->
 							<p class="input-group">
-							  <input class="form-control" type="text"  id="date1" name="date1" datepicker-popup="yyyy-MM-dd" ng-model="duration.start" is-open="rentdate" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
+							  <input class="form-control" type="text"  id="date1" name="date1" datepicker-popup="yyyy-MM-dd" ng-model="duration.start" is-open="rentdate2" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate2')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
 									<span class="input-group-btn">
-										<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate')">
+										<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate2')">
 										<i class="glyphicon glyphicon-calendar"></i></button>
 									</span>
 							</p>
@@ -89,9 +89,9 @@
 					<div class="bottomspace">
 					<label for="year" class="control-label"></label>
 							<p class="input-group">
-							  <input class="form-control" type="text" ng-change="calcDuration(type, duration)" id="date" name="date" datepicker-popup="yyyy-MM-dd" ng-model="duration.end" is-open="rentdate" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
+							  <input class="form-control" type="text" ng-change="calcDuration(type, duration)" id="date" name="date" datepicker-popup="yyyy-MM-dd" ng-model="duration.end" is-open="rentdate3" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate3')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
 									<span class="input-group-btn">
-										<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate')">
+										<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate3')">
 										<i class="glyphicon glyphicon-calendar"></i></button>
 									</span>
 							</p>

@@ -1,19 +1,12 @@
 <div class="main-content">
 	<ng-include src="'modules/component/toolbar.html'"></ng-include>
 	<h3 class="text-center">User Report</h3>
-	<div class="row">
-		<!-- <div class="col-sm-3"> 
-			<div class="bottomspace">
-				<label for="search" class="control-label">Search </label>		
-					<input id="search" type="text" class="form-control" ng-change="searchFilter('income_expence_type', searchProp)" ng-model="searchProp" placeholder="search"/>
-			</div>
-		</div>		 -->	 				  
+	<div class="row">			  
 		<div class="col-sm-3">
-			<div class="bottomspace" ng-init="type = 'daily'">
-				<label for="year" class="control-label" >View Report</label>
-					<select id="year" class="form-control" ng-model="type">
-						<option value="">Select Order</option>	
-						<option value="user">User Report</option>	
+			<div class="bottomspace">
+				<label for="year" class="control-label">View Report</label>
+					<select id="year" class="form-control" ng-model="type" ng-init="type = 'user'; getUsers(); getProperties()">
+						<option value="user" selected>User Report</option>	
 						<option value="property">Property Report</option>	
 					</select>
 			</div>
@@ -21,97 +14,99 @@
 
 		<div class="col-sm-3" ng-if="type == 'user'"><!--ng-model="duration.start"-->
 			<div class="bottomspace">
-			<label for="year" class="control-label"></label>
-					<select class="form-control" name="customer" id="customer"  ng-model="addincome.description.user_id" ng-options="item.id as item.name for item in customerList | filter: { group_name : 'customer'} " ng-change="getPropertylist(addincome.description.user_id)" required>
-						<option value="">Select User</option>
-					</select>	
-					
+				<label for="year" class="control-label"></label>
+				<!--ng-init="addincome.description.user_id = '17'"-->
+						<select class="form-control" name="customer" id="customer" ng-model="addincome.description.user_id" ng-options="item.id as item.name for item in customerList | filter: { group_name : 'customer'} " ng-change="getPropertylist(addincome.description.user_id, 'user')" required>
+							<option value="">Select User</option>
+						</select>
 			</div>
 		</div>
 		
 		<div class="col-sm-3" ng-if="type == 'property'">
 			<div class="bottomspace">
-			<label for="property" class="control-label"></label>
-				<select class="form-control" name="property" id="property"  ng-model="addincome.id" ng-options="item.id as item.property_for for item in propertyList" ng-change="getProperty(id)" required>
-					<option value="">Select Property Id</option>
-				</select>	
+				<label for="property" class="control-label"></label>
+					<select class="form-control" name="property" id="property"  ng-model="addincome.id" ng-options="item.id as item.property_for for item in propertyList" ng-change="getPropertylist(addincome.id, 'property')" required>
+						<option value="">Select Property Id</option>
+					</select>	
 			</div>
 		</div> 
-		
-		<div class="col-sm-3" ng-if="type == 'year'">
-			<div class="bottomspace">
-				<label for="year1" class="control-label">View  duration report</label>
-					<select id="year1" class="form-control " ng-model="duration" ng-init="duration.getFullYear(duration)"
-					ng-change="calcDuration(type, duration)"> 
-						<option value="2010">2010</option>	
-						<option value="2011">2011</option>	
-						<option value="2012">2012</option>
-						<option value="2013">2013</option>
-						<option value="2014">2014</option>
-						<option value="2015">2015</option>
-						<option value="2016">2016</option>
-						<option value="2017">2017</option>
-						<option value="2018">2018</option>
-						<option value="2019">2019</option>
-					</select> 
-			</div>
-		</div> 
-	
-	<div  ng-if="type == 'custom'">
-		<div class="col-sm-3"><!--ng-model="duration.start"-->
-				<div class="bottomspace">
-				<label for="date1" class="control-label"></label><!--ng-change="calcDuration(type,start)"-->
-						<p class="input-group">
-						  <input class="form-control" type="text"  id="date1" name="date1" datepicker-popup="yyyy-MM-dd" ng-model="duration.start" is-open="rentdate" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
-								<span class="input-group-btn">
-									<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate')">
-									<i class="glyphicon glyphicon-calendar"></i></button>
-								</span>
-						</p>
-				</div>
-		</div>
-		<div class="col-sm-3"><!--ng-model="duration.start"-->
-				<div class="bottomspace">
-				<label for="year" class="control-label"></label>
-						<p class="input-group">
-						  <input class="form-control" type="text" ng-change="calcDuration(type, duration)" id="date" name="date" datepicker-popup="yyyy-MM-dd" ng-model="duration.end" is-open="rentdate" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
-								<span class="input-group-btn">
-									<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate')">
-									<i class="glyphicon glyphicon-calendar"></i></button>
-								</span>
-						</p>
-				</div>
-		</div>
-	</div>
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<div class="table-responsive" ng-if="incomTotal">
+			<div class="table-responsive"><!--ng-if="addincome.description.user_id || addincome.id"-->
 				<table class="table table-bordered">
-				<thead><th colspan ="6" class="text-center">Income</th></thead>
-				<tbody>
-					<tr>
-						<th>Sr.No.</th>
-						<th>Income Type</th>
-						<th>User Id</th>
-						<th>Amount</th>
-					</tr>
-					<tr ng-repeat="x in income">
-						<td>{{ $index + 1}}</td>
-						<td>{{x.income_expence_type}}</td>
-						<td>{{x.user_id}}</td>
-						<td>{{x.amount}}</td>
-					</tr>
-					<tr>
-					<th> Total Income :</th>
-					<td colspan="5">{{incomTotal}}</td>
-					</tr> 
-				</tbody>
+					<thead><th colspan ="6" class="text-center">Rent Details</th></thead>
+					<tbody>
+						<tr>
+							<th>Sr.No.</th>
+							<th>Property Id</th>
+							<th>Due Date</th>
+							<th>Rent Details</th>
+						</tr>
+						<tr ng-repeat="x in receiptList">
+							<td>{{ $index + 1}}</td>
+							<td>{{x.property_id}}</td>
+							<td>{{x.due_date}}</td>
+							<td>
+							<table class="table table-bordered table-responsive">
+								<tr>
+									<td><b>Previous Due</b></td>
+									<td>{{x.previous_due}}</td>
+								</tr>
+								<tr>
+									<td><b>Current Amount</b></td>
+									<td>{{x.current_amount}}</td>
+								</tr>
+								<tr>
+									<td><b>Total Amount</b></td>
+									<td>{{x.total_amount}}</td>		
+								</tr>
+							</table> 
+							</td>
+						</tr>
+					</tbody>
 				</table>
+				<!-- <div ng-if="">
+					<h2>No Data Found</h2>
+				</div>  -->
+				
+				<!--TABLE FOR PROPERTY-->
+				<!-- <table class="table table-bordered" ng-if="">
+					<thead><th colspan ="6" class="text-center">Property Details</th></thead>
+					<tbody>
+						<tr>
+							<th>Sr.No.</th>
+							<th>Property Id</th>
+							<th>Due Date</th>
+							<th>Rent Details</th>
+						</tr>
+						<tr ng-repeat="x in receiptList">
+							<td>{{ $index + 1}}</td>
+							<td>{{x.property_id}}</td>
+							<td>{{x.due_date}}</td>
+							<td>
+							<table class="table table-bordered table-responsive">
+								<tr>
+									<td><b>Previous Due</b></td>
+									<td>{{x.previous_due}}</td>
+								</tr>
+								<tr>
+									<td><b>Current Amount</b></td>
+									<td>{{x.current_amount}}</td>
+								</tr>
+								<tr>
+									<td><b>Total Amount</b></td>
+									<td>{{x.total_amount}}</td>		
+								</tr>
+							</table> 
+							</td>
+						</tr>
+					</tbody>
+				</table> --><!--END PROPERTY-->
 			</div>
-			<div ng-if="!incomTotal">
-			<h2>No Data Found</h2>
-			</div>
+			<!-- <div ng-if="!receiptList">
+				<h2>No Data Found</h2>
+			</div>  -->
 		</div>
 	</div>
 </div>

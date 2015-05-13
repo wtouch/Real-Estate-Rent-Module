@@ -1,0 +1,7 @@
+<tr><b>Address</b></tr>
+												<tr>
+												<b>Country</b> :{{x.property_location.country}}
+												<b>State</b> :{{x.property_location.state}}
+												<b>City</b> :{{x.property_location.city}}
+												</td>
+												</tr>

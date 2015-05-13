@@ -19,14 +19,10 @@ define(['app'], function (app) {
 		$scope.currentDate = dataService.currentDate;
 		$scope.dates ={};
 		$scope.dates.date = $scope.currentDate;
+		$scope.today = new Date();
+		$scope.todayDt = $scope.today.getFullYear() + "-" + ($scope.today.getMonth() + 1) + "-" + $scope.today.getDate();
+		$scope.duration = {start : $scope.todayDt};
 		
-		$scope.ok = function () {
-			$modalInstance.close();
-		};
-
-		$scope.cancel = function () {
-			$modalInstance.dismiss('cancel');
-		};
 		$scope.openRent = function (url) {
 				//date picker
 			var modalDefaults = {
@@ -35,35 +31,9 @@ define(['app'], function (app) {
 			};
 			
 			modalService.showModal(modalDefaults).then(function (result) {
-				$scope.ok = function(){
-					$modalInstance.close("ok");
-				}
 			});
 		};
 		
-		//code for search filter
-		$scope.searchFilter = function(statusCol, showStatus) {
-			$scope.search = {search: true};
-			$scope.filterStatus= {};
-			$scope.rentParam={};
-			(showStatus =="") ? delete $scope.rentParam[statusCol] : $scope.filterStatus[statusCol] = showStatus;
-			angular.extend($scope.rentParam, $scope.filterStatus);
-			angular.extend($scope.rentParam, $scope.search);
-			if(showStatus.length >= 4 || showStatus == ""){
-			dataService.get("getmultiple/account/1/"+$scope.pageItems, $scope.rentParam)
-			.then(function(response) {  //function for websitelist response
-				if(response.status == 'success'){
-					$scope.account = response.data;
-					$scope.totalRecords = response.totalRecords;
-				}else{
-					$scope.account = {};
-					$scope.totalRecords = {};
-					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$notification[response.status]("Search Account Data", response.message);
-				}
-			});
-			}
-		}; 
 		$scope.pageChanged = function(page, where) {
 			dataService.get("getmultiple/account/"+page+"/"+$scope.pageItems,$scope.income_expence_type)
 			.then(function(response){ 
@@ -71,35 +41,32 @@ define(['app'], function (app) {
 			});
 		};
 		
-		$scope.today = function() {
-			$scope.date = new Date();
-		};
 		$scope.open = function($event,rentdate){
 			$event.preventDefault();
 			$event.stopPropagation();
-			$scope.rentdate = ($scope.rentdate==true)?false:true;
-		};
-		$scope.opendate = function($event,selectDate){
-			$event.preventDefault();
-			$event.stopPropagation();
-			$scope.selectDate = ($scope.selectDate==true)?false:true;
+			$scope[rentdate] = !$scope[rentdate];
 		};
 		
-		//function for Users list response
-		dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
-		.then(function(response) {  
-			if(response.status == 'success'){
-				$scope.customerList = response.data;
-			}else{
-				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-				$notification[response.status]("Get Customers", response.message);
-			}
-		});
+		$scope.getUsers = function(){
+			//function for Users list response
+			dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
+			.then(function(response) {  
+				if(response.status == 'success'){
+					$scope.customerList = response.data;
+				}else{
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Get Customers", response.message);
+				}
+			});
+		}
+		
 		
 		//get data from rent-receipt table
-		$scope.getPropertylist = function(userId){
-			var user_id = {user_id : userId};
-			dataService.get("getmultiple/rentreceipt/1/1000", user_id)
+		$scope.getPropertylist = function(userId, reportType){
+			if (reportType == 'user') $scope.rentParams = { user_id : userId };
+			if (reportType == 'property') $scope.rentParams = {property_id : userId, user_id : $rootScope.userDetails.id };
+			
+			dataService.get("getmultiple/rentreceipt/1/1000", $scope.rentParams)
 				.then(function(response) {
 					if(response.status == "success"){
 						$scope.receiptList = response.data;
@@ -108,7 +75,7 @@ define(['app'], function (app) {
 		}
 		
 		//get data from rent-receipt table
-	
+		$scope.getProperties = function(){
 			dataService.get("getmultiple/property/1/1000", $scope.userInfo)
 				.then(function(response) {
 					console.log(response);
@@ -117,7 +84,7 @@ define(['app'], function (app) {
 						console.log($scope.propertyList);
 					}
 			});
-		
+		}
 		
 		$scope.postData = function(addincome) {
 				 dataService.post("post/account/addincome",addincome)
@@ -229,9 +196,7 @@ define(['app'], function (app) {
 			$scope.getExpense({startDt : startDt, endtDt : endtDt});
 			
 		}
-		$scope.today = new Date();
-		$scope.today = $scope.today.getFullYear() + "-" + ($scope.today.getMonth() + 1) + "-" + $scope.today.getDate();
-		$scope.calcDuration('daily', {start : $scope.today});
+		
 		
 	};
 		

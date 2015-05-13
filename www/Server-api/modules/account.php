@@ -20,6 +20,8 @@
 			$limit[0] = $pageNo;
 			$limit[1] = $records;
 			$where = array();
+			
+			if(isset($_GET['property_id'])) $where['property_id'] = $_GET['property_id'];
 			if(isset($_GET['user_id'])) $where['user_id'] = $_GET['user_id'];
 			if(isset($_GET['balancesheet_type'])) $where['balancesheet_type'] = $_GET['balancesheet_type'];
 			
