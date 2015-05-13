@@ -12,6 +12,7 @@
 				<input type="text" class="form-control" id="amount" ng-model="rentData.rent"   ng-init="rentData.rent = modalOptions.rentList.rent">
 			</div><span><b>Rupee</b></span>
 			<input type="hidden" ng-model="rentData.due_date" ng-init="rentData.due_date = modalOptions.rentList.date_of_rent" >
+			<input type="hidden" ng-model="rentData.generated_date" ng-init="rentData.generated_date = modalOptions.rentDate" >
 			<input type="hidden" ng-model="rentData.user_id">
 			<input type="hidden" ng-model="rentData.property_id" ng-init="rentData.property_id = modalOptions.rentList.property_id">
 			<input type="hidden" ng-model="rentData.total_amount" >
@@ -56,7 +57,7 @@
 		<div class="form-group">
 			<label  for="due_date" class="col-sm-2 control-label">* Date</label>
 			<div class="col-sm-6">
-				<input type="text" class="form-control " placeholder="YYYY-DD-MM" id="due_date" name="due_date" ng-model="rent_date" ng-init="rent_date = modalOptions.rentDate.date" readonly/>
+				<input type="text" class="form-control " placeholder="YYYY-DD-MM" id="due_date" name="due_date" ng-model="rent_date" ng-init="rent_date = modalOptions.rentDate.date" />
 			</div>
 		</div>	
 	</form>

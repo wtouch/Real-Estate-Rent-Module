@@ -21,7 +21,7 @@
 <div class="panel panel-default">
 	<!-- Default panel contents -->
 	<div class="panel-heading text-center">INVOICE</div>
-	<div class="panel-body row">{{receiptList}}
+	<div class="panel-body row">
 		<div class="col-xs-6">
 			<address class="text-center">
 				{{userDetails.name}}<br>
@@ -45,9 +45,8 @@
 					</tr>
 					
 					<tr>
-						<td>Reference Number<br>
-						Invoice - {{receiptList.due_date}}</td>
-						<td>Other Reference(S)<br>{{receiptList.due_date}}
+						
+						<td colspan="2">Due Date <br>{{receiptList.due_date}}
 						</td>
 					</tr>
 					

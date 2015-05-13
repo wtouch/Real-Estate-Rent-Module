@@ -42,7 +42,6 @@
 			
 			$data = $db->select();
 			if($data['status'] == "success"){
-				
 				$total_due = 0;
 				$total_rent = 0;
 				$total_paid = 0;

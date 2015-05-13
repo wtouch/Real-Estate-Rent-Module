@@ -51,21 +51,20 @@ define(['app'], function (app) {
 					},
 				};
 				modalService.showModal(modalDefaults,modalOptions).then(function (result) {
-					dataService.post("post/rentreceipt",modalOptions.rentReceipt)
+					console.log(modalOptions.rentReceipt);
+					/* dataService.post("post/rentreceipt",modalOptions.rentReceipt)
 					.then(function(response) {  
 						if(response.status == "success"){
 							console.log(response);
 						}
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 						$notification[response.status]("Rent Receipt Generated", response.message);
-					});  
+					});   */
 				});
 		};
 		
 		// code for generate invoice
 		if($routeParams.id) {
-			
-			
 			$scope.invoiceyear = [];
 			$scope.invoicemonth = [];			
 			var curDate = new Date();
@@ -75,7 +74,6 @@ define(['app'], function (app) {
 			for (var value = $scope.rentYear.curYear-5; value <= $scope.rentYear.curYear; value++){
 				$scope.invoiceyear.push(value);
 			}
-			
 			$scope.rentYear.curMonth = curDate.getMonth()+1 ;
 			for (var value = 1; value <= 12; value++){
 				if(value<10){
