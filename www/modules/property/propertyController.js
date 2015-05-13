@@ -45,6 +45,32 @@ define(['app'], function (app) {
 				//console.log(response.data);				
 			});			
 		};//end pagination
+		/********************************************************************************************/
+		//code for rent setting
+		$scope.accountConfig = $rootScope.userDetails.config.rentsetting;
+		$scope.tds = $scope.accountConfig.tds;
+		$scope.other_tax = $scope.accountConfig.other_tax;
+		$scope.service_tax = $scope.accountConfig.service_tax;
+		
+		// function for edit your profile
+		$scope.changeSetting = function(id,setting){
+			console.log(setting);
+			dataService.put("put/config/"+id,setting)
+			.then(function(response) {
+				if(response.status == 'success'){
+					$scope.rentsettingForm.$setPristine();
+					/* angular.extend($rootScope.userDetails,editprofile);
+					console.log($rootScope.userDetails);
+					dataService.setUserDetails(($rootScope.userDetails));
+					$rootScope.userDetails = dataService.parse(dataService.userDetails);  */
+				}
+				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+				$notification[response.status]("Edit Profile", response.message);
+			}) 
+		}	
+		
+		
+		/*******************************************************************************************/
 		
 		// code for delete button 
 			$scope.deleted = function(id, status){

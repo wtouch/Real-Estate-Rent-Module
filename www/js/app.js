@@ -218,6 +218,20 @@ define(['angular',
 					}
 				}
 			}
+			if($rootScope.userDetails.config.rentsetting === undefined){
+				$rootScope.userDetails.config = {
+					service_tax : false,
+					other_tax : false,
+					tds : false,
+				}
+				dataService.put('put/user/'+$rootScope.userDetails.id, {config : $rootScope.userDetails.config}).then(function(response){
+					
+					if(response.status == "success"){
+						dataService.setUserDetails(JSON.stringify($rootScope.userDetails));
+						$rootScope.userDetails = dataService.parse(dataService.userDetails);
+					}
+				})
+			}
 		});
 		
 		//(userDetails.config.chooseTemplate=='true')

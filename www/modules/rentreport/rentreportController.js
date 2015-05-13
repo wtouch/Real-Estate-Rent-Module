@@ -31,11 +31,8 @@ define(['app'], function (app) {
 					rentList : rentId,
 					rentDate:{ date :$scope.currentDate },
 					accountConfig : $rootScope.userDetails.config.rentsetting,
-					formData : function(rentData){
-						rentData.user_id = $scope.userData;
-						var d_date = new Date(rentData.due_date); //
-						d_date.setDate(d_date.getDate() + 10);
-						rentData.due_date = d_date;
+					total_amount : 0,
+					getTotal : function(rentData, modalOptions){
 						rentData.tax = modalOptions.accountConfig.service_tax;
 						rentData.tds = modalOptions.accountConfig.tds;
 						rentData.other_tax = modalOptions.accountConfig.other_tax;
@@ -45,21 +42,28 @@ define(['app'], function (app) {
 						var toatltds =  totalRent * parseFloat(parseFloat(modalOptions.accountConfig.tds)/100);
 						var othertax =  totalRent * parseFloat(parseFloat(modalOptions.accountConfig.other_tax)/100);
 						var totalAmount = parseInt(totalRent + totalservice + toatltds + othertax);
-						rentData.total_amount = totalAmount;
-						console.log(rentData.total_amount);
+						modalOptions.total_amount = totalAmount;
+					},
+					formData : function(rentData){
+						rentData.user_id = $scope.userData;
+						var d_date = new Date(rentData.due_date); //
+						d_date.setDate(d_date.getDate() + 10);
+						rentData.due_date = d_date;
+						rentData.total_amount = modalOptions.total_amount;
 						modalOptions.rentReceipt = rentData;
 					},
+					
 				};
 				modalService.showModal(modalDefaults,modalOptions).then(function (result) {
 					console.log(modalOptions.rentReceipt);
-					/* dataService.post("post/rentreceipt",modalOptions.rentReceipt)
+					 dataService.post("post/rentreceipt",modalOptions.rentReceipt)
 					.then(function(response) {  
 						if(response.status == "success"){
 							console.log(response);
 						}
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 						$notification[response.status]("Rent Receipt Generated", response.message);
-					});   */
+					});  
 				});
 		};
 		
@@ -82,9 +86,7 @@ define(['app'], function (app) {
 				else{
 					$scope.invoicemonth.push(value);
 				}
-				
 			}
-			
 			if($scope.rentYear.curMonth <= 10){
 				$scope.rentYear.curMonth = '0' + $scope.rentYear.curMonth;
 			}
@@ -93,13 +95,13 @@ define(['app'], function (app) {
 			dataService.get("getmultiple/rentreceipt/1/1000",$scope.rentParams).then(function(response) {
 				if(response.status == 'success'){
 					$scope.receiptList = response.data[0];
-					$scope.totalPaid = response.data.total_paid;
-					$scope.totalRent = response.data.total_rent;
-					$scope.totalDue = response.data.total_due;
+					$scope.totalPaid = response.data[0].paid;
+					$scope.totalRent = response.data[0].total_amount;
+					$scope.totalDue = response.data[0].due_amount;
 						var a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
 						var b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
-						var num = $scope.totalRent;
-						
+						var num = $scope.totalRent;						;
+						console.log(num);
 						if ((num = num.toString()).length > 9) return 'overflow';
 						var n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
 						if (!n) return; var str = '';
