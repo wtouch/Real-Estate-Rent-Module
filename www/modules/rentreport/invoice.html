@@ -64,8 +64,8 @@
 				</thead>
 				<tfoot>
 					<tr>
-						<td class="text-right"><b>Total</b></td>
-						<td class="amt text-center">{{receiptList.total_amount}}</td>
+						<td class="text-right"><b>Total Rent</b></td>
+						<td class="amt text-center">{{totalRent}}</td>
 					</tr>
 				</tfoot>
 				<tbody>
@@ -73,18 +73,32 @@
 						<td>Rent</td>
 						<td>{{receiptList.rent}}</td>
 					</tr>
-					<tr >
+					<tr>
 						<td>Maintainance</td>
 						<td>{{receiptList.maintainance}}</td>
 					</tr>
-					<tr >
+					<tr>
 						<td>Electricity Bill</td>
 						<td>{{receiptList.electricity_bill}}</td>
 					</tr>
-					<tr >
+					<tr>
 						<td>Water Charge</td>
 						<td>{{receiptList.water_charge}}</td>
 					</tr>
+					<tr>
+						<td><strong>Total Amount</strong></td>
+						<td>{{receiptList.total_amount}}</td>
+					</tr>
+					<tr>
+						<td><strong>Total Due Amount</strong></td>
+						<td>{{totalDue}}</td>
+					</tr>
+					<tr>
+						<td><strong>Total Paid Amount</strong></td>
+						<td>{{totalPaid}}</td>
+					</tr>
+					
+					
 				</tbody>
 			</table>
 		</div>

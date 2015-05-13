@@ -95,9 +95,12 @@ define(['app'], function (app) {
 			dataService.get("getmultiple/rentreceipt/1/1000",$scope.rentParams).then(function(response) {
 				if(response.status == 'success'){
 					$scope.receiptList = response.data[0];
+					$scope.totalPaid = response.data.total_paid;
+					$scope.totalRent = response.data.total_rent;
+					$scope.totalDue = response.data.total_due;
 						var a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
 						var b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
-						var num = $scope.receiptList.total_amount;
+						var num = $scope.totalRent;
 						
 						if ((num = num.toString()).length > 9) return 'overflow';
 						var n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
@@ -108,16 +111,12 @@ define(['app'], function (app) {
 						str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
 						str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only! ' : '';
 					$scope.amountInWords = str;
-						
 					$scope.getReceiptByMonth = function(generatedDate){
 						var generated_date = $scope.generatedDate.year + '-' + $scope.generatedDate.month;
 						angular.extend($scope.rentParams, {generated_date : generated_date});
 						dataService.get("getmultiple/rentreceipt/1/1000",$scope.rentParams).then(function(response) {
 							if(response.status == 'success'){
 								$scope.receiptList = response.data[0];
-								$scope.totalDue = response.data[0].total_paid;
-								console.log($scope.totalDue);
-								
 							}else{
 								if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 								$notification[response.status]("No Data Found", response.message);
