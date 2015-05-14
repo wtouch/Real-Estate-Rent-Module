@@ -70,6 +70,12 @@ define(['app'], function (app) {
 				.then(function(response) {
 					if(response.status == "success"){
 						$scope.receiptList = response.data;
+						$scope.receiptList.total_due = response.data.total_due;
+						$scope.receiptList.total_paid = response.data.total_paid;
+						$scope.receiptList.total_rent = response.data.total_rent;
+						console.log(receiptList);
+					}else{
+						$scope.receiptList="";
 					}
 			})
 		}
@@ -82,6 +88,8 @@ define(['app'], function (app) {
 					if(response.status == "success"){
 						$scope.propertyList = response.data;
 						console.log($scope.propertyList);
+					}else{
+						$scope.propertyList="";
 					}
 			});
 		}
@@ -98,7 +106,7 @@ define(['app'], function (app) {
 				console.log(addincome);
 		}   
 		
-		 $scope.postDataExpence = function(addexpence) {
+		$scope.postDataExpence = function(addexpence) {
 				 dataService.post("post/account/addexpence",addexpence)
 				.then(function(response) {  
 					if(response.status == "success"){
@@ -109,7 +117,6 @@ define(['app'], function (app) {
 				});   
 				console.log(addexpence);
 		}
-		
 		
 		$scope.getIncome = function(dateRange){
 			var expenseParams = {balancesheet_type : 'income'};
@@ -135,12 +142,12 @@ define(['app'], function (app) {
 					$scope.alerts.push({type: response.status, msg: response.message});
 				}				
 			});
-		}
+		} 
 
 		$scope.getExpense = function(dateRange){
 			var expenseParams = {balancesheet_type : 'expence'};
 			angular.extend(expenseParams, dateRange);
-			dataService.get("getmultiple/account/1/"+$scope.pageItems, expenseParams)
+			 dataService.get("getmultiple/account/1/"+$scope.pageItems, expenseParams)
 			.then(function(response) {  //function for property response
 				if(response.status == 'success'){
 					var total = 0;
@@ -158,9 +165,9 @@ define(['app'], function (app) {
 					$scope.totalRecords = {};
 					$scope.alerts.push({type: response.status, msg: response.message});
 				}
-			});
-		}
-		
+			}); 
+		 }
+		 
 		$scope.calcDuration = function(type, duration){
 			//console.log(type, duration);
 			if(type == 'custom'){

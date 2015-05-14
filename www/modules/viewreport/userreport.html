@@ -33,7 +33,8 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<div class="table-responsive"><!--ng-if="addincome.description.user_id || addincome.id"-->
+			<div class="table-responsive">
+			<!--ng-if="addincome.description.user_id || addincome.id"-->
 				<table class="table table-bordered">
 					<thead><th colspan ="6" class="text-center">Rent Details</th></thead>
 					<tbody>
@@ -57,61 +58,29 @@
 									<td><b>Paid Amount</b></td>
 									<td>{{x.paid}}</td>
 								</tr>
-								<!-- <tr>
-									<td><b>Previous Amount</b></td>
-									<td>{{x.previous_due}}</td>
-								</tr> -->
 								<tr>
 									<td><b>Total Amount</b></td>
 									<td>{{x.total_amount}}</td>		
 								</tr>
 							</table>
 							</td>
+							<table>
+							<tr ng-if="receiptList">
+								<td><b>Total</b></td>
+								<td>{{x.total_due}}</td>
+								<td>{{x.total_paid}}</td>
+								<td>{{x.total_rent}}</td>
+							</tr>
+				</table> 
 						</tr>
 					</tbody>
 				</table>
-				
-				<!-- <div ng-if="">
-					<h2>No Data Found</h2>
-				</div>  -->
-				
-				<!--TABLE FOR PROPERTY-->
-				<!-- <table class="table table-bordered" ng-if="">
-					<thead><th colspan ="6" class="text-center">Property Details</th></thead>
-					<tbody>
-						<tr>
-							<th>Sr.No.</th>
-							<th>Property Id</th>
-							<th>Due Date</th>
-							<th>Rent Details</th>
-						</tr>
-						<tr ng-repeat="x in receiptList">
-							<td>{{ $index + 1}}</td>
-							<td>{{x.property_id}}</td>
-							<td>{{x.due_date}}</td>
-							<td>
-							<table class="table table-bordered table-responsive">
-								<tr>
-									<td><b>Previous Due</b></td>
-									<td>{{x.previous_due}}</td>
-								</tr>
-								<tr>
-									<td><b>Current Amount</b></td>
-									<td>{{x.current_amount}}</td>
-								</tr>
-								<tr>
-									<td><b>Total Amount</b></td>
-									<td>{{x.total_amount}}</td>		
-								</tr>
-							</table> 
-							</td>
-						</tr>
-					</tbody>
-				</table> --><!--END PROPERTY-->
+				<div>
+				</div>
+				<div ng-if="!receiptList">
+				<h2 class="text-center">No Data Found</h2>
+				</div>		
 			</div>
-			<!-- <div ng-if="!receiptList">
-				<h2>No Data Found</h2>
-			</div>  -->
 		</div>
 	</div>
 </div>
