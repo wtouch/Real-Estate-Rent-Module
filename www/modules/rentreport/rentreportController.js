@@ -14,12 +14,14 @@ define(['app'], function (app) {
 		$scope.userData = $rootScope.userDetails.id ;
 		$scope.currentDate = dataService.currentDate;
 		
-		$scope.ok = function () {
-			$modalInstance.close();
-		};
-		$scope.cancel = function () {
-			$modalInstance.dismiss('cancel');
-		};
+		$scope.printDiv = function(divName) {
+			var printContents = document.getElementById(divName).innerHTML;
+			var popupWin = window.open('', '_blank', 'width=1000,height=620');
+			popupWin.document.open()
+			popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /><link rel="stylesheet" type="text/css" href="css/style.css" /></head><body onload="window.print()">' + printContents + '</html>');
+			popupWin.document.close();
+		} 
+		
 		$scope.rentDate = {};
 		$scope.openRent = function (url,rentId) {
 			$scope.rentYear = [];

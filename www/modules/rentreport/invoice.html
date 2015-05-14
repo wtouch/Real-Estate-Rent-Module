@@ -1,7 +1,7 @@
 <div class="main-content" >
 <ng-include src="'modules/component/toolbar.html'"></ng-include>
 <form class="form-horizontal" >
-	<h3>Pay Rent<button class="btn btn-primary pull-right" >PRINT</button></h3>
+	<h3>Pay Rent<button class="btn btn-primary pull-right" ng-click="printDiv('invoice')" >PRINT</button></h3>
 		<div class="form-group">
 			<div class="col-sm-5">
 				<label for="year" class="control-label">Generate Invoice by Year</label>
@@ -18,8 +18,8 @@
 		</div>
 	</form>
 
-<div class="panel panel-default">
 	<!-- Default panel contents -->
+<div class="panel panel-default" id="invoice">
 	<div class="panel-heading text-center">INVOICE</div>
 	<div class="panel-body row">
 		<div class="col-xs-6">
@@ -61,12 +61,6 @@
 						<th class=" col-xs-2">Amount</th>
 					</tr>
 				</thead>
-				<tfoot>
-					<tr>
-						<td class="text-right"><b>Total Rent</b></td>
-						<td class="amt text-center">{{totalRent}}</td>
-					</tr>
-				</tfoot>
 				<tbody>
 					<tr>
 						<td>Rent</td>
@@ -84,34 +78,26 @@
 						<td>Water Charge</td>
 						<td>{{receiptList.water_charge}}</td>
 					</tr>
-					<tr>
-						<td><strong>Total Amount</strong></td>
-						<td>{{receiptList.total_amount}}</td>
-					</tr>
-					<tr>
-						<td><strong>Total Due Amount</strong></td>
-						<td>{{totalDue}}</td>
-					</tr>
-					<tr>
-						<td><strong>Total Paid Amount</strong></td>
-						<td>{{totalPaid}}</td>
-					</tr>
-					
-					
 				</tbody>
+				<tfoot>
+					<tr>
+						<td class="text-right"><strong>Total Rent</strong></td>
+						<td class="amt text-center">{{totalRent}}</td>
+					</tr>
+				</tfoot>
 			</table>
 		</div>
 		<div class="col-xs-12">
-			<b><p>Amount Chargeable(in words) : 
-			<i>{{amountInWords | uppercase}}</i>
-			<p>Remarks :</b>
-			<p>{{receiptList.remark}}
+			<p>Amount Chargeable(in words) : 
+			<strong><em>{{amountInWords | uppercase}}</em></strong>
+			<p ng-if="receiptList.remark">Remarks :</p>
+			<p ng-if="receiptList.remark">{{receiptList.remark}} </p>
 			<!-- <p>Company's Service Tax No.: <b>{{receiptList.tax}}</b>
 			<p> TDS.: <b>{{receiptList.tax}}</b>
 			<p> Other Tax.: <b>{{receiptList.tax}}</b>
 			<!-- <p>Company's PAN : <b>AAFPL1404N --> 
-			<p class="text-right">For {{userDetails.name}}<br><br><br>
-			Authorised Signatory</b>
+			<p class="text-right">For <strong><em>{{userDetails.name}}</em></strong><br><br><br>
+			Authorised Signatory</p>
 		</div>
 	</div>
 </div>
