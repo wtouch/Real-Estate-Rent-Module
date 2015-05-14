@@ -11,16 +11,12 @@
 		<div class="col-sm-3">
 			<div class="bottomspace">
 				<label for="username" class="control-label">View Rent By User</label>
-					<!-- <select id="filterbycustomerid"  ng-model="filterbycustomerid" class="form-control"  ng-click="changestatus(filterName, $index)" ng-options="user.id as user.name for user in userList"> 
-						<option value="">Select User</option>	
-					</select> -->
-					
 					<select id="filterbycustomerid" class="form-control" ng-model="filterbycustomerid"  ng-change="changeStatus('user_id', filterbycustomerid)" ng-options="user.id as user.name for user in userList">
 						<option value="">Select User</option>
 					</select>
 			</div>
 		</div>
-		<div class="col-sm-3">
+		<!-- <div class="col-sm-3">
 			<div class="bottomspace">
 				<label for="status" class="control-label">Select type</label>
 					<select id="status" class="form-control" 
@@ -30,7 +26,7 @@
 						<option value="0">Due Rent</option>
 					</select>
 			</div>
-		</div>
+		</div> -->
 		<div class="col-sm-3">
 			<div class="bottomspace">
 				<label for="sort" class="control-label">Sort by Order</label>
@@ -50,6 +46,7 @@
 				<th>Owner Name</th>
 				<th>Taken Date</th>
 				<th>Leaving Date</th>
+				<!-- <th>Paid</th> -->
 				<th>Manage</th>
 			</tr>
 			<tr ng-repeat="x in rentData | orderBy:sort">
@@ -58,6 +55,10 @@
 				<td>{{x.name}}</td>
 				<td>{{x.taken_date}}</td>
 				<td>{{x.leaving_date}}</td>
+				<!-- <td>
+					<a class="btn btn-success" ng-show="x.due_amount==0">Paid</a>
+					<a class="btn btn-warning" ng-show="x.due_amount!=0">Unpaid</a>
+				</td> -->
 				<td>
 					<a class="btn btn-primary"  ng-click="openRent('modules/rentreport/receiptmodal.html',x)">Generate Receipt </a>
 					<a class="btn btn-warning" href="#/dashboard/rentreport/invoice/{{x.id}}">View Receipt</a>

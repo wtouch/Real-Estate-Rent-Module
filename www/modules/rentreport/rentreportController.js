@@ -171,7 +171,7 @@ define(['app'], function (app) {
 			(colValue == "") ? delete $scope.rentParams[statusCol] : $scope.filterStatus[statusCol] = colValue;
 			angular.extend($scope.rentParams, $scope.filterStatus);
 			if(statusCol == 'user_id' && colValue == null) {
-				angular.extend($scope.rentParams, $scope.userInfo);
+				angular.extend($scope.rentParams,  $scope.userInfo);
 			}
 			dataService.get("getmultiple/rent/1/"+$scope.pageItems, $scope.rentParams)
 			.then(function(response) {  //function for templatelist response

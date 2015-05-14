@@ -40,29 +40,29 @@
 				<div class="container-fluid"> 
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-						<ul class="nav navbar-nav">
+						<ul class="nav navbar-nav nav-pills">
 							<li><a class="btn btn-primary" type="button" go-back tooltip="Back"> <!-- created go-back directive for go back one step like back btn on browser -->
 								<span class="glyphicon glyphicon glyphicon-arrow-left">	</span>
 							</a></li>
 							<li><a class="btn btn-primary glyphicon glyphicon-home" href="#/dashboard"><span class="sr-only"></span></a></li>
 							
 							<li><a class="btn btn-primary" href="#/dashboard/property">Property</a></li>
-							<li><a class="btn btn-primary" href="#/dashboard/viewreport">Account</a></li>
-							<li><a class="btn btn-primary" href="#/dashboard/userreport">User Report</a></li>
 							<li><a class="btn btn-primary" href="#/dashboard/rentreport">Rent Details</a></li>
+							<li><a class="btn btn-primary" href="#/dashboard/userreport">Reports</a></li>
+							<li><a class="btn btn-primary" href="#/dashboard/viewreport">Account</a></li>
 							<li><a class="btn btn-primary" href="#/dashboard/users">Userlist</a></li>
 						</ul>
 					<!-- </div>/.navbar-collapse 
 					<div class="collapse navbar-collapse pull-right" id="bs-example-navbar-collapse-1">-->
-						<ul class="nav navbar-nav navbar-right">
-							<li><a type="button" tooltip="Add InCome" class="btn btn-primary" href="#/dashboard/viewreport/addincome/">Add Income</a></li>
+						<ul class="nav navbar-nav nav-pills navbar-right">
+							<li><a type="button" class="btn btn-primary" href="#/dashboard/viewreport/addincome/">Add Income</a></li>
 					
-							<li><a type="button" tooltip="Add Expenses" class="btn btn-primary" href="#/dashboard/viewreport/addexpenses/">Add Expense</a></li>
+							<li><a type="button" class="btn btn-primary" href="#/dashboard/viewreport/addexpenses/">Add Expense</a></li>
 					
-							<li><a type="button" tooltip="Rent This Property" class="btn btn-primary glyphicon glyphicon-cog" href="#/dashboard/property/rentsetting/{{x.id}}"></a></li>
+							<li><a type="button" tooltip="Tax Info" class="btn btn-primary glyphicon glyphicon-cog" href="#/dashboard/property/rentsetting/{{x.id}}"></a></li>
 					
 							<li class="btn-group" dropdown> 
-								<a class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled" tooltip="List">
+								<a class="btn btn-primary dropdown-toggle" dropdown-toggle ng-disabled="disabled">
 									<span class="glyphicon glyphicon-th-large dropdown-toggle"></span>
 								</a>
 										<ul class="dropdown-menu dropd" role="menu" aria-labelledby="dropdownMenu1">	
