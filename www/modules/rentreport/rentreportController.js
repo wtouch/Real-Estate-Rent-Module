@@ -12,7 +12,16 @@ define(['app'], function (app) {
 		$scope.numPages = "";
 		$scope.userInfo = {user_id : $rootScope.userDetails.id};
 		$scope.userData = $rootScope.userDetails.id ;
-		$scope.currentDate = dataService.currentDate;
+		var curDate = new Date();
+		var month = curDate.getMonth() + 1;
+		month = (month <= 9) ? '0' + month : month;
+		$scope.currentDate = curDate.getFullYear() + "-" + month + "-" + curDate.getDate();
+		
+		var dueDate = new Date();
+		dueDate.setDate(dueDate.getDate() + 10);
+		var dueMonth = dueDate.getMonth() + 1;
+		dueMonth = (dueMonth <= 9) ? '0' + dueMonth : dueMonth;
+		$scope.dueDate = dueDate.getFullYear() + "-" + dueMonth + "-" + dueDate.getDate();
 		
 		$scope.printDiv = function(divName) {
 			var printContents = document.getElementById(divName).innerHTML;
@@ -23,15 +32,15 @@ define(['app'], function (app) {
 		} 
 		
 		$scope.rentDate = {};
-		$scope.openRent = function (url,rentId) {
+		$scope.openRent = function (url,rent_data) {
 			$scope.rentYear = [];
 				var modalDefaults = {
 					templateUrl: url,	
 					size : 'lg'
 				};
 				var modalOptions = {
-					rentList : rentId,
-					rentDate:{ date :$scope.currentDate },
+					rentList : rent_data,
+					rentDate: { date : $scope.currentDate, due_date : $scope.dueDate },
 					accountConfig : $rootScope.userDetails.config.rentsetting,
 					total_amount : 0,
 					getTotal : function(rentData, modalOptions){
@@ -47,11 +56,13 @@ define(['app'], function (app) {
 						modalOptions.total_amount = totalAmount;
 					},
 					formData : function(rentData){
-						rentData.user_id = $scope.userData;
-						var d_date = new Date(rentData.due_date); //
-						d_date.setDate(d_date.getDate() + 10);
-						rentData.due_date = d_date;
+						var due_date = new Date(rentData.generated_date);
+						rentData.user_id = modalOptions.rentList.user_id;
+						rentData.property_id = modalOptions.rentList.property_id;
+						due_date.setDate(due_date.getMonth() + modalOptions.rentList.duration);
+						rentData.due_date = due_date;
 						rentData.total_amount = modalOptions.total_amount;
+						console.log(rentData);
 						modalOptions.rentReceipt = rentData;
 					},
 					
