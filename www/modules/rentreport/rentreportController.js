@@ -16,6 +16,7 @@ define(['app'], function (app) {
 		var month = curDate.getMonth() + 1;
 		month = (month <= 9) ? '0' + month : month;
 		$scope.currentDate = curDate.getFullYear() + "-" + month + "-" + curDate.getDate();
+		$scope.rentParams = {};
 		
 		var dueDate = new Date();
 		dueDate.setDate(dueDate.getDate() + 10);
@@ -45,23 +46,22 @@ define(['app'], function (app) {
 					total_amount : 0,
 					getTotal : function(rentData, modalOptions){
 						rentData.tax = modalOptions.accountConfig.service_tax;
-						rentData.tds = modalOptions.accountConfig.tds;
 						rentData.other_tax = modalOptions.accountConfig.other_tax;
 						var totalRent = parseInt(rentData.rent ) +  parseInt(rentData.electricity_bill )+parseInt(rentData.water_charge )+  parseInt(rentData.maintainance);
 						
 						var totalservice = totalRent * parseFloat(parseFloat(modalOptions.accountConfig.service_tax)/100);
-						var toatltds =  totalRent * parseFloat(parseFloat(modalOptions.accountConfig.tds)/100);
+						
 						var othertax =  totalRent * parseFloat(parseFloat(modalOptions.accountConfig.other_tax)/100);
-						var totalAmount = parseInt(totalRent + totalservice + toatltds + othertax);
+						var totalAmount = parseInt(totalRent + totalservice + othertax);
 						modalOptions.total_amount = totalAmount;
 					},
-					formData : function(rentData){
+					formData : function(rentData, total_amount){
 						var due_date = new Date(rentData.generated_date);
 						rentData.user_id = modalOptions.rentList.user_id;
 						rentData.property_id = modalOptions.rentList.property_id;
 						due_date.setDate(due_date.getMonth() + modalOptions.rentList.duration);
 						rentData.due_date = due_date;
-						rentData.total_amount = modalOptions.total_amount;
+						rentData.total_amount = total_amount;
 						console.log(rentData);
 						modalOptions.rentReceipt = rentData;
 					},
@@ -81,7 +81,7 @@ define(['app'], function (app) {
 		};
 		
 		// code for generate invoice
-		if($routeParams.id) {
+		if($routeParams.propertyId) {
 			$scope.invoiceyear = [];
 			$scope.invoicemonth = [];			
 			var curDate = new Date();
@@ -104,17 +104,32 @@ define(['app'], function (app) {
 				$scope.rentYear.curMonth = '0' + $scope.rentYear.curMonth;
 			}
 			$scope.generated_date = $scope.rentYear.curYear + "-" + $scope.rentYear.curMonth;
-			$scope.rentParams = {property_id : $routeParams.id, user_id : $rootScope.userDetails.id, generated_date : $scope.generated_date};
+			$scope.rentParams = {property_id : $routeParams.propertyId, user_id : $routeParams.userId, generated_date : $scope.generated_date};
 			dataService.get("getmultiple/rentreceipt/1/1000",$scope.rentParams).then(function(response) {
 				if(response.status == 'success'){
+					console.log($rootScope.userDetails.config.rentsetting);
 					$scope.receiptList = response.data[0];
-					$scope.totalPaid = response.data[0].paid;
-					$scope.totalRent = response.data[0].total_amount;
-					$scope.totalDue = response.data[0].due_amount;
+					$scope.serviceTax = function(rent){
+						return rent * parseInt($rootScope.userDetails.config.rentsetting.service_tax) / 100; // other_tax - secondary_edu_cess - primary_edu_cess
+					}
+					$scope.primaryEduCess = function(rent){
+						return $scope.serviceTax(rent) * parseInt($rootScope.userDetails.config.rentsetting.primary_edu_cess) / 100;
+					}
+					$scope.secondaryEduCess = function(rent){
+						return $scope.serviceTax(rent) * parseInt($rootScope.userDetails.config.rentsetting.secondary_edu_cess) / 100;
+					}
+					$scope.totalRent = function(){
+						var rent = $scope.receiptList.rent;
+						var maintainance = ($scope.receiptList.maintainance) ? $scope.receiptList.maintainance : 0;
+						var electricity_bill = ($scope.receiptList.electricity_bill) ? $scope.receiptList.electricity_bill : 0;
+						var water_charge = ($scope.receiptList.water_charge) ? $scope.receiptList.water_charge : 0;
+						return Math.round(parseFloat(rent) + parseFloat($scope.serviceTax(rent)) + parseFloat($scope.primaryEduCess(rent)) + parseFloat($scope.secondaryEduCess(rent)) + parseFloat(maintainance) + parseFloat(electricity_bill) + parseFloat(water_charge)) ;
+					}
+					$scope.inWords = function(totalRent){
 						var a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
 						var b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
-						var num = $scope.totalRent;						;
-						console.log(num);
+						var num = totalRent;
+						
 						if ((num = num.toString()).length > 9) return 'overflow';
 						var n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
 						if (!n) return; var str = '';
@@ -123,47 +138,53 @@ define(['app'], function (app) {
 						str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'thousand ' : '';
 						str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
 						str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only! ' : '';
-					$scope.amountInWords = str;
+						$scope.amountInWords = str;
+					}
+					$scope.inWords($scope.totalRent());
 					$scope.getReceiptByMonth = function(generatedDate){
 						var generated_date = $scope.generatedDate.year + '-' + $scope.generatedDate.month;
 						angular.extend($scope.rentParams, {generated_date : generated_date});
 						dataService.get("getmultiple/rentreceipt/1/1000",$scope.rentParams).then(function(response) {
 							if(response.status == 'success'){
 								$scope.receiptList = response.data[0];
+								$scope.totalPaid = response.data[0].paid;
+								$scope.totalRent = response.data[0].total_amount;
+								$scope.totalDue = response.data[0].due_amount;
+								$scope.inWords($scope.totalRent);
 							}else{
+								$scope.receiptList = [];
+								$scope.totalPaid = 0;
+								$scope.totalRent = 0;
+								$scope.totalDue = 0;
 								if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 								$notification[response.status]("No Data Found", response.message);
 							}
 						});
 					}
 				}else{
+					$scope.receiptList = [];
+					$scope.totalPaid = 0;
+					$scope.totalRent = 0;
+					$scope.totalDue = 0;
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 					$notification[response.status]("Rent Receipt not generated", response.message);
 				}
 			});
 		};
+		
 		$scope.pageChanged = function(page, rentParams) {
-			dataService.get("getmultiple/rent/"+page+"/"+$scope.pageItems, $scope.rentParams)
+			dataService.get("getmultiple/rent/"+page+"/"+$scope.pageItems, rentParams)
 			.then(function(response) { 
 				$scope.rentData = response.data;			
 			});
 		}; 
-		
-		$scope.rentParams = {status: 1};
-		angular.extend($scope.rentParams, $scope.userInfo);
-		dataService.get("getmultiple/rent/"+$scope.rentListCurrentPage+"/"+$scope.pageItems, $scope.rentParams)
-		.then(function(response) {  
-			$scope.rentData = response.data;
-			if(response.status == 'success'){
-				$scope.rentreport = response.data;
-				$scope.totalRecords=response.totalRecords;		
-			}else{
-				$scope.rentData = {};
-				$scope.totalRecords = {};	
-				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-				$notification[response.status]("View rent report", response.message);
-			}  
-		});
+		$scope.getRentData = function() {
+			var rentParams = {user_id : $rootScope.userDetails.id};
+			dataService.get("getmultiple/rent/1/"+$scope.pageItems, rentParams)
+			.then(function(response) { 
+				$scope.rentData = response.data;			
+			});
+		}; 
 		
 		// code for show User list
 		dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})

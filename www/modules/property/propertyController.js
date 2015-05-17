@@ -18,19 +18,6 @@ define(['app'], function (app) {
 		$scope.dates.date=$scope.currentDate;
 		$scope.setrent={};
 		
-		//for alert 		 
-		if($scope.status=="warning"){     
-			 $scope.alerts.push({type: 'error', msg: "Error to load data"});
-			 $scope.closeAlert = function(index) {
-				$scope.alerts.splice(index, 1);
-			 }; 
-		}	
-		
-		//function for close alert
-		$scope.closeAlert = function(index) {
-			$scope.alerts.splice(index, 1);
-		}; 	
-
 		//for dynamic tooltip
 		$scope.dynamicTooltip = function(status, active, notActive){
 			return (status==1) ? active : notActive;
@@ -47,26 +34,29 @@ define(['app'], function (app) {
 		};//end pagination
 		/********************************************************************************************/
 		//code for rent setting
-		$scope.accountConfig = $rootScope.userDetails.config.rentsetting;
-		$scope.tds = $scope.accountConfig.tds;
-		$scope.other_tax = $scope.accountConfig.other_tax;
-		$scope.service_tax = $scope.accountConfig.service_tax;
+		var accountConfig = $rootScope.userDetails.config.rentsetting;
+		$scope.config = {
+			other_tax : accountConfig.other_tax,
+			service_tax : accountConfig.service_tax,
+			pan_no : accountConfig.pan_no,
+			tin_no : accountConfig.tin_no
+		}
+		
 		
 		// function for edit your profile
-		$scope.changeSetting = function(id,setting){
+		$scope.changeSetting = function(setting){
 			console.log(setting);
-			dataService.put("put/config/"+id,setting)
-			.then(function(response) {
-				if(response.status == 'success'){
-					$scope.rentsettingForm.$setPristine();
-					/* angular.extend($rootScope.userDetails,editprofile);
-					console.log($rootScope.userDetails);
-					dataService.setUserDetails(($rootScope.userDetails));
-					$rootScope.userDetails = dataService.parse(dataService.userDetails);  */
+			if($rootScope.userDetails.config == "") $rootScope.userDetails.config = {};
+			$rootScope.userDetails.config.rentsetting = setting;
+			
+			dataService.put('put/user/'+$rootScope.userDetails.id, {config : $rootScope.userDetails.config}).then(function(response){
+				if(response.status == "success"){
+					dataService.setUserDetails(JSON.stringify($rootScope.userDetails));
+					$rootScope.userDetails = dataService.parse(dataService.userDetails);
 				}
 				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 				$notification[response.status]("Edit Profile", response.message);
-			}) 
+			})
 		}	
 		
 		
@@ -119,10 +109,10 @@ define(['app'], function (app) {
 /**************************************************************************************/			
 		//upload method for multiple images
 		$scope.uploadMultiple = function(files,path,userInfo,picArr){ //this function for uploading files
+		console.log(picArr);
 			 upload.upload(files,path,userInfo,function(data){
-				var picArrKey = 0, x;
-				for(x in picArr) picArrKey++;
 				if(data.status === 'success'){
+					console.log(picArr);
 					picArr.push(data.data);
 				}else{
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};

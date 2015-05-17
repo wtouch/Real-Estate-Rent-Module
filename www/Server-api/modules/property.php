@@ -44,12 +44,12 @@
 	}//end get
 	
 	
-	if($reqMethod=="POST"){
+	if($reqMethod=="POST" && $_GET['METHOD'] == 'POST'){
 		$insert = $db->insert("property", $body);
 		echo json_encode($insert);
 	}
 	
-	if($reqMethod=="PUT" || $reqMethod=="DELETE"){
+	if($reqMethod=="POST" && $_GET['METHOD'] == 'PUT' || $reqMethod=="DELETE" && $_GET['METHOD'] == 'DELETE'){
 		$where['id'] = $id; // need where clause to update/delete record
 		$update = $db->update("property", $body, $where);
 		echo json_encode($update);

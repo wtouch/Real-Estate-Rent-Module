@@ -79,7 +79,7 @@
 		}
 	}//end get
 	
-	if($reqMethod=="POST"){
+	if($reqMethod=="POST" && $_GET['METHOD'] == 'POST'){
 		$input = json_decode($body,true);
 		//print_r($input);
 		$postData = array();
@@ -93,9 +93,9 @@
 		 }
 	}
 	
-	if($reqMethod=="PUT" || $reqMethod=="DELETE"){
+	if($reqMethod=="POST" && $_GET['METHOD'] == 'PUT' || $reqMethod=="DELETE" && $_GET['METHOD'] == 'DELETE'){
 		$where['id'] = $id; // need where clause to update/delete record
-		$update = $db->update("website", $body, $where);
+		$update = $db->update("config", $body, $where);
 		echo json_encode($update);
 	}
 

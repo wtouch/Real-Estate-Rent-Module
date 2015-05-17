@@ -42,13 +42,13 @@
 			echo json_encode($data);
 		}
 	}//end get
-	if($reqMethod=="PUT" || $reqMethod=="DELETE"){
+	if($reqMethod=="POST" && $_GET['METHOD'] == 'PUT' || $reqMethod=="DELETE" && $_GET['METHOD'] == 'DELETE'){
 		$where['id'] = $id; // need where clause to update/delete record
 		$update = $db->update("account", $body, $where);
 		echo json_encode($update);
 	}
 	
-	if($reqMethod=="POST"){
+	if($reqMethod=="POST" && $_GET['METHOD'] == 'POST'){
 		$insert = $db->insert("account", $body);
 		echo json_encode($insert);
 	}

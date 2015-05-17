@@ -14,7 +14,7 @@
 			</div> 
 
 			<div ng-if = "type =='Rent'">
-				<div class="form-group" ng-if="userDetails.group_name != 'customer'">
+				<div class="form-group" ng-if="userDetails.group_name != 'customer'" ng-init="getUsers()">
 					<label for="customer" class="col-sm-2 control-label">* User</label>
 						<div class="col-sm-9">
 							<select class="form-control" name="customer" id="customer"  ng-model="addincome.description.user_id" ng-options="item.id as item.name for item in customerList | filter: { group_name : 'customer'} " ng-change="getPropertylist(addincome.description.user_id)" required>
@@ -30,7 +30,7 @@
 				</span> 
 			</div>
 			
-			<div class="form-group" ng-if="addincome.description.user_id">
+			<div class="form-group" ng-if="addincome.description.user_id" ng-init="getPropertylist(addincome.description.user_id,'user')">
 				<label for="receipt" class="col-sm-2 control-label">* Receipt Id</label>
 					<div class="col-sm-7">
 						<select class="form-control" name="receipt" id="receipt" ng-model="addincome.receipt_id" ng-options="item.id as item.generated_date for item in receiptList | filter : { due_amount : '0' }" required>

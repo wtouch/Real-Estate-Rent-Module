@@ -68,11 +68,16 @@
 							<tbody>
 								<tr ng-repeat="x in properties | orderBy:sort">
 									<td>{{((currentPage - 1) * pageItems) + $index + 1}}</td>
-									<td>
-										{{x.property_images}}									
-										 <!-- <img ng-src="{{x.property_images}}" ng-click="open(x.property_images)" class="img-thumbnail   img-responsive prop-img" title="Property image">  -->
-										 <img class="img-responsive" ng-model="x.property_images" ng-src="{{appConfig.assetPath + x.property_images.file_relative_path}}"/>
-									</td> <!-- ng-click added for modal, class added for responsive image --> 
+									<td class="col-sm-2">
+										<div class="media-left">
+										<div class="media-object text-center"><!--width="150px"-->
+											<img class="imgwidths"  ng-model="x.imgkey" ng-src="{{appConfig.assetPath + x.property_images[x.imgkey].file_relative_path}}" ng-init="x.imgkey = 0"/>
+											<span class="thumbs" ng-repeat="(key, value) in x.property_images">
+												<img class="img-thumbnail" width="40px" ng-src="{{appConfig.assetPath + value.file_relative_path}}" ng-click="x.imgkey = key"/>
+											</span>
+										</div>
+										</div>
+									</td>
 									<td>
 										<table class="table table-bordered table-responsive">
 											<tr>

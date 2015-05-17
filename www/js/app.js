@@ -100,7 +100,7 @@ define(['angular',
 				.when('/dashboard/rentreport/:id?', route.resolve({controller: 'rentreport', template: 'rentreport',
 				 label: "View Rent Report"}, 'rentreport/'))
 				 
-				.when('/dashboard/rentreport/invoice/:id?', route.resolve({controller:'rentreport', template: 'invoice',label:"Generate Invoice "}, 'rentreport/'))
+				.when('/dashboard/rentreport/invoice/:propertyId?/:userId', route.resolve({controller:'rentreport', template: 'invoice',label:"Generate Invoice "}, 'rentreport/'))
 				 
 				 .when('/dashboard/viewreport', route.resolve({controller: 'viewreport', template: 'viewreport',
 				 label: "Property Rent Report"}, 'viewreport/')) 
@@ -162,6 +162,21 @@ define(['angular',
 				
 			};
 			if($rootScope.userDetails != null){
+				if($rootScope.userDetails.config == "") $rootScope.userDetails.config = {};
+				if($rootScope.userDetails.config.rentsetting === undefined){
+					$rootScope.userDetails.config.rentsetting = {
+						service_tax : 0,
+						other_tax : 0,
+						pan_no : 0,
+						tin_no : 0
+					}
+					dataService.put('put/user/'+$rootScope.userDetails.id, {config : $rootScope.userDetails.config}).then(function(response){
+						if(response.status == "success"){
+							dataService.setUserDetails(JSON.stringify($rootScope.userDetails));
+							$rootScope.userDetails = dataService.parse(dataService.userDetails);
+						}
+					})
+				}
 				if($rootScope.userDetails.group_id == 4){
 					if($rootScope.userDetails.config.addbusiness === undefined){
 						
@@ -218,20 +233,7 @@ define(['angular',
 					}
 				}
 			}
-			if($rootScope.userDetails.config.rentsetting === undefined){
-				$rootScope.userDetails.config = {
-					service_tax : false,
-					other_tax : false,
-					tds : false,
-				}
-				dataService.put('put/user/'+$rootScope.userDetails.id, {config : $rootScope.userDetails.config}).then(function(response){
-					
-					if(response.status == "success"){
-						dataService.setUserDetails(JSON.stringify($rootScope.userDetails));
-						$rootScope.userDetails = dataService.parse(dataService.userDetails);
-					}
-				})
-			}
+			
 		});
 		
 		//(userDetails.config.chooseTemplate=='true')

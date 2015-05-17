@@ -73,7 +73,7 @@ define(['app'], function (app) {
 						$scope.receiptList.total_due = response.data.total_due;
 						$scope.receiptList.total_paid = response.data.total_paid;
 						$scope.receiptList.total_rent = response.data.total_rent;
-						console.log(receiptList);
+						console.log($scope.receiptList);
 					}else{
 						$scope.receiptList="";
 					}

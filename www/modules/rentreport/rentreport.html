@@ -1,6 +1,6 @@
-<div class="main-content" >
+<div class="main-content" ng-init="getRentData()">
 	<ng-include src="'modules/component/toolbar.html'"></ng-include>
-	<h3 class="text-center">Details About RENT</h3>
+	<h3 class="text-center">Rented Property Details</h3>
 	<div class="row">
 		<div class="col-sm-3"> 
 			<div class="bottomspace">
@@ -61,7 +61,7 @@
 				</td> -->
 				<td>
 					<a class="btn btn-primary"  ng-click="openRent('modules/rentreport/receiptmodal.html',x)">Generate Receipt </a>
-					<a class="btn btn-warning" href="#/dashboard/rentreport/invoice/{{x.id}}">View Receipt</a>
+					<a class="btn btn-warning" href="#/dashboard/rentreport/invoice/{{x.property_id}}/{{x.user_id}}">View Receipt</a>
 				</td>
 			</tr>
 		</table>

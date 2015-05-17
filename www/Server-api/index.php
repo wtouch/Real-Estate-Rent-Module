@@ -32,7 +32,7 @@ $app->get('/getsingle/:getRequest(/:id)', 'getRecord' );
 //use this uri for post new record into database - like create
 $app->post('/post/:getRequest(/:postParams)', 'postRecord' );
 //use this uri for put/update record from database
-$app->put('/put/:getRequest/:id', 'putRecord' );
+$app->post('/put/:getRequest/:id', 'putRecord' );
 //use this uri for delete record from database
 $app->delete('/delete/:getRequest/:id', 'deleteRecord' );
 

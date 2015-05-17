@@ -374,7 +374,8 @@ define(['app'], function (app) {
 				});
 			};
 			obj.post = function (q, object, params) {
-				
+				if(!params) params = {};
+				angular.extend(params, {METHOD : 'POST'});
 				$rootScope.loading = true;
 				return $http({
 					url: serviceBase + q,
@@ -387,20 +388,25 @@ define(['app'], function (app) {
 				});
 			};
 			obj.put = function (q, object, params) {
-				
+				if(!params) params = {};
+				angular.extend(params, {METHOD : 'PUT'});
 				$rootScope.loading = true;
 				return $http({
 					url: serviceBase + q,
-					method: "PUT",
+					method: "POST",
 					data: object,
-					params: params
+					params: params,
+					headers : {
+						Authorization : 'Digest 5rJg8fjEUH6h'
+					}
 				}).then(function (results) {
 					$rootScope.loading = false;
 					return results.data;
 				});
 			};
 			obj.delete = function (q, object, params) {
-				
+				if(!params) params = {};
+				angular.extend(params, {METHOD : 'DELETE'});
 				$rootScope.loading = true;
 				return $http({
 					url: serviceBase + q,

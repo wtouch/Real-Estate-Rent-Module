@@ -25,7 +25,7 @@
 		<div class="col-sm-3" ng-if="type == 'property'">
 			<div class="bottomspace">
 				<label for="property" class="control-label"></label>
-					<select class="form-control" name="property" id="property"  ng-model="addincome.id" ng-options="item.id as item.property_for for item in propertyList" ng-change="getPropertylist(addincome.id, 'property')" required>
+					<select class="form-control" name="property" id="property"  ng-model="addincome.id" ng-options="item.id as item.title for item in propertyList" ng-change="getPropertylist(addincome.id, 'property')" required>
 						<option value="">Select Property Id</option>
 					</select>	
 			</div>

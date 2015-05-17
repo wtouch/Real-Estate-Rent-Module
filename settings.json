@@ -17,7 +17,7 @@
         "maximum_size": [0, 0],
         "disable_maximize_button": false,
         "center_on_screen": true,
-        "start_maximized": false,
+        "start_maximized": true,
         "start_fullscreen": false
     },
     "popup_window": {
@@ -54,5 +54,6 @@
             "open_in_external_browser": true,
             "devtools": true
         }
-    }
+    },
+	"PUT_DELETE_PASSWORDS_FILE" : "no-password-file-required"
 }

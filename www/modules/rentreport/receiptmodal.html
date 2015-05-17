@@ -46,15 +46,14 @@
 			<div class="col-sm-8">
 				<input type="text" class="form-control " placeholder="YYYY-DD-MM" id="due_date" name="due_date" ng-model="rentData.generated_date" ng-init="rentData.generated_date = modalOptions.rentDate.date" />
 			</div>
-		</div>	
-		
+		</div>
 	</form>
 </div>
 
 
 <div class="col-md-4 ">
 	<div class="table-responsive">
-		<table class="table bordered" ng-init="modalOptions.getTotal(rentData, modalOptions)">
+		<table class="table bordered" ng-init="modalOptions.getTotal(rentData, modalOptions); rentData.total_amount = modalOptions.total_amount">
 			<thead><th colspan="2">Total Amount Details</th></thead>
 			<tr><td>Rent :</td><td>{{rentData.rent}}</td></tr>
 			<tr><td>Electricity_bill :</td><td>{{rentData.electricity_bill}}</td></tr>
@@ -65,5 +64,5 @@
 	</div>
 </div>
 <div class="modal-footer ">
-	<button type="submit" ng-disabled="receiptForm.$invalid" class="btn btn-primary" ng-click="modalOptions.formData(rentData); modalOptions.ok()">OK</button>
+	<button type="submit" ng-disabled="receiptForm.$invalid" class="btn btn-primary" ng-click="modalOptions.formData(rentData, modalOptions.total_amount); modalOptions.ok()">OK</button>
 </div>
