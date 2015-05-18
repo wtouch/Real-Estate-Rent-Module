@@ -24,6 +24,24 @@ define(['app'], function (app) {
 		dueMonth = (dueMonth <= 9) ? '0' + dueMonth : dueMonth;
 		$scope.dueDate = dueDate.getFullYear() + "-" + dueMonth + "-" + dueDate.getDate();
 		
+		$scope.otherTax = function(rent){
+			if($rootScope.userDetails.config.rentsetting.other_tax == 0){ 
+				return 0;
+			}else{
+				return rent * parseInt($rootScope.userDetails.config.rentsetting.other_tax) / 100;
+			}
+		}
+		$scope.serviceTax = function(rent){
+			console.log(parseFloat($rootScope.userDetails.config.rentsetting.service_tax));
+			return rent * parseFloat($rootScope.userDetails.config.rentsetting.service_tax) / 100; // other_tax - secondary_edu_cess - primary_edu_cess
+		}
+		$scope.primaryEduCess = function(rent){
+			return $scope.serviceTax(rent) * parseInt($rootScope.userDetails.config.rentsetting.primary_edu_cess) / 100;
+		}
+		$scope.secondaryEduCess = function(rent){
+			return $scope.serviceTax(rent) * parseInt($rootScope.userDetails.config.rentsetting.secondary_edu_cess) / 100;
+		}
+		
 		$scope.printDiv = function(divName) {
 			var printContents = document.getElementById(divName).innerHTML;
 			var popupWin = window.open('', '_blank', 'width=1000,height=620');
@@ -45,14 +63,15 @@ define(['app'], function (app) {
 					accountConfig : $rootScope.userDetails.config.rentsetting,
 					total_amount : 0,
 					getTotal : function(rentData, modalOptions){
-						rentData.tax = modalOptions.accountConfig.service_tax;
-						rentData.other_tax = modalOptions.accountConfig.other_tax;
-						var totalRent = parseInt(rentData.rent ) +  parseInt(rentData.electricity_bill )+parseInt(rentData.water_charge )+  parseInt(rentData.maintainance);
+						rentData.tax = $scope.serviceTax(rentData.rent);
+						rentData.other_tax = $scope.otherTax(rentData.rent);
 						
-						var totalservice = totalRent * parseFloat(parseFloat(modalOptions.accountConfig.service_tax)/100);
+						var rent = rentData.rent;
+						var maintainance = (rentData.maintainance) ? rentData.maintainance : 0;
+						var electricity_bill = (rentData.electricity_bill) ? rentData.electricity_bill : 0;
+						var water_charge = (rentData.water_charge) ? rentData.water_charge : 0;
+						var totalAmount =  Math.round(parseFloat(rent) + parseFloat($scope.serviceTax(rent)) + parseFloat($scope.primaryEduCess(rent)) + parseFloat($scope.secondaryEduCess(rent)) + parseFloat(maintainance) + parseFloat(electricity_bill) + parseFloat(water_charge));
 						
-						var othertax =  totalRent * parseFloat(parseFloat(modalOptions.accountConfig.other_tax)/100);
-						var totalAmount = parseInt(totalRent + totalservice + othertax);
 						modalOptions.total_amount = totalAmount;
 					},
 					formData : function(rentData, total_amount){
@@ -62,7 +81,6 @@ define(['app'], function (app) {
 						due_date.setDate(due_date.getMonth() + modalOptions.rentList.duration);
 						rentData.due_date = due_date;
 						rentData.total_amount = total_amount;
-						console.log(rentData);
 						modalOptions.rentReceipt = rentData;
 					},
 					
@@ -109,15 +127,7 @@ define(['app'], function (app) {
 				if(response.status == 'success'){
 					console.log($rootScope.userDetails.config.rentsetting);
 					$scope.receiptList = response.data[0];
-					$scope.serviceTax = function(rent){
-						return rent * parseInt($rootScope.userDetails.config.rentsetting.service_tax) / 100; // other_tax - secondary_edu_cess - primary_edu_cess
-					}
-					$scope.primaryEduCess = function(rent){
-						return $scope.serviceTax(rent) * parseInt($rootScope.userDetails.config.rentsetting.primary_edu_cess) / 100;
-					}
-					$scope.secondaryEduCess = function(rent){
-						return $scope.serviceTax(rent) * parseInt($rootScope.userDetails.config.rentsetting.secondary_edu_cess) / 100;
-					}
+					
 					$scope.totalRent = function(){
 						var rent = $scope.receiptList.rent;
 						var maintainance = ($scope.receiptList.maintainance) ? $scope.receiptList.maintainance : 0;
@@ -148,9 +158,9 @@ define(['app'], function (app) {
 							if(response.status == 'success'){
 								$scope.receiptList = response.data[0];
 								$scope.totalPaid = response.data[0].paid;
-								$scope.totalRent = response.data[0].total_amount;
+								//$scope.totalRent = $scope.totalRent();
 								$scope.totalDue = response.data[0].due_amount;
-								$scope.inWords($scope.totalRent);
+								$scope.inWords($scope.totalRent());
 							}else{
 								$scope.receiptList = [];
 								$scope.totalPaid = 0;

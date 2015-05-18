@@ -13,6 +13,26 @@
 	</div>
 	
 	<div class="form-group">
+		<label for="primary_edu_cess" class="col-sm-2 control-label">Primary Education CESS *</label>
+		<div class="col-sm-9">
+			<input type="text" id="primary_edu_cess" class="form-control" name="primary_edu_cess" placeholder="Set Service Tax" ng-model="config.primary_edu_cess" required>
+			<span class="text-danger" ng-show="rentsettingForm.primary_edu_cess.$dirty && rentsettingForm.primary_edu_cess.$invalid">
+				<span ng-show="rentsettingForm.primary_edu_cess.$error.required">Primary Education CESS is required.</span>
+			</span>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="secondary_edu_cess" class="col-sm-2 control-label">Secondary Education CESS *</label>		
+		<div class="col-sm-9">
+			<input type="text" id="secondary_edu_cess" class="form-control" name="secondary_edu_cess" placeholder="Set Service Tax" ng-model="config.secondary_edu_cess" required>
+			<span class="text-danger" ng-show="rentsettingForm.secondary_edu_cess.$dirty && rentsettingForm.secondary_edu_cess.$invalid">
+				<span ng-show="rentsettingForm.secondary_edu_cess.$error.required">Secondary Education is required.</span>
+			</span>
+		</div>
+	</div>
+	
+	<div class="form-group">
 		<label for="other_tax" class="col-sm-2 control-label">Other Tax*</label>		
 		<div class="col-sm-9">
 			<input type="text" id="other_tax" class="form-control" name="other_tax" ng-model="config.other_tax" required>

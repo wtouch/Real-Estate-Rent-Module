@@ -38,6 +38,8 @@ define(['app'], function (app) {
 		$scope.config = {
 			other_tax : accountConfig.other_tax,
 			service_tax : accountConfig.service_tax,
+			primary_edu_cess : accountConfig.primary_edu_cess,
+			secondary_edu_cess : accountConfig.secondary_edu_cess,
 			pan_no : accountConfig.pan_no,
 			tin_no : accountConfig.tin_no
 		}
