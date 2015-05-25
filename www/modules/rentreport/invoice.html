@@ -1,7 +1,7 @@
 <div class="main-content" >
 <ng-include src="'modules/component/toolbar.html'"></ng-include>
 <form class="form-horizontal" >
-	<h3>Pay Rent<button class="btn btn-primary pull-right" ng-click="printDiv('invoice')" >PRINT</button></h3>
+	<button class="btn btn-primary pull-right" ng-click="printDiv('invoice')" >PRINT</button>
 		<div class="form-group">
 			<div class="col-sm-5">
 				<label for="year" class="control-label">Generate Invoice by Year</label>
@@ -45,9 +45,10 @@
 					</tr>
 					
 					<tr>
-						
-						<td colspan="2">Due Date <br>{{receiptList.due_date}}
+						<td>Due Date<br>{{receiptList.due_date}}
 						</td>
+						<td>Current Month<br>
+						{{receiptList.current_month}}</td>
 					</tr>
 					
 				</table>

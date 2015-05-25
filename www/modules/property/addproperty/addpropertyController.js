@@ -1,8 +1,10 @@
 'use strict';
 define(['app'], function (app) {
-    var injectParams = ['$scope', '$injector','$routeParams','$http','$rootScope','upload', '$timeout', 'dataService'];
+    var injectParams = ['$scope', '$injector','$routeParams','$http','$rootScope','upload', '$timeout', 'dataService'
+	,'$location'];
     // This is controller for this view
-	var addpropertyController = function ($scope, $injector,$routeParams,$http,$rootScope, upload, $timeout,dataService) {
+	var addpropertyController = function ($scope, $injector,$routeParams,$http,$rootScope, upload, $timeout,
+	dataService,$location) {
 		$rootScope.metaTitle = "Add Real Estate Property";
 		
 		// all $scope object goes here
@@ -31,7 +33,23 @@ define(['app'], function (app) {
 		$scope.closeAlert = function(index) {
 			$scope.alerts.splice(index, 1);
 		};
-		
+	
+		$scope.getData = function(location){
+			$scope.readOnly = true;
+			$scope.property.property_location.location = location.location;
+			$scope.property.property_location.city = location.city;
+			$scope.property.property_location.state = location.state;
+			$scope.property.property_location.country = location.country;
+			$scope.property.property_location.area = location.area;
+			$scope.property.property_location.pincode = location.pincode;
+		}
+		$scope.getTypeaheadData = function(table, searchColumn, searchValue){
+			var locationParams = {search : {}}
+			locationParams.search[searchColumn] = searchValue;
+			return dataService.config('locations', locationParams).then(function(response){
+				return response;
+			});
+		}
 		// this function for uploading files
 		$scope.upload = function(files,path,userInfo, picArr){
 			console.log($scope.property);
@@ -63,6 +81,7 @@ define(['app'], function (app) {
 		/************************************************************************************/
 		//Add property
 		$scope.addPropertyFun = function(property){	
+			$scope.property.user_id= $rootScope.userDetails.id;
 			$scope.property.date = $scope.currentDate;
 			dataService.post("post/property",property,$scope.userInfo)
 			.then(function(response) {

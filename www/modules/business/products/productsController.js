@@ -106,7 +106,7 @@ define(['app','css!modules/business/products/products.css'], function (app) {
 				$scope.businessList = response.data;
 			});
 			
-			//code for add product
+			//code for add product   //
 			var addproducts = function(){ 
 				$scope.reset = function(){
 					$scope.addproduct = {};

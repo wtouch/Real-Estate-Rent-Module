@@ -218,7 +218,7 @@ define(['angular',
 						$rootScope.requestSiteClass = 'col-xs-3 bs-wizard-step disabled';
 						
 					}else if($rootScope.userDetails.config.chooseTemplate == false){
-						$location.path("/dashboard/templates/listoftemplates");
+						//$location.path("/dashboard/templates/listoftemplates");
 						$rootScope.addbusinessClass = 'col-xs-3 bs-wizard-step complete';
 						$rootScope.addProductsClass = 'col-xs-3 bs-wizard-step complete';
 						$rootScope.chooseTemplateClass = 'col-xs-3 bs-wizard-step active';

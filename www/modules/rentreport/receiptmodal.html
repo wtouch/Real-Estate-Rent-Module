@@ -5,44 +5,44 @@
 <div class="modal-body col-md-8">
 	<form class="form-horizontal" name="receiptForm" name="applyTemplateForm"  novalidate="novalidate" 	ng-submit="receiptForm.$valid">
 		<div class="form-group">
-			<label for="amount" class="col-md-3 control-label">* Rent</label>
+			<label for="amount" class="col-md-3 control-label">Rent *</label>
 			<div class="col-sm-8">
 				<input type="text" class="form-control" id="amount" ng-model="rentData.rent"   ng-init="rentData.rent = modalOptions.rentList.rent" ng-change="modalOptions.getTotal(rentData, modalOptions)">
 			</div><span><b>Rs.</b></span>
 		</div>
 		
 		<div class="form-group">
-			<label for="electricity_bill" class="col-md-3 control-label">* Electricity Bill</label>
+			<label for="electricity_bill" class="col-md-3 control-label">Electricity Bill *</label>
 			<div class="col-sm-8">
 				<input type="text" class="form-control" id="electricity_bill"  ng-model="rentData.electricity_bill" ng-init="rentData.electricity_bill = 0" ng-change="modalOptions.getTotal(rentData, modalOptions)">
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="water" class="col-md-3 control-label">*  Water Bill</label>
+			<label for="water" class="col-md-3 control-label">Water Bill *</label>
 			<div class="col-sm-8">
 				<input type="text" class="form-control " id="water"  ng-model="rentData.water_charge" ng-init="rentData.water_charge = modalOptions.rentList.water_charge" ng-change="modalOptions.getTotal(rentData, modalOptions)">
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="maintainance" class="col-md-3 control-label">*  Maintainance </label>
+			<label for="maintainance" class="col-md-3 control-label">Maintainance *</label>
 			<div class="col-sm-8">
 				<input type="text" class="form-control " id="maintainance" ng-model="rentData.maintainance" ng-init="rentData.maintainance = modalOptions.rentList.maintainance" ng-change="modalOptions.getTotal(rentData, modalOptions)">
 			</div>
 		</div>
 		<div class="form-group">
-			<label  for="service_tax" class="col-sm-3 control-label">* Service Tax</label>
+			<label  for="service_tax" class="col-sm-3 control-label">Service Tax *</label>
 			<div class="col-sm-8">
 				<input type="text" class="form-control "  id="service_tax" name="service_tax" ng-model="service_tax" ng-init="service_tax = modalOptions.accountConfig.service_tax" readonly/>
 			</div>
 		</div>
 		<div class="form-group">
-			<label  for="other_tax" class="col-sm-3 control-label">* Other Tax</label>
+			<label  for="other_tax" class="col-sm-3 control-label">Other Tax *</label>
 			<div class="col-sm-8">
 				<input type="text" class="form-control "  id="other_tax" name="other_tax" ng-model="other_tax" ng-init="other_tax = modalOptions.accountConfig.other_tax" readonly/>
 			</div>
 		</div>	
 		<div class="form-group">
-			<label  for="due_date" class="col-sm-3 control-label">* Date</label>
+			<label  for="due_date" class="col-sm-3 control-label">Date *</label>
 			<div class="col-sm-8">
 				<input type="text" class="form-control " placeholder="YYYY-DD-MM" id="due_date" name="due_date" ng-model="rentData.generated_date" ng-init="rentData.generated_date = modalOptions.rentDate.date" />
 			</div>
@@ -57,8 +57,10 @@
 			<thead><th colspan="2">Total Amount Details</th></thead>
 			<tr><td>Rent :</td><td>{{rentData.rent}}</td></tr>
 			<tr><td>Electricity_bill :</td><td>{{rentData.electricity_bill}}</td></tr>
-			<tr><td>Maintainance :</td><td>{{rentData.maintainance}}</td></tr>
 			<tr><td>Water charge :</td><td>{{rentData.water_charge}}</td></tr>
+			<tr><td>Maintainance :</td><td>{{rentData.maintainance}}</td></tr>
+			<tr><td>Service Tax :</td><td>{{service_tax}}</td></tr>
+			<tr><td>Other Tax :</td><td>{{other_tax}}</td></tr>
 			<tr><td><b>Total  :</b></td><td>{{modalOptions.total_amount}}</td></tr>
 		</table>
 	</div>

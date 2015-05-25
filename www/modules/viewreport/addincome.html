@@ -18,7 +18,8 @@
 					<label for="customer" class="col-sm-2 control-label">* User</label>
 						<div class="col-sm-9">
 							<select class="form-control" name="customer" id="customer"  ng-model="addincome.description.user_id" ng-options="item.id as item.name for item in customerList | filter: { group_name : 'customer'} " ng-change="getPropertylist(addincome.description.user_id)" required>
-								<option value="">Select User</option>
+				
+				<option value="">Select User</option>
 							</select>
 							<span class="help-block" ng-show="addIncomeForm.customer.$dirty && addIncomeForm.customer.$invalid">
 							<span ng-show="addIncomeForm.customer.$error.required" class="text-danger">User is required.</span>
@@ -105,6 +106,32 @@
 						<input type="text" id="refferance no" ng-model="addincome.description.payment_type.Refferance_No" class="form-control" name="refferance no"   placeholder="Enter Refferance No" >
 					</div>		
 			</div>
+			
+			<div class="form-group" ng-if="addincome.description.payment_type.type == 'Cheque' || addincome.description.payment_type.type == 'Net Banking' || addincome.description.payment_type.type == 'DD'">
+				<label for="refferance no" class="col-sm-2 control-label">Date</label>
+					<div class="col-sm-9">
+						<input type="text" id="refferance no" ng-model="addincome.description.payment_type.Refferance_No" class="form-control" name="refferance no"   placeholder="Enter Refferance No" >
+					</div>		
+			</div>
+			
+			<div class="form-group" ng-if="addincome.description.payment_type.type == 'Cheque' || addincome.description.payment_type.type == 'Net Banking' || addincome.description.payment_type.type == 'DD'">
+				<label for="refferance no" class="col-sm-2 control-label">Bank Name</label>
+					<div class="col-sm-9">
+						<input type="text" id="refferance no" ng-model="addincome.description.payment_type.Refferance_No" class="form-control" name="refferance no"   placeholder="Enter Refferance No" >
+					</div>		
+			</div>
+			
+			<div class="form-group" ng-if="addincome.description.payment_type.type == 'Cheque' || addincome.description.payment_type.type == 'Net Banking' || addincome.description.payment_type.type == 'DD'">
+				<label for="refferance no" class="col-sm-2 control-label">Branch</label>
+					<div class="col-sm-9">
+						<input type="text" id="refferance no" ng-model="addincome.description.payment_type.Refferance_No" class="form-control" name="refferance no"   placeholder="Enter Refferance No" >
+					</div>		
+			</div>
+			
+			
+			
+			
+			
 			
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-9"><!--ng-disabled="addIncomeForm.$invalid"-->
