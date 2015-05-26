@@ -22,7 +22,7 @@ define(['app'], function (app) {
 		$scope.today = new Date();
 		$scope.todayDt = $scope.today.getFullYear() + "-" + ($scope.today.getMonth() + 1) + "-" + $scope.today.getDate();
 		$scope.duration = {start : $scope.todayDt};
-		
+		//addincome.description.payment_type.date
 		$scope.openRent = function (url) {
 				//date picker
 			var modalDefaults = {
@@ -60,7 +60,6 @@ define(['app'], function (app) {
 			});
 		}
 		
-		
 		//get data from rent-receipt table
 		$scope.getPropertylist = function(userId, reportType){
 			if (reportType == 'user') $scope.rentParams = { user_id : userId };
@@ -70,9 +69,9 @@ define(['app'], function (app) {
 				.then(function(response) {
 					if(response.status == "success"){
 						$scope.receiptList = response.data;
-						$scope.receiptList.total_due = response.data.total_due;
-						$scope.receiptList.total_paid = response.data.total_paid;
-						$scope.receiptList.total_rent = response.data.total_rent;
+						$scope.total_due = response.total_due;
+						$scope.total_paid = response.total_paid;
+						$scope.total_rent = response.total_rent;
 						console.log($scope.receiptList);
 					}else{
 						$scope.receiptList="";
@@ -95,6 +94,7 @@ define(['app'], function (app) {
 		}
 		
 		$scope.postData = function(addincome) {
+				//$scope.addincome.user_id= $rootScope.userDetails.id;
 				 dataService.post("post/account/addincome",addincome)
 				.then(function(response) {  
 					if(response.status == "success"){

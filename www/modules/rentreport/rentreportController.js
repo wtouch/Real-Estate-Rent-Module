@@ -18,6 +18,18 @@ define(['app'], function (app) {
 		$scope.currentDate = curDate.getFullYear() + "-" + month + "-" + curDate.getDate();
 		$scope.rentParams = {};
 		
+		
+		var accountConfig = $rootScope.userDetails.config.rentsetting;
+		$scope.config = {
+			other_tax : accountConfig.other_tax,
+			service_tax : accountConfig.service_tax,
+			primary_edu_cess : accountConfig.primary_edu_cess,
+			secondary_edu_cess : accountConfig.secondary_edu_cess,
+			pan_no : accountConfig.pan_no,
+			tds : accountConfig.tds,
+			service_tax_no : accountConfig.service_tax_no
+		}
+		
 		var dueDate = new Date();
 		dueDate.setDate(dueDate.getDate() + 10);
 		var dueMonth = dueDate.getMonth() + 1;
@@ -32,7 +44,7 @@ define(['app'], function (app) {
 			}
 		}
 		$scope.serviceTax = function(rent){
-			console.log(parseFloat($rootScope.userDetails.config.rentsetting.service_tax));
+			//console.log(parseFloat($rootScope.userDetails.config.rentsetting.service_tax));
 			return rent * parseFloat($rootScope.userDetails.config.rentsetting.service_tax) / 100; // other_tax - secondary_edu_cess - primary_edu_cess
 		}
 		$scope.primaryEduCess = function(rent){
@@ -70,7 +82,9 @@ define(['app'], function (app) {
 						var maintainance = (rentData.maintainance) ? rentData.maintainance : 0;
 						var electricity_bill = (rentData.electricity_bill) ? rentData.electricity_bill : 0;
 						var water_charge = (rentData.water_charge) ? rentData.water_charge : 0;
-						var totalAmount =  Math.round(parseFloat(rent) + parseFloat($scope.serviceTax(rent)) + parseFloat($scope.primaryEduCess(rent)) + parseFloat($scope.secondaryEduCess(rent)) + parseFloat(maintainance) + parseFloat(electricity_bill) + parseFloat(water_charge));
+							var service_tax =  Math.round(parseFloat(rent)*(rentData.service_tax)/100 ? rentData.service_tax : 0);
+							var other_tax =  Math.round(parseFloat(rent)*(rentData.other_tax)/100 ? rentData.other_tax : 0);
+						var totalAmount =  Math.round(parseFloat(rent) + parseFloat($scope.serviceTax(rent)) + parseFloat($scope.primaryEduCess(rent)) + parseFloat($scope.secondaryEduCess(rent)) + parseFloat(maintainance) + parseFloat(electricity_bill) + parseFloat(water_charge)+ parseFloat(service_tax) + parseFloat(other_tax));
 						
 						modalOptions.total_amount = totalAmount;
 					},
@@ -131,6 +145,7 @@ define(['app'], function (app) {
 					$scope.totalRent = function(){
 						var rent = $scope.receiptList.rent;
 						var maintainance = ($scope.receiptList.maintainance) ? $scope.receiptList.maintainance : 0;
+						var service_tax_no = ($scope.receiptList.service_tax_no) ? $scope.receiptList.service_tax_no : 0;
 						var electricity_bill = ($scope.receiptList.electricity_bill) ? $scope.receiptList.electricity_bill : 0;
 						var water_charge = ($scope.receiptList.water_charge) ? $scope.receiptList.water_charge : 0;
 						return Math.round(parseFloat(rent) + parseFloat($scope.serviceTax(rent)) + parseFloat($scope.primaryEduCess(rent)) + parseFloat($scope.secondaryEduCess(rent)) + parseFloat(maintainance) + parseFloat(electricity_bill) + parseFloat(water_charge)) ;
@@ -150,6 +165,22 @@ define(['app'], function (app) {
 						str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only! ' : '';
 						$scope.amountInWords = str;
 					}
+					
+					$scope.inWords = function(totalRent){
+						var a = ['','January','February ','March ','April ', 'May ','June ','July ','August ','September ','October ','November ','December'];
+						var num = totalRent;
+						
+						if ((num = num.toString()).length > 9) return 'overflow';
+						var n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+						if (!n) return; var str = '';
+						str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'crore ' : '';
+						str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'lakh ' : '';
+						str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'thousand ' : '';
+						str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
+						str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]): '';
+						$scope.monthInWords = str;
+					}
+					
 					$scope.inWords($scope.totalRent());
 					$scope.getReceiptByMonth = function(generatedDate){
 						var generated_date = $scope.generatedDate.year + '-' + $scope.generatedDate.month;
@@ -181,7 +212,7 @@ define(['app'], function (app) {
 				}
 			});
 		};
-		
+			
 		$scope.pageChanged = function(page, rentParams) {
 			dataService.get("getmultiple/rent/"+page+"/"+$scope.pageItems, rentParams)
 			.then(function(response) { 
@@ -207,6 +238,18 @@ define(['app'], function (app) {
 			}
 		});
 		
+		/* // code for show User list
+		$scope.openProperty = function (url, propId) {
+		dataService.get("getsingle/property",propId)
+		.then(function(response) {  
+			if(response.status == 'success'){
+				$scope.propList.title = response.data.title;
+			}else{
+				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+				$notification[response.status]("Get Users", response.message);
+			}
+		});
+		} */
 		//global method for filter 
 		$scope.changeStatus = function(statusCol, colValue) {
 			$scope.filterStatus= {};

@@ -15,6 +15,10 @@
   padding:none;
 } */
 
+
+.btn-group>.btn:first-child {
+  margin-left: 3px;
+}
 .navbar-collapse {
   padding-right: 7px;
   padding-left: 0px;

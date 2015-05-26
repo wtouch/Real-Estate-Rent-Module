@@ -18,8 +18,8 @@
 				
 				<input type="hidden" id="date" name="date" ng-model="property.date" >
 					
-					
-				<ul class="nav nav-tabs">
+				<ng-include src="'modules/property/addproperty/property.html'"></ng-include>		
+				<!-- <ul class="nav nav-tabs">
 				
 					<li role="presentation" ng-class="{active: formPart=='property'}">
 						<a ng-click="showFormPart('property')">Property Structure</a>
@@ -29,31 +29,31 @@
 						<a ng-click="showFormPart('propertyStructure')"> Structure</a>
 					</li> -->
 					  
-					<li role="presentation" ng-class="{active: formPart=='propertyLocation'}">
+					<!-- <li role="presentation" ng-class="{active: formPart=='propertyLocation'}">
 						<a ng-click="showFormPart('propertyLocation')">Location</a>
-					</li>
+					</li> -->
 					  
 					<!-- <li role="presentation" ng-class="{active: formPart=='contactDetails'}">
 						<a ng-click="showFormPart('contactDetails')">Contact Details</a>
 					</li> -->
 					  
-					<li role="presentation" ng-class="{active: formPart=='optionalPropertyDt'}">
+					<!-- <li role="presentation" ng-class="{active: formPart=='optionalPropertyDt'}">
 						<a ng-click="showFormPart('optionalPropertyDt')">Optional Details</a>
-					</li>
+					</li> -->
 					  
 					<!-- <li role="presentation" ng-class="{active: formPart=='landmarkDetails'}">
 						<a ng-click="showFormPart('landmarkDetails')">Landmark Details</a>
 					</li> -->
-					  
+					<!--   
 					<li role="presentation" ng-class="{active: formPart=='amenities'}">
 						<a ng-click="showFormPart('amenities')">Aminities</a>
-					</li>
+					</li> - ->
 					  
-				</ul>
+				</ul> -->
 				
-					<ng-include  ng-show="formPart=='property'" src="'modules/property/addproperty/property.html'">
+					<!-- <ng-include  ng-show="formPart=='property'" src="'modules/property/addproperty/property.html'">
 					</ng-include> 					
-					
+					 -->
 					<ng-include  ng-show="formPart=='property_Information'" src="'modules/property/addproperty/property_Information.html'">
 					</ng-include> 					
 					

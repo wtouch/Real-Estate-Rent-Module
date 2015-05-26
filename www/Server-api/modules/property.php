@@ -25,7 +25,8 @@
 				(isset($_GET['title'])) ? $like['title'] = $_GET['title'] : "";
 			} 
 			(isset($_GET['status'])) ? $where['status'] = $_GET['status'] : "";
-			(isset($_GET['featured'])) ? $where['featured'] = $_GET['featured'] : "";
+			(isset($_GET['status'])) ? $where['status'] = $_GET['status'] : "";
+			(isset($_GET['availability'])) ? $where['availability'] = $_GET['availability'] : "";
 			(isset($_GET['domain'])) ? $where['domain'] = $_GET['domain'] : "";
 			
 			$userCols['name'] = "name";

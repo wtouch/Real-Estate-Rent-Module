@@ -4,14 +4,17 @@
 	<button class="btn btn-primary pull-right" ng-click="printDiv('invoice')" >PRINT</button>
 		<div class="form-group">
 			<div class="col-sm-5">
-				<label for="year" class="control-label">Generate Invoice by Year</label>
+				<label for="year" class="control-label">Year</label>
 				<select class="form-control" name="year" id="year"  ng-model="generatedDate.year" ng-init="generatedDate.year = rentYear.curYear" ng-options="item as item for item in invoiceyear">	
 					<option value=" "></option>
 				</select>
 			</div>
 			<div class="col-sm-5">
-				<label for="month" class="control-label">Generate Invoice by Month</label>
-				<select ng-change="getReceiptByMonth(generatedDate)" class="form-control" name="month" id="month"  ng-model="generatedDate.month"  ng-init="generatedDate.month = '05'" ng-options="item as item for item in invoicemonth">
+				<label for="month" class="control-label">Month</label>
+				<!-- <select ng-change="getReceiptByMonth(generatedDate)" class="form-control" name="month" id="month"  ng-model="generatedDate.month"  ng-init="generatedDate.month = '05'" ng-options="item as item for item in invoicemonth">
+					<option value=" "></option>	
+				</select> -->
+				<select ng-change="getReceiptByMonth(generatedDate)" class="form-control" name="month" id="month"  ng-model="generatedDate.month"  ng-init="generatedDate.month = rentYear.curMonth" ng-options="item as item for item in invoicemonth">
 					<option value=" "></option>	
 				</select>
 			</div>
@@ -48,7 +51,8 @@
 						<td>Due Date<br>{{receiptList.due_date}}
 						</td>
 						<td>Current Month<br>
-						{{receiptList.current_month}}</td>
+						{{generatedDate.month = rentYear.curMonth}}-
+						{{generatedDate.year = rentYear.curYear}}</td>
 					</tr>
 					
 				</table>
@@ -107,7 +111,13 @@
 		<div class="col-xs-12">
 			<p>Amount Chargeable(in words) : 
 			<strong><em>{{amountInWords | uppercase}}</em></strong>
-			<p ng-if="receiptList.remark">Remarks :</p>
+			<!-- <p ng-if="receiptList.remark">Remarks :</p> -->
+			<p><b>Remarks :</b>Being Invoice for {{monthInWords | uppercase}}{{generatedDate.month = rentYear.curMonth}}-
+			{{generatedDate.year = rentYear.curYear}} Licence Fee & Maintance Charges against Agr. for
+			4th floor premise area PAYEKO Tower,Kothrud,Pune-38.</p>
+			<p>Companys Service Tax No:{{config.service_tax_no}}</p>
+			<p>Companys Pan: {{config.pan_no}}</p>
+			
 			<p ng-if="receiptList.remark">{{receiptList.remark}} </p>
 			<!-- <p>Company's Service Tax No.: <b>{{receiptList.tax}}</b>
 			<p> TDS.: <b>{{receiptList.tax}}</b>

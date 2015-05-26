@@ -15,7 +15,7 @@
 					</div>
 			</div>
 			<div class="form-group">
-				<label for="expence_month" class="col-sm-2 control-label">Expence Of Month</label>
+				<label for="expence_month" class="col-sm-2 control-label">Month</label>
 					<div class="col-sm-9">
 							<select id="expence_month" class="form-control">
 							<option value="" selected>Select Month</option><!-- added value & selected attr -->
@@ -71,6 +71,29 @@
 				<label for="refferance no" class="col-sm-2 control-label">Refference No</label>
 					<div class="col-sm-9">
 						<input type="text" id="refferance no" ng-model="addexpence.description.payment_type.Refference_No" class="form-control" name="refferance no"   placeholder="Enter Refferance No" >
+					</div>		
+			</div>
+			
+			<div class="form-group" ng-if="addexpence.description.payment_type.type == 'Cheque' || addexpence.description.payment_type.type == 'Net Banking' || addexpence.description.payment_type.type == 'DD'">
+				<label for="Date" class="col-sm-2 control-label">Date</label>
+				 <div class="col-sm-9">
+						<!-- <input type="text" id="Date" ng-model="addincome.description.payment_type.Date" class="form-control" name="Date"   placeholder="Enter Date" > -->
+					<input type="text" id="date" class="form-control" value="{{dates.date}}" ng-model="addexpence.description.payment_type.date"  ng-init="addexpence.description.payment_type.date = dates.date" name="date"  
+						placeholder="date" >
+				</div>					
+			</div>
+			
+			<div class="form-group" ng-if="addexpence.description.payment_type.type == 'Cheque' || addexpence.description.payment_type.type == 'Net Banking' || addexpence.description.payment_type.type == 'DD'">
+				<label for="Bank" class="col-sm-2 control-label">Bank Name</label>
+					<div class="col-sm-9">
+						<input type="text" id="Bank" ng-model="addexpence.description.payment_type.Bank" class="form-control" name="Bank"   placeholder="Enter Bank Name" >
+					</div>		
+			</div>
+			
+			<div class="form-group" ng-if="addexpence.description.payment_type.type == 'Cheque' || addexpence.description.payment_type.type == 'Net Banking' || addexpence.description.payment_type.type == 'DD'">
+				<label for="Branch" class="col-sm-2 control-label">Branch</label>
+					<div class="col-sm-9">
+						<input type="text" id="Branch" ng-model="addexpence.description.payment_type.Branch" class="form-control" name="Branch"   placeholder="Enter Branch" >
 					</div>		
 			</div>
 		

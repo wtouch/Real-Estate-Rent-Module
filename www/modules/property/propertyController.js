@@ -41,7 +41,8 @@ define(['app'], function (app) {
 			primary_edu_cess : accountConfig.primary_edu_cess,
 			secondary_edu_cess : accountConfig.secondary_edu_cess,
 			pan_no : accountConfig.pan_no,
-			tin_no : accountConfig.tin_no
+			tds : accountConfig.tds,
+			service_tax_no : accountConfig.service_tax_no
 		}
 		
 		
