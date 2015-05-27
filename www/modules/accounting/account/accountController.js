@@ -23,15 +23,20 @@ define(['app'], function (app) {
 		$scope.todayDt = $scope.today.getFullYear() + "-" + ($scope.today.getMonth() + 1) + "-" + $scope.today.getDate();
 		$scope.duration = {start : $scope.todayDt};
 		//addincome.description.payment_type.date
-		$scope.openRent = function (url) {
-				//date picker
+		$scope.openAddaccount = function (url) {
 			var modalDefaults = {
 					templateUrl: url,	
 					size : 'lg'
 			};
-			
-			modalService.showModal(modalDefaults).then(function (result) {
+			var modalOptions={
+				
+			};
+			modalService.show(modalDefaults,modalOptions).then(function (result) {
 			});
+		};
+		
+		$scope.ok = function () {
+			$modalOptions.close('ok');
 		};
 		
 		$scope.pageChanged = function(page, where) {
