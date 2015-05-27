@@ -47,6 +47,45 @@ define(['app'], function (app) {
 			$scope[rentdate] = !$scope[rentdate];
 		};
 		
+	//Modlal For add income form
+	$scope.incomeDate = {};
+	$scope.openAddincome = function (url) {
+		dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
+				.then(function(user) {  
+				
+			var modalDefaults = {
+				templateUrl: url,	// apply template to modal
+				size : 'lg'
+			};
+			var modalOptions = {
+				incomeDate: { date : $scope.currentDate},
+				customerList : (user.data),
+				postData : function(addincome) {
+				//$scope.addincome.user_id= $rootScope.userDetails.id;
+				 dataService.post("post/account/addincome",addincome)
+				.then(function(response) {  
+					if(response.status == "success"){
+					}
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Add record", response.message);
+				});   
+				console.log(addincome);
+		} //  
+		
+			}; 
+		modalService.show(modalDefaults, modalOptions).then(function (result) {
+			modalOptions.addincome.date = dataService.currentDate;
+				console.log("modalOpened");
+		
+		});	
+		
+		});
+		
+		};
+		$scope.ok = function () {
+			$modalOptions.close('ok');
+		};
+		
 		$scope.getUsers = function(){
 			//function for Users list response
 			dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
