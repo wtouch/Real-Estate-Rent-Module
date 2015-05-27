@@ -4,7 +4,7 @@ define(['app'], function (app) {
     var injectParams = ['$scope','$rootScope','$injector','modalService','$routeParams' ,'$notification', 'dataService'];
     
     // This is controller for this view
-	var viewreportController = function ($scope,$rootScope,$injector,modalService, $routeParams,$notification,dataService) {
+	var invoiceController = function ($scope,$rootScope,$injector,modalService, $routeParams,$notification,dataService) {
 		
 		//global scope objects
 		$scope.maxSize = 5;
@@ -208,7 +208,7 @@ define(['app'], function (app) {
 	};
 		
 	// Inject controller's dependencies
-	viewreportController.$inject = injectParams;
+	invoiceController.$inject = injectParams;
 	// Register/apply controller dynamically
-    app.register.controller('viewreportController', viewreportController);
+    app.register.controller('invoiceController', invoiceController);
 });
