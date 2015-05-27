@@ -1,0 +1,147 @@
+<div class="main-content">
+	<ng-include src="'modules/component/toolbar.html'"></ng-include>
+	<h3 class="col-sm-offset-2 col-sm-9">Add Income</h3>
+		<form name="addIncomeForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="addIncomeForm.$valid">
+			<div class="form-group">
+				<label for="income_expence_type" class="col-sm-2 control-label">Income Type</label>
+					<div class="col-sm-9">
+						<select id="income_expence_type" class="form-control" ng-model="type" ng-change="addincome.income_expence_type = type">
+						<option value="" selected>Select Type</option><!-- added value & selected attr -->
+						<option value="Rent" >Rent</option>
+						<option value="other">Other</option>
+						</select>
+					</div>
+			</div> 
+
+			<div ng-if = "type =='Rent'">
+				<div class="form-group" ng-if="userDetails.group_name != 'customer'" ng-init="getUsers()">
+					<label for="customer" class="col-sm-2 control-label">* User</label>
+						<div class="col-sm-9">
+							<select class="form-control" name="customer" id="customer"  ng-model="addincome.description.user_id" ng-options="item.id as item.name for item in customerList | filter: { group_name : 'customer'} " ng-change="getPropertylist(addincome.description.user_id)" required>
+				
+				<option value="">Select User</option>
+							</select>
+							<span class="help-block" ng-show="addIncomeForm.customer.$dirty && addIncomeForm.customer.$invalid">
+							<span ng-show="addIncomeForm.customer.$error.required" class="text-danger">User is required.</span>
+							</span>	
+						</div>
+				</div>
+				<span ng-if="userDetails.group_name == 'customer'">
+					<input type="hidden" class="form-control" ng-model="addincome.description.user_id"  readonly/>
+				</span> 
+			</div>
+			
+			<div class="form-group" ng-if="addincome.description.user_id" ng-init="getPropertylist(addincome.description.user_id,'user')">
+				<label for="receipt" class="col-sm-2 control-label">* Receipt</label>
+					<div class="col-sm-7">
+						<select class="form-control" name="receipt" id="receipt" ng-model="addincome.receipt_id" ng-options="item.id as item.generated_date for item in receiptList | filter : { due_amount : '0' }" required>
+							<option value="">Select Receipt</option>
+						</select>
+					</div>
+			</div>
+		
+			<input type="hidden" class="form-control" ng-model="userDetails.id"  readonly/>
+			<input type="hidden"  ng-if="type !='other'" ng-model="addincome.income_expence_type"/>
+			<input type="hidden" ng-model="addincome.balancesheet_type" ng-init="addincome.balancesheet_type='income'"/> 
+			
+			<div class="form-group" ng-if="type =='other'">
+				<label for="income_expence" class="col-sm-2 control-label">other</label>
+					<div class="col-sm-9">
+						<input type="text" id="income_expence" class="form-control" ng-model="addincome.income_expence_type" />
+					</div>
+			</div>
+			
+			<div ng-if = "type =='Rent'">
+			<div class="form-group">
+				<label for="rent_month" class="col-sm-2 control-label">Month</label>
+					<div class="col-sm-9">
+						<select id="rent_month" class="form-control">
+						<option value="" selected>Select Month</option><!-- added value & selected attr -->
+						<option value="January" >January</option>
+						<option value="February">February</option>
+						<option value="March">March</option>
+						<option value="April">April</option>
+						<option value="May">May</option>
+						<option value="June">June</option>
+						<option value="July">July</option>
+						<option value="August">August</option>
+						<option value="September">September</option>
+						<option value="October">October</option>
+						<option value="November">November</option>
+						<option value="December">December</option>
+						</select>
+					</div>
+			</div>
+			</div>
+			
+			<div class="form-group">	
+				<label  for="date" class="col-sm-2 control-label">Date</label>
+					<div class="col-sm-9">
+						<input type="text" id="date" class="form-control" value="{{dates.date}}"  ng-model="addincome.date"  ng-init="addincome.date = dates.date" name="date" readonly 
+						placeholder="date" >
+					</div>						
+			</div>
+			
+			<div class="form-group">
+				<label  for="amount" class="col-sm-2 control-label">Amount</label>
+					<div class="col-sm-9">
+						<input type="text" id="amount" class="form-control" ng-model="addincome.amount" name="amount" placeholder="Amount" >
+					</div>						
+			</div>
+			
+			<div class="form-group">
+				<label for="payment_type" class="col-sm-2 control-label">Payment Type </label>
+					<div class="col-sm-9">
+						<select id="payment_type" class="form-control" ng-model="addincome.description.payment_type.type">
+						<option value="" selected>Select Type</option><!-- added value & selected attr -->
+						<option value="Cash" >Cash</option>
+						<option value="Cheque">Cheque</option>
+						<option value="Net Banking">Net Banking</option>
+						<option value="DD">DD</option>
+						</select>
+					</div>
+			</div>
+			
+			<div class="form-group" ng-if="addincome.description.payment_type.type == 'Cheque' || addincome.description.payment_type.type == 'Net Banking' || addincome.description.payment_type.type == 'DD'">
+				<label for="refferance no" class="col-sm-2 control-label">Refference No</label>
+					<div class="col-sm-9">
+						<input type="text" id="refferance no" ng-model="addincome.description.payment_type.Refferance_No" class="form-control" name="refferance no"   placeholder="Enter Refferance No" >
+					</div>		
+			</div>
+			
+			<div class="form-group" ng-if="addincome.description.payment_type.type == 'Cheque' || addincome.description.payment_type.type == 'Net Banking' || addincome.description.payment_type.type == 'DD'">
+				<label for="Date" class="col-sm-2 control-label">Date</label>
+				 <div class="col-sm-9">
+						<!-- <input type="text" id="Date" ng-model="addincome.description.payment_type.Date" class="form-control" name="Date"   placeholder="Enter Date" > -->
+					<input type="text" id="date" class="form-control" value="{{dates.date}}" ng-model="addincome.description.payment_type.date"  ng-init="addincome.description.payment_type.date = dates.date" name="date"  
+						placeholder="date" >
+				</div>					
+			</div>
+			
+			<div class="form-group" ng-if="addincome.description.payment_type.type == 'Cheque' || addincome.description.payment_type.type == 'Net Banking' || addincome.description.payment_type.type == 'DD'">
+				<label for="Bank" class="col-sm-2 control-label">Bank Name</label>
+					<div class="col-sm-9">
+						<input type="text" id="Bank" ng-model="addincome.description.payment_type.Bank" class="form-control" name="Bank"   placeholder="Enter Bank Name" >
+					</div>		
+			</div>
+			
+			<div class="form-group" ng-if="addincome.description.payment_type.type == 'Cheque' || addincome.description.payment_type.type == 'Net Banking' || addincome.description.payment_type.type == 'DD'">
+				<label for="Branch" class="col-sm-2 control-label">Branch</label>
+					<div class="col-sm-9">
+						<input type="text" id="Branch" ng-model="addincome.description.payment_type.Branch" class="form-control" name="Branch"   placeholder="Enter Branch" >
+					</div>		
+			</div>
+			
+			
+			
+			
+			
+			
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-9"><!--ng-disabled="addIncomeForm.$invalid"-->
+					<button type="submit" class="btn btn-success" ng-disabled="addIncomeForm.$invalid" ng-click="postData(addincome)">Submit</button>
+					<button type="reset" class="btn btn-danger">Reset</button>
+				</div>
+			</div>			
+		</form>
+</div>
