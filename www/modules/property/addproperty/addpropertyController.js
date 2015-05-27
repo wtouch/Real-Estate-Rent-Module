@@ -33,6 +33,12 @@ define(['app'], function (app) {
 		$scope.closeAlert = function(index) {
 			$scope.alerts.splice(index, 1);
 		};
+		
+		// to next button code
+			 $scope.status = {
+				isFirstOpen: true,
+				isFirstDisabled: false,
+			};
 	
 		$scope.getData = function(location){
 			$scope.readOnly = true;

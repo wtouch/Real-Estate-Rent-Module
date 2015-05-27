@@ -29,6 +29,7 @@
 			(isset($_GET['name'])) ? $where['name'] = $_GET['name'] : "";
 			(isset($_GET['username'])) ? $like['username'] = $_GET['username'] : "";
 			(isset($_GET['status'])) ? $where['status'] = $_GET['status'] : "";
+			(isset($_GET['title']))?$where['title'] =$_GET['title'] : "";
 			$userCols['name'] = "name";
 			$userCols['username'] = "username";
 			$userCols['address'] = "address";
