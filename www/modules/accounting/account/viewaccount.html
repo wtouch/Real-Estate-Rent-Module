@@ -1,19 +1,21 @@
-<h1>Accounts</h1>
+<h3>Accounts</h3>
 <div class="table-responsive">
   <table class="table  table-hover table-bordered">
-	<tr>
+	<thead>
 	<th>Sr. No.</th>
 	<th>Account Name</th>
 	<th>Category</th>
 	<th>Description</th>
 	<th>Manage</th>
+	</thead>
+	<tbody>
+	<tr ng-repeat="x in accounts | orderBy:sort">
+	<td>{{ $index+1 }}</td>
+	<td>{{ x.account_name }}</td>
+	<td>{{ x.category }}</td>
+	<td>{{ x.description}}</td>
+	<td><a class="btn btn-primary" ng-click="openAddaccount('modules/accounting/account/addaccount.html',x.id)">Edit</a><button class="btn btn-primary" >Delete</button></td>
 	</tr>
-	<tr>
-	<td>1</td>
-	<td>203345612378</td>
-	<td>Party Account</td>
-	<td>The Very Natural Management.</td>
-	<td><button class="btn btn-primary" ng-click="openAddaccount('modules/accounting/account/addaccount.html')">Edit</button><button class="btn btn-primary" >Delete</button></td>
-	</tr>
+	</tbody>
   </table>
 </div>

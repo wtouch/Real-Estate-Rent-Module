@@ -23,22 +23,56 @@ define(['app'], function (app) {
 		$scope.todayDt = $scope.today.getFullYear() + "-" + ($scope.today.getMonth() + 1) + "-" + $scope.today.getDate();
 		$scope.duration = {start : $scope.todayDt};
 		//addincome.description.payment_type.date
-		$scope.openAddaccount = function (url) {
+/***********************************************************************************/
+/*Addaccount Model*/
+		$scope.openAddaccount = function (url,EditId) {
+			console.log(EditId);
 			var modalDefaults = {
 					templateUrl: url,	
 					size : 'lg'
 			};
 			var modalOptions={
-				
+				editAccount : EditId,
+				date : $scope.currentDate,
+				account : {},
+				postData : function(account) {
+					dataService.post("post/account/account",account)
+					.then(function(response) {  
+						if(response.status == "success"){
+						}
+						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+						$notification[response.status]("Add record", response.message);
+					});
+			   }
+			   
 			};
-			modalService.show(modalDefaults,modalOptions).then(function (result) {
-			});
+			if(EditId){
+				dataService.get("getsingle/account/"+EditId)
+				.then(function(response) {  
+					if(response.status == "success"){
+						modalOptions.account = {
+							account_name : response.data.account_name,
+							account_no : response.data.account_no,
+							category : response.data.category,
+							account_no : response.data.account_no,
+							user_id : response.data.user_id,
+							id : response.data.id,
+							description : response.data.description,
+							date : response.data.description
+						};
+						modalService.show(modalDefaults,modalOptions).then(function (result) {
+						});
+					}
+					console.log(response);
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Add record", response.message);
+				});
+			}else{
+				modalService.show(modalDefaults,modalOptions).then(function (result) {
+				});
+			}
 		};
-		
-		$scope.ok = function () {
-			$modalOptions.close('ok');
-		};
-		
+/***********************************************************************************/
 		$scope.pageChanged = function(page, where) {
 			dataService.get("getmultiple/account/"+page+"/"+$scope.pageItems,$scope.income_expence_type)
 			.then(function(response){ 
@@ -83,133 +117,17 @@ define(['app'], function (app) {
 					}
 			})
 		}
-		
+/************************************************************/	
 		//get data from rent-receipt table
-		$scope.getProperties = function(){
-			dataService.get("getmultiple/property/1/1000", $scope.userInfo)
+			dataService.get("getmultiple/account/1/1000")
 				.then(function(response) {
-					console.log(response);
 					if(response.status == "success"){
-						$scope.propertyList = response.data;
-						console.log($scope.propertyList);
+						$scope.accounts = response.data;
 					}else{
-						$scope.propertyList="";
+						$scope.accounts="";
 					}
 			});
-		}
-		
-		$scope.postData = function(addincome) {
-				//$scope.addincome.user_id= $rootScope.userDetails.id;
-				 dataService.post("post/account/addincome",addincome)
-				.then(function(response) {  
-					if(response.status == "success"){
-						//$scope.reset();
-					}
-					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$notification[response.status]("Add record", response.message);
-				});   
-				console.log(addincome);
-		}   
-		
-		$scope.postDataExpence = function(addexpence) {
-				 dataService.post("post/account/addexpence",addexpence)
-				.then(function(response) {  
-					if(response.status == "success"){
-					
-					}
-					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$notification[response.status]("Add record", response.message);
-				});   
-				console.log(addexpence);
-		}
-		
-		$scope.getIncome = function(dateRange){
-			var expenseParams = {balancesheet_type : 'income'};
-			angular.extend(expenseParams, dateRange);
-			dataService.get("getmultiple/account/1/"+$scope.pageItems, expenseParams)
-			.then(function(response) {  //function for property response
-				if(response.status == 'success'){
-					
-					$scope.income = response.data;
-					
-					var total = 0;
-					for(var i = 0; i < response.data.length; i++){
-						var product = response.data[i];
-						total += parseInt(product.amount);
-					}
-					$scope.incomTotal = total;
-					
-					$scope.totalRecords = response.totalRecords;
-				}else{
-					$scope.income = [];
-					$scope.incomTotal = "";
-					$scope.totalRecords = {};
-					$scope.alerts.push({type: response.status, msg: response.message});
-				}				
-			});
-		} 
-
-		$scope.getExpense = function(dateRange){
-			var expenseParams = {balancesheet_type : 'expence'};
-			angular.extend(expenseParams, dateRange);
-			 dataService.get("getmultiple/account/1/"+$scope.pageItems, expenseParams)
-			.then(function(response) {  //function for property response
-				if(response.status == 'success'){
-					var total = 0;
-					for(var i = 0; i < response.data.length; i++){
-						var product = response.data[i];
-						total += parseInt(product.amount);
-					}
-					$scope.expenceTotal = total;
-					$scope.expence = response.data;
-					$scope.totalRecords = response.totalRecords;
-					console.log($scope.expence);
-				}else{
-					$scope.expence = [];
-					$scope.expenceTotal = "";
-					$scope.totalRecords = {};
-					$scope.alerts.push({type: response.status, msg: response.message});
-				}
-			}); 
-		 }
-		 
-		$scope.calcDuration = function(type, duration){
-			//console.log(type, duration);
-			if(type == 'custom'){
-				var dateS = new Date(duration.start);
-				var dateE = new Date(duration.end);
-				var startDt = dateS.getFullYear() + "-" + (dateS.getMonth() + 1) + "-" + dateS.getDate();
-				var endtDt = dateE.getFullYear() + "-" + (dateE.getMonth() + 1) + "-" + dateE.getDate();
-			}
-			if(type == 'daily'){
-				var dateS = new Date(duration.start);
-				var startDt = dateS.getFullYear() + "-" + (dateS.getMonth() + 1) + "-" + dateS.getDate();
-				var endtDt = dateS.getFullYear() + "-" + (dateS.getMonth() + 1) + "-" + dateS.getDate();
-			}
-			if(type == 'month'){
-				duration = parseInt(duration);
-				var today = new Date();
-				var start = new Date(today.getFullYear(), (duration - 1), 1);
-				var endt = new Date(today.getFullYear(), (duration - 1) + 1, 0);
-				
-				var startDt = start.getFullYear() +"-" + (start.getMonth() + 1) + "-"+start.getDate();
-				var endtDt = endt.getFullYear() +"-" + (endt.getMonth() + 1) + "-"+ endt.getDate();
-			}
-			if(type == 'year'){
-				duration = parseInt(duration);
-				var today = new Date();
-				var start = new Date(duration, 3, 1);
-				var endt = new Date(duration + 1, 2 + 1, 0);
-				
-				var startDt = start.getFullYear() +"-" + (start.getMonth() + 1) + "-"+start.getDate();
-				var endtDt = endt.getFullYear() +"-" + (endt.getMonth() + 1) + "-"+ endt.getDate();
-			}
-			$scope.getIncome({startDt : startDt, endtDt : endtDt});
-			$scope.getExpense({startDt : startDt, endtDt : endtDt});
-			
-		}
-		
-		
+/***********************************************************/		
 	};
 		
 	// Inject controller's dependencies
