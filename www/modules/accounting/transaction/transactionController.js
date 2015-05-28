@@ -35,9 +35,9 @@ define(['app'], function (app) {
 		};
 		
 		$scope.pageChanged = function(page, where) {
-			dataService.get("getmultiple/account/"+page+"/"+$scope.pageItems,$scope.income_expence_type)
+			dataService.get("getmultiple/transaction/"+page+"/"+$scope.pageItems,$scope.income_expence_type)
 			.then(function(response){ 
-				$scope.account = response.data;
+				$scope.transaction = response.data;
 			});
 		};
 		
@@ -62,7 +62,7 @@ define(['app'], function (app) {
 				customerList : (user.data),
 				postData : function(addincome) {
 				//$scope.addincome.user_id= $rootScope.userDetails.id;
-				 dataService.post("post/account/addincome",addincome)
+				 dataService.post("post/transaction/addincome",addincome)
 				.then(function(response) {  
 					if(response.status == "success"){
 					}
@@ -134,7 +134,7 @@ define(['app'], function (app) {
 		
 		$scope.postData = function(addincome) {
 				//$scope.addincome.user_id= $rootScope.userDetails.id;
-				 dataService.post("post/account/addincome",addincome)
+				 dataService.post("post/transaction/addincome",addincome)
 				.then(function(response) {  
 					if(response.status == "success"){
 						//$scope.reset();
@@ -146,7 +146,7 @@ define(['app'], function (app) {
 		}   
 		
 		$scope.postDataExpence = function(addexpence) {
-				 dataService.post("post/account/addexpence",addexpence)
+				 dataService.post("post/transaction/addexpence",addexpence)
 				.then(function(response) {  
 					if(response.status == "success"){
 					
@@ -160,7 +160,7 @@ define(['app'], function (app) {
 		$scope.getIncome = function(dateRange){
 			var expenseParams = {balancesheet_type : 'income'};
 			angular.extend(expenseParams, dateRange);
-			dataService.get("getmultiple/account/1/"+$scope.pageItems, expenseParams)
+			dataService.get("getmultiple/transaction/1/"+$scope.pageItems, expenseParams)
 			.then(function(response) {  //function for property response
 				if(response.status == 'success'){
 					
@@ -186,7 +186,7 @@ define(['app'], function (app) {
 		$scope.getExpense = function(dateRange){
 			var expenseParams = {balancesheet_type : 'expence'};
 			angular.extend(expenseParams, dateRange);
-			 dataService.get("getmultiple/account/1/"+$scope.pageItems, expenseParams)
+			 dataService.get("getmultiple/transaction/1/"+$scope.pageItems, expenseParams)
 			.then(function(response) {  //function for property response
 				if(response.status == 'success'){
 					var total = 0;
