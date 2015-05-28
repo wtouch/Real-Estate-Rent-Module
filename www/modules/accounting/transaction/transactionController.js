@@ -70,8 +70,8 @@ define(['app'], function (app) {
 					$notification[response.status]("Add record", response.message);
 				});   
 				console.log(addincome);
-		} //  
-		
+				} // 
+
 			}; 
 		modalService.show(modalDefaults, modalOptions).then(function (result) {
 			modalOptions.addincome.date = dataService.currentDate;
@@ -85,7 +85,40 @@ define(['app'], function (app) {
 		$scope.ok = function () {
 			$modalOptions.close('ok');
 		};
+		//
 		
+		//Modal for add expence
+		$scope.expenseDate = {};
+		$scope.openAddexpense = function (url) {
+		var modalDefaults = {
+				templateUrl: url,	// apply template to modal
+				size : 'lg'
+			};
+		var modalOptions = {
+			expenseDate: { date : $scope.currentDate},
+			postDataExpence : function(addexpence) {
+				//$scope.addexpence.user_id= $rootScope.userDetails.id;
+				 dataService.post("post/transaction/addexpence",addexpence)
+				.then(function(response) {  
+					if(response.status == "success"){
+					}
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Add record", response.message);
+				});   
+				console.log(addexpence);
+				} // 
+		};
+		modalService.show(modalDefaults, modalOptions).then(function (result) {
+			modalOptions.addexpence.date = dataService.currentDate;
+				console.log("modalOpened");
+		
+		});	
+		};
+		$scope.ok = function () {
+			$modalOptions.close('ok');
+		};
+		
+		//
 		$scope.getUsers = function(){
 			//function for Users list response
 			dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
@@ -158,9 +191,9 @@ define(['app'], function (app) {
 		}
 		
 		$scope.getIncome = function(dateRange){
-			var expenseParams = {balancesheet_type : 'income'};
-			angular.extend(expenseParams, dateRange);
-			dataService.get("getmultiple/transaction/1/"+$scope.pageItems, expenseParams)
+			//var expenseParams = {balancesheet_type : 'income'};
+			//angular.extend(expenseParams, dateRange);
+			dataService.get("getmultiple/transaction/1/"+$scope.pageItems)
 			.then(function(response) {  //function for property response
 				if(response.status == 'success'){
 					
@@ -182,7 +215,20 @@ define(['app'], function (app) {
 				}				
 			});
 		} 
-
+		
+		//get data from transaction , $scope.userInfo
+		/* $scope.getTransaction=function(transaction){ */
+			dataService.get("getmultiple/transaction/1/1000")
+				.then(function(response) {
+					console.log(response);
+					if(response.status == "success"){
+						$scope.transaction = response.data;
+						console.log($scope.transaction);
+					}else{
+						$scope.transaction="";
+					}
+			});
+		/* } */
 		$scope.getExpense = function(dateRange){
 			var expenseParams = {balancesheet_type : 'expence'};
 			angular.extend(expenseParams, dateRange);

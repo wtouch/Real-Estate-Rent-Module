@@ -8,11 +8,14 @@
 			<div class="form-group">
 				<label for="income_expence_type" class="col-sm-2 control-label">Income Type</label>
 					<div class="col-sm-9">
-						<select id="income_expence_type" class="form-control" ng-model="type" ng-change="addincome.income_expence_type = type">
+						<select id="income_expence_type" class="form-control" name="income_expence_type" id="income_expence_type" ng-model="type" ng-change="addincome.income_expence_type = type" required>
 						<option value="" selected>Select Type</option><!-- added value & selected attr -->
 						<option value="Rent" >Rent</option>
 						<option value="other">Other</option>
 						</select>
+						<span class="help-block" ng-show="addIncomeForm.income_expence_type.$dirty && addIncomeForm.income_expence_type.$invalid">
+							<span ng-show="addIncomeForm.income_expence_type.$error.required" class="text-danger">Type is required.</span>
+						</span>		
 					</div>
 			</div> 
 
@@ -29,8 +32,6 @@
 					</span>	
 				</div>
 			</div>
-			
-			
 				<span ng-if="userDetails.group_name == 'customer'">
 					<input type="hidden" class="form-control" ng-model="addincome.description.user_id"  readonly/>
 				</span> 
@@ -42,6 +43,10 @@
 						<select class="form-control" name="receipt" id="receipt" ng-model="addincome.receipt_id" ng-options="item.id as item.generated_date for item in receiptList | filter : { due_amount : '0' }" required>
 							<option value="">Select Receipt</option>
 						</select>
+						<span class="help-block" ng-show="addIncomeForm.receipt.$dirty && addIncomeForm.receipt.$invalid">
+							<span ng-show="addIncomeForm.receipt.$error.required" class="text-danger">Receipt is required.</span>
+						</span>	
+					
 					</div>
 			</div>
 		
@@ -65,32 +70,43 @@
 			</div>
 			
 			<div class="form-group">
-				<label  for="amount" class="col-sm-2 control-label">Amount</label>
+				<label  for="credit_amount" class="col-sm-2 control-label">Amount</label><!--ng-pattern="/^\d{0,9}[0-9]$/" -->
 					<div class="col-sm-9">
-						<input type="text" id="amount" class="form-control" ng-model="addincome.amount" name="amount" placeholder="Amount" >
+						<input type="text" id="credit_amount" class="form-control"  ng-pattern="/^\d{0,9}[0-9]$/" ng-model="addincome.credit_amount" name="amount" placeholder="Amount" required/>
+						<span class="help-block" ng-show="addIncomeForm.credit_amount.$dirty && addIncomeForm.credit_amount.$invalid">
+						<span ng-show="addIncomeForm.credit_amount.$error.pattern && (addIncomeForm.credit_amount.$dirty || submitted)" class="text-danger">Enter Numbers Only!</span>
+						<span ng-show="addIncomeForm.credit_amount.$error.required" class="text-danger">. is required.</span>
+						</span>
 					</div>						
 			</div>
 			
 			<div class="form-group">
 				<label for="payment_type" class="col-sm-2 control-label">Payment Type </label>
 					<div class="col-sm-9">
-						<select id="payment_type" class="form-control" ng-model="addincome.description.payment_type.type">
+						<select id="payment_type" class="form-control" name="payment_type"  ng-model="addincome.description.payment_type.type" required>
 						<option value="" selected>Select Type</option><!-- added value & selected attr -->
 						<option value="Cash" >Cash</option>
 						<option value="Cheque">Cheque</option>
 						<option value="Net Banking">Net Banking</option>
 						<option value="DD">DD</option>
 						</select>
+						<span class="help-block" ng-show="addIncomeForm.payment_type.$dirty && addIncomeForm.payment_type.$invalid">
+							<span ng-show="addIncomeForm.payment_type.$error.required" class="text-danger">Payment Type is required.</span>
+						</span>	
 					</div>
 			</div>
 			
-			<div class="form-group" ng-if="addincome.description.payment_type.type == 'Cheque' || addincome.description.payment_type.type == 'Net Banking' || addincome.description.payment_type.type == 'DD'">
-				<label for="refferance no" class="col-sm-2 control-label">Refference No</label>
+			 <div class="form-group" ng-if="addincome.description.payment_type.type == 'Cheque' || addincome.description.payment_type.type == 'Net Banking' || addincome.description.payment_type.type == 'DD'">
+				<label for="refferance no" ng-if="addincome.description.payment_type.type == 'Net Banking'"class="col-sm-2 control-label">Transaction No</label>
+				<label for="refferance no" ng-if="addincome.description.payment_type.type == 'Cheque'" class="col-sm-2 control-label">Check No</label>
+				<label for="refferance no" ng-if="addincome.description.payment_type.type == 'DD'" class="col-sm-2 control-label">DD No</label>
 					<div class="col-sm-9">
-						<input type="text" id="refferance no" ng-model="addincome.description.payment_type.Refferance_No" class="form-control" name="refferance no"   placeholder="Enter Refferance No" >
+						<input type="text" id="refferance no" ng-if="addincome.description.payment_type.type == 'Net Banking'" ng-model="addincome.description.payment_type.transaction_No" class="form-control" name="refferance no"   placeholder="Enter Refferance No" >
+						<input type="text" id="refferance no" ng-if="addincome.description.payment_type.type == 'Cheque'" ng-model="addincome.description.payment_type.check_no" class="form-control" name="refferance no"   placeholder="Enter Check No" >
+						<input type="text" id="refferance no" ng-if="addincome.description.payment_type.type == 'DD'" ng-model="addincome.description.payment_type.DD_no" class="form-control" name="refferance no"   placeholder="Enter DD No" >
 					</div>		
 			</div>
-			
+
 			<div class="form-group" ng-if="addincome.description.payment_type.type == 'Cheque' || addincome.description.payment_type.type == 'Net Banking' || addincome.description.payment_type.type == 'DD'">
 				<label for="Date" class="col-sm-2 control-label">Date</label>
 				 <div class="col-sm-9">
