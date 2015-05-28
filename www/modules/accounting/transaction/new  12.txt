@@ -1,0 +1,85 @@
+{		
+			
+	"categoryIncome" : [
+			{
+				"category_name" : "Licence Fees"				
+			},
+			{
+				"category_name" : "Agriculture"				
+			},
+			{
+				"category_name" : "Commissions" 					
+			},
+			{
+				"category_name" : "Fees & Charges"					
+			},
+			{
+				"category_name" : "Investments"				
+			},
+			{
+				"category_name" : "Non-Profit"				
+			},
+			{
+				"category_name" : "Other Income"				
+			},
+			{
+				"category_name" : "Income"				
+			},
+			{
+				"category_name" : "Professional Services"				
+			},
+			{
+				"category_name" : "Sales Product & Services"				
+			}
+			],
+	"categoryExpense" : [{
+				"category_name" : "Agriculture "				
+			},
+			{
+				"category_name" : "Pets" 					
+			},
+			{
+				"category_name" : "Building & Equipments"					
+			},
+			{
+				"category_name" : "Household"				
+			},
+			{
+				"category_name" : "Computers/Communication"				
+			},
+			{
+				"category_name" : "Fees,Charges & Subscription"				
+			},
+			{
+				"category_name" : "Insurance"				
+			},
+			{
+				"category_name" : "Financial"				
+			},
+			{
+				"category_name" : "Non-Profit"				
+			},
+			{
+				"category_name" : "Office"				
+			},
+			{
+				"category_name" : "Other Expenses"				
+			},
+			{
+				"category_name" : "Donation & Gifts"				
+			},
+			{
+				"category_name" : "Other"				
+			},
+			{
+				"category_name" : "Payroll"				
+			},
+			{
+				"category_name" : "Services"				
+			},
+			{
+				"category_name" : "Taxes"				
+			}
+			]
+
+}

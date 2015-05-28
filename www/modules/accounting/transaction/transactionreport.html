@@ -162,8 +162,7 @@
 								<th>Category</th>
 								<th>Credit Amount</th>
 								<th>Debit Amount</th> 
-								<th>Total Credit</th>
-								<th>Total Debit</th>
+								<th>Balance</th> 
 							</tr>
 						</thead>
 						<tbody>
@@ -171,12 +170,19 @@
 								<td>{{((currentPage - 1) * pageItems) + $index + 1}}</td>
 								<td>{{x.date}}</td>
 								<td>{{x.income_expence_type}}</td>
-								<td>{{x.description}}</td>
+								<td>
+								<!-- {{x.description}} -->
+								<table class="table table-bordered table-responsive">
+									<tr ng-repeat="(key, val) in x.description.payment_type">
+										<td><b>{{key | uppercase}}</b></td>
+										<td>{{val}}</td>
+									</tr>
+								</table>  
+								</td>
 								<td>{{x.balancesheet_type}}</td>
 								<td>{{x.credit_amount}}</td>
 								<td>{{x.debit_amount}}</td>
-								<td>{{x.total_amount}}</td>
-								<td>{{x.total_amount}}</td>
+								<td>{{x.balance}}</td>
 							</tr>				
 						</tbody>
 					</table>

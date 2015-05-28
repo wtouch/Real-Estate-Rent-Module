@@ -8,7 +8,7 @@
 		if(isset($id)){
 			$where['id'] = $id;
 			
-			$t0 = $db->setTable("transaction");
+			$t0 = $db->setTable("account");
 			$db->setWhere($where, $t0);
 			$data = $db->selectSingle();
 			echo json_encode($data);
@@ -31,11 +31,11 @@
 			}
 			
 			if(isset($_GET['startDt']) && isset($_GET['endtDt'])){
-				$db->setWhere(array("(date BETWEEN '".$_GET['startDt']."' AND '".$_GET['endtDt']."')"), "transaction", false, true);
+				$db->setWhere(array("(date BETWEEN '".$_GET['startDt']."' AND '".$_GET['endtDt']."')"), "account", false, true);
 			}
-			$t0 = $db->setTable("transaction");
+			$t0 = $db->setTable("account");
 			$db->setWhere($where, $t0);
-			$db->setWhere($like, "transaction", true);
+			$db->setWhere($like, "account", true);
 			//$db->setLimit($limit);
 			
 			$data = $db->select();
@@ -44,12 +44,12 @@
 	}//end get
 	if($reqMethod=="POST" && $_GET['METHOD'] == 'PUT' || $reqMethod=="DELETE" && $_GET['METHOD'] == 'DELETE'){
 		$where['id'] = $id; // need where clause to update/delete record
-		$update = $db->update("transaction", $body, $where);
+		$update = $db->update("account", $body, $where);
 		echo json_encode($update);
 	}
 	
 	if($reqMethod=="POST" && $_GET['METHOD'] == 'POST'){
-		$insert = $db->insert("transaction", $body);
+		$insert = $db->insert("account", $body);
 		echo json_encode($insert);
 	}
  ?>

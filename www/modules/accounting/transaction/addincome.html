@@ -10,7 +10,7 @@
 					<div class="col-sm-9">
 						<select id="income_expence_type" class="form-control" name="income_expence_type" id="income_expence_type" ng-model="type" ng-change="addincome.income_expence_type = type" required>
 						<option value="" selected>Select Type</option><!-- added value & selected attr -->
-						<option value="Rent" >Rent</option>
+						<option value="Rent" >Licence Fees</option>
 						<option value="other">Other</option>
 						</select>
 						<span class="help-block" ng-show="addIncomeForm.income_expence_type.$dirty && addIncomeForm.income_expence_type.$invalid">
@@ -80,6 +80,20 @@
 					</div>						
 			</div>
 			
+			<div class="form-group">
+				<label for="category" class="col-sm-2 form-control">Category</label> 
+					<div class="col-sm-9">
+						<select id="category" name="category" class="form-control" ng-model="addincome.category" required>
+						<option value="" selected>Select Category</option>
+						<option value=""></option>
+						<option value=""></option>
+						<option value=""></option>
+						<option value=""></option>
+						<option value=""></option>
+						<option value=""></option>
+						<option value=""></option>
+					</div>
+			</div>
 			<div class="form-group">
 				<label for="payment_type" class="col-sm-2 control-label">Payment Type </label>
 					<div class="col-sm-9">
