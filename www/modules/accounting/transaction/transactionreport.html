@@ -1,5 +1,5 @@
-<h3 class="text-center">Report View</h3>
-	<div class="row">	 				  
+<h3 class="text-center">Transaction Report</h3>
+<!--<div class="row">	 				  
 		<div class="col-sm-3">
 			<div class="bottomspace" ng-init="type = 'daily'; calcDuration(type, duration);">
 				<label for="year" class="control-label" >View Report</label>
@@ -12,7 +12,7 @@
 			</div>
 		</div>
 		
-		<div class="col-sm-3" ng-if="type == 'daily'"><!--ng-model="duration.start"-->
+		<div class="col-sm-3" ng-if="type == 'daily'"><!--ng-model="duration.start"- ->
 			<div class="bottomspace">
 			<label for="year" class="control-label"></label>
 					<p class="input-group">
@@ -64,9 +64,9 @@
 			</div>
 		</div> 
 		<div  ng-if="type == 'custom'">
-			<div class="col-sm-3"><!--ng-model="duration.start"-->
+			<div class="col-sm-3"><!--ng-model="duration.start"- ->
 					<div class="bottomspace">
-					<label for="date1" class="control-label"></label><!--ng-change="calcDuration(type,start)"-->
+					<label for="date1" class="control-label"></label><!--ng-change="calcDuration(type,start)"- ->
 							<p class="input-group">
 							  <input class="form-control" type="text"  id="date1" name="date1" datepicker-popup="yyyy-MM-dd" ng-model="duration.start" is-open="rentdate2" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate2')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
 									<span class="input-group-btn">
@@ -76,7 +76,7 @@
 							</p>
 					</div>
 			</div>
-			<div class="col-sm-3"><!--ng-model="duration.start"-->
+			<div class="col-sm-3"><!--ng-model="duration.start"- ->
 					<div class="bottomspace">
 					<label for="year" class="control-label"></label>
 							<p class="input-group">
@@ -89,7 +89,6 @@
 					</div>
 			</div>
 		</div>
-	
 	</div>
 		<div class="row">
 			<div class="col-md-6">
@@ -125,7 +124,7 @@
 				<div ng-if="expenceTotal" class="table-responsive">
 					<table class="table table-bordered">
 					<thead><th colspan ="6" class="text-center">Expences</th></thead>
-						<tbody>
+					<tbody>
 						<tr>
 							<th>Sr.No.</th>
 							<th>Expenses Type</th>
@@ -149,9 +148,43 @@
 				<h2>No Data Found</h2>
 				</div>
 			</div>
+		</div>-->
+		<div class="row" >
+			<div class="col-sm-12 ">
+				<div class="table-responsive">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>Sr.No.</th>
+								<th>Date</th>
+								<th>Type</th>
+								<th>Description</th>
+								<th>Category</th>
+								<th>Credit Amount</th>
+								<th>Debit Amount</th> 
+								<th>Total Credit</th>
+								<th>Total Debit</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="x in transaction | orderBy:sort">
+								<td>{{((currentPage - 1) * pageItems) + $index + 1}}</td>
+								<td>{{x.date}}</td>
+								<td>{{x.income_expence_type}}</td>
+								<td>{{x.description}}</td>
+								<td>{{x.balancesheet_type}}</td>
+								<td>{{x.credit_amount}}</td>
+								<td>{{x.debit_amount}}</td>
+								<td>{{x.total_amount}}</td>
+								<td>{{x.total_amount}}</td>
+							</tr>				
+						</tbody>
+					</table>
+				</div>				
+			</div>
 		</div>
-
-<!-- <div class="text-center">				
+		
+<div class="text-center">				
 	<pagination total-items="totalRecords" items-per-page="pageItems"  ng-model="rentreportCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged(rentreportCurrentPage,rentParam)"></pagination>
 	<pre>Page: {{rentreportCurrentPage}} / {{numPages}}</pre>
-</div> -->
+</div> 

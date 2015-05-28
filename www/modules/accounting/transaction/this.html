@@ -1,0 +1,110 @@
+<div class="main-content">
+	<div class="modal-header">
+		<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
+		<h3>Add Expenses</h3>
+	</div>
+	<h3 class="col-sm-offset-2 col-sm-9">Add Expenses</h3>
+		<form name="addExpenceForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="addExpenceForm.$valid">
+			<div class="form-group">
+				<label for="income_expence_type" class="col-sm-2 control-label">Expenses Type</label>
+					<div class="col-sm-9">
+							<select id="income_expence_type" class="form-control" ng-model="addexpence.income_expence_type">
+							<option value="" selected>Select Type</option><!-- added value & selected attr -->
+							<option value="electricity_bill" >Electricity Bill</option>
+							<option value="water_bill">Water Bill</option>
+							<option value="drawing">Drawing</option>
+							<option value="Depreciation">Depreciation </option>
+							</select>
+					</div>
+			</div>
+			<div class="form-group">
+				<label for="expence_month" class="col-sm-2 control-label">Month</label>
+					<div class="col-sm-9">
+							<select id="expence_month" class="form-control">
+							<option value="" selected>Select Month</option><!-- added value & selected attr -->
+							<option value="January" >January</option>
+							<option value="February">February</option>
+							<option value="March">March</option>
+							<option value="April">April</option>
+							<option value="May">May</option>
+							<option value="June">June</option>
+							<option value="July">July</option>
+							<option value="August">August</option>
+							<option value="September">September</option>
+							<option value="October">October</option>
+							<option value="November">November</option>
+							<option value="December">December</option>
+							</select>
+					</div>
+			</div>
+			
+			
+			<div class="form-group">	
+				<label  for="date" class="col-sm-2 control-label">Date</label>
+					<div class="col-sm-9">
+						<input type="text" id="date" class="form-control" value="{{dates.date}}"  ng-model="addexpence.date"  ng-init="addexpence.date = dates.date" name="date" readonly 
+						placeholder="date" >
+					</div>						
+			</div>
+			
+			<div class="form-group">
+				<label  for="amount" class="col-sm-2 control-label">Amount</label>
+					<div class="col-sm-9">
+						<input type="text" id="amount" class="form-control" ng-model="addexpence.amount" name="amount" placeholder="Amount" >
+					</div>						
+			</div>
+			
+			<input type="hidden" ng-model="addexpence.balancesheet_type" ng-init="addexpence.balancesheet_type = 'expence'" />
+			
+			
+			<div class="form-group">
+				<label for="payment_type" class="col-sm-2 control-label">Payment Type </label>
+					<div class="col-sm-9">
+							<select id="payment_type" class="form-control" ng-model="addexpence.description.payment_type.type">
+							<option value="" selected>Select Type</option><!-- added value & selected attr -->
+							<option value="Cash" >Cash</option>
+							<option value="Cheque">Cheque</option>
+							<option value="Net Banking">Net Banking</option>
+							<option value="DD">DD</option>
+							</select>
+					</div>
+			</div>
+			
+			<div class="form-group" ng-if="addexpence.description.payment_type.type =='Cheque' || addexpence.description.payment_type.type =='Net Banking' || addexpence.description.payment_type.type =='DD'">
+				<label for="refferance no" class="col-sm-2 control-label">Refference No</label>
+					<div class="col-sm-9">
+						<input type="text" id="refferance no" ng-model="addexpence.description.payment_type.Refference_No" class="form-control" name="refferance no"   placeholder="Enter Refferance No" >
+					</div>		
+			</div>
+			
+			<div class="form-group" ng-if="addexpence.description.payment_type.type == 'Cheque' || addexpence.description.payment_type.type == 'Net Banking' || addexpence.description.payment_type.type == 'DD'">
+				<label for="Date" class="col-sm-2 control-label">Date</label>
+				 <div class="col-sm-9">
+						<!-- <input type="text" id="Date" ng-model="addincome.description.payment_type.Date" class="form-control" name="Date"   placeholder="Enter Date" > -->
+					<input type="text" id="date" class="form-control" value="{{dates.date}}" ng-model="addexpence.description.payment_type.date"  ng-init="addexpence.description.payment_type.date = dates.date" name="date"  
+						placeholder="date" >
+				</div>					
+			</div>
+			
+			<div class="form-group" ng-if="addexpence.description.payment_type.type == 'Cheque' || addexpence.description.payment_type.type == 'Net Banking' || addexpence.description.payment_type.type == 'DD'">
+				<label for="Bank" class="col-sm-2 control-label">Bank Name</label>
+					<div class="col-sm-9">
+						<input type="text" id="Bank" ng-model="addexpence.description.payment_type.Bank" class="form-control" name="Bank"   placeholder="Enter Bank Name" >
+					</div>		
+			</div>
+			
+			<div class="form-group" ng-if="addexpence.description.payment_type.type == 'Cheque' || addexpence.description.payment_type.type == 'Net Banking' || addexpence.description.payment_type.type == 'DD'">
+				<label for="Branch" class="col-sm-2 control-label">Branch</label>
+					<div class="col-sm-9">
+						<input type="text" id="Branch" ng-model="addexpence.description.payment_type.Branch" class="form-control" name="Branch"   placeholder="Enter Branch" >
+					</div>		
+			</div>
+		
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-9">
+					<button type="submit" class="btn btn-success" ng-disabled="addExpenceForm.$invalid" ng-click="postDataExpence(addexpence)">Submit</button>
+					<button type="reset" class="btn btn-danger">Reset</button>
+				</div>
+			</div>	
+		</form>
+</div>

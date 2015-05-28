@@ -4,8 +4,7 @@
 	<div class="form-group">
 		<label for="title" class="col-sm-2 control-label">Property Title *</label>
 		<div class="col-sm-9">
-			<input type="text"  id="title" class="form-control" name="title" ng-model="property.title" required>				
-			
+			<input type="text" id="title" class="form-control" name="title" ng-model="property.title" required>
 			<span class="text-danger" ng-show="addProperty.title.$dirty && addProperty.title.$invalid">
 				<span ng-show="addProperty.title.$error.required">Title is required .</span>
 			</span>											 
