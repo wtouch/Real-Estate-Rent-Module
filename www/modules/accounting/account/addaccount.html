@@ -1,9 +1,11 @@
 <div class="main-content" ng-init="account = modalOptions.account">
-		<div class="modal-header">{{modalOptions.account}}
+		<div class="modal-header">
 				<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
-				<h3>Add Account</h3>
+				<h3 class="col-sm-offset-2 col-sm-9" ng-if="!modalOptions.editAccount">Add Account</h3>
+				<h3 class="col-sm-offset-2 col-sm-9" ng-if="modalOptions.editAccount">Edit Account</h3>
 		</div>
-		<h3 class="col-sm-offset-2 col-sm-9">Add Account</h3>
+		<h3 class="col-sm-offset-2 col-sm-9" ng-if="!modalOptions.editAccount">Add Account</h3>
+		<h3 class="col-sm-offset-2 col-sm-9" ng-if="modalOptions.editAccount">Edit Account</h3>
 		<form name="addAccountForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="addAccountForm.$valid">
 				<div class="form-group">
 					<label for="accountname" class="col-sm-2 control-label">Account Name * </label>
