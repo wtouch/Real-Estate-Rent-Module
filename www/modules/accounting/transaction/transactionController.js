@@ -51,8 +51,11 @@ define(['app'], function (app) {
 	$scope.incomeDate = {};
 	$scope.openAddincome = function (url) {
 		dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
-				.then(function(user) {  
-				
+			.then(function(user) {  
+		dataService.config('config', {config_name : "category"}).then(function(response){
+		
+		dataService.get("getmultiple/account/1/100")
+			.then(function(account) { 
 			var modalDefaults = {
 				templateUrl: url,	// apply template to modal
 				size : 'lg'
@@ -60,6 +63,8 @@ define(['app'], function (app) {
 			var modalOptions = {
 				incomeDate: { date : $scope.currentDate},
 				customerList : (user.data),
+				accountList : (account.data),
+				categoryConfig : response.config_data,
 				postData : function(addincome) {
 				//$scope.addincome.user_id= $rootScope.userDetails.id;
 				 dataService.post("post/transaction/addincome",addincome)
@@ -80,6 +85,8 @@ define(['app'], function (app) {
 		});	
 		
 		});
+		});
+		});
 		
 		};
 		$scope.ok = function () {
@@ -90,12 +97,17 @@ define(['app'], function (app) {
 		//Modal for add expence
 		$scope.expenseDate = {};
 		$scope.openAddexpense = function (url) {
+		dataService.config('config', {config_name : "category"}).then(function(response){
+		dataService.get("getmultiple/account/1/100")
+			.then(function(account) { 
 		var modalDefaults = {
 				templateUrl: url,	// apply template to modal
 				size : 'lg'
 			};
 		var modalOptions = {
 			expenseDate: { date : $scope.currentDate},
+			categoryConfig : response.config_data,
+			accountList : (account.data),
 			postDataExpence : function(addexpence) {
 				//$scope.addexpence.user_id= $rootScope.userDetails.id;
 				 dataService.post("post/transaction/addexpence",addexpence)
@@ -112,6 +124,8 @@ define(['app'], function (app) {
 			modalOptions.addexpence.date = dataService.currentDate;
 				console.log("modalOpened");
 		
+		});	
+		});	
 		});	
 		};
 		$scope.ok = function () {

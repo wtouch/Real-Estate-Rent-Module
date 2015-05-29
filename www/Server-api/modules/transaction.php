@@ -23,11 +23,11 @@
 			
 			if(isset($_GET['property_id'])) $where['property_id'] = $_GET['property_id'];
 			if(isset($_GET['user_id'])) $where['user_id'] = $_GET['user_id'];
-			if(isset($_GET['balancesheet_type'])) $where['balancesheet_type'] = $_GET['balancesheet_type'];
+			if(isset($_GET['type'])) $where['type'] = $_GET['type'];
 			
 			//if(isset($_GET['user_id'])) $userId = $_GET['user_id'];
 			if(isset($_GET['search']) && $_GET['search'] == true){
-				(isset($_GET['income_expence_type'])) ? $like['income_expence_type'] = $_GET['income_expence_type'] : "";
+				(isset($_GET['category'])) ? $like['category'] = $_GET['category'] : "";
 			}
 			
 			if(isset($_GET['startDt']) && isset($_GET['endtDt'])){
