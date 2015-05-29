@@ -13,7 +13,6 @@
 			<div class="row">
 			    <div class="col-sm-9">
 					<table class="table table-hover table-responsive">
-					    
 						<tr>
 							 <td><b>Property Title </b></td>
 							 <td><ul>							
@@ -45,7 +44,8 @@
 							<td><b>Area</b> 
 							<td>
 								 <p><b>Built_up area :</b>
-								 {{modalOptions.viewProperty.property_info.buildup_area}}		 {{modalOptions.viewProperty.property_info.build_unit}}</p>
+								 {{modalOptions.viewProperty.property_info.buildup_area}}		 
+								 {{modalOptions.viewProperty.property_info.build_unit}}</p>
 								 
 								 <p><b>Plot/ Land Area</b>
 								 {{modalOptions.viewProperty.property_info.land_area}}
@@ -59,49 +59,56 @@
 							</td>					
 						</tr>
 						<tr>
-							<td><b>Price </b>
-							<td>{{modalOptions.viewProperty.price}}</td>			
+							<td ng-if="modalOptions.viewProperty.price"><b>Price </b>
+							<td ng-if="modalOptions.viewProperty.price">{{modalOptions.viewProperty.price}}</td>			
 						</tr>
 						<tr>
-							<td><b>Contact US! </b> </td> 
-							<td>{{modalOptions.viewProperty.contact_details.contact_person}}</td>
+							<td ng-if="modalOptions.viewProperty.contact_details.contact_person"><b>Contact US! </b> </td> 
+							<td ng-if="modalOptions.viewProperty.contact_details.contact_person">{{modalOptions.viewProperty.contact_details.contact_person}}</td>
 						</tr>
 					</table>	
 				</div>
 				<div class="col-sm-3">
-					<img src="img1.jpg" width="100%">
+					<table class="table table-bordered">
+						<tr "modalOptions.templates">
+							<img class="img-responsive" ng-model="modalOptions.viewProperty.imgkey" ng-src="{{appConfig.assetPath + modalOptions.viewProperty.property_images[modalOptions.viewProperty.imgkey].file_relative_path}}" ng-init="modalOptions.viewProperty.imgkey = 0"/>
+							<span class="thumbs" ng-repeat="(key, value) in modalOptions.viewProperty.property_images">
+								<img class="img-thumbnail" width="40px" ng-src="{{appConfig.assetPath +value.file_relative_path}}" ng-click="modalOptions.viewProperty.imgkey = key"/>
+							</span>
+						</tr>		
+					</table>
 				</div>
 			</div>
 			<hr>	
-					<h3>Property Built Up Details</h3>
-					<table class="table table-bordered table-responsive">
-						<thead>
-							<th ng-if="modalOptions.viewProperty.optional_property_details.furnished">Furnishing</th>
-							<th ng-if="modalOptions.viewProperty.optional_property_details.transType">Transaction</th>
-							<th ng-if="modalOptions.viewProperty.property_info.bedrooms">Bedrooms</th>
-							<th ng-if="modalOptions.viewProperty.property_info.bathrooms">Bathrooms</th>
-							<th ng-if="modalOptions.viewProperty.optional_property_details.parking">Reserved Parking</th>
-						</thead>
-						<tbody>
-							<tr>
-								<td ng-if="modalOptions.viewProperty.optional_property_details.furnished">{{modalOptions.viewProperty.optional_property_details.furnished}}</td>
-								
-								<td ng-if="modalOptions.viewProperty.optional_property_details.transType">{{modalOptions.viewProperty.optional_property_details.transType}}</td>
-								
-								<td ng-if="modalOptions.viewProperty.property_info.bedrooms">{{modalOptions.viewProperty.property_info.bedrooms}}</td>
-								
-								<td ng-if="modalOptions.viewProperty.property_info.bathrooms">{{modalOptions.viewProperty.property_info.bathrooms}}</td>
-								
-								<td ng-if="modalOptions.viewProperty.optional_property_details.parking">{{modalOptions.viewProperty.optional_property_details.parking}}</td>
-							</tr>
-						</tbody>
-					</table>
+			<h3>Property Built Up Details</h3>
+				<table class="table table-bordered table-responsive">
+					<thead>
+						<th ng-if="modalOptions.viewProperty.optional_property_details.furnished">Furnishing</th>
+						<th ng-if="modalOptions.viewProperty.optional_property_details.transType">Transaction</th>
+						<th ng-if="modalOptions.viewProperty.property_info.bedrooms">Bedrooms</th>
+						<th ng-if="modalOptions.viewProperty.property_info.bathrooms">Bathrooms</th>
+						<th ng-if="modalOptions.viewProperty.optional_property_details.parking">Reserved Parking</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td ng-if="modalOptions.viewProperty.optional_property_details.furnished">{{modalOptions.viewProperty.optional_property_details.furnished}}</td>
+							
+							<td ng-if="modalOptions.viewProperty.optional_property_details.transType">{{modalOptions.viewProperty.optional_property_details.transType}}</td>
+							
+							<td ng-if="modalOptions.viewProperty.property_info.bedrooms">{{modalOptions.viewProperty.property_info.bedrooms}}</td>
+							
+							<td ng-if="modalOptions.viewProperty.property_info.bathrooms">{{modalOptions.viewProperty.property_info.bathrooms}}</td>
+							
+							<td ng-if="modalOptions.viewProperty.optional_property_details.parking">{{modalOptions.viewProperty.optional_property_details.parking}}</td>
+						</tr>
+					</tbody>
+				</table>
 			<hr>
 				<table class="table table-hover table-responsive">
 					<tbody>
 						<h3>Amenities</h3>	
 						<tr>
-						
+							{{modalOptions.viewProperty.amenities}}
 						</tr>
 					<hr>			
 						<h3>Property Address</h3>
@@ -110,27 +117,27 @@
 					</tbody>
 				</table>		
 			<hr>			
-					<h3>Property Seller Detail</h3>
-					<table class="table table-bordered table-responsive">
-						<tbody>
-							<tr>
-								<td>Contact Person</td>
-								<td>{{modalOptions.viewProperty.contact_details.contact_person}}</td>
-							</tr>
-							<tr>
-								<td>Mobile</td>
-								<td>{{modalOptions.viewProperty.contact_details.mobile}}</td>
-							</tr>
-							<tr>
-								<td>Email</td>
-								<td>{{modalOptions.viewProperty.contact_details.email}}</td>
-							</tr>
-							<tr>
-								<td>Contact Address</td>
-								<td>{{modalOptions.viewProperty.contact_details.cont_address}}</td>
-							</tr>
-						</tbody>
-					</table>				
+			<h3>Property Seller Detail</h3>
+				<table class="table table-bordered table-responsive">
+					<tbody>
+						<tr>
+							<td>Contact Person</td>
+							<td>{{modalOptions.viewProperty.contact_details.contact_person}}</td>
+						</tr>
+						<tr>
+							<td>Mobile</td>
+							<td>{{modalOptions.viewProperty.contact_details.mobile}}</td>
+						</tr>
+						<tr>
+							<td>Email</td>
+							<td>{{modalOptions.viewProperty.contact_details.email}}</td>
+						</tr>
+						<tr>
+							<td>Contact Address</td>
+							<td>{{modalOptions.viewProperty.contact_details.cont_address}}</td>
+						</tr>
+					</tbody>
+				</table>				
 		</div>
 	</div>
 </div>
