@@ -1,0 +1,45 @@
+<h3 class="text-center">Transaction Report</h3>
+		<div class="row" >
+			<div class="col-sm-12 ">
+				<div class="table-responsive">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>Sr.No.</th>
+								<th>Date</th>
+								<th>Category</th>
+								<th>Description</th>
+								<th>Type</th>
+								<th>Credit Amount</th>
+								<th>Debit Amount</th> 
+								<th>Balance</th> 
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="x in transaction | orderBy:sort">
+								<td>{{((currentPage - 1) * pageItems) + $index + 1}}</td>
+								<td>{{x.date}}</td>
+								<td>{{x.category}}</td>
+								<td>
+								<table class="table table-bordered table-responsive">
+									<tr ng-repeat="(key, val) in x.description.payment_type">
+										<td><b>{{key | uppercase}}</b></td>
+										<td>{{val}}</td>
+									</tr>
+								</table>  
+								</td>
+								<td>{{x.type}}</td>
+								<td>{{x.credit_amount}}</td>
+								<td>{{x.debit_amount}}</td>
+								<td>{{x.balance}}</td>
+							</tr>				
+						</tbody>
+					</table>
+				</div>				
+			</div>
+		</div>
+		
+<div class="text-center">				
+	<pagination total-items="totalRecords" items-per-page="pageItems"  ng-model="rentreportCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged(rentreportCurrentPage,rentParam)"></pagination>
+	<pre>Page: {{rentreportCurrentPage}} / {{numPages}}</pre>
+</div> 

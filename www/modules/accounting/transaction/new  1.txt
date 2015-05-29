@@ -1,0 +1,43 @@
+//open simple Modal
+$scope.openAddincome = function (url) {
+var modalDefaults = {
+				templateUrl: url,	// apply template to modal
+				size : 'lg'
+			};
+			var modalOptions = {
+			};
+			modalService.show(modalDefaults, modalOptions).then(function (result) {
+			modalOptions.addincome.date = dataService.currentDate;
+				console.log("modalOpened");
+		
+		});	
+		});
+		
+		};
+		$scope.ok = function () {
+			$modalOptions.close('ok');
+		};
+		
+		
+		<!-- <div ng-if = "type =='Rent'">
+			<div class="form-group">
+				<label for="rent_month" class="col-sm-2 control-label">Month</label>
+					<div class="col-sm-9">
+						<select id="rent_month" class="form-control">
+						<option value="" selected>Select Month</option><!-- added value & selected attr - ->
+						<option value="January" >January</option>
+						<option value="February">February</option>
+						<option value="March">March</option>
+						<option value="April">April</option>
+						<option value="May">May</option>
+						<option value="June">June</option>
+						<option value="July">July</option>
+						<option value="August">August</option>
+						<option value="September">September</option>
+						<option value="October">October</option>
+						<option value="November">November</option>
+						<option value="December">December</option>
+						</select>
+					</div>
+			</div>
+			</div> -->

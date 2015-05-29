@@ -1,11 +1,10 @@
 
-	<accordion close-others="true">
-	<accordion-group is-open="status.isFirstOpen" heading="Property Structure">
+	<accordion close-others="true"><!--close-others="oneAtATime"-->
+	<accordion-group heading="Property Structure" is-open="status.isFirstOpen">
 	<div class="form-group">
 		<label for="title" class="col-sm-2 control-label">Property Title *</label>
 		<div class="col-sm-9">
-			<input type="text"  id="title" class="form-control" name="title" ng-model="property.title" required>				
-			
+			<input type="text" id="title" class="form-control" name="title" ng-model="property.title" required>
 			<span class="text-danger" ng-show="addProperty.title.$dirty && addProperty.title.$invalid">
 				<span ng-show="addProperty.title.$error.required">Title is required .</span>
 			</span>											 
@@ -37,9 +36,9 @@
 	<div class="form-group">
 		<label for="prop_desc" class="col-sm-2 control-label">Property Discription *</label>
 		<div class="col-sm-9">
-			<textarea type="text" class="form-control" name="prop_desc" ng-model="property.property_description" cols="30" rows="4" ng-maxlength="356" required></textarea>
+			<textarea type="text" class="form-control" name="prop_desc" ng-model="property.property_description" cols="30" rows="4" ng-maxlength="700" required></textarea>
 			
-			<p ng-hide="addProperty.property_description.$error.maxlength">{{ 356 - property.property_description.length + " Chars left" }}</p>
+			<p ng-hide="addProperty.property_description.$error.maxlength">{{ 700 - property.property_description.length + " Chars left" }}</p>
 			
 			<span class="text-danger" ng-show="addProperty.property_description.$error.maxlength">
 				Sorry You are Exceeding the Limit
@@ -55,43 +54,35 @@
 	
 	<div class="form-group">
 		<label for="bedrooms" class="col-sm-2 control-label">Bedrooms </label>
-		<div class="col-sm-9">
+		<div class="col-sm-4">
 			<select class="form-control" id="bedrooms" name="bedrooms" ng-model="property.property_info.bedrooms"  ng-options="item as item for item in propertyConfig.Bedrooms" required>
 				<option value="" selected>Select one</option>						
 			</select>
 			<span class="text-danger" ng-show="addProperty.bedrooms.$dirty && addProperty.bedrooms.$invalid">
 			</span>
 		</div>										
-	</div>
-		
-	<div class="form-group">
-		<label for="bathrooms" class="col-sm-2 control-label">Bathrooms </label>
-		<div class="col-sm-9">
-			<select class="form-control" id="bathrooms"  name="bathrooms" ng-model="property.property_info.bathrooms" required ng-options="item as item for item in propertyConfig.Bathrooms">
-				<option value="" selected>Select one</option>	
-			</select>	
-			 <span class="text-danger" ng-show="addProperty.bathrooms.$dirty && addProperty.bathrooms.$invalid">
-			</span>				 
-		</div>									
-	</div>
-		
-	<div class="form-group">
-		<label for="propertyPrice" class="col-sm-2 control-label ">Licence Fees: </label>
-		<div class="col-sm-6">
-			<input type="text" id="propertyPrice" class="form-control" name="propertyPrice" ng-model="property.price" ng-pattern="/^\d{0,9}[0-9]$/" required>
-			<p ng-show="addProperty.price.$error.pattern && (addProperty.price.$dirty || submitted)"
-			class="help-block">Enter only no.</p> 
+		<label for="bathrooms" class="col-sm-1 control-label">Bathrooms </label>
+			<div class="col-sm-4">
+				<select class="form-control" id="bathrooms"  name="bathrooms" ng-model="property.property_info.bathrooms" required ng-options="item as item for item in propertyConfig.Bathrooms">
+					<option value="" selected>Select one</option>	
+				</select>	
+				 <span class="text-danger" ng-show="addProperty.bathrooms.$dirty && addProperty.bathrooms.$invalid">
+				</span>				 
+			</div>									
 		</div>
-		<div class="col-sm-3"><!---->
-			<select class="form-control"  ng-model="property.currency" ng-options="item as item for item in propertyConfig.currency" required>
-				<option value="" selected>Select Currency</option>				
-			</select>
-			<span class="text-danger" ng-show="addProperty.propertyPrice.$dirty && addProperty.propertyPrice.$invalid">
-				<span ng-show="addProperty.propertyPrice.$error.required">Property Price is required .</span>
-			</span>				 
-		</div>				
+		
+	<div class="form-group">
+		<label for="propertyPrice" class="col-sm-2 control-label ">Licence Fees</label>
+		<div class="col-sm-4">
+			<input type="text" id="propertyPrice" class="form-control" name="propertyPrice" ng-model="property.price" ng-pattern="/^\d{0,9}[0-9]$/" required>
+		</div>
+		<label for="deposit" class="col-sm-1 control-label ">Deposit</label>
+		<div class="col-sm-4">
+			<input type="text" id="deposit" name="deposit" class="form-control" ng-model="property.deposit" ng-pattern="/^\d{0,9}[0-9]$/" required>
+		</div>		
+			
 	</div>
-
+	
 	<div class="form-group">
 	  <label for="property_images" class="col-sm-2 control-label" >*Property Images</label>
 		<div class="col-sm-9">
@@ -110,9 +101,9 @@
 	<div class="form-group">
 	<label for="address" class="col-sm-2 control-label">Address*</label>
 	<div class="col-sm-9">
-		<textarea type="text" class="form-control" id="address" name="address" ng-model="addProperty.property_location.address" cols="30" rows="3" ng-maxlength="256" placeholder="Enter address"  required></textarea>
+		<textarea type="text" class="form-control" id="address" name="address" ng-model="addProperty.property_location.address" cols="30" rows="3" ng-maxlength="500" placeholder="Enter address"  required></textarea>
 		<p ng-hide="addProperty.address.$error.maxlength">
-			{{ 256 - addProperty.property_location.address.length + " Chars left" }}
+			{{ 500 - addProperty.property_location.address.length + " Chars left" }}
 		</p>
 		<span class="help-block" ng-show="addProperty.address.$dirty && addProperty.address.$invalid">
 			<span ng-show="addProperty.address.$error.maxlength"class="text-danger">Sorry You are Exceeding the Limit</span>
@@ -121,47 +112,37 @@
 	</div> 
 	</div>	
 	
-<!-- add combo boxes for city, state, country & add text input for zip code & validation with number max-char 6 -->		
-	<script type="text/ng-template" id="customTemplate.html">
-		<a>
-			<span bind-html-unsafe="match.label | typeaheadHighlight:query"></span> 
-			<span><small> ({{match.model.area}} - {{match.model.pincode}})</small></span>
-		</a>
-	</script>
-	<div class="form-group">
-		<label for="location" class="col-sm-2 control-label">Location*</label>
-		<div class="col-sm-9">
-			<input typeahead-template-url="customTemplate.html" type="text" required name="location" id="location" ng-model="property.property_location.location" typeahead-on-select="getData($item)" placeholder="Location" typeahead="address.location for address in getTypeaheadData('locations','location', $viewValue)" typeahead-loading="locationLoading" typeahead-editable="false" class="form-control" autocomplete="off">
-			
-				<span class="help-block" ng-show="addProperty.location.$dirty && addProperty.location.$invalid || addProperty.location.$dirty && !addbusiness.location">
-					<span class="text-danger" ng-show="addProperty.location.$dirty && (addProperty.location.$error.required || !addbusiness.location)">Location required.If Location not found enter pincode.</span>
-				</span>
-		</div>						
-	</div>
-	
-	<div class="form-group">
-		<label for="pincode" class="col-sm-2 control-label">Pin Code</label>
-		<div class="col-sm-9">
-			<input ng-disabled="readOnly" type="text" id="pincode" name="pincode" class="form-control" ng-model="property.property_location.pincode" placeholder="Enter Pin Code" ng-pattern="/^\d{0,9}[0-9]$/" maxlength="6"  ng-minlength="6">
-			<span class="help-block" ng-show="addProperty.pincode.$dirty && addProperty.pincode.$invalid">
-				<span ng-show="addProperty.pincode.$error.pattern && (addProperty.pincode.$dirty || submitted)" class="text-danger">Enter a valid ZIP Code</span>
-				<span class="text-danger" ng-show="addProperty.pincode.$error.minlength && (addProperty.pincode.$dirty || submitted)">Enter Valid Length Of Zip Code.</span>
-			</span>
-		</div>						
-	</div>
-	
 	<div class="form-group">
 		<label for="area" class="col-sm-2 control-label">Area</label>
-		<div class="col-sm-9">
+		<div class="col-sm-4">
 			<input ng-disabled="readOnly" type="text" id="area" name="area" class="form-control" ng-model="property.property_location.area" placeholder="Enter area">
 			<span class="help-block" ng-show="addProperty.area.$dirty && addProperty.area.$invalid">
 				<span ng-show="addProperty.area.$error.pattern && (addProperty.area.$dirty || submitted)" class="text-danger">Enter Area</span>
 				<span class="text-danger" ng-show="addProperty.area.$error.minlength && (addProperty.area.$dirty || submitted)">Enter correct Code.</span>
 			</span>
-		</div>						
+		</div>	
+		<label for="location" class="col-sm-1 control-label">Location*</label>
+		<div class="col-sm-4">
+			<input typeahead-template-url="customTemplate.html" type="text" required name="location" id="location" ng-model="property.property_location.location" typeahead-on-select="getData($item)" placeholder="Location" typeahead="address.location for address in getTypeaheadData('locations','location', $viewValue)" typeahead-loading="locationLoading" typeahead-editable="false" class="form-control" autocomplete="off">
+			
+				<span class="help-block" ng-show="addProperty.location.$dirty && addProperty.location.$invalid || addProperty.location.$dirty && !addbusiness.location">
+					<span class="text-danger" ng-show="addProperty.location.$dirty && (addProperty.location.$error.required || !addbusiness.location)">Location required.If Location not found enter pincode.</span>
+				</span>
+		</div>				
+			
 	</div>			
-	<div class="form-group">
-		<label for="state" class="col-sm-2 control-label">City</label>
+	
+	<div class="form-group">			
+		<label for="pincode" class="col-sm-2 control-label">PinCode</label>
+		<div class="col-sm-4">
+			<input ng-disabled="readOnly" type="text" id="pincode" name="pincode" class="form-control" ng-model="property.property_location.pincode" placeholder="Enter Pin Code" ng-pattern="/^\d{0,9}[0-9]$/" maxlength="6"  ng-minlength="6">
+			<span class="help-block" ng-show="addProperty.pincode.$dirty && addProperty.pincode.$invalid">
+				<span ng-show="addProperty.pincode.$error.pattern && (addProperty.pincode.$dirty || submitted)" class="text-danger">Enter a valid ZIP Code</span>
+				<span class="text-danger" ng-show="addProperty.pincode.$error.minlength && (addProperty.pincode.$dirty || submitted)">Enter Valid Length Of Zip Code.</span>
+			</span>
+		</div>	
+		
+		<label for="state" class="col-sm-1 control-label">City *</label>
 		<div class="col-sm-4">
 			<input type="text" required name="City" id="City" ng-model="property.property_location.city" placeholder="Enter Your City"  ng-disabled="readOnly" class="form-control" autocomplete="off">	
 			<i ng-show="cityLoading" class="glyphicon glyphicon-refresh"></i>
@@ -169,24 +150,26 @@
 				<span ng-show="addProperty.City.$error.required || addProperty.City.$dirty && !addbusiness.city" class="text-danger">City is required.</span>
 			</span>				
 		</div>
-		<label for="state" class="col-sm-1 control-label">State</label>
+	</div>
+	
+	
+	<div class="form-group">
+		<label for="state" class="col-sm-2 control-label">State *</label>
 		<div class="col-sm-4">
 		<input ng-disabled="readOnly" type="text" id="state" name="state" class="form-control" ng-model="property.property_location.state" placeholder="Enter state">
 			<span class="help-block" ng-show="addProperty.state.$dirty && addProperty.state.$invalid">
 				<span ng-show="addProperty.state.$error.required" class="text-danger">State is required.</span>
 			</span>				
 		</div>
-	</div>
-	<div class="form-group">
-		<label for="Country" class="col-sm-2 control-label">Country</label>
-		<div class="col-sm-9">
+		<label for="Country" class="col-sm-1 control-label">Country*</label>
+		<div class="col-sm-4">
 			<input type="text" required name="Country" id="Country" ng-model="property.property_location.country" placeholder="Enter Your Country" ng-disabled="readOnly" class="form-control" autocomplete="off">
 			<span class="help-block" ng-show="addProperty.Country.$dirty && addProperty.Country.$invalid || addProperty.Country.$dirty && !addbusiness.Country">
 				<span ng-show="addProperty.Country.$error.required || addProperty.Country.$dirty && !addbusiness.Country" class="text-danger">Country is required.</span>
 			</span>				
 		</div>
-	</div>					
-
+		
+	</div>
 	<h4>Amenities:</h4>
 		<div class="form-group row">
 			<div class="checkbox col-sm-12">
@@ -196,63 +179,58 @@
 				</label>
 			</div>					
 		</div>
+		<button type="button" ng-click(is-open="status.open") class="btn btn-primary center-block">Next</button>
 	</accordion-group>
-	<accordion-group heading="Optional Details" is-open="status.open">
+	<accordion-group heading="Optional Details"  is-open="status.open">
 	<h3>Optional Property Details:</h3>
 		<div class="form-group">
 			<label for="prop_age" class="col-sm-2 control-label">Property Age</label>
-			<div class="col-sm-9">
+			<div class="col-sm-4">
 				<select class="form-control"  id="prop_age" ng-model="property.optional_property_details.property_age"  ng-options="item for item in propertyConfig.propertyAge" required>
 					<option value="" selected>Select One</option>	
 				</select>
-			</div>					
-		</div>				
+			</div>	
+			<label for="prop_owner" class="col-sm-1 control-label">Ownership</label>
+			<div class="col-sm-4">
+				<select class="form-control" id="prop_owner" ng-model="property.optional_property_details.ownership" ng-options="item for item in propertyConfig.ownership" required>
+					<option value="" selected>Select One</option>					
+				</select>
+			</div>
+		</div>
+		
 		<div class="form-group">
 			<label for="furnished" class="col-sm-2 control-label">Furnished</label>
-			<div class="col-sm-9">
+			<div class="col-sm-4">
 				<select class="form-control" id="furnished" ng-model="property.optional_property_details.furnished" ng-options="item for item in propertyConfig.furnished" required>
 					<option value="" selected>Select One</option>				
 				</select>
 			</div>
+			<label for="floors" class="col-sm-1 control-label">TotalFloors</label>
+			<div class="col-sm-4">
+				<select class="form-control" id="floors" ng-model="property.optional_property_details.property_floor" ng-options="item for item in propertyConfig.floors" required>
+					<option value="" selected>Select One</option>
+					
+				</select>
+			</div>
 		</div>
 		<div class="form-group">
-				<label for="prop_owner" class="col-sm-2 control-label">Ownership</label>
-				<div class="col-sm-9">
-					<select class="form-control" id="prop_owner" ng-model="property.optional_property_details.ownership" ng-options="item for item in propertyConfig.ownership" required>
-						<option value="" selected>Select One</option>					
-					</select>
-				</div>
-		</div>
-		<div class="form-group">
-				<label for="floors" class="col-sm-2 control-label">Total Number of Floors</label>
-				<div class="col-sm-9">
-					<select class="form-control" id="floors" ng-model="property.optional_property_details.property_floor" ng-options="item for item in propertyConfig.floors" required>
-						<option value="" selected>Select One</option>
-						
-					</select>
-				</div>
-		</div>
-		<div class="form-group">
-				<label for="facing" class="col-sm-2 control-label">Facing</label>
-				<div class="col-sm-9">
-					<select class="form-control" id="facing" ng-model="property.optional_property_details.facing" ng-options="item for item in propertyConfig.facing" required>
-						<option value="">Select One</option>										
-					</select>
-				</div>
-		</div>
-		
-		<div class="form-group">
-				<label for="parking" class="col-sm-2 control-label">Parking</label>
-				<div class="col-sm-9">
-					<select class="form-control" id="parking" ng-model="property.optional_property_details.parking" ng-options="item for item in propertyConfig.parking" required>
-						<option value="" selected>Select One</option>				
-					</select>
-				</div>
+			<label for="facing" class="col-sm-2 control-label">Facing</label>
+			<div class="col-sm-4">
+				<select class="form-control" id="facing" ng-model="property.optional_property_details.facing" ng-options="item for item in propertyConfig.facing" required>
+					<option value="">Select One</option>										
+				</select>
+			</div>
+			<label for="parking" class="col-sm-1 control-label">Parking</label>
+			<div class="col-sm-4">
+				<select class="form-control" id="parking" ng-model="property.optional_property_details.parking" ng-options="item for item in propertyConfig.parking" required>
+					<option value="" selected>Select One</option>				
+				</select>
+			</div>
 		</div>
 		
 		<div class="form-group">
 			<label for=" transType" class="col-sm-2 control-label">Transaction Type</label>
-			<div class="col-sm-9">
+			<div class="col-sm-4">
 				<select class="form-control" id="transType" ng-model="property.optional_property_details.transType" ng-options="item for item in propertyConfig.transaction_type" required>							
 					<option value="">Select Transaction Type</option>				
 				</select>
@@ -262,31 +240,35 @@
 		<h4>Land Mark:</h4>
 		<div class="form-group">
 				<label for="hospitals" class="col-sm-2 control-label">Hospitals </label>
-				<div class="col-sm-9">
+				<div class="col-sm-4">
 					<input type="text"  id="hospitals" class="form-control" name="hospitals" ng-model="property.landmarks.hospitals" required /> kms						
 				<span class="help-block" ng-show="addProperty.hospitals.$dirty && addProperty.hospitals.$invalid">
 					<span ng-show="addProperty.hospitals.$error.pattern && (addProperty.hospitals.$dirty || submitted)" class="text-danger">Enter only numbers. 
 					.</span>
 				</span>		
 				</div>							
-		  </div>
-		  <div class="form-group">
-				<label for="airport" class="col-sm-2 control-label">  Airport </label>
-				<div class="col-sm-9">
+				<label for="airport" class="col-sm-1 control-label">Airport</label>
+				<div class="col-sm-4">
 					<input type="text" id="airport" class="form-control"  name="airport" ng-model="property.landmarks.airport" required >	kms						 
 				</div>											
-		  </div>
-		  <div class="form-group">
+		 </div>
+		<div class="form-group">
 				<label for="railway" class="col-sm-2 control-label">Railway Station</label>
-				<div class="col-sm-9">
+				<div class="col-sm-4">
 					<input type="text" id="railway" class="form-control" name="railway" ng-model="property.landmarks.railway" required>kms	
-				</div>											
-		  </div>
-		  <div class="form-group">
-				<label for="school" class="col-sm-2 control-label">School </label>
-				<div class="col-sm-9">
+				</div>										
+				<label for="school" class="col-sm-1 control-label">School </label>
+				<div class="col-sm-4">
 					<input type="text" id="school" class="form-control" name="school" ng-model="property.landmarks.school" required>kms	
 				</div>											
-		  </div>	
+		</div>
+
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-9">
+				<button type="submit" ng-if="!editId" ng-click="addPropertyFun(property)" class="btn btn-primary" title="Add new property">Submit Property</button>
+				<button type="submit" ng-if="editId" ng-click="update(property)" title="Update your property" class="btn btn-success text-center ">Edit Property</button>
+				<button type="reset" ng-click="reset()" title="Cancel" class="btn btn-danger text-center ">Cancel</button>
+			</div>
+		</div>					
 	</accordion-group>
 	</accordion>	
