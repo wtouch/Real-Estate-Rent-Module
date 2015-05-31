@@ -26,18 +26,29 @@ define(['app'], function (app) {
 /***********************************************************************************/
 /*Addaccount Model*/
 		$scope.openAddaccount = function (url,EditId) {
-			console.log(EditId);
+			dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
+			.then(function(response) {
 			var modalDefaults = {
 					templateUrl: url,	
 					size : 'lg'
 			};
 			var modalOptions={
 				editAccount : EditId,
+				customerList : (response.data),
 				date : $scope.currentDate,
 				account : {},
 				postData : function(account) {
-					dataService.post("post/account/account",account)
+					dataService.post("post/account",account)
 					.then(function(response) {  
+						if(response.status == "success"){
+						}
+						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+						$notification[response.status]("Add record", response.message);
+					});
+			   },
+			   updateData : function(account) {
+					dataService.put("put/account/"+EditId,account)
+					.then(function(response) {
 						if(response.status == "success"){
 						}
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
@@ -65,68 +76,27 @@ define(['app'], function (app) {
 					}
 					console.log(response);
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$notification[response.status]("Add record", response.message);
 				});
 			}else{
 				modalService.show(modalDefaults,modalOptions).then(function (result) {
 				});
 			}
-		};
-/***********************************************************************************/
-		$scope.pageChanged = function(page, where) {
-			dataService.get("getmultiple/account/"+page+"/"+$scope.pageItems,$scope.income_expence_type)
-			.then(function(response){ 
-				$scope.account = response.data;
 			});
 		};
+/***********************************************************************************/
 		
-		$scope.open = function($event,rentdate){
-			$event.preventDefault();
-			$event.stopPropagation();
-			$scope[rentdate] = !$scope[rentdate];
-		};
-		
-		$scope.getUsers = function(){
-			//function for Users list response
-			dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
+/************************************************************/	
+		$scope.getAccounts = function(){
+			dataService.get("getmultiple/account/1/500", {status: 1, user_id : $rootScope.userDetails.id})
 			.then(function(response) {  
 				if(response.status == 'success'){
-					$scope.customerList = response.data;
+					$scope.accounts = response.data;
 				}else{
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 					$notification[response.status]("Get Customers", response.message);
 				}
 			});
-		}
-		
-		//get data from rent-receipt table
-		$scope.getPropertylist = function(userId, reportType){
-			if (reportType == 'user') $scope.rentParams = { user_id : userId };
-			if (reportType == 'property') $scope.rentParams = {property_id : userId, user_id : $rootScope.userDetails.id };
-			
-			dataService.get("getmultiple/rentreceipt/1/1000", $scope.rentParams)
-				.then(function(response) {
-					if(response.status == "success"){
-						$scope.receiptList = response.data;
-						$scope.total_due = response.total_due;
-						$scope.total_paid = response.total_paid;
-						$scope.total_rent = response.total_rent;
-						console.log($scope.receiptList);
-					}else{
-						$scope.receiptList="";
-					}
-			})
-		}
-/************************************************************/	
-		//get data from rent-receipt table
-			dataService.get("getmultiple/account/1/1000")
-				.then(function(response) {
-					if(response.status == "success"){
-						$scope.accounts = response.data;
-					}else{
-						$scope.accounts="";
-					}
-			});
+			}
 /***********************************************************/		
 	};
 		

@@ -1,16 +1,15 @@
-<div class="main-content" ng-init="account = modalOptions.account">
-		<div class="modal-header">
-				<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
-				<h3 class="col-sm-offset-2 col-sm-9" ng-if="!modalOptions.editAccount">Add Account</h3>
-				<h3 class="col-sm-offset-2 col-sm-9" ng-if="modalOptions.editAccount">Edit Account</h3>
-		</div>
-		<h3 class="col-sm-offset-2 col-sm-9" ng-if="!modalOptions.editAccount">Add Account</h3>
-		<h3 class="col-sm-offset-2 col-sm-9" ng-if="modalOptions.editAccount">Edit Account</h3>
+<div class="main-content" ng-init="account = modalOptions.account;account.user_id = userDetails.id">
+					<div class="modal-header" style="margin-bottom: 18px">
+						<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
+						<h3 ng-if="!modalOptions.editAccount">Add Account</h3>
+						<h3 ng-if="modalOptions.editAccount">Edit Account</h3>
+					</div>
 		<form name="addAccountForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="addAccountForm.$valid">
 				<div class="form-group">
 					<label for="accountname" class="col-sm-2 control-label">Account Name * </label>
 					<div class="col-sm-9">
 						<input type="text"  id="accountname" class="form-control" name="accountname" placeholder=" Account Name" ng-model="account.account_name" required>
+						<input type="hidden"  id="user_id" class="form-control" name="user_id" placeholder=" Account Name" ng-model="account.user_id" required>
 						<span class="help-block" ng-show="addAccountForm.accountname.$dirty && addAccountForm.accountname.$invalid">
 						<span class="text-danger" ng-show="addAccountForm.accountname.$error.required"> Account Name is required.</span>
 					</span>
@@ -18,25 +17,24 @@
 				</div>
 				<div class="form-group">
 						<label for="category" class="col-sm-2 control-label">Account Category * </label>
-							<div class="col-sm-9">
-								<select id="category" name="category" class="form-control" ng-model="account.category" required>
-								<option value="" selected>Select Category</option>
-								<option value="bank" >Bank Account</option>
-								<option value="Capital">Capital Account</option>
-								<option value="party">Party Account</option>
-								</select>
-								<span class="help-block" ng-show="addAccountForm.category.$dirty && addAccountForm.category.$invalid">
-								<span ng-show="addAccountForm.category.$error.required" class="text-danger">Account Category is required.</span>
-							    </span>	
-							</div>
+						<div class="col-sm-9">
+							<select id="category" name="category" class="form-control" ng-model="account.category" required>
+							<option value="" selected>Select Category</option>
+							<option value="Bank" >Bank Account</option>
+							<option value="Capital">Capital Account</option>
+							<option value="Party">Party Account</option>
+							</select>
+							<span class="help-block" ng-show="addAccountForm.category.$dirty && addAccountForm.category.$invalid">
+							<span ng-show="addAccountForm.category.$error.required" class="text-danger">Account Category is required.</span>
+							</span>	
+						</div>
 				</div>
-				
-				<div ng-if = "account.category =='party'">
+				<div ng-if = "account.category =='Party'">
 					<div class="form-group" ng-if="userDetails.group_name != 'customer'">
-						<label for="customer" class="col-sm-2 control-label">Customer *</label>
-						<div class="col-sm-7">
-							<select class="form-control" name="customer" id="customer"  ng-model="account.user_id" ng-options="item.id as item.name for item in modalOptions.customerList | filter: { group_name : 'customer'} " required>
-								<option value="">Select Customer</option>
+						<label for="customer" class="col-sm-2 control-label">Party *</label>
+						<div class="col-sm-9">
+							<select class="form-control" name="customer" id="customer"  ng-model="account.account_no" ng-options="item.id as item.name for item in modalOptions.customerList | filter: { group_name : 'customer'} " required>
+								<option value="">Select Party</option>
 							</select>
 							<span class="help-block" ng-show="addAccountForm.customer.$dirty && addAccountForm.customer.$invalid">
 								<span ng-show="addAccountForm.customer.$error.required" class="text-danger">Customer is required.</span>
@@ -44,15 +42,17 @@
 						</div>
 					</div>
 			   </div>
+			   <div ng-if = "account.category !=='Party'">
 				<div class="form-group">
-					<label for="accountnumber" class="col-sm-2 control-label">Account Number * </label>
+					<label for="account_no" class="col-sm-2 control-label">Account Number * </label>
 					<div class="col-sm-9">
-						<input type="text" id="accountnumber" name="accountnumber" class="form-control" ng-model="account.account_no" placeholder="Enter Account Number" ng-pattern="/^\d{0,100}[0-9]$/" required>
-					<span class="help-block" ng-show="addAccountForm.accountnumber.$dirty && addAccountForm.accountnumber.$invalid">
-						<span ng-show="(addAccountForm.accountnumber.$dirty || submitted)" class="text-danger">Enter a valid Account Number</span>
+						<input type="text" id="account_no" name="account_no" class="form-control" ng-model="account.account_no" placeholder="Enter Account Number" ng-pattern="/^\d{0,100}[0-9]$/" required>
+					<span class="help-block" ng-show="addAccountForm.account_no.$dirty && addAccountForm.account_no.$invalid">
+						<span ng-show="(addAccountForm.account_no.$dirty || submitted)" class="text-danger">Enter a valid Account Number</span>
 					</span>
 					</div>
-				</div>	
+				</div>
+				</div>
 				<div class="form-group">
 					<label for="description" class="col-sm-2 control-label">Description * </label>
 					<div class="col-sm-9">
@@ -70,17 +70,14 @@
 						<input type="text" class="form-control " placeholder="YYYY-DD-MM" id="date" name="date" ng-model="account.date" ng-init="account.date = modalOptions.date" required="" readonly/>
 					</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group modal-footer">
 					<div class="col-sm-offset-2 col-sm-9">
-						<button type="submit" ng-if="!modalOptions.editAccount" class="btn btn-success" ng-disabled="addAccountForm.$invalid" ng-click="modalOptions.postData(account)">Submit</button>
+						<button type="submit" ng-if="!modalOptions.editAccount" class="btn btn-success" ng-disabled="addAccountForm.$invalid" ng-click="modalOptions.postData(account);modalOptions.ok()">Submit</button>
 						
-						<button type="submit" ng-if="modalOptions.editAccount" class="btn btn-success" ng-disabled="addAccountForm.$invalid" ng-click="modalOptions.updatetData(account)">Update</button>
+						<button type="submit" ng-if="modalOptions.editAccount" class="btn btn-success" ng-disabled="addAccountForm.$invalid" ng-click="modalOptions.updateData(account);modalOptions.ok()">Update</button>
 						
 						<button type="reset" class="btn btn-danger">Reset</button>
 					</div>
-				</div>
-				<div class="modal-footer">
-				<button type="submit" class="btn btn-primary" ng-click="modalOptions.ok()">OK</button>
 				</div>
 		</form>
 </div>
