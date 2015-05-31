@@ -6,7 +6,7 @@
 		<div class="col-sm-9">
 			<input type="text" id="title" class="form-control" name="title" ng-model="property.title" required>
 			<span class="text-danger" ng-show="addProperty.title.$dirty && addProperty.title.$invalid">
-				<span ng-show="addProperty.title.$error.required">Title is required .</span>
+				<span ng-show="addProperty.title.$error.required">Property title is must.</span>
 			</span>											 
 		</div>				
 	</div>
@@ -15,12 +15,11 @@
 		<label for="category" class="col-sm-2 control-label">Property Category *</label>
 		<div class="col-sm-3">
 			<select id="category" name="category" ng-model="property.category" class="form-control" required ng-options="item.category_name as item.category_name for item in propertyConfig.category">
-				<!--ng-options="item.system_name as item.name for item in temp.category"-->
-				<option value="">Select Category</option>			
+				<option value="">Select  Property Category</option>			
 			</select>
 			
 			<span class="text-danger" ng-show="addProperty.category.$dirty && addProperty.category.$invalid">
-				<span ng-show="addProperty.category.$error.required">Property selection is required .</span>
+				<span ng-show="addProperty.category.$error.required">Selection of Property category is must.</span>
 			</span>				 
 		</div>
 		 <label for="type" class="col-sm-2  control-label">Property Type *</label>
@@ -29,7 +28,7 @@
 					<option value=""> Select Property Type</option>		
 				</select>
 					<span class="text-danger" ng-show="addProperty.type.$dirty && addProperty.type.$invalid">
-						<span ng-show="addProperty.type.$error.required">Project Type is required .</span>
+						<span ng-show="addProperty.type.$error.required">Selection of Property type is must.</span>
 					</span>	
 			</div>
 	</div>
@@ -40,18 +39,13 @@
 			
 			<p ng-hide="addProperty.property_description.$error.maxlength">{{ 700 - property.property_description.length + " Chars left" }}</p>
 			
-			<span class="text-danger" ng-show="addProperty.property_description.$error.maxlength">
+			<span class="text-danger" ng-show="addProperty.prop_desc.$error.maxlength">
 				Sorry You are Exceeding the Limit
 			</span>	
-			<span class="text-danger" ng-show="addProperty.property_description.$dirty && addProperty.property_description.$invalid">
-			
-			<span class="text-danger" ng-show="addProperty.property_description.$dirty && addProperty.property_description.$invalid">
-				<span ng-show="addProperty.property_description.$error.required">property_description is required .</span>
-			</span>	
-							
+			<span class="text-danger" ng-show="addProperty.prop_desc.$dirty && addProperty.prop_desc.$invalid">
+				<span ng-show="addProperty.prop_desc.$error.required">Property Description is required .</span>
 		</div>				
-	</div> 
-	
+	</div>
 	<div class="form-group">
 		<label for="bedrooms" class="col-sm-2 control-label">Bedrooms </label>
 		<div class="col-sm-4">
@@ -60,7 +54,7 @@
 			</select>
 			<span class="text-danger" ng-show="addProperty.bedrooms.$dirty && addProperty.bedrooms.$invalid">
 			</span>
-		</div>										
+		</div>
 		<label for="bathrooms" class="col-sm-1 control-label">Bathrooms </label>
 			<div class="col-sm-4">
 				<select class="form-control" id="bathrooms"  name="bathrooms" ng-model="property.property_info.bathrooms" required ng-options="item as item for item in propertyConfig.Bathrooms">
@@ -69,22 +63,28 @@
 				 <span class="text-danger" ng-show="addProperty.bathrooms.$dirty && addProperty.bathrooms.$invalid">
 				</span>				 
 			</div>									
-		</div>
+	</div>
 		
 	<div class="form-group">
-		<label for="propertyPrice" class="col-sm-2 control-label ">Licence Fees</label>
+		<label for="propertyPrice" class="col-sm-2 control-label ">Licence Fees*</label>
 		<div class="col-sm-4">
 			<input type="text" id="propertyPrice" class="form-control" name="propertyPrice" ng-model="property.price" ng-pattern="/^\d{0,9}[0-9]$/" required>
+			<span class="help-block" ng-show="addProperty.propertyPrice.$dirty && addProperty.propertyPrice.$invalid">
+			<span ng-show="addProperty.propertyPrice.$error.pattern" class="text-danger">Fees is Number</span>
+			<span class="text-danger" ng-show="addProperty.propertyPrice.$error.required">Licence Fees is required.</span></span>
 		</div>
-		<label for="deposit" class="col-sm-1 control-label ">Deposit</label>
+		<label for="deposit" class="col-sm-1 control-label ">Deposit*</label>
 		<div class="col-sm-4">
 			<input type="text" id="deposit" name="deposit" class="form-control" ng-model="property.deposit" ng-pattern="/^\d{0,9}[0-9]$/" required>
+			<span class="help-block" ng-show="addProperty.deposit.$dirty && addProperty.deposit.$invalid">
+			<span ng-show="addProperty.deposit.$error.pattern" class="text-danger">Deposit is Number</span>
+			<span class="text-danger" ng-show="addProperty.deposit.$error.required">Licence Fees is required.</span></span>
 		</div>		
 			
 	</div>
 	
 	<div class="form-group">
-	  <label for="property_images" class="col-sm-2 control-label" >*Property Images</label>
+	  <label for="property_images" class="col-sm-2 control-label" >Property Images *</label>
 		<div class="col-sm-9">
 			<!-- This is file input for select images -->
 			<input type="file" id="property_images" ng-file-select ng-multiple="true" accept="image/jpeg,image/png,image/gif" ng-file-change="generateThumb($files)" ng-model="property_images" required>		
@@ -113,41 +113,38 @@
 	</div>	
 	
 	<div class="form-group">
-		<label for="area" class="col-sm-2 control-label">Area</label>
+		<label for="area" class="col-sm-2 control-label">Area*</label>
 		<div class="col-sm-4">
-			<input ng-disabled="readOnly" type="text" id="area" name="area" class="form-control" ng-model="property.property_location.area" placeholder="Enter area">
+			<input type="text" id="area" name="area" class="form-control" ng-model="property.property_location.area" placeholder="Enter area" required>
 			<span class="help-block" ng-show="addProperty.area.$dirty && addProperty.area.$invalid">
-				<span ng-show="addProperty.area.$error.pattern && (addProperty.area.$dirty || submitted)" class="text-danger">Enter Area</span>
-				<span class="text-danger" ng-show="addProperty.area.$error.minlength && (addProperty.area.$dirty || submitted)">Enter correct Code.</span>
+				<span class="text-danger" ng-show="addProperty.area.$error.required && (addProperty.area.$dirty || submitted)">Enter Area Code.</span>
 			</span>
 		</div>	
 		<label for="location" class="col-sm-1 control-label">Location*</label>
 		<div class="col-sm-4">
-			<input typeahead-template-url="customTemplate.html" type="text" required name="location" id="location" ng-model="property.property_location.location" typeahead-on-select="getData($item)" placeholder="Location" typeahead="address.location for address in getTypeaheadData('locations','location', $viewValue)" typeahead-loading="locationLoading" typeahead-editable="false" class="form-control" autocomplete="off">
-			
-				<span class="help-block" ng-show="addProperty.location.$dirty && addProperty.location.$invalid || addProperty.location.$dirty && !addbusiness.location">
-					<span class="text-danger" ng-show="addProperty.location.$dirty && (addProperty.location.$error.required || !addbusiness.location)">Location required.If Location not found enter pincode.</span>
+			<input type="text"name="location" id="location" ng-model="property.property_location.location" placeholder="Location" class="form-control" required>
+				<span class="help-block" ng-show="addProperty.location.$dirty && addProperty.location.$invalid || addProperty.location.$dirty">
+					<span class="text-danger" ng-show="addProperty.location.$dirty && (addProperty.location.$error.required )">Location required.If Location not found enter pincode.</span>
 				</span>
 		</div>				
 			
 	</div>			
 	
 	<div class="form-group">			
-		<label for="pincode" class="col-sm-2 control-label">PinCode</label>
+		<label for="pincode" class="col-sm-2 control-label">PinCode*</label>
 		<div class="col-sm-4">
-			<input ng-disabled="readOnly" type="text" id="pincode" name="pincode" class="form-control" ng-model="property.property_location.pincode" placeholder="Enter Pin Code" ng-pattern="/^\d{0,9}[0-9]$/" maxlength="6"  ng-minlength="6">
+			<input type="text" id="pincode" name="pincode" class="form-control" ng-model="property.property_location.pincode" placeholder="Enter Pin Code" ng-pattern="/^\d{0,9}[0-9]$/" maxlength="6"  ng-minlength="6">
 			<span class="help-block" ng-show="addProperty.pincode.$dirty && addProperty.pincode.$invalid">
-				<span ng-show="addProperty.pincode.$error.pattern && (addProperty.pincode.$dirty || submitted)" class="text-danger">Enter a valid ZIP Code</span>
-				<span class="text-danger" ng-show="addProperty.pincode.$error.minlength && (addProperty.pincode.$dirty || submitted)">Enter Valid Length Of Zip Code.</span>
+				<span ng-show="addProperty.pincode.$error.pattern && (addProperty.pincode.$dirty || submitted)" class="text-danger">Enter a valid Pin Code</span>
+				<span class="text-danger" ng-show="addProperty.pincode.$error.minlength && (addProperty.pincode.$dirty || submitted)">Enter Valid Length Of Pin Code.</span>
 			</span>
 		</div>	
 		
-		<label for="state" class="col-sm-1 control-label">City *</label>
+		<label for="City" class="col-sm-1 control-label">City *</label>
 		<div class="col-sm-4">
-			<input type="text" required name="City" id="City" ng-model="property.property_location.city" placeholder="Enter Your City"  ng-disabled="readOnly" class="form-control" autocomplete="off">	
-			<i ng-show="cityLoading" class="glyphicon glyphicon-refresh"></i>
-			<span class="help-block" ng-show="addProperty.City.$dirty && addProperty.City.$invalid || addProperty.City.$dirty && !addbusiness.City">
-				<span ng-show="addProperty.City.$error.required || addProperty.City.$dirty && !addbusiness.city" class="text-danger">City is required.</span>
+			<input type="text" name="City" id="City" ng-model="property.property_location.city" placeholder="Enter Your City"  class="form-control" required>
+			<span class="help-block" ng-show="addProperty.City.$dirty && addProperty.City.$invalid">
+				<span ng-show="addProperty.City.$error.required || addProperty.City.$dirty" class="text-danger">City is required.</span>
 			</span>				
 		</div>
 	</div>
@@ -156,16 +153,16 @@
 	<div class="form-group">
 		<label for="state" class="col-sm-2 control-label">State *</label>
 		<div class="col-sm-4">
-		<input ng-disabled="readOnly" type="text" id="state" name="state" class="form-control" ng-model="property.property_location.state" placeholder="Enter state">
+		<input type="text" id="state" name="state" class="form-control" ng-model="property.property_location.state" placeholder="Enter state" required>
 			<span class="help-block" ng-show="addProperty.state.$dirty && addProperty.state.$invalid">
 				<span ng-show="addProperty.state.$error.required" class="text-danger">State is required.</span>
 			</span>				
 		</div>
 		<label for="Country" class="col-sm-1 control-label">Country*</label>
 		<div class="col-sm-4">
-			<input type="text" required name="Country" id="Country" ng-model="property.property_location.country" placeholder="Enter Your Country" ng-disabled="readOnly" class="form-control" autocomplete="off">
-			<span class="help-block" ng-show="addProperty.Country.$dirty && addProperty.Country.$invalid || addProperty.Country.$dirty && !addbusiness.Country">
-				<span ng-show="addProperty.Country.$error.required || addProperty.Country.$dirty && !addbusiness.Country" class="text-danger">Country is required.</span>
+			<input type="text"name="Country" id="Country" ng-model="property.property_location.country" placeholder="Enter Your Country" class="form-control" required>
+			<span class="help-block" ng-show="addProperty.Country.$dirty && addProperty.Country.$invalid">
+				<span ng-show="addProperty.Country.$error.required || addProperty.Country.$dirty" class="text-danger">Country is required.</span>
 			</span>				
 		</div>
 		
@@ -179,10 +176,10 @@
 				</label>
 			</div>					
 		</div>
-		<button type="button" ng-click(is-open="status.open") class="btn btn-primary center-block">Next</button>
+		<button type="button" class="btn btn-primary center-block" heading="Optional Details"  is-open="status.open">Next</button>
 	</accordion-group>
 	<accordion-group heading="Optional Details"  is-open="status.open">
-	<h3>Optional Property Details:</h3>
+	<h3>Property Details:</h3>
 		<div class="form-group">
 			<label for="prop_age" class="col-sm-2 control-label">Property Age</label>
 			<div class="col-sm-4">

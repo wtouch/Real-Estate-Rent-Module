@@ -1,9 +1,8 @@
-<div class="main-content">
-	<div class="modal-header">
+<div class="main-content" ng-init="addincome.user_id = userDetails.id">
+	<div class="modal-header" style="margin-bottom: 14px">
 		<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
 		<h3>Add Income</h3>
 	</div>
-	<h3 class="col-sm-offset-2 col-sm-9">Add Income</h3>
 		<form name="addIncomeForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="addIncomeForm.$valid">
 			<div class="form-group">
 				<label for="category" class="col-sm-2 control-label">Category</label>
@@ -32,6 +31,7 @@
 			</div>
 				<span ng-if="userDetails.group_name == 'customer'">
 					<input type="hidden" class="form-control" ng-model="addincome.description.user_id"  readonly/>
+					<input type="hidden" class="form-control" ng-model="addincome.user_id"  readonly/>
 				</span> 
 			</div>
 			
@@ -78,17 +78,6 @@
 					<div class="col-sm-9">
 						<input type="text" id="date" class="form-control" value="{{dates.date}}"  ng-model="addincome.date" ng-init="addincome.date = modalOptions.incomeDate.date"  name="date" readonly 
 						placeholder="date" ><!--ng-init="addincome.date = dates.date"-->
-					</div>						
-			</div>
-			
-			<div class="form-group">
-				<label  for="credit_amount" class="col-sm-2 control-label">Amount</label><!--ng-pattern="/^\d{0,9}[0-9]$/" -->
-					<div class="col-sm-9">
-						<input type="text" id="credit_amount" class="form-control"  ng-pattern="/^\d{0,9}[0-9]$/" ng-model="addincome.credit_amount" name="amount" placeholder="Amount" required/>
-						<span class="help-block" ng-show="addIncomeForm.credit_amount.$dirty && addIncomeForm.credit_amount.$invalid">
-						<span ng-show="addIncomeForm.credit_amount.$error.pattern && (addIncomeForm.credit_amount.$dirty || submitted)" class="text-danger">Enter Numbers Only!</span>
-						<span ng-show="addIncomeForm.credit_amount.$error.required" class="text-danger">. is required.</span>
-						</span>
 					</div>						
 			</div>
 			
@@ -141,7 +130,19 @@
 					</div>		
 			</div>
 			
+			
 			<div class="form-group">
+				<label  for="credit_amount" class="col-sm-2 control-label">Amount</label><!--ng-pattern="/^\d{0,9}[0-9]$/" -->
+					<div class="col-sm-9">
+						<input type="text" id="credit_amount" class="form-control"  ng-pattern="/^\d{0,9}[0-9]$/" ng-model="addincome.credit_amount" name="amount" placeholder="Amount" required/>
+						<span class="help-block" ng-show="addIncomeForm.credit_amount.$dirty && addIncomeForm.credit_amount.$invalid">
+						<span ng-show="addIncomeForm.credit_amount.$error.pattern && (addIncomeForm.credit_amount.$dirty || submitted)" class="text-danger">Enter Numbers Only!</span>
+						<span ng-show="addIncomeForm.credit_amount.$error.required" class="text-danger">. is required.</span>
+						</span>
+					</div>						
+			</div>
+			
+			<div class="form-group modal-footer">
 				<div class="col-sm-offset-2 col-sm-9"><!--ng-disabled="addIncomeForm.$invalid"-->
 					<button type="submit" class="btn btn-success" ng-disabled="addIncomeForm.$invalid" ng-click="modalOptions.postData(addincome)">Submit</button>
 					<button type="reset" class="btn btn-danger">Reset</button>

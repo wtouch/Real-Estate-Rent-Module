@@ -65,7 +65,6 @@ define(['app'], function (app) {
 							account_name : response.data.account_name,
 							account_no : response.data.account_no,
 							category : response.data.category,
-							account_no : response.data.account_no,
 							user_id : response.data.user_id,
 							id : response.data.id,
 							description : response.data.description,
@@ -84,8 +83,6 @@ define(['app'], function (app) {
 			});
 		};
 /***********************************************************************************/
-		
-/************************************************************/	
 		$scope.getAccounts = function(){
 			dataService.get("getmultiple/account/1/500", {status: 1, user_id : $rootScope.userDetails.id})
 			.then(function(response) {  
@@ -97,7 +94,20 @@ define(['app'], function (app) {
 				}
 			});
 			}
-/***********************************************************/		
+/***********************************************************/
+/*Delete Account Funtion*/
+			$scope.deleted = function(id, status){
+				$scope.deletedData = {status : status};
+				dataService.put("put/account/"+id, $scope.deletedData)
+				.then(function(response) { 
+					if(response.status == 'success'){
+						$scope.hideDeleted = 1;
+					}
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Delete Property", response.message);
+				});
+			};
+/**************************************************************/
 	};
 		
 	// Inject controller's dependencies

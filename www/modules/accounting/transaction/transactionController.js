@@ -48,13 +48,14 @@ define(['app'], function (app) {
 		};
 		
 	//Modlal For add income form
+/************************************************************/
 	$scope.incomeDate = {};
 	$scope.openAddincome = function (url) {
 		dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
 			.then(function(user) {  
 		dataService.config('config', {config_name : "category"}).then(function(response){
 		
-		dataService.get("getmultiple/account/1/100")
+		dataService.get("getmultiple/account/1/100", {status: 1, user_id : $rootScope.userDetails.id})
 			.then(function(account) { 
 			var modalDefaults = {
 				templateUrl: url,	// apply template to modal
@@ -89,16 +90,12 @@ define(['app'], function (app) {
 		});
 		
 		};
-		$scope.ok = function () {
-			$modalOptions.close('ok');
-		};
-		//
-		
+/*************************************************************************/		
 		//Modal for add expence
 		$scope.expenseDate = {};
 		$scope.openAddexpense = function (url) {
 		dataService.config('config', {config_name : "category"}).then(function(response){
-		dataService.get("getmultiple/account/1/100")
+		dataService.get("getmultiple/account/1/100", {status: 1, user_id : $rootScope.userDetails.id})
 			.then(function(account) { 
 		var modalDefaults = {
 				templateUrl: url,	// apply template to modal
@@ -128,11 +125,7 @@ define(['app'], function (app) {
 		});	
 		});	
 		};
-		$scope.ok = function () {
-			$modalOptions.close('ok');
-		};
-		
-		//
+/***************************************************************/
 		$scope.getUsers = function(){
 			//function for Users list response
 			dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
@@ -230,19 +223,19 @@ define(['app'], function (app) {
 			});
 		} 
 		
-		//get data from transaction , $scope.userInfo
-		/* $scope.getTransaction=function(transaction){ */
-			dataService.get("getmultiple/transaction/1/1000")
-				.then(function(response) {
-					console.log(response);
-					if(response.status == "success"){
-						$scope.transaction = response.data;
-						console.log($scope.transaction);
-					}else{
-						$scope.transaction="";
-					}
+/***************************************************************/
+			$scope.getTransaction = function(){
+			dataService.get("getmultiple/transaction/1/500", {status: 1, user_id : $rootScope.userDetails.id})
+			.then(function(response) {  
+				if(response.status == 'success'){
+					$scope.transaction = response.data;
+				}else{
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Get Transactions", response.message);
+				}
 			});
-		/* } */
+			}
+/*****************************************************************/
 		$scope.getExpense = function(dateRange){
 			var expenseParams = {balancesheet_type : 'expence'};
 			angular.extend(expenseParams, dateRange);

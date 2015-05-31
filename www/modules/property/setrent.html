@@ -11,7 +11,7 @@
 			</div>
 		</div>
 		<div class="form-group" ng-if="userDetails.group_name != 'customer'">
-			<label for="customer" class="col-sm-2 control-label">* User</label>
+			<label for="customer" class="col-sm-2 control-label">User* </label>
 			<div class="col-sm-7">
 				<select class="form-control" name="customer" id="customer"  ng-model="setrent.user_id" ng-options="item.id as item.name for item in customerList | filter: { group_name : 'customer'} " required>
 					<option value="">Select User</option>
@@ -29,14 +29,14 @@
 		</span> 
 		
 		<div class="form-group">
-				<label for="title" class="col-sm-2 control-label">* Property Name</label>		
+				<label for="title" class="col-sm-2 control-label">Property Name* </label>		
 				<div class="col-sm-9">
 					<input type="text" id="title" class="form-control" name="title" placeholder="title" ng-model="setrent.title" readonly ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
 				</div>
 		</div>
 		
 		<div class="form-group">
-			<label for="deposit" class="col-sm-2 control-label">* Deposit</label>		
+			<label for="deposit" class="col-sm-2 control-label">Deposit* </label>		
 			<div class="col-sm-9">
 				<input type="text" id="deposit" class="form-control" name="deposit" ng-model="setrent.deposite"placeholder="Deposit" required>
 				
@@ -49,18 +49,15 @@
 		<input type="hidden" ng-model="setrent.property.id">
 		
 		<div class="form-group">
-				<label for="rent" class="col-sm-2 control-label">* Rent</label>		
+				<label for="rent" class="col-sm-2 control-label">Rent* </label>		
 				<div class="col-sm-9">
 					<input type="text" id="rent" class="form-control" name="rent" placeholder="Set Rent"  ng-pattern="/^[a-zA-Z0-9(_)]*$/" ng-model="setrent.rent" required><!--ng-model="setrent.rent"-->
 					<p ng-show="setrent.rent.$error.pattern && (setrent.rent.$dirty || submitted)" class="text-danger">Enter Number only</p>
-					<!-- <span class="text-danger" ng-show="setrentForm.rent.$dirty && setrentForm.rent.$invalid">
-						<span ng-show="setrentForm.rent.$error.required">Rent is required.</span>
-					</span> -->
 				</div>
 		</div>
 		
 		<div class="form-group">	
-			<label  for="date" class="col-sm-2 control-label">Taken Date</label>
+			<label  for="date" class="col-sm-2 control-label">Date of Rent</label>
 			<div class="col-sm-9">
 				<input type="text" id="date" class="form-control" name="date"  value="{{dates.date}}" ng-model="setrent.taken_date"  ng-init="setrent.taken_date = dates.date" readonly  placeholder="date" >
 			</div>						
@@ -69,7 +66,7 @@
 		 <input type="hidden" id="date1" class="form-control" name="date1" ng-model="setrent.leaving_date"  placeholder="date">
 		
 		<div class="form-group">
-			<label for="maintainance" class="col-sm-2 control-label">* Maintainance</label>		
+			<label for="maintainance" class="col-sm-2 control-label">Maintainance*</label>		
 			<div class="col-sm-9">
 				<input type="text" id="maintainance" class="form-control" name="maintainance" placeholder="Maintainance"  ng-model="setrent.maintainance" required>
 				<span class="text-danger" ng-show="setrentForm.maintainance.$dirty && setrentForm.maintainance.$invalid">
@@ -77,27 +74,13 @@
 				</span>
 			</div>
 		</div>
-		
-		<!-- <input type="text" ng-model="setrent.leavedate"> -->
-			
 		<div class="form-group">
-			<label for="electricity" class="col-sm-2 control-label">Electricity Bill</label>
-			<div class="col-sm-9">
-				<label class="radio-inline">
-					<input type="radio" name="Owner" id="Owner" value="Owner" ng-model="setrent.electricity_bill" ng-init="setrent.electricity_bill='Owner'">Owner
-				</label>
-				<label class="radio-inline">
-					<input type="radio" name="renter" id="renter" value="renter"  ng-model="setrent.electricity_bill">Renter
-				</label>
-			</div>
-		</div>
-	
-		<div class="form-group">
-			<label  for="duration" class="col-sm-2 control-label">Duration</label>
+			<label  for="duration" class="col-sm-2 control-label">Duration For*</label>
 				<div class="col-sm-3">
 					<label  for="year" class="col-sm-3 control-label">Year</label>
 						<select id="year" class="form-control" ng-model="duration.year">
 						<option value="" selected>Select Year</option><!-- added value & selected attr -->
+						<option value="0" >0</option>
 						<option value="1" >1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -107,12 +90,14 @@
 						<option value="7">7</option>
 						<option value="8">8</option>
 						<option value="9">9</option>
+						<option value="10">10</option>
 						</select>
 				</div>
 				<div class="col-sm-3">
 					<label  for="month" class="col-sm-3 control-label">Month</label>
 						<select id="month" class="form-control" ng-model="duration.month">
-						<option value="" selected>Select Month</option><!-- added value & selected attr -->
+						<option value="" selected>Select Month</option>
+						<option value="0" >0</option>
 						<option value="1" >1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -131,11 +116,12 @@
 		<input type="hidden" ng-model="setrent.duration"/>
 		
 		<div class="form-group">	
-			<label  for="escalation" class="col-sm-2 control-label">Escalation Period</label>
+			<label  for="escalation" class="col-sm-2 control-label">Escalation After*</label>
 				<div class="col-sm-3">
 					<label  for="esc_year" class="col-sm-3 control-label">Year</label>
 						<select id="esc_year" class="form-control" ng-model="duration.esc_year">
-						<option value="" selected>Select Year</option><!-- added value & selected attr -->
+						<option value="" selected>Select Year</option>
+						<option value="0">0</option>
 						<option value="1" >1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -145,12 +131,14 @@
 						<option value="7">7</option>
 						<option value="8">8</option>
 						<option value="9">9</option>
+						<option value="10">10</option>
 						</select>
 				</div>	
 				<div class="col-sm-3">
-					<label  for="esc_month" class="col-sm-3 control-label">Month</label>
-						<select id="esc_month" name="esc_month" class="form-control" ng-model="duration.esc_month">
-						<option value="" selected>Select Month</option><!-- added value & selected attr -->
+						<label  for="esc_month" class="col-sm-3 control-label">Month</label>
+						<select id="esc_month" class="form-control" ng-model="duration.esc_month">
+						<option value="" selected>Select Month</option>
+						<option value="0" >0</option>
 						<option value="1" >1</option>
 						<option value="2">2</option>
 						<option value="3">3</option>
@@ -169,10 +157,9 @@
 		<input type="hidden" ng-model="setrent.escduration"/>
 		
 		<div class="form-group">
-			<label for="escalation_per" class="col-sm-2 control-label">* Escalation In %</label>		
+			<label for="escalation_per" class="col-sm-2 control-label">Escalation Percentage (%) * </label>		
 				<div class="col-sm-9">
 					<input type="text" id="escalation_per" class="form-control" name="escalation_per" placeholder="Set Escalation Percentage" ng-model="setrent.escalation_amount" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
-
 					<span class="text-danger" ng-show="setrentForm.escalation_per.$dirty && setrentForm.escalation_per.$invalid">
 						<span ng-show="setrentForm.escalation_per.$error.required">Percentage are required.</span>
 					</span>
@@ -180,7 +167,7 @@
 		</div> 
 			
 		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-9"><!--ng-disabled="setrentForm.$invalid"-->
+			<div class="col-sm-offset-2 col-sm-9">
 				<button type="submit" class="btn btn-success" ng-disabled="setrentForm.$invalid" ng-click="postData(setrent,duration)">Submit</button>
 				<button type="reset" class="btn btn-danger">Reset</button>
 			</div>

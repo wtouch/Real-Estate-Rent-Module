@@ -1,14 +1,13 @@
-<div class="main-content">
-	<div class="modal-header">
+<div class="main-content" ng-init="addexpence.user_id = userDetails.id">
+	<div class="modal-header" style="margin-bottom: 14px">
 		<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
-		<h3>Add Expenses</h3>
+		<h3>Add Expense</h3>
 	</div>
-	<h3 class="col-sm-offset-2 col-sm-9">Add Expenses</h3>
 		<form name="addExpenceForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="addExpenceForm.$valid">
 			<div class="form-group">
 				<label for="category" class="col-sm-2 control-label">Category</label>
 					<div class="col-sm-9">
-							<select id="category" class="form-control" name="category" id="category" ng-model="addexpence.category" ng-options="item.system_name as item.name for item in modalOptions.categoryConfig.categoryExpense" ng-change="addincome.category = type" required>
+							<select id="category" class="form-control" name="category" ng-model="addexpence.category" ng-options="item.system_name as item.name for item in modalOptions.categoryConfig.categoryExpense" ng-change="addincome.category = type" required>
 								<option value="" selected>Select Type</option>
 							</select>
 							<span class="help-block" ng-show="addExpenceForm.category.$dirty && addExpenceForm.category.$invalid">
@@ -17,27 +16,26 @@
 					</div>
 			</div>
 			
+			<div class="form-group">
+					<label for="account_no" class="col-sm-2 control-label">Select Account* </label>
+					<div class="col-sm-9">
+						<select class="form-control" name="account_no" id="account_no"  ng-model="addexpence.account_no" ng-options="item.id as item.account_name for item in modalOptions.accountList" required>
+							<option value="" selected>Select Account</option>
+						</select>
+					<span class="help-block" ng-show="addExpenceForm.account_no.$dirty && addExpenceForm.account_no.$invalid">
+						<span ng-show="addExpenceForm.account_no.$error.required" class="text-danger">Account is required.</span>
+					</span>
+					</div>
+			</div>
+			
 			<div class="form-group">	
 				<label  for="date" class="col-sm-2 control-label">Date</label>
 					<div class="col-sm-9">
 						<input type="text" id="date" class="form-control" value="{{dates.date}}"  ng-model="addexpence.date"  ng-init="addexpence.date = modalOptions.expenseDate.date" name="date" readonly 
 						placeholder="date" >
+						<input type="hidden" class="form-control" ng-model="addexpence.user_id"  readonly/>
 					</div>						
 			</div>
-			
-			<div class="form-group">
-					<label for="account_no" class="col-sm-2 control-label">Account No* </label>
-					<div class="col-sm-9">
-						<!-- <input type="text" id="account_no" name="account_no" class="form-control" ng-model="addexpence.account_no" placeholder="Enter Account Number" ng-pattern="/^\d{0,100}[0-9]$/" required> -->
-						<select class="form-control" name="account_no" id="account_no"  ng-model="addexpence.account_no" ng-options="item.id as item.account_name for item in modalOptions.accountList" required>
-							<option value="" selected>Select Account No</option>
-						</select>
-					<span class="help-block" ng-show="addExpenceForm.account_no.$dirty && addExpenceForm.account_no.$invalid">
-						<span ng-show="addExpenceForm.account_no.$error.required" class="text-danger">Account No is required.</span>
-						<span ng-show="(addExpenceForm.account_no.$dirty || submitted)" class="text-danger">Enter Numbers Only!</span>
-					</span>
-					</div>
-			</div>	
 			
 			<div class="form-group">
 				<label  for="debit_amount" class="col-sm-2 control-label">Amount</label>
@@ -83,7 +81,6 @@
 			<div class="form-group" ng-if="addexpence.description.payment_type.type == 'Cheque' || addexpence.description.payment_type.type == 'Net Banking' || addexpence.description.payment_type.type == 'DD'">
 				<label for="Date" class="col-sm-2 control-label">Date</label>
 				 <div class="col-sm-9">
-						<!-- <input type="text" id="Date" ng-model="addincome.description.payment_type.Date" class="form-control" name="Date"   placeholder="Enter Date" > ng-init="addexpence.description.payment_type.date = dates.date"-->
 					<input type="text" id="date" class="form-control" value="{{dates.date}}" ng-model="addexpence.date" ng-init="addexpence.date = modalOptions.expenseDate.date" name="date"  
 						placeholder="date" >
 				</div>					
@@ -103,7 +100,7 @@
 					</div>		
 			</div>
 		
-			<div class="form-group">
+			<div class="form-group modal-footer">
 				<div class="col-sm-offset-2 col-sm-9">
 					<button type="submit" class="btn btn-success" ng-disabled="addExpenceForm.$invalid" ng-click="modalOptions.postDataExpence(addexpence)">Submit</button>
 					<button type="reset" class="btn btn-danger">Reset</button>

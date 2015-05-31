@@ -77,7 +77,8 @@ define(['app'], function (app) {
 					getTotal : function(rentData, modalOptions){
 						rentData.tax = $scope.serviceTax(rentData.rent);
 						rentData.other_tax = $scope.otherTax(rentData.rent);
-						
+						rentData.primaryeducation = $scope.primaryEduCess(rentData.rent);
+						rentData.secondaryeducation = $scope.secondaryEduCess(rentData.rent);
 						var rent = rentData.rent;
 						var maintainance = (rentData.maintainance) ? rentData.maintainance : 0;
 						var electricity_bill = (rentData.electricity_bill) ? rentData.electricity_bill : 0;
@@ -85,7 +86,8 @@ define(['app'], function (app) {
 							var service_tax =  Math.round(parseFloat(rent)*(rentData.service_tax)/100 ? rentData.service_tax : 0);
 							var other_tax =  Math.round(parseFloat(rent)*(rentData.other_tax)/100 ? rentData.other_tax : 0);
 						var totalAmount =  Math.round(parseFloat(rent) + parseFloat($scope.serviceTax(rent)) + parseFloat($scope.primaryEduCess(rent)) + parseFloat($scope.secondaryEduCess(rent)) + parseFloat(maintainance) + parseFloat(electricity_bill) + parseFloat(water_charge)+ parseFloat(service_tax) + parseFloat(other_tax));
-						
+						modalOptions.service_tax = service_tax
+						modalOptions.other_tar = other_tax;
 						modalOptions.total_amount = totalAmount;
 					},
 					formData : function(rentData, total_amount){
@@ -95,13 +97,13 @@ define(['app'], function (app) {
 						due_date.setDate(due_date.getMonth() + modalOptions.rentList.duration);
 						rentData.due_date = due_date;
 						rentData.total_amount = total_amount;
-						modalOptions.rentReceipt = rentData;
+						modalOptions.invoice = rentData;
 					},
 					
 				};
 				modalService.showModal(modalDefaults,modalOptions).then(function (result) {
-					console.log(modalOptions.rentReceipt);
-					 dataService.post("post/rentreceipt",modalOptions.rentReceipt)
+					console.log(modalOptions.invoice);
+					 dataService.post("post/invoice",modalOptions.invoice)
 					.then(function(response) {  
 						if(response.status == "success"){
 							console.log(response);
@@ -137,7 +139,7 @@ define(['app'], function (app) {
 			}
 			$scope.generated_date = $scope.rentYear.curYear + "-" + $scope.rentYear.curMonth;
 			$scope.rentParams = {property_id : $routeParams.propertyId, user_id : $routeParams.userId, generated_date : $scope.generated_date};
-			dataService.get("getmultiple/rentreceipt/1/1000",$scope.rentParams).then(function(response) {
+			dataService.get("getmultiple/invoice/1/1000",$scope.rentParams).then(function(response) {
 				if(response.status == 'success'){
 					console.log($rootScope.userDetails.config.rentsetting);
 					$scope.receiptList = response.data[0];
@@ -185,7 +187,7 @@ define(['app'], function (app) {
 					$scope.getReceiptByMonth = function(generatedDate){
 						var generated_date = $scope.generatedDate.year + '-' + $scope.generatedDate.month;
 						angular.extend($scope.rentParams, {generated_date : generated_date});
-						dataService.get("getmultiple/rentreceipt/1/1000",$scope.rentParams).then(function(response) {
+						dataService.get("getmultiple/invoice/1/1000",$scope.rentParams).then(function(response) {
 							if(response.status == 'success'){
 								$scope.receiptList = response.data[0];
 								$scope.totalPaid = response.data[0].paid;
