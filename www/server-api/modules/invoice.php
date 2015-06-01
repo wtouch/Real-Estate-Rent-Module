@@ -7,11 +7,13 @@
 	//getMethod
 	if($reqMethod=="GET"){
 		if(isset($id)){
-			$where['id'] = $id;
-			$t0 = $db->setTable($table);
-			$db->setWhere($where, $t0);
-			$data = $db->selectSingle();
-			echo json_encode($data);
+			if(isset($_GET['account'])){
+				$where['id'] = $id;
+				$t0 = $db->setTable($table);
+				$db->setWhere($where, $t0);
+				$data = $db->selectSingle();
+				echo json_encode($data);
+			}
 			
 		}else{
 			
@@ -36,7 +38,7 @@
 			$selectInnerJoinCols[0] = "*";
 			$db->setColumns($table, $selectInnerJoinCols);
 			
-			$paid = $db->setJoinString("LEFT JOIN", "transaction", array("receipt_id"=>$table.".id"));
+			$paid = $db->setJoinString("LEFT JOIN", "transaction", array("account_no"=>$table.".id"));
 			$db->setColumns($paid, array("ifnull(".$paid.".credit_amount, 0) as paid") , true);
 			$db->setColumns($paid, array("ifnull(".$table.".total_amount, 0) - ifnull(".$paid.".credit_amount, 0) as due_amount"), true);
 			

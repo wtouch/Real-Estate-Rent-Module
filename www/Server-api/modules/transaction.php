@@ -6,10 +6,21 @@
 	//getMethod
 	if($reqMethod=="GET"){
 		if(isset($id)){
-			$where['id'] = $id;
+			if(isset($_GET['account'])){
+				$where['id'] = $id;
+				$db->setWhere($where, $t1);
+			}else{
+				$where['id'] = $id;
+				$db->setWhere($where, $t0);
+			}
 			
 			$t0 = $db->setTable("transaction");
-			$db->setWhere($where, $t0);
+			$t1 = $db->setJoinString("INNER JOIN", "account", array("id"=>$t0.".account_no"));
+			
+			$db->setColumns($t0, array($t0.".account_no, sum(".$t0.".credit_amount) as totalCredit, sum(".$t0.".debit_amount) as totalDebit, (sum(".$t0.".credit_amount) - sum(".$t0.".debit_amount)) as balance "), true);
+			$db->setColumns($t1, array("account_name"));
+			
+			$db->setGroupBy(array("account_no"), $t0);
 			$data = $db->selectSingle();
 			echo json_encode($data);
 			
@@ -24,11 +35,6 @@
 			if(isset($_GET['property_id'])) $where['property_id'] = $_GET['property_id'];
 			if(isset($_GET['user_id'])) $where['user_id'] = $_GET['user_id'];
 			if(isset($_GET['type'])) $where['type'] = $_GET['type'];
-			
-			//if(isset($_GET['user_id'])) $userId = $_GET['user_id'];
-			if(isset($_GET['search']) && $_GET['search'] == true){
-				(isset($_GET['category'])) ? $like['category'] = $_GET['category'] : "";
-			}
 			
 			if(isset($_GET['startDt']) && isset($_GET['endtDt'])){
 				$db->setWhere(array("(date BETWEEN '".$_GET['startDt']."' AND '".$_GET['endtDt']."')"), "transaction", false, true);
