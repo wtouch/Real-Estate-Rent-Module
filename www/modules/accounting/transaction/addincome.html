@@ -47,10 +47,10 @@
 					</div>
 			</div>
 			
-			<div class="form-group">
+			<div class="form-group" ng-if="modalOptions.previousBalance">
 				<label for="previous_amount" class="col-sm-2 control-label">Previous Amount</label>
 				<div class="col-sm-9">
-					<input type="text" id="" name="" class="form-control" ng-model="modalOptions.addincome.balance"/>			
+					<input type="text" id="" name="" readonly class="form-control" ng-model="modalOptions.previousBalance"/>			
 					</div>
 			</div>
 			
@@ -141,19 +141,18 @@
 			<div class="form-group">
 				<label  for="credit_amount" class="col-sm-2 control-label">Amount</label><!--ng-pattern="/^\d{0,9}[0-9]$/" -->
 					<div class="col-sm-9">
-						<input type="text" id="credit_amount" class="form-control"  ng-pattern="/^\d{0,9}[0-9]$/" ng-model="modalOptions.addincome.credit_amount" name="amount" placeholder="Amount" required/>
+						<input type="text" id="credit_amount" class="form-control"  ng-pattern="/^\d{0,9}[0-9]$/" ng-model="modalOptions.addincome.credit_amount" ng-change="modalOptions.totalAmount(modalOptions)" name="amount" placeholder="Amount" required/>
 						<span class="help-block" ng-show="addIncomeForm.credit_amount.$dirty && addIncomeForm.credit_amount.$invalid">
 						<span ng-show="addIncomeForm.credit_amount.$error.pattern && (addIncomeForm.credit_amount.$dirty || submitted)" class="text-danger">Enter Numbers Only!</span>
 						<span ng-show="addIncomeForm.credit_amount.$error.required" class="text-danger">. is required.</span>
 						</span>
 					</div>						
 			</div>
-			<input type="hidden" ng-model="modalOptions.addincome.balance">
 			
 			<div class="form-group modal-footer">
-				<div class="col-sm-offset-2 col-sm-9"><!--ng-disabled="addIncomeForm.$invalid"-->
-					<button type="submit" class="btn btn-success" ng-disabled="addIncomeForm.$invalid" ng-click="modalOptions.postData(modalOptions.addincome)">Submit</button>
-					<button type="reset" class="btn btn-danger">Reset</button>
+				<div class="col-sm-11">
+					<button type="submit" class="btn btn-success" ng-disabled="addIncomeForm.$invalid" ng-click="modalOptions.postData(modalOptions.addincome); modalOptions.ok()">Submit</button>
+					<button type="reset" class="btn btn-danger" ng-click="modalOptions.close()">Cancel</button>
 				</div>
 			</div>		
 		</form>

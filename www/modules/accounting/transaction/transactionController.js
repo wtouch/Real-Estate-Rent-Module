@@ -97,29 +97,23 @@ define(['app'], function (app) {
 //Modlal For add income form
 	$scope.incomeDate = {};
 	$scope.openAddincome = function (url) {
-		dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
-			.then(function(user) {  
 		dataService.config('config', {config_name : "category"}).then(function(response){
-		
-		dataService.get("getmultiple/transaction/1",{user_id : $rootScope.userDetails.id})
-			.then(function(transaction) {
-				
-		dataService.get("getmultiple/account/1/100", {status: 1, user_id : $rootScope.userDetails.id})
-			.then(function(account) {			
+		dataService.get("getmultiple/account/1/100", {status: 1, user_id : $rootScope.userDetails.id}).then(function(account){
 			var modalDefaults = {
 				templateUrl: url,	// apply template to modal
 				size : 'lg'
 			};
 			var modalOptions = {
 				incomeDate : { date : $scope.currentDate},
-				customerList : (user.data),
 				accountList : (account.data),
 				addincome : {},
-				transaction : transaction.data,
 				categoryConfig : response.config_data,
 				amount : response.data,
 				
-				totalAmount : Math.round(modalOptions.addincome.balance) + modalOptions.addincome.credit_amount);
+				totalAmount : function(modalOptions){
+					if(modalOptions.addincome == undefined) modalOptions.addincome = {};
+					modalOptions.addincome.balance = Math.round(parseFloat(modalOptions.previousBalance) + parseFloat(modalOptions.addincome.credit_amount));
+				},
 				postData : function(addincome) {
 					//$scope.addincomes.user_id= $rootScope.userDetails.id;
 					 dataService.post("post/transaction",addincome)
@@ -137,7 +131,7 @@ define(['app'], function (app) {
 					.then(function(response) { 
 						
 						if(response.status == "success"){
-							modalOptions.addincome.balance = response.data.balance;
+							modalOptions.previousBalance = response.data.balance;
 							
 						}else{
 							if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
@@ -149,10 +143,6 @@ define(['app'], function (app) {
 			modalService.show(modalDefaults, modalOptions).then(function (result) {
 			
 			});
-		});
-		});
-		
-		
 		});
 		});
 		};
