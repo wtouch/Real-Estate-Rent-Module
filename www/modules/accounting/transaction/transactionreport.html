@@ -1,45 +1,162 @@
 <h3 class="text-center">Transaction Report</h3>
-		<div class="row" ng-init="getTransaction()" >
-			<div class="col-sm-12 ">
-				<div class="table-responsive">
-					<table class="table table-bordered">
-						<thead>
-							<tr>
-								<th>Sr.No.</th>
-								<th>Date</th>
-								<th>Category</th>
-								<th>Description</th>
-								<th>Type</th>
-								<th>Credit Amount</th>
-								<th>Debit Amount</th> 
-								<th>Balance</th> 
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="x in transaction | orderBy:sort">
-								<td>{{((currentPage - 1) * pageItems) + $index + 1}}</td>
-								<td>{{x.date}}</td>
-								<td>{{x.category}}</td>
-								<td>
-								<table class="table table-bordered table-responsive">
-									<tr ng-repeat="(key, val) in x.description.payment_type">
-										<td><b>{{key | uppercase}}</b></td>
-										<td>{{val}}</td>
-									</tr>
-								</table>  
-								</td>
-								<td>{{x.type}}</td>
-								<td>{{x.credit_amount}}</td>
-								<td>{{x.debit_amount}}</td>
-								<td>{{x.balance}}</td>
-							</tr>				
-						</tbody>
-					</table>
-				</div>				
+	<div class="row">	 				  
+		<div class="col-sm-2">
+			<div class="bottomspace" ng-init="type = 'daily'; calcDuration(type, duration);">
+				<label for="year" class="control-label" >View Report</label>
+					<select id="year" class="form-control" ng-model="type" ng-init="type = 'daily'">
+						<option value="daily">Daily Report</option>	
+						<option value="month">Monthly Report</option>	
+						<option value="year">Yearly Report</option>
+						<option value="custom">Custom Report</option>
+					</select>
 			</div>
 		</div>
 		
+		<div class="col-sm-2" ng-if="type == 'daily'"><!--ng-model="duration.start"-->
+			<div class="bottomspace">
+			<label for="year" class="control-label"></label>
+				<p class="input-group">
+				  <input class="form-control" type="text" ng-change="calcDuration(type,duration)" id="date" name="date" datepicker-popup="yyyy-MM-dd" ng-model="duration.start" is-open="rentdate1" min-date="minDate" ng-required="true" close-text="Close" ng-click="open($event,'rentdate1')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate1')">
+							<i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
+				</p>
+			</div>
+		</div>
+	
+		<div class="col-sm-2" ng-if="type == 'month'">
+			<div class="bottomspace">
+			<label for="year" class="control-label"></label>
+				<select id="month"  class="form-control " ng-model="duration" ng-init="start.getMonth(start)" ng-change="calcDuration(type, duration)"> 
+					<option value="1" selected>January</option>	
+					<option value="2">February</option>	
+					<option value="3">March</option>	
+					<option value="4">April</option>	
+					<option value="5">May</option>	
+					<option value="6">June</option>	
+					<option value="7">July</option>
+					<option value="8">August</option>
+					<option value="9">September</option>
+					<option value="10">October</option>
+					<option value="11">November</option>
+					<option value="12">December</option>
+				</select>
+			</div>
+		</div> 
+		
+		<div class="col-sm-2" ng-if="type == 'year'">
+			<div class="bottomspace">
+				<label for="year1" class="control-label">View  duration report</label>
+					<select id="year1" class="form-control " ng-model="duration" ng-init="duration.getFullYear(duration)"
+					ng-change="calcDuration(type, duration)"> 
+						<option value="2010">2010</option>	
+						<option value="2011">2011</option>	
+						<option value="2012">2012</option>
+						<option value="2013">2013</option>
+						<option value="2014">2014</option>
+						<option value="2015">2015</option>
+						<option value="2016">2016</option>
+						<option value="2017">2017</option>
+						<option value="2018">2018</option>
+						<option value="2019">2019</option>
+					</select> 
+			</div>
+		</div> 
+		<div  ng-if="type == 'custom'">
+			<div class="col-sm-2"><!--ng-model="duration.start"-->
+					<div class="bottomspace">
+					<label for="date1" class="control-label"></label><!--ng-change="calcDuration(type,start)"-->
+							<p class="input-group">
+							  <input class="form-control" type="text"  id="date1" name="date1" datepicker-popup="yyyy-MM-dd" ng-model="duration.start" is-open="rentdate2" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate2')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate2')">
+										<i class="glyphicon glyphicon-calendar"></i></button>
+									</span>
+							</p>
+					</div>
+			</div>
+			<div class="col-sm-2"><!--ng-model="duration.start"-->
+					<div class="bottomspace">
+					<label for="year" class="control-label"></label>
+							<p class="input-group">
+							  <input class="form-control" type="text" ng-change="calcDuration(type, duration)" id="date" name="date" datepicker-popup="yyyy-MM-dd" ng-model="duration.end" is-open="rentdate3" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate3')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate3')">
+										<i class="glyphicon glyphicon-calendar"></i></button>
+									</span>
+							</p>
+					</div>
+			</div>
+			
+		</div>
+		<div class="col-sm-2">
+			<label for="type" class="control-label">Select Type</label>
+				<select id="type" class="form-control" ng-model="types" title="type"                 ng-change="changeStatus('type',type)">
+					<option value="" selected>Select Type</option> <!-- add value attribute empty & selected for initial selected option -->
+					<option value="income">Income</option>
+					<option value="expense">Expense</option>   
+				</select>
+		</div>
+		<div class="col-sm-2">
+			<label for="category" class="control-label">Select Category</label>
+				<select class="form-control" name="category" id="category" ng-model="category" ng-options="item.system_name as item.name for item in categoryConfig.category" ng-change="addincome.category = type changeStatus('category',filterCategory)" required>
+					<option value="" selected>Select Category</option>
+				</select>
+		</div>
+	</div>
+	
+	
+	<div class="row" ng-init="getTransaction(page)" >
+		<div class="col-sm-12 ">
+			<div class="table-responsive">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Sr.No.</th>
+							<th>Date</th>
+							<th>Category</th>
+							<th>Description</th>
+							<th>Type</th>
+							<th>Credit Amount</th>
+							<th>Debit Amount</th> 
+							<th>Balance</th> 
+							<th>Manage</th> 
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="x in transaction | orderBy:sort">
+							<td>{{((currentPage - 1) * pageItems) + $index + 1}}</td>
+							<td>{{x.date}}</td>
+							<td>{{x.category}}</td>
+							<td>
+							<table class="table table-bordered table-responsive">
+								<tr ng-repeat="(key, val) in x.description.payment_type">
+									<td><b>{{key | uppercase}}</b>  {{val}}</td>
+								</tr>
+							</table>  
+							</td>
+							<td>{{x.type}}</td>
+							<td>{{x.credit_amount}}</td>
+							<td>{{x.debit_amount}}</td>
+							<td>{{x.balance}}</td>
+							<td>
+								<div class="btn-group">
+									<button type="button" tooltip="{{dynamicTooltip(x.status, 'Delete Property', 'Make Active')}}" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'"><span class="glyphicon glyphicon-remove"></span></button>
+								</div>
+							</td>
+						</tr>				
+					</tbody>
+				</table>
+			</div>				
+		</div>
+	</div>
+	
 <div class="text-center">				
-	<pagination total-items="totalRecords" items-per-page="pageItems"  ng-model="rentreportCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged(rentreportCurrentPage,rentParam)"></pagination>
-	<pre>Page: {{rentreportCurrentPage}} / {{numPages}}</pre>
+
+<pagination total-items="totalRecords" items-per-page="pageItems"  
+ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true"
+num-pages="numPages" ng-change="pageChanged(currentPage,transactionParams)"></pagination>	
+<pre>Page: {{currentPage}} / {{numPages}}</pre>
+
 </div> 

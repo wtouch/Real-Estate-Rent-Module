@@ -11,7 +11,7 @@ define(['app'], function (app) {
 		$scope.maxSize = 5;
 		$scope.totalRecords = "";
 		$scope.currentPage = 1;
-		$scope.rentreportCurrentPage = 1;
+		$scope.CurrentPage = 1;
 		$scope.pageItems = 10;
 		$scope.numPages = "";		
 		$scope.alerts = [];
@@ -23,72 +23,138 @@ define(['app'], function (app) {
 		$scope.today = new Date();
 		$scope.todayDt = $scope.today.getFullYear() + "-" + ($scope.today.getMonth() + 1) + "-" + $scope.today.getDate();
 		$scope.duration = {start : $scope.todayDt};
-		//addincome.description.payment_type.date
-		$scope.openRent = function (url) {
-				//date picker
-			var modalDefaults = {
-				templateUrl: url,	
-				size : 'lg'
-			};
-			
-			modalService.showModal(modalDefaults).then(function (result) {
-			});
-		};
 		
-		var account = {account : "HDFC"};
-		dataService.get("getsingle/transaction/9", account)
-		.then(function(response){ 
-			console.log(response);
-		});
+		//for dynamic tooltip
+		$scope.dynamicTooltip = function(status, active, notActive){
+			return (status==1) ? active : notActive;
+		};	
+		
+		// code for delete button 
+		$scope.deleted = function(id, status){
+			$scope.deletedData = {status : status};
+			dataService.put("put/transaction/"+id, $scope.deletedData)
+			.then(function(response) { 
+				if(response.status == 'success'){
+					$scope.hideDeleted = 1;
+				}
+				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+				$notification[response.status](response.message);
+			});
+		};			
 		
 		$scope.open = function($event,rentdate){
 			$event.preventDefault();
 			$event.stopPropagation();
 			$scope[rentdate] = !$scope[rentdate];
 		};
-		
-	//Modlal For add income form
-/************************************************************/
+	/***************************************************************/
+	//changevalue function
+		$scope.changeValue = function(statusCol,status) {
+			$scope.filterStatus= {};
+			(status =="") ? delete $scope.transactionParam[statusCol] : $scope.filterStatus[statusCol] = status;
+			angular.extend($scope.transactionParam, $scope.filterStatus);
+			angular.extend($scope.transactionParam, $scope.search);			
+			
+			dataService.get("/getmultiple/transaction/1/"+$scope.pageItems, $scope.transactionParam)
+			.then(function(response) {  //function for property response
+				if(response.status == 'success'){
+					$scope.transaction = response.data;
+					$scope.totalRecords = response.totalRecords;
+				}else{
+					$scope.transaction = {};
+					$scope.totalRecords = {};
+					$scope.alerts.push({type: response.status, msg: response.message});
+				}				
+			});
+		};
+		/***********************************************************************************/
+		//this is global method for filter 
+		$scope.changeStatus = function(statusCol, showStatus) {
+			$scope.filterStatus= {};
+			(showStatus =="") ? delete $scope.user_id[statusCol] : $scope.filterStatus[statusCol] = showStatus;
+			angular.extend($scope.user_id, $scope.filterStatus);
+			if(statusCol == 'user_id' && showStatus == null) {
+				angular.extend($scope.user_id, $scope.userInfo);
+			}
+			dataService.get("getmultiple/transaction/1/"+$scope.pageItems, $scope.user_id)
+			.then(function(response) {  
+				if(response.status == 'success'){
+					$scope.transaction = response.data;
+					$scope.totalRecords = response.totalRecords;
+				}else{
+					$scope.transaction = {};
+					$scope.totalRecords = {};
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Get transaction List", response.message);
+				}
+			});
+		};
+		/*************************************************************************************/
+		dataService.config('config', {config_name : "category"}).then(function(response){
+			$scope.categoryConfig = response.config_data;
+		});
+	/*****************************************************************************************/
+//Modlal For add income form
 	$scope.incomeDate = {};
 	$scope.openAddincome = function (url) {
 		dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
 			.then(function(user) {  
 		dataService.config('config', {config_name : "category"}).then(function(response){
 		
+		dataService.get("getmultiple/transaction/1",{user_id : $rootScope.userDetails.id})
+			.then(function(transaction) {
+				
 		dataService.get("getmultiple/account/1/100", {status: 1, user_id : $rootScope.userDetails.id})
-			.then(function(account) { 
+			.then(function(account) {			
 			var modalDefaults = {
 				templateUrl: url,	// apply template to modal
 				size : 'lg'
 			};
 			var modalOptions = {
-				incomeDate: { date : $scope.currentDate},
+				incomeDate : { date : $scope.currentDate},
 				customerList : (user.data),
 				accountList : (account.data),
+				addincome : {},
+				transaction : transaction.data,
 				categoryConfig : response.config_data,
+				amount : response.data,
+				
+				totalAmount : Math.round(modalOptions.addincome.balance) + modalOptions.addincome.credit_amount);
 				postData : function(addincome) {
-					//$scope.addincome.user_id= $rootScope.userDetails.id;
-					 dataService.post("post/transaction/addincome",addincome)
+					//$scope.addincomes.user_id= $rootScope.userDetails.id;
+					 dataService.post("post/transaction",addincome)
 					.then(function(response) {  
 						if(response.status == "success"){
 						}
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 						$notification[response.status]("Add record", response.message);
 					});   
-					console.log(addincome);
-				} // 
-
+					console.log(addincomedata);
+				},
+				getData : function(id, modalOptions) {
+					var account = {account : "account_name"};
+					 dataService.get("getsingle/transaction/"+id,account)
+					.then(function(response) { 
+						
+						if(response.status == "success"){
+							modalOptions.addincome.balance = response.data.balance;
+							
+						}else{
+							if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+							$notification[response.status]("", response.message);
+						}
+					});   
+				}
 			}; 
-		modalService.show(modalDefaults, modalOptions).then(function (result) {
-			modalOptions.addincome.date = dataService.currentDate;
-				console.log("modalOpened");
-		
-		});	
-		
-		});
+			modalService.show(modalDefaults, modalOptions).then(function (result) {
+			
+			});
 		});
 		});
 		
+		
+		});
+		});
 		};
 /*************************************************************************/		
 		//Modal for add expence
@@ -105,6 +171,7 @@ define(['app'], function (app) {
 			expenseDate: { date : $scope.currentDate},
 			categoryConfig : response.config_data,
 			accountList : (account.data),
+			addexpence :{},
 			postDataExpence : function(addexpence) {
 				//$scope.addexpence.user_id= $rootScope.userDetails.id;
 				 dataService.post("post/transaction/addexpence",addexpence)
@@ -115,7 +182,21 @@ define(['app'], function (app) {
 					$notification[response.status]("Add record", response.message);
 				});   
 				console.log(addexpence);
-				} // 
+				},
+				getData : function(id, modalOptions) {
+					var account = {account : "account_name"};
+					 dataService.get("getsingle/transaction/"+id,account)
+					.then(function(response) { 
+						
+						if(response.status == "success"){
+							modalOptions.addexpence.balance = response.data.balance;
+							
+						}else{
+							if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+							$notification[response.status]("", response.message);
+						}
+					});   
+				}
 		};
 		modalService.show(modalDefaults, modalOptions).then(function (result) {
 			modalOptions.addexpence.date = dataService.currentDate;
@@ -125,6 +206,7 @@ define(['app'], function (app) {
 		});	
 		});
 		};
+		/****************************************************************/
 		
 		/***************************************************************/
 		$scope.getTransaction = function(page){
@@ -140,8 +222,6 @@ define(['app'], function (app) {
 				}
 			});
 		}
-
-		 
 		$scope.calcDuration = function(type, duration){
 			//console.log(type, duration);
 			if(type == 'custom'){
@@ -174,8 +254,6 @@ define(['app'], function (app) {
 				var endtDt = endt.getFullYear() +"-" + (endt.getMonth() + 1) + "-"+ endt.getDate();
 			}
 		}
-		
-		
 	};
 		
 	// Inject controller's dependencies
@@ -183,3 +261,11 @@ define(['app'], function (app) {
 	// Register/apply controller dynamically
     app.register.controller('transactionController', transactionController);
 });
+
+/* $scope.amount = function(id){
+		var account = {account : "account_name"};
+		dataService.get("getsingle/transaction/"+id, account)
+		.then(function(response){ 
+			
+		});
+		}; */

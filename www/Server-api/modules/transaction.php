@@ -6,13 +6,7 @@
 	//getMethod
 	if($reqMethod=="GET"){
 		if(isset($id)){
-			if(isset($_GET['account'])){
-				$where['id'] = $id;
-				$db->setWhere($where, $t1);
-			}else{
-				$where['id'] = $id;
-				$db->setWhere($where, $t0);
-			}
+			
 			
 			$t0 = $db->setTable("transaction");
 			$t1 = $db->setJoinString("INNER JOIN", "account", array("id"=>$t0.".account_no"));
@@ -21,8 +15,18 @@
 			$db->setColumns($t1, array("account_name"));
 			
 			$db->setGroupBy(array("account_no"), $t0);
+			
+			if(isset($_GET['account'])){
+				$where['id'] = $id;
+				$db->setWhere($where, $t1);
+			}else{
+				$where['id'] = $id;
+				$db->setWhere($where, $t0);
+			}
+			
 			$data = $db->selectSingle();
 			echo json_encode($data);
+			
 			
 		}else{
 			
@@ -32,9 +36,11 @@
 			$limit[1] = $records;
 			$where = array();
 			
-			if(isset($_GET['property_id'])) $where['property_id'] = $_GET['property_id'];
+			//if(isset($_GET['property_id'])) $where['property_id'] = $_GET['property_id'];
 			if(isset($_GET['user_id'])) $where['user_id'] = $_GET['user_id'];
 			if(isset($_GET['type'])) $where['type'] = $_GET['type'];
+			if(isset($_GET['category'])) $where['category'] = $_GET['category'];
+			if(isset($_GET['account_name'])) $where['account_name'] = $_GET['account_name'];
 			
 			if(isset($_GET['startDt']) && isset($_GET['endtDt'])){
 				$db->setWhere(array("(date BETWEEN '".$_GET['startDt']."' AND '".$_GET['endtDt']."')"), "transaction", false, true);

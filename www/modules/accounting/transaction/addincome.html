@@ -1,13 +1,13 @@
-<div class="main-content" ng-init="addincome.user_id = userDetails.id">
+<div class="main-content" ng-init="modalOptions.addincome.user_id = userDetails.id">
 	<div class="modal-header" style="margin-bottom: 14px">
 		<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
-		<h3>Add Income</h3>
+		<h3>Add Income</h3>{{modalOptions.myData}}
 	</div>
 		<form name="addIncomeForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="addIncomeForm.$valid">
 			<div class="form-group">
 				<label for="category" class="col-sm-2 control-label">Category</label>
 					<div class="col-sm-9">
-						<select class="form-control" name="category" id="category" ng-model="type" ng-options="item.system_name as item.name for item in modalOptions.categoryConfig.category" ng-change="addincome.category = type" required>
+						<select class="form-control" name="category" id="category" ng-model="type" ng-options="item.system_name as item.name for item in modalOptions.categoryConfig.category" ng-change="modalOptions.addincome.category = type" required>
 						<option value="" selected>Select Type</option>
 						</select>
 						<span class="help-block" ng-show="addIncomeForm.category.$dirty && addIncomeForm.category.$invalid">
@@ -23,23 +23,21 @@
 					<select class="form-control" name="customer" id="customer"  ng-model="templateList.user_id" ng-options="item.id as item.name for item in modalOptions.customerList | filter: { group_name : 'customer'} " required>
 						<option value="">Select Customer</option>
 					</select>
-					
 					<span class="help-block" ng-show="addIncomeForm.customer.$dirty && addIncomeForm.customer.$invalid">
 						<span ng-show="addIncomeForm.customer.$error.required" class="text-danger">Customer is required.</span>
 					</span>	
 				</div>
 			</div>
 				<span ng-if="userDetails.group_name == 'customer'">
-					<input type="hidden" class="form-control" ng-model="addincome.description.user_id"  readonly/>
-					<input type="hidden" class="form-control" ng-model="addincome.user_id"  readonly/>
+					<input type="hidden" class="form-control" ng-model="modalOptions.addincome.description.user_id"  readonly/>
+					<input type="hidden" class="form-control" ng-model="modalOptions.addincome.user_id"  readonly/>
 				</span> 
 			</div>
 			
 			<div class="form-group">
-					<label for="account_no" class="col-sm-2 control-label">Account No* </label>
+				<label for="account_no" class="col-sm-2 control-label">Account No* </label>
 					<div class="col-sm-9">
-						<!-- <input type="text" id="account_no" name="account_no" class="form-control" ng-model="addincome.account_no" placeholder="Enter Account Number" ng-pattern="/^\d{0,100}[0-9]$/" required> -->
-					<select class="form-control" name="account_no" id="account_no"  ng-model="addincome.account_no" ng-options="item.id as item.account_name for item in modalOptions.accountList" required>
+					<select class="form-control" name="account_no" id="account_no"  ng-model="modalOptions.addincome.account_no" ng-change="modalOptions.getData(modalOptions.addincome.account_no, modalOptions)" ng-options="item.id as item.account_name for item in modalOptions.accountList" required>
 						<option value="" selected>Select Account No</option>
 					</select>
 					<span class="help-block" ng-show="addIncomeForm.account_no.$dirty && addIncomeForm.account_no.$invalid">
@@ -48,11 +46,20 @@
 					</span>
 					</div>
 			</div>
+			
+			<div class="form-group">
+				<label for="previous_amount" class="col-sm-2 control-label">Previous Amount</label>
+				<div class="col-sm-9">
+					<input type="text" id="" name="" class="form-control" ng-model="modalOptions.addincome.balance"/>			
+					</div>
+			</div>
+			
+			<input type="hidden"  ng-model="modalOptions.addincome.balance"/>
 			 
-			<div class="form-group" ng-if="addincome.description.user_id" ng-init="getPropertylist(addincome.description.user_id,'user')">
+			<div class="form-group" ng-if="modalOptions.addincome.description.user_id" ng-init="getPropertylist(modalOptions.addincome.description.user_id,'user')">
 				<label for="receipt" class="col-sm-2 control-label">* Receipt</label>
 					<div class="col-sm-7">
-						<select class="form-control" name="receipt" id="receipt" ng-model="addincome.receipt_id" ng-options="item.id as item.generated_date for item in receiptList | filter : { due_amount : '0' }" required>
+						<select class="form-control" name="receipt" id="receipt" ng-model="modalOptions.addincome.receipt_id" ng-options="item.id as item.generated_date for item in receiptList | filter : { due_amount : '0' }" required>
 							<option value="">Select Receipt</option>
 						</select>
 						<span class="help-block" ng-show="addIncomeForm.receipt.$dirty && addIncomeForm.receipt.$invalid">
@@ -63,28 +70,28 @@
 			</div>
 		
 			<input type="hidden" class="form-control" ng-model="userDetails.id"  readonly/>
-			<input type="hidden"  ng-if="type !='other'" ng-model="addincome.category"/>
-			<input type="hidden" ng-model="addincome.balancesheet_type" ng-init="addincome.type='income'"/> 
+			<input type="hidden"  ng-if="type !='other'" ng-model="modalOptions.addincome.category"/>
+			<input type="hidden" ng-model="modalOptions.addincome.balancesheet_type" ng-init="modalOptions.addincome.type='income'"/> 
 			
 			<div class="form-group" ng-if="type =='other'">
 				<label for="income_expence" class="col-sm-2 control-label">other</label>
 					<div class="col-sm-9">
-						<input type="text" id="income_expence" class="form-control" ng-model="addincome.category" />
+						<input type="text" id="income_expence" class="form-control" ng-model="modalOptions.addincome.category" />
 					</div>
 			</div>
 			
 			<div class="form-group">	
 				<label  for="date" class="col-sm-2 control-label">Date</label>
 					<div class="col-sm-9">
-						<input type="text" id="date" class="form-control" value="{{dates.date}}"  ng-model="addincome.date" ng-init="addincome.date = modalOptions.incomeDate.date"  name="date" readonly 
-						placeholder="date" ><!--ng-init="addincome.date = dates.date"-->
+						<input type="text" id="date" class="form-control" value="{{dates.date}}"  ng-model="modalOptions.addincome.date" ng-init="modalOptions.addincome.date = modalOptions.incomeDate.date"  name="date" readonly 
+						placeholder="date" ><!--ng-init="modalOptions.addincome.date = dates.date"-->
 					</div>						
 			</div>
 			
 			<div class="form-group">
 				<label for="payment_type" class="col-sm-2 control-label">Payment Type </label>
 					<div class="col-sm-9">
-						<select id="payment_type" class="form-control" name="payment_type"  ng-model="addincome.description.payment_type.type" required>
+						<select id="payment_type" class="form-control" name="payment_type"  ng-model="modalOptions.addincome.description.payment_type.type" required>
 						<option value="" selected>Select Type</option><!-- added value & selected attr -->
 						<option value="Cash" >Cash</option>
 						<option value="Cheque">Cheque</option>
@@ -97,36 +104,36 @@
 					</div>
 			</div> 
 			
-			<div class="form-group" ng-if="addincome.description.payment_type.type == 'Cheque' || addincome.description.payment_type.type == 'Net Banking' || addincome.description.payment_type.type == 'DD'">
-				<label for="refferance no" ng-if="addincome.description.payment_type.type == 'Net Banking'"class="col-sm-2 control-label">Transaction No</label>
-				<label for="refferance no" ng-if="addincome.description.payment_type.type == 'Cheque'" class="col-sm-2 control-label">Check No</label>
-				<label for="refferance no" ng-if="addincome.description.payment_type.type == 'DD'" class="col-sm-2 control-label">DD No</label>
+			<div class="form-group" ng-if="modalOptions.addincome.description.payment_type.type == 'Cheque' || modalOptions.addincome.description.payment_type.type == 'Net Banking' || modalOptions.addincome.description.payment_type.type == 'DD'">
+				<label for="refferance no" ng-if="modalOptions.addincome.description.payment_type.type == 'Net Banking'"class="col-sm-2 control-label">Transaction No</label>
+				<label for="refferance no" ng-if="modalOptions.addincome.description.payment_type.type == 'Cheque'" class="col-sm-2 control-label">Check No</label>
+				<label for="refferance no" ng-if="modalOptions.addincome.description.payment_type.type == 'DD'" class="col-sm-2 control-label">DD No</label>
 					<div class="col-sm-9">
-						<input type="text" id="refferance no" ng-if="addincome.description.payment_type.type == 'Net Banking'" ng-model="addincome.description.payment_type.transaction_No" class="form-control" name="refferance no"   placeholder="Enter Refferance No" >
-						<input type="text" id="refferance no" ng-if="addincome.description.payment_type.type == 'Cheque'" ng-model="addincome.description.payment_type.check_no" class="form-control" name="refferance no"   placeholder="Enter Check No" >
-						<input type="text" id="refferance no" ng-if="addincome.description.payment_type.type == 'DD'" ng-model="addincome.description.payment_type.DD_no" class="form-control" name="refferance no"   placeholder="Enter DD No" >
+						<input type="text" id="refferance no" ng-if="modalOptions.addincome.description.payment_type.type == 'Net Banking'" ng-model="modalOptions.addincome.description.payment_type.transaction_No" class="form-control" name="refferance no"   placeholder="Enter Refferance No" >
+						<input type="text" id="refferance no" ng-if="modalOptions.addincome.description.payment_type.type == 'Cheque'" ng-model="modalOptions.addincome.description.payment_type.check_no" class="form-control" name="refferance no"   placeholder="Enter Check No" >
+						<input type="text" id="refferance no" ng-if="modalOptions.addincome.description.payment_type.type == 'DD'" ng-model="modalOptions.addincome.description.payment_type.DD_no" class="form-control" name="refferance no"   placeholder="Enter DD No" >
 					</div>		
 			</div> 
 
-			<div class="form-group" ng-if="addincome.description.payment_type.type == 'Cheque' || addincome.description.payment_type.type == 'Net Banking' || addincome.description.payment_type.type == 'DD'">
+			<div class="form-group" ng-if="modalOptions.addincome.description.payment_type.type == 'Cheque' || modalOptions.addincome.description.payment_type.type == 'Net Banking' || modalOptions.addincome.description.payment_type.type == 'DD'">
 				<label for="Date" class="col-sm-2 control-label">Date</label>
 				 <div class="col-sm-9">
-					<input type="text" id="date" class="form-control" value="{{dates.date}}"  ng-model="addincome.date" ng-init="addincome.date = modalOptions.incomeDate.date"  name="date" 
+					<input type="text" id="date" class="form-control" value="{{dates.date}}"  ng-model="modalOptions.addincome.date" ng-init="modalOptions.addincome.date = modalOptions.incomeDate.date"  name="date" 
 					placeholder="date">
 				</div>					
 			</div>
 			
-			<div class="form-group" ng-if="addincome.description.payment_type.type == 'Cheque' || addincome.description.payment_type.type == 'Net Banking' || addincome.description.payment_type.type == 'DD'">
+			<div class="form-group" ng-if="modalOptions.addincome.description.payment_type.type == 'Cheque' || modalOptions.addincome.description.payment_type.type == 'Net Banking' || modalOptions.addincome.description.payment_type.type == 'DD'">
 				<label for="Bank" class="col-sm-2 control-label">Bank Name</label>
 					<div class="col-sm-9">
-						<input type="text" id="Bank" ng-model="addincome.description.payment_type.Bank" class="form-control" name="Bank"   placeholder="Enter Bank Name" >
+						<input type="text" id="Bank" ng-model="modalOptions.addincome.description.payment_type.Bank" class="form-control" name="Bank"   placeholder="Enter Bank Name" >
 					</div>		
 			</div>
 			
-			<div class="form-group" ng-if="addincome.description.payment_type.type == 'Cheque' || addincome.description.payment_type.type == 'Net Banking' || addincome.description.payment_type.type == 'DD'">
+			<div class="form-group" ng-if="modalOptions.addincome.description.payment_type.type == 'Cheque' || modalOptions.addincome.description.payment_type.type == 'Net Banking' || modalOptions.addincome.description.payment_type.type == 'DD'">
 				<label for="Branch" class="col-sm-2 control-label">Branch</label>
 					<div class="col-sm-9">
-						<input type="text" id="Branch" ng-model="addincome.description.payment_type.Branch" class="form-control" name="Branch"   placeholder="Enter Branch" >
+						<input type="text" id="Branch" ng-model="modalOptions.addincome.description.payment_type.Branch" class="form-control" name="Branch"   placeholder="Enter Branch" >
 					</div>		
 			</div>
 			
@@ -134,17 +141,18 @@
 			<div class="form-group">
 				<label  for="credit_amount" class="col-sm-2 control-label">Amount</label><!--ng-pattern="/^\d{0,9}[0-9]$/" -->
 					<div class="col-sm-9">
-						<input type="text" id="credit_amount" class="form-control"  ng-pattern="/^\d{0,9}[0-9]$/" ng-model="addincome.credit_amount" name="amount" placeholder="Amount" required/>
+						<input type="text" id="credit_amount" class="form-control"  ng-pattern="/^\d{0,9}[0-9]$/" ng-model="modalOptions.addincome.credit_amount" name="amount" placeholder="Amount" required/>
 						<span class="help-block" ng-show="addIncomeForm.credit_amount.$dirty && addIncomeForm.credit_amount.$invalid">
 						<span ng-show="addIncomeForm.credit_amount.$error.pattern && (addIncomeForm.credit_amount.$dirty || submitted)" class="text-danger">Enter Numbers Only!</span>
 						<span ng-show="addIncomeForm.credit_amount.$error.required" class="text-danger">. is required.</span>
 						</span>
 					</div>						
 			</div>
+			<input type="hidden" ng-model="modalOptions.addincome.balance">
 			
 			<div class="form-group modal-footer">
 				<div class="col-sm-offset-2 col-sm-9"><!--ng-disabled="addIncomeForm.$invalid"-->
-					<button type="submit" class="btn btn-success" ng-disabled="addIncomeForm.$invalid" ng-click="modalOptions.postData(addincome)">Submit</button>
+					<button type="submit" class="btn btn-success" ng-disabled="addIncomeForm.$invalid" ng-click="modalOptions.postData(modalOptions.addincome)">Submit</button>
 					<button type="reset" class="btn btn-danger">Reset</button>
 				</div>
 			</div>		
