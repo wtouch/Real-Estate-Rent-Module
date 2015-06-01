@@ -1,0 +1,87 @@
+<div class="modal-header" ng-init="modalOptions.getAccountConfig()">
+	<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
+	<h3>Generate Invoice</h3>
+</div>
+<div class="modal-body row">
+	<div class="col-sm-6">
+		<form class="form-horizontal" name="receiptForm" name="applyTemplateForm"  novalidate="novalidate" 	ng-submit="receiptForm.$valid">
+			<div class="form-group">
+				<label for="amount" class="col-sm-6 control-label">Licence Fees *</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" id="amount" ng-model="modalOptions.rentData.rent"   ng-init="modalOptions.rentData.rent = modalOptions.rentList.rent" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="electricity_bill" class="col-sm-6 control-label">Electricity Bill *</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" id="electricity_bill"  ng-model="modalOptions.rentData.electricity_bill" ng-init="modalOptions.rentData.electricity_bill = 0" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="water" class="col-sm-6 control-label">Water Bill *</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control " id="water"  ng-model="modalOptions.rentData.water_charge" ng-init="modalOptions.rentData.water_charge = modalOptions.rentList.water_charge" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="maintainance" class="col-sm-6 control-label">Maintainance *</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control " id="maintainance" ng-model="modalOptions.rentData.maintainance" ng-init="modalOptions.rentData.maintainance = modalOptions.rentList.maintainance" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)">
+				</div>
+			</div>
+			<div class="form-group">
+				<label  for="service_tax" class="col-sm-6 control-label">Service Tax *</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control "  id="service_tax" name="service_tax" ng-model="service_tax" ng-init="service_tax = modalOptions.accountConfig.service_tax" readonly/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label  for="other_tax" class="col-sm-6 control-label">Other Tax *</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control "  id="other_tax" name="other_tax" ng-model="other_tax" ng-init="other_tax = modalOptions.accountConfig.other_tax" readonly/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label  for="primary_tax" class="col-sm-6 control-label">Primary Education Cess *</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control "  id="primary_tax" name="primary_tax" ng-model="primary_tax" ng-init="primary_tax = modalOptions.accountConfig.primary_edu_cess" readonly/>
+				</div>
+			</div>
+			<div class="form-group">
+				<label  for="secondary_tax" class="col-sm-6 control-label">Secondary Education Cess *</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control "  id="secondary_tax" name="secondary_tax" ng-model="secondary_tax" ng-init="secondary_tax = modalOptions.accountConfig.secondary_edu_cess" readonly/>
+				</div>
+			</div>
+				
+			<div class="form-group">
+				<label  for="due_date" class="col-sm-6 control-label">Date *</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control " placeholder="YYYY-DD-MM" id="due_date" name="due_date" ng-model="modalOptions.rentData.generated_date" ng-init="modalOptions.rentData.generated_date = modalOptions.rentDate.date" />
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="col-sm-6 ">
+		<div class="table-responsive">
+			<table class="table bordered" ng-init="modalOptions.getTotal(modalOptions.rentData, modalOptions); modalOptions.rentData.total_amount = modalOptions.total_amount">
+				<thead><th colspan="2">Total Amount Details</th></thead>
+				<tr><td>Licence Fees :</td><td class="text-right">{{modalOptions.rentData.rent}}</td></tr>
+				<tr><td>Electricity_bill :</td><td class="text-right">{{modalOptions.rentData.electricity_bill}}</td></tr>
+				<tr><td>Water charge :</td><td class="text-right">{{modalOptions.rentData.water_charge}}</td></tr>
+				<tr><td>Maintainance :</td><td class="text-right">{{modalOptions.rentData.maintainance}}</td></tr>
+				<tr><td>Service Tax :</td><td class="text-right"> {{modalOptions.rentData.perticulars.tax}}</td></tr>
+				<tr><td>Other Tax :</td><td class="text-right">{{modalOptions.rentData.perticulars.other_tax}}</td></tr>
+				<tr><td>LESS TDS :</td><td class="text-right"> -{{modalOptions.rentData.perticulars.tds}}</td></tr>
+				<tr><td>Primary Education Cess:</td><td class="text-right">{{modalOptions.rentData.perticulars.primaryeducation}}</td></tr>
+				<tr><td>Secondary Education Cess:</td><td class="text-right">{{modalOptions.rentData.perticulars.secondaryeducation}}</td></tr>
+				<tr><td><b>Total  :</b></td><td class="text-right">{{modalOptions.total_amount}}</td></tr>
+			</table>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button type="submit" ng-disabled="receiptForm.$invalid" class="btn btn-success" ng-click="modalOptions.formData(modalOptions.rentData, modalOptions.total_amount); modalOptions.ok()">Generate Invoice</button>
+	<button type="reset" class="btn btn-warning">Reset</button>
+</div>

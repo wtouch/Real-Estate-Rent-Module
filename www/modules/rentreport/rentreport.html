@@ -44,13 +44,10 @@
 				<td>{{x.name}}</td>
 				<td>{{x.taken_date}}</td>
 				<td>{{x.leaving_date}}</td>
-				<!-- <td>
-					<a class="btn btn-success" ng-show="x.due_amount==0">Paid</a>
-					<a class="btn btn-warning" ng-show="x.due_amount!=0">Unpaid</a>
-				</td> -->
 				<td>
-					<a class="btn btn-primary"  ng-click="openRent('modules/rentreport/receiptmodal.html',x)">Generate Invoice</a>
+					<a class="btn btn-primary"  ng-click="openRent('modules/rentreport/generateInvoice.html',x)">Generate Invoice</a>
 					<a class="btn btn-warning" href="#/dashboard/rentreport/invoice/{{x.property_id}}/{{x.user_id}}">View Invoice</a>
+					<a class="btn btn-info"  ng-click="propertyRelease(x.id)">Release Property</a>
 				</td>
 			</tr>
 		</table>

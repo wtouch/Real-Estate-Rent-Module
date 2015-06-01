@@ -43,6 +43,13 @@ define(['app'], function (app) {
 				return rent * parseInt($rootScope.userDetails.config.rentsetting.other_tax) / 100;
 			}
 		}
+		$scope.tds = function(rent){
+			if($rootScope.userDetails.config.rentsetting.tds == 0){ 
+				return 0;
+			}else{
+				return rent * parseInt($rootScope.userDetails.config.rentsetting.tds) / 100;
+			}
+		}
 		$scope.serviceTax = function(rent){
 			//console.log(parseFloat($rootScope.userDetails.config.rentsetting.service_tax));
 			return rent * parseFloat($rootScope.userDetails.config.rentsetting.service_tax) / 100; // other_tax - secondary_edu_cess - primary_edu_cess
@@ -63,6 +70,8 @@ define(['app'], function (app) {
 		} 
 		
 		$scope.rentDate = {};
+/**************************************************************************/
+/*Generate Invoice Modal function Open Rent*/
 		$scope.openRent = function (url,rent_data) {
 			$scope.rentYear = [];
 				var modalDefaults = {
@@ -74,19 +83,22 @@ define(['app'], function (app) {
 					rentDate: { date : $scope.currentDate, due_date : $scope.dueDate },
 					accountConfig : $rootScope.userDetails.config.rentsetting,
 					total_amount : 0,
+					rentData : {},
 					getTotal : function(rentData, modalOptions){
-						rentData.tax = $scope.serviceTax(rentData.rent);
-						rentData.other_tax = $scope.otherTax(rentData.rent);
-						rentData.primaryeducation = $scope.primaryEduCess(rentData.rent);
-						rentData.secondaryeducation = $scope.secondaryEduCess(rentData.rent);
+						if(rentData.perticulars == undefined) rentData.perticulars = {};
+						console.log(rentData.perticulars);
+						rentData.perticulars.tax = $scope.serviceTax(rentData.rent);
+						rentData.perticulars.tds = $scope.tds(rentData.rent);
+						rentData.perticulars.other_tax = $scope.otherTax(rentData.rent);
+						rentData.perticulars.primaryeducation = $scope.primaryEduCess(rentData.rent);
+						rentData.perticulars.secondaryeducation = $scope.secondaryEduCess(rentData.rent);
 						var rent = rentData.rent;
 						var maintainance = (rentData.maintainance) ? rentData.maintainance : 0;
 						var electricity_bill = (rentData.electricity_bill) ? rentData.electricity_bill : 0;
 						var water_charge = (rentData.water_charge) ? rentData.water_charge : 0;
-							var service_tax =  Math.round(parseFloat(rent)*(rentData.service_tax)/100 ? rentData.service_tax : 0);
-							var other_tax =  Math.round(parseFloat(rent)*(rentData.other_tax)/100 ? rentData.other_tax : 0);
-						var totalAmount =  Math.round(parseFloat(rent) + parseFloat($scope.serviceTax(rent)) + parseFloat($scope.primaryEduCess(rent)) + parseFloat($scope.secondaryEduCess(rent)) + parseFloat(maintainance) + parseFloat(electricity_bill) + parseFloat(water_charge)+ parseFloat(service_tax) + parseFloat(other_tax));
-						modalOptions.service_tax = service_tax
+						
+						var totalAmount =  Math.round((parseFloat(rent) + parseFloat($scope.serviceTax(rent)) + parseFloat($scope.primaryEduCess(rent)) + parseFloat($scope.secondaryEduCess(rent)) + parseFloat(maintainance) + parseFloat(electricity_bill) + parseFloat(water_charge))  - parseFloat($scope.tds(rent)));
+						modalOptions.service_tax = service_tax;
 						modalOptions.other_tar = other_tax;
 						modalOptions.total_amount = totalAmount;
 					},
@@ -113,7 +125,12 @@ define(['app'], function (app) {
 					});  
 				});
 		};
-		
+/**************************************************************************************************/
+/*Property Release Function*/
+$scope.propertyRelease = function (){
+	
+}
+/**************************************************************************************************/		
 		// code for generate invoice
 		if($routeParams.propertyId) {
 			$scope.invoiceyear = [];
@@ -240,18 +257,6 @@ define(['app'], function (app) {
 			}
 		});
 		
-		/* // code for show User list
-		$scope.openProperty = function (url, propId) {
-		dataService.get("getsingle/property",propId)
-		.then(function(response) {  
-			if(response.status == 'success'){
-				$scope.propList.title = response.data.title;
-			}else{
-				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-				$notification[response.status]("Get Users", response.message);
-			}
-		});
-		} */
 		//global method for filter 
 		$scope.changeStatus = function(statusCol, colValue) {
 			$scope.filterStatus= {};

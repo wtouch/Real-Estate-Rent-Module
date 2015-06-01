@@ -7,6 +7,7 @@ define(['app'], function (app) {
 	var invoiceController = function ($scope,$rootScope,$injector,modalService, $routeParams,$notification,dataService) {
 		
 		//global scope objects
+		$scope.invoice = true;
 		$scope.maxSize = 5;
 		$scope.totalRecords = "";
 		$scope.currentPage = 1;
@@ -84,10 +85,13 @@ define(['app'], function (app) {
 		};
 /***********************************************************************************/
 		$scope.getInvoices = function(){
-			dataService.get("getmultiple/invoice/1/500", {status: 1, user_id : $rootScope.userDetails.id})
+			var InvoiceParams = {status: 1, user_id : $rootScope.userDetails.id};
+			dataService.get("getmultiple/invoice/1/500",InvoiceParams)
 			.then(function(response) {  
 				if(response.status == 'success'){
 					$scope.invoices = response.data;
+					$scope.total_due = response.total_due;
+					$scope.total_amount = response.total_rent;
 				}else{
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 					$notification[response.status]("Get Invoices", response.message);

@@ -7,6 +7,7 @@ define(['app'], function (app) {
 	var accountController = function ($scope,$rootScope,$injector,modalService, $routeParams,$notification,dataService) {
 		
 		//global scope objects
+		$scope.account = true;
 		$scope.maxSize = 5;
 		$scope.totalRecords = "";
 		$scope.currentPage = 1;

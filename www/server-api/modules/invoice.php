@@ -32,15 +32,28 @@
 			$userCols['email'] = "email";
 			$user = $db->getUsers($userId,$userCols);
 			$db->setLimit($limit);
+			
 			$table = $db->setJoinString("INNER JOIN", "invoice", array("user_id"=>$user.".id"));
 			$db->setWhere($where, $table);
 			$db->setWhere($like, $table, true);
 			$selectInnerJoinCols[0] = "*";
 			$db->setColumns($table, $selectInnerJoinCols);
 			
-			$paid = $db->setJoinString("LEFT JOIN", "transaction", array("account_no"=>$table.".id"));
+			$rent = $db->setJoinString("INNER JOIN", "rent", array("id"=>$table.".property_id"));
+			$rentCols['id'] = "RentProperty_id";
+			$db->setColumns($rent, $rentCols);
+			
+			$property = $db->setJoinString("INNER JOIN", "property", array("id"=>$rent.".property_id"));
+			$propertyCols['id'] = "main_property_id";
+			$propertyCols['title'] = "property_name";
+			$propertyCols['property_location'] = "property_location";
+			$db->setColumns($property, $propertyCols);
+			
+			$paid = $db->setJoinString("LEFT JOIN", "transaction", array("invoice_id"=>$table.".id"));
 			$db->setColumns($paid, array("ifnull(".$paid.".credit_amount, 0) as paid") , true);
 			$db->setColumns($paid, array("ifnull(".$table.".total_amount, 0) - ifnull(".$paid.".credit_amount, 0) as due_amount"), true);
+			
+			
 			
 			$data = $db->select();
 			if($data['status'] == "success"){
