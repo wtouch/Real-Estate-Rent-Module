@@ -137,9 +137,9 @@
 							<td><strong>{{x.description.payment_type.type}}</strong> <span ng-if="x.description.payment_type.Bank"> - {{x.description.payment_type.Bank}}</span>
 							</td>
 							<td>{{x.type}}</td>
-							<td>{{x.credit_amount}}</td>
-							<td>{{x.debit_amount}}</td>
-							<td>{{x.balance}}</td>
+							<td class="text-right">{{x.credit_amount}}</td>
+							<td class="text-right">{{x.debit_amount}}</td>
+							<td class="text-right">{{x.balance}}</td>
 							<td>
 								<div class="btn-group">
 									<button type="button" tooltip="{{dynamicTooltip(x.status, 'Delete Property', 'Make Active')}}" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'"><span class="glyphicon glyphicon-remove"></span></button>

@@ -14,7 +14,7 @@
 								<span ng-show="addExpenceForm.category.$error.required" class="text-danger">Type is required.</span>
 							</span>	
 					</div>
-			</div>
+			</div> 
 			
 			<div class="form-group">
 				<label for="account_no" class="col-sm-2 control-label">Account Name* </label>
@@ -68,9 +68,23 @@
 				<label for="refferance no" ng-if="modalOptions.addexpence.description.payment_type.type == 'Cheque'" class="col-sm-2 control-label">Cheque No</label>
 				<label for="refferance no" ng-if="modalOptions.addexpence.description.payment_type.type == 'DD'" class="col-sm-2 control-label">DD No</label>
 					<div class="col-sm-9">
-						<input type="text" id="refferance no" ng-if="modalOptions.addexpence.description.payment_type.type == 'Net Banking'" ng-model="modalOptions.addexpence.description.payment_type.transaction_No" class="form-control" name="refferance no"   placeholder="Enter Refferance No"/>
-						<input type="text" id="refferance no" ng-if="modalOptions.addexpence.description.payment_type.type == 'Cheque'" ng-model="modalOptions.addexpence.description.payment_type.cheque_no" class="form-control" name="refferance no"   placeholder="Enter Cheque No"/>
-						<input type="text" id="refferance no" ng-if="modalOptions.addexpence.description.payment_type.type == 'DD'" ng-model="modalOptions.addexpence.description.payment_type.DD_no" class="form-control" name="refferance no"   placeholder="Enter DD No"/>
+						<input type="text" id="refferance no" ng-if="modalOptions.addexpence.description.payment_type.type == 'Net Banking'" ng-model="modalOptions.addexpence.description.payment_type.transaction_No" class="form-control" name="refferance_no" placeholder="Enter Transaction No" ng-pattern="/^\d{0,9}[0-9]$/" required/>
+						<span class="help-block" ng-show="addExpenceForm.refferance_no.$dirty && addExpenceForm.refferance_no.$invalid">
+							<span ng-show="addExpenceForm.refferance_no.$error.required" class="text-danger">Transaction No is required.</span>
+							<span ng-show="addExpenceForm.refferance_no.$error.pattern" class="text-danger">Enter Numbers Only!</span>
+						</span>
+						<input type="text" id="refferance no" ng-if="modalOptions.addexpence.description.payment_type.type == 'Cheque'" ng-model="modalOptions.addexpence.description.payment_type.cheque_no" class="form-control" name="cheque_no"   placeholder="Enter Cheque No" ng-pattern="/^\d{0,9}[0-9]$/" required/>
+						<span class="help-block" ng-show="addExpenceForm.cheque_no.$dirty && addExpenceForm.cheque_no.$invalid">
+							<span ng-show="addExpenceForm.cheque_no.$error.required" class="text-danger">Cheque No is required.</span>
+							<span ng-show="addExpenceForm.cheque_no.$error.pattern" class="text-danger">Enter Numbers Only!</span>
+							
+						</span>
+						<input type="text" id="refferance no" ng-if="modalOptions.addexpence.description.payment_type.type == 'DD'" ng-model="modalOptions.addexpence.description.payment_type.DD_no" class="form-control" name="DD_no"  placeholder="Enter DD No" ng-pattern="/^\d{0,9}[0-9]$/" required/>
+						<span class="help-block" ng-show="addExpenceForm.DD_no.$dirty && addExpenceForm.DD_no.$invalid">
+							<span ng-show="addExpenceForm.DD_no.$error.required" class="text-danger">DD no required.</span>
+							<span ng-show="addExpenceForm.DD_no.$error.pattern" class="text-danger">Enter Numbers Only!</span>
+							
+						</span>
 					</div>		
 			</div>
 			
@@ -86,6 +100,9 @@
 				<label for="Bank" class="col-sm-2 control-label">Bank Name</label>
 					<div class="col-sm-9">
 						<input type="text" id="Bank" ng-model="modalOptions.addexpence.description.payment_type.Bank" class="form-control" name="Bank"   placeholder="Enter Bank Name" required/>
+						<span class="text-danger" ng-show="addExpenceForm.Bank.$dirty && addExpenceForm.Bank.$invalid">
+							<span ng-show="addExpenceForm.Bank.$error.required">Bank Name is Required.</span>
+						</span>	
 					</div>		
 			</div>
 			
@@ -93,16 +110,20 @@
 				<label for="Branch" class="col-sm-2 control-label">Branch</label>
 					<div class="col-sm-9">
 						<input type="text" id="Branch" ng-model="modalOptions.addexpence.description.payment_type.Branch" class="form-control" name="Branch" placeholder="Enter Branch" required/>
+						<span class="text-danger" ng-show="addExpenceForm.Branch.$dirty && addExpenceForm.Branch.$invalid">
+							<span ng-show="addExpenceForm.Branch.$error.required">Branch Name is Required.</span>
+						</span>	
 					</div>		
 			</div>
 			
 			<div class="form-group">
 				<label  for="debit_amount" class="col-sm-2 control-label">Amount</label>
 					<div class="col-sm-9">
-						<input type="number" id="debit_amount" class="form-control" ng-model="modalOptions.addexpence.debit_amount" ng-change="modalOptions.totalAmount(modalOptions)" name="debit_amount" placeholder="Amount" required>
+						<input type="text" id="debit_amount" class="form-control" ng-model="modalOptions.addexpence.debit_amount"  ng-pattern="/^\d{0,9}[0-9]$/" ng-change="modalOptions.totalAmount(modalOptions)" name="debit_amount" placeholder="Amount" required/>
 						<span class="help-block" ng-show="addExpenceForm.debit_amount.$dirty && addExpenceForm.debit_amount.$invalid">
-						<span ng-show="addExpenceForm.debit_amount.$error.pattern && (addExpenceForm.debit_amount.$dirty || submitted)" class="text-danger">Enter Numbers Only!</span>
-						<span ng-show="addExpenceForm.debit_amount.$error.required" class="text-danger">. is required.</span>
+							<span ng-show="addExpenceForm.debit_amount.$error.required" class="text-danger">Amount is required.</span>
+							<span ng-show="addExpenceForm.debit_amount.$error.pattern" class="text-danger">Enter Numbers Only!</span>
+							
 						</span>
 					</div>						
 			</div>

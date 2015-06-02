@@ -103,7 +103,7 @@
 						</span>	
 					</div>
 			</div> 
-			
+
 			<div class="form-group" ng-if="modalOptions.addincome.description.payment_type.type == 'Cheque' || modalOptions.addincome.description.payment_type.type == 'Net Banking' || modalOptions.addincome.description.payment_type.type == 'DD'">
 				<label for="refferance no" ng-if="modalOptions.addincome.description.payment_type.type == 'Net Banking'"class="col-sm-2 control-label">Transaction No</label>
 				<label for="refferance no" ng-if="modalOptions.addincome.description.payment_type.type == 'Cheque'" class="col-sm-2 control-label">Check No</label>
@@ -113,7 +113,6 @@
 						<span class="help-block" ng-show="addIncomeForm.refferance_no.$dirty && addIncomeForm.refferance_no.$invalid">
 							<span ng-show="addIncomeForm.refferance_no.$error.required" class="text-danger">Ref No is required.</span>
 							<span ng-show="addIncomeForm.refferance_no.$error.pattern" class="text-danger">Enter Numbers Only!</span>
-							
 						</span>
 						<input type="text" id="refferance no" ng-if="modalOptions.addincome.description.payment_type.type == 'Cheque'" ng-model="modalOptions.addincome.description.payment_type.check_no" class="form-control" name="cheque_no"   placeholder="Enter Check No" ng-pattern="/^\d{0,9}[0-9]$/" required/>
 						<span class="help-block" ng-show="addIncomeForm.cheque_no.$dirty && addIncomeForm.cheque_no.$invalid">
@@ -165,7 +164,6 @@
 						<span class="help-block" ng-show="addIncomeForm.amount.$dirty && addIncomeForm.amount.$invalid">
 							<span ng-show="addIncomeForm.amount.$error.required" class="text-danger">Amount is required.</span>
 							<span ng-show="addIncomeForm.amount.$error.pattern" class="text-danger">Enter Numbers Only!</span>
-							
 						</span>
 					</div>						
 			</div>
