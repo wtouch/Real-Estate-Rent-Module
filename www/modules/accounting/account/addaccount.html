@@ -6,22 +6,11 @@
 					</div>
 		<form name="addAccountForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="addAccountForm.$valid">
 				<div class="form-group">
-					<label for="accountname" class="col-sm-2 control-label">Account Name * </label>
-					<div class="col-sm-9">
-						<input type="text"  id="accountname" class="form-control" name="accountname" placeholder=" Account Name" ng-model="account.account_name" required>
-						<input type="hidden"  id="user_id" class="form-control" name="user_id" placeholder=" Account Name" ng-model="account.user_id" required>
-						<span class="help-block" ng-show="addAccountForm.accountname.$dirty && addAccountForm.accountname.$invalid">
-						<span class="text-danger" ng-show="addAccountForm.accountname.$error.required"> Account Name is required.</span>
-					</span>
-					</div>
-				</div>
-				<div class="form-group">
 						<label for="category" class="col-sm-2 control-label">Account Category * </label>
 						<div class="col-sm-9">
 							<select id="category" name="category" class="form-control" ng-model="account.category" required>
 							<option value="" selected>Select Category</option>
 							<option value="Bank" >Bank Account</option>
-							<option value="Capital">Capital Account</option>
 							<option value="Party">Party Account</option>
 							</select>
 							<span class="help-block" ng-show="addAccountForm.category.$dirty && addAccountForm.category.$invalid">
@@ -33,8 +22,8 @@
 					<div class="form-group" ng-if="userDetails.group_name != 'customer'">
 						<label for="customer" class="col-sm-2 control-label">Party *</label>
 						<div class="col-sm-9">
-							<select class="form-control" name="customer" id="customer"  ng-model="account.account_no" ng-options="item.id as item.name for item in modalOptions.customerList | filter: { group_name : 'customer'} " required>
-								<option value="">Select Party</option>
+							<select class="form-control" name="customer" id="customer" ng-change="account.account_no = party.id; account.account_name = party.name" ng-model="party" ng-options="item as item.name for item in modalOptions.customerList | filter: { group_name : 'customer'} "required>
+							<option value="">Select Party</option>
 							</select>
 							<span class="help-block" ng-show="addAccountForm.customer.$dirty && addAccountForm.customer.$invalid">
 								<span ng-show="addAccountForm.customer.$error.required" class="text-danger">Customer is required.</span>
@@ -42,6 +31,19 @@
 						</div>
 					</div>
 			   </div>
+			   <div ng-if = "account.category =='Bank'">
+					<div class="form-group">
+						<label for="accountname" class="col-sm-2 control-label">Account Name * </label>
+						<div class="col-sm-9">
+							<input type="text"  id="accountname" class="form-control" name="accountname" placeholder=" Account Name" ng-model="account.account_name" required>
+							<input type="hidden"  id="user_id" class="form-control" name="user_id" placeholder=" Account Name" ng-model="account.user_id" required>
+							<span class="help-block" ng-show="addAccountForm.accountname.$dirty && addAccountForm.accountname.$invalid">
+							<span class="text-danger" ng-show="addAccountForm.accountname.$error.required"> Account Name is required.</span>
+						</span>
+						</div>
+					</div>
+				</div>
+			   
 			   <div ng-if = "account.category !=='Party'">
 				<div class="form-group">
 					<label for="account_no" class="col-sm-2 control-label">Account Number * </label>
