@@ -83,7 +83,7 @@ define(['app'], function (app) {
 			});
 		};
 /***********************************************************************************/
-		$scope.getAccounts = function(page){
+		/*$scope.getAccounts = function(page,statusCol, showStatus){
 			dataService.get("getmultiple/account/"+page+"/"+$scope.pageItems, $scope.userInfo)
 			.then(function(response) {  
 				if(response.status == 'success'){
@@ -94,7 +94,7 @@ define(['app'], function (app) {
 					$notification[response.status]("Get Customers", response.message);
 				}
 			});
-			}
+			}*/
 /***********************************************************/
 /*Delete Account Funtion*/
 			$scope.deleted = function(id, status){
@@ -108,6 +108,39 @@ define(['app'], function (app) {
 					$notification[response.status]("Delete Property", response.message);
 				});
 			};
+/**************************************************************/
+$scope.changeStatus = function(page, column, value, search) {
+			$scope.filterStatus = ($scope.filterStatus) ? $scope.filterStatus : {status: 1, user_id : $rootScope.userDetails.id};
+			(value == "none") ? delete $scope.filterStatus[column] : $scope.filterStatus[column] = value;
+			
+			if(column == 'user_id' && value == null) {
+				angular.extend($scope.filterStatus, $scope.userInfo);
+			}
+			
+			if(search == true && value == ""){
+				delete $scope.filterStatus.search;
+				delete $scope.filterStatus[column];
+			}else{
+				$scope.filterStatus.search = search;
+			}
+
+			if((search == true && value.length <= 4 && value.length != 0)){
+				return false;
+			}
+			
+			dataService.get("getmultiple/account/"+page+"/"+$scope.pageItems,$scope.filterStatus)
+			.then(function(response) {  
+				if(response.status == 'success'){
+					$scope.accounts = response.data;
+					$scope.totalRecords = response.totalRecords;
+				}else{
+					$scope.accounts = {};
+					$scope.totalRecords = {};
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Get a List", response.message);
+				}
+			});
+		};
 /**************************************************************/
 	};
 		

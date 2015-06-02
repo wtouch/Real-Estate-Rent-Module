@@ -47,12 +47,11 @@ define(['app'], function (app) {
 			$event.stopPropagation();
 			$scope[rentdate] = !$scope[rentdate];
 		};
-
-			$scope.transactionParams={};
 		/***********************************************************************************/
 		//this is global method for filter 
-		$scope.changeStatus = function(statusCol, showStatus) {
+		$scope.changeStatus = function(statusCol, showStatus) { 
 			$scope.filterStatus= {};
+			$scope.transactionParams={status: 1, user_id : $rootScope.userDetails.id};
 			(showStatus =="") ? delete $scope.transactionParams[statusCol] : $scope.filterStatus[statusCol] = showStatus;
 			angular.extend($scope.transactionParams, $scope.filterStatus);
 			if(statusCol == 'user_id' && showStatus == null) {
