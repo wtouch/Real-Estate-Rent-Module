@@ -11,7 +11,6 @@ define(['app'], function (app) {
 		$scope.maxSize = 5;
 		$scope.totalRecords = "";
 		$scope.currentPage = 1;
-		$scope.rentreportCurrentPage = 1;
 		$scope.pageItems = 10;
 		$scope.numPages = "";		
 		$scope.alerts = [];
@@ -84,11 +83,12 @@ define(['app'], function (app) {
 			});
 		};
 /***********************************************************************************/
-		$scope.getAccounts = function(){
-			dataService.get("getmultiple/account/1/500", {status: 1, user_id : $rootScope.userDetails.id})
+		$scope.getAccounts = function(page){
+			dataService.get("getmultiple/account/"+page+"/"+$scope.pageItems, $scope.userInfo)
 			.then(function(response) {  
 				if(response.status == 'success'){
 					$scope.accounts = response.data;
+					$scope.totalRecords = response.totalRecords;
 				}else{
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 					$notification[response.status]("Get Customers", response.message);

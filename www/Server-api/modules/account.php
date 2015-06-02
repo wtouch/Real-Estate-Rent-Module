@@ -36,7 +36,7 @@
 			$t0 = $db->setTable("account");
 			$db->setWhere($where, $t0);
 			$db->setWhere($like, "account", true);
-			//$db->setLimit($limit);
+			$db->setLimit($limit);
 			
 			$data = $db->select();
 			echo json_encode($data);

@@ -11,9 +11,6 @@
 			</div>
 			<div class="col-sm-5">
 				<label for="month" class="control-label">Month</label>
-				<!-- <select ng-change="getReceiptByMonth(generatedDate)" class="form-control" name="month" id="month"  ng-model="generatedDate.month"  ng-init="generatedDate.month = '05'" ng-options="item as item for item in invoicemonth">
-					<option value=" "></option>	
-				</select> -->
 				<select ng-change="getReceiptByMonth(generatedDate)" class="form-control" name="month" id="month"  ng-model="generatedDate.month"  ng-init="generatedDate.month = rentYear.curMonth" ng-options="item as item for item in invoicemonth">
 					<option value=" "></option>	
 				</select>
@@ -48,11 +45,11 @@
 					</tr>
 					
 					<tr>
-						<td>Due Date<br>{{receiptList.due_date}}
-						</td>
 						<td>Current Month<br>
 						{{generatedDate.month = rentYear.curMonth}}-
 						{{generatedDate.year = rentYear.curYear}}</td>
+						<td>Due Date<br>{{receiptList.due_date}}
+						</td>
 					</tr>
 					
 				</table>
@@ -112,17 +109,12 @@
 			<p>Amount Chargeable(in words) : 
 			<strong><em>{{amountInWords | uppercase}}</em></strong>
 			<!-- <p ng-if="receiptList.remark">Remarks :</p> -->
-			<p><b>Remarks :</b>Being Invoice for {{monthInWords | uppercase}}{{generatedDate.month = rentYear.curMonth}}-
+			<p><b>Remarks :</b>Being Invoice for{{generatedDate.month = rentYear.curMonth}}-
 			{{generatedDate.year = rentYear.curYear}} Licence Fee & Maintance Charges against Agr. for
 			4th floor premise area PAYEKO Tower,Kothrud,Pune-38.</p>
 			<p>Companys Service Tax No:{{config.service_tax_no}}</p>
 			<p>Companys Pan: {{config.pan_no}}</p>
-			
 			<p ng-if="receiptList.remark">{{receiptList.remark}} </p>
-			<!-- <p>Company's Service Tax No.: <b>{{receiptList.tax}}</b>
-			<p> TDS.: <b>{{receiptList.tax}}</b>
-			<p> Other Tax.: <b>{{receiptList.tax}}</b>
-			<!-- <p>Company's PAN : <b>AAFPL1404N --> 
 			<p class="text-right">For <strong><em>{{userDetails.name}}</em></strong><br><br><br>
 			Authorised Signatory</p>
 		</div>

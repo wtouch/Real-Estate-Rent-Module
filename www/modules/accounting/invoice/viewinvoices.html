@@ -1,5 +1,5 @@
 <h3>Invoices</h3>
-<div class="table-responsive" ng-init="getInvoices()">
+<div class="table-responsive" ng-init="getInvoices(currentPage)">
 <table class="table  table-hover table-bordered">
 	<thead>
 	<th>Sr. No.</th>
@@ -14,20 +14,28 @@
 	</thead>
 	<tbody>
 	<tr ng-repeat="x in invoices | orderBy:sort">
-	<td>{{ $index+1 }}</td>
+	<td>{{ ((currentPage - 1) * pageItems ) + $index+1 }}</td>
 	<td>{{ x.id }}</td>
 	<td>{{ x.username }}</td>
 	<td>{{ x.generated_date }}</td>
-	<td>{{ x.payment_status }}</td>
-	<td>{{ x.total_amount}}</td>
-	<td>{{ x.due_amount}}</td>
-	<td><a ng-click="openAddaccount('modules/accounting/account/addaccount.html',x.id)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="Edit Invoice Information"> <span class="glyphicon glyphicon-pencil"></span></a>
-	<a type="button" tooltip="Delete Invoice" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox="" btn-checkbox-true="'1'" btn-checkbox-false="'0'" class="ng-pristine ng-valid btn btn-success btn-danger"><span class="glyphicon glyphicon-remove"></span></a>
+	<td>{{ (x.payment_status == 1) ? 'Paid' : 'Unpaid' }}</td>
+	<td class="text-right">{{ x.total_amount}}</td>
+	<td class="text-right">{{ x.due_amount}}</td>
+	<td><a ng-click="openGenerateinvoice('modules/accounting/invoice/addinvoice.html',x.id)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="Edit Invoice Information"> <span class="glyphicon glyphicon-pencil"></span></a>
+	<a type="button" tooltip="Delete Invoice" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox="" btn-checkbox-true="'1'" btn-checkbox-false="'0'" class="ng-pristine ng-valid active btn btn-success"><span class="glyphicon glyphicon-remove"></span></a>
 	<button class="btn btn-primary">Pay Invoice</button></td>
 	<td><button class="btn btn-warning">View Invoice</button><button class="btn btn-warning">View Receipt</button></td>
 	</tr>
+	<tr>
+		<td colspan="5" class="text-right"><strong>Total</strong></td>
+		<td  class="text-right">{{total_amount}}</td>
+		<td class="text-right">{{total_due}}</td>
+		<td colspan="3"></td>
+	</tr>
 	</tbody>
   </table>
-	Total Amount:{{total_amount}}
-	Total Due Amount:{{total_due}}
+</div>
+<div class="text-center">				
+		<pagination total-items="totalRecords" items-per-page="pageItems"  ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="getInvoices(currentPage)"></pagination>
+		<pre>Page: {{currentPage}} / {{numPages}}</pre>
 </div>

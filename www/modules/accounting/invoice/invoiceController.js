@@ -11,7 +11,6 @@ define(['app'], function (app) {
 		$scope.maxSize = 5;
 		$scope.totalRecords = "";
 		$scope.currentPage = 1;
-		$scope.rentreportCurrentPage = 1;
 		$scope.pageItems = 10;
 		$scope.numPages = "";		
 		$scope.alerts = [];
@@ -84,14 +83,14 @@ define(['app'], function (app) {
 			});
 		};
 /***********************************************************************************/
-		$scope.getInvoices = function(){
-			var InvoiceParams = {status: 1, user_id : $rootScope.userDetails.id};
-			dataService.get("getmultiple/invoice/1/500",InvoiceParams)
+		$scope.getInvoices = function(page){
+			dataService.get("getmultiple/invoice/"+page+"/"+$scope.pageItems, $scope.userInfo)
 			.then(function(response) {  
 				if(response.status == 'success'){
 					$scope.invoices = response.data;
 					$scope.total_due = response.total_due;
 					$scope.total_amount = response.total_rent;
+					$scope.totalRecords = response.totalRecords;
 				}else{
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 					$notification[response.status]("Get Invoices", response.message);
