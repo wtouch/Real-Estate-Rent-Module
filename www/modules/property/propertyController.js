@@ -62,9 +62,7 @@ define(['app'], function (app) {
 			})
 		}	
 		
-		
 		/*******************************************************************************************/
-		
 		// code for delete button 
 			$scope.deleted = function(id, status){
 				$scope.deletedData = {status : status};

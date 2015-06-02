@@ -34,7 +34,7 @@ $app->post('/post/:getRequest(/:postParams)', 'postRecord' );
 //use this uri for put/update record from database
 $app->post('/put/:getRequest/:id', 'putRecord' );
 //use this uri for delete record from database
-$app->delete('/delete/:getRequest/:id', 'deleteRecord' );
+$app->post('/delete/:getRequest/:id', 'deleteRecord' );
 
 function login($getRequest){
 	$app = new \Slim\Slim();

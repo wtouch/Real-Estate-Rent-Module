@@ -12,7 +12,7 @@
 			</div>
 		</div>
 		
-		<div class="col-sm-2" ng-if="type == 'daily'"><!--ng-model="duration.start"-->
+		<div class="col-sm-2" ng-if="type == 'daily'">
 			<div class="bottomspace">
 			<label for="year" class="control-label"></label>
 				<p class="input-group">
@@ -77,37 +77,42 @@
 					</div>
 			</div>
 			<div class="col-sm-2"><!--ng-model="duration.start"-->
-					<div class="bottomspace">
+				<div class="bottomspace">
 					<label for="year" class="control-label"></label>
-							<p class="input-group">
-							  <input class="form-control" type="text" ng-change="calcDuration(type, duration)" id="date" name="date" datepicker-popup="yyyy-MM-dd" ng-model="duration.end" is-open="rentdate3" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate3')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
-									<span class="input-group-btn">
-										<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate3')">
-										<i class="glyphicon glyphicon-calendar"></i></button>
-									</span>
-							</p>
-					</div>
+						<p class="input-group">
+						  <input class="form-control" type="text" ng-change="calcDuration(type, duration)" id="date" name="date" datepicker-popup="yyyy-MM-dd" ng-model="duration.end" is-open="rentdate3" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate3')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"/>
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate3')">
+								<i class="glyphicon glyphicon-calendar"></i></button>
+							</span>
+						</p>
+				</div>
 			</div>
-			
 		</div>
 		<div class="col-sm-2">
 			<label for="type" class="control-label">Select Type</label>
-				<select id="type" class="form-control" ng-model="types" title="type"                 ng-change="changeStatus('type',type)">
-					<option value="" selected>Select Type</option> <!-- add value attribute empty & selected for initial selected option -->
+				<select id="type" class="form-control" ng-model="types" title="type"  ng-change="changeStatus('type',types)">
+					<option value="" selected>Select Type</option>
 					<option value="income">Income</option>
-					<option value="expense">Expense</option>   
+					<option value="expence">Expence</option>   
 				</select>
 		</div>
 		<div class="col-sm-2">
 			<label for="category" class="control-label">Select Category</label>
-				<select class="form-control" name="category" id="category" ng-model="category" ng-options="item.system_name as item.name for item in categoryConfig.category" ng-change="addincome.category = type changeStatus('category',filterCategory)" required>
+				<select class="form-control" name="category" id="category" ng-model="filterCategory" ng-options="item.system_name as item.name for item in categoryConfig.category" ng-change="addincome.category = type;changeStatus('category',filterCategory)" required>
 					<option value="" selected>Select Category</option>
+				</select>
+		</div>
+		<div class="col-sm-2">
+			<label for="account_no" class="control-label" ng-init="getAccount(addincome.account_no)">Account     Name*</label>
+				<select class="form-control" name="account_no" id="account_no" ng-change="changeStatus('account_no',account_name)" ng-model="account_name"  ng-options="item.id as item.account_name for item in accountList" required>
+					<option value="" selected>Select Account</option>
 				</select>
 		</div>
 	</div>
 	
 	
-	<div class="row" ng-init="getTransaction(page)" >
+	<div class="row" ng-init="getTransaction(CurrentPage)" >
 		<div class="col-sm-12 ">
 			<div class="table-responsive">
 				<table class="table table-bordered">
@@ -126,15 +131,15 @@
 					</thead>
 					<tbody>
 						<tr ng-repeat="x in transaction | orderBy:sort">
-							<td>{{((currentPage - 1) * pageItems) + $index + 1}}</td>
+							<td>{{((CurrentPage - 1) * pageItems) + $index + 1}}</td>
 							<td>{{x.date}}</td>
 							<td>{{x.category}}</td>
 							<td><strong>{{x.description.payment_type.type}}</strong> <span ng-if="x.description.payment_type.Bank"> - {{x.description.payment_type.Bank}}</span>
 							</td>
 							<td>{{x.type}}</td>
-							<td>{{x.credit_amount}}</td>
-							<td>{{x.debit_amount}}</td>
-							<td>{{x.balance}}</td>
+							<td class="text-right">{{x.credit_amount}}</td>
+							<td class="text-right">{{x.debit_amount}}</td>
+							<td class="text-right">{{x.balance}}</td>
 							<td>
 								<div class="btn-group">
 									<button type="button" tooltip="{{dynamicTooltip(x.status, 'Delete Property', 'Make Active')}}" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'"><span class="glyphicon glyphicon-remove"></span></button>
@@ -148,10 +153,6 @@
 	</div>
 	
 <div class="text-center">				
-
-<pagination total-items="totalRecords" items-per-page="pageItems"  
-ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true"
-num-pages="numPages" ng-change="pageChanged(currentPage,transactionParams)"></pagination>	
-<pre>Page: {{currentPage}} / {{numPages}}</pre>
-
-</div> 
+		<pagination total-items="totalRecords" items-per-page="pageItems"  ng-model="CurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="getTransaction(CurrentPage)"></pagination>
+		<pre>Page: {{CurrentPage}} / {{numPages}}</pre>
+</div>		

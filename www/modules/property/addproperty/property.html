@@ -1,5 +1,4 @@
-
-	<accordion close-others="true"><!--close-others="oneAtATime"-->
+<accordion close-others="true"><!--close-others="oneAtATime"-->
 	<accordion-group heading="Property Structure" is-open="status.isFirstOpen">
 	<div class="form-group">
 		<label for="title" class="col-sm-2 control-label">Property Title *</label>
@@ -176,9 +175,10 @@
 				</label>
 			</div>					
 		</div>
-		<button type="button" class="btn btn-primary center-block" heading="Optional Details"  is-open="status.open">Next</button>
+		
+		<button type="button" class="btn btn-primary center-block" ng-click="status.open = !status.open">Next</button>
 	</accordion-group>
-	<accordion-group heading="Optional Details"  is-open="status.open">
+	<accordion-group heading="Optional Details" is-open="status.open">
 	<h3>Property Details:</h3>
 		<div class="form-group">
 			<label for="prop_age" class="col-sm-2 control-label">Property Age</label>
@@ -210,6 +210,7 @@
 				</select>
 			</div>
 		</div>
+		
 		<div class="form-group">
 			<label for="facing" class="col-sm-2 control-label">Facing</label>
 			<div class="col-sm-4">
@@ -248,7 +249,7 @@
 				<div class="col-sm-4">
 					<input type="text" id="airport" class="form-control"  name="airport" ng-model="property.landmarks.airport" required >	kms						 
 				</div>											
-		 </div>
+		</div>
 		<div class="form-group">
 				<label for="railway" class="col-sm-2 control-label">Railway Station</label>
 				<div class="col-sm-4">
@@ -262,7 +263,7 @@
 
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-9">
-				<button type="submit" ng-if="!editId" ng-click="addPropertyFun(property)" class="btn btn-primary" title="Add new property">Submit Property</button>
+				<button type="submit" ng-if="!editId" ng-click="addPropertyFun(property)" class="btn btn-primary" title="Add new property" ng-disabled="addPropertyForm.$invalid">Submit Property</button><!--ng-disabled="addPropertyForm.$invalid"-->
 				<button type="submit" ng-if="editId" ng-click="update(property)" title="Update your property" class="btn btn-success text-center ">Edit Property</button>
 				<button type="reset" ng-click="reset()" title="Cancel" class="btn btn-danger text-center ">Cancel</button>
 			</div>
