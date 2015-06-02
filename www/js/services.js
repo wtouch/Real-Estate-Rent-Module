@@ -410,7 +410,7 @@ define(['app'], function (app) {
 				$rootScope.loading = true;
 				return $http({
 					url: serviceBase + q,
-					method: "DELETE",
+					method: "POST",
 					data: object,
 					params: params
 				}).then(function (results) {
