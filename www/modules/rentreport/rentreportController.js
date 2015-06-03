@@ -87,20 +87,21 @@ define(['app'], function (app) {
 					getTotal : function(rentData, modalOptions){
 						if(rentData.perticulars == undefined) rentData.perticulars = {};
 						console.log(rentData.perticulars);
-						rentData.perticulars.tax = $scope.serviceTax(rentData.rent);
-						rentData.perticulars.tds = $scope.tds(rentData.rent);
-						rentData.perticulars.other_tax = $scope.otherTax(rentData.rent);
-						rentData.perticulars.primaryeducation = $scope.primaryEduCess(rentData.rent);
-						rentData.perticulars.secondaryeducation = $scope.secondaryEduCess(rentData.rent);
-						var rent = rentData.rent;
+						rentData.perticulars.tax = $scope.serviceTax(rentData.rent).toFixed(2);
+						rentData.perticulars.tds = $scope.tds(rentData.rent).toFixed(2);
+						rentData.perticulars.other_tax = $scope.otherTax(rentData.rent).toFixed(2);
+						rentData.perticulars.primaryeducation = $scope.primaryEduCess(rentData.rent).toFixed(2);
+						rentData.perticulars.secondaryeducation = $scope.secondaryEduCess(rentData.rent).toFixed(2);
+						rentData.rent = parseFloat(rentData.rent).toFixed(2);
+						var rent = parseFloat(rentData.rent).toFixed(2);
 						var maintainance = (rentData.maintainance) ? rentData.maintainance : 0;
 						var electricity_bill = (rentData.electricity_bill) ? rentData.electricity_bill : 0;
 						var water_charge = (rentData.water_charge) ? rentData.water_charge : 0;
 						
-						var totalAmount =  Math.round((parseFloat(rent) + parseFloat($scope.serviceTax(rent)) + parseFloat($scope.primaryEduCess(rent)) + parseFloat($scope.secondaryEduCess(rent)) + parseFloat(maintainance) + parseFloat(electricity_bill) + parseFloat(water_charge))  - parseFloat($scope.tds(rent)));
-						modalOptions.service_tax = service_tax;
-						modalOptions.other_tar = other_tax;
-						modalOptions.total_amount = totalAmount;
+						var totalAmount =  Math.round((parseFloat(rent) + parseFloat($scope.serviceTax(rent)) + parseFloat($scope.otherTax(rent)) + parseFloat($scope.primaryEduCess(rent)) + parseFloat($scope.secondaryEduCess(rent)) + parseFloat(maintainance) + parseFloat(electricity_bill) + parseFloat(water_charge))  - parseFloat($scope.tds(rent)));
+						modalOptions.service_tax = parseFloat(service_tax).toFixed(2);
+						modalOptions.other_tar = parseFloat(other_tax).toFixed(2);
+						modalOptions.total_amount = parseFloat(totalAmount).toFixed(2);
 					},
 					formData : function(rentData, total_amount){
 						var due_date = new Date(rentData.generated_date);

@@ -23,7 +23,7 @@
 			if(isset($_GET['category'])) $where['category'] = $_GET['category'];
 			if(isset($_GET['user_id'])) $where['user_id'] = $_GET['user_id'];
 			if(isset($_GET['search']) && $_GET['search'] == true){
-				(isset($_GET['income_expence_type'])) ? $like['income_expence_type'] = $_GET['income_expence_type'] : "";
+				(isset($_GET['account_name'])) ? $like['account_name'] = $_GET['account_name'] : "";
 			}
 			
 			if(isset($_GET['startDt']) && isset($_GET['endtDt'])){
@@ -31,7 +31,7 @@
 			}
 			$t0 = $db->setTable("account");
 			$db->setWhere($where, $t0);
-			$db->setWhere($like, "account", true);
+			$db->setWhere($like, $t0, true);
 			$db->setLimit($limit);
 			
 			$data = $db->select();
@@ -42,6 +42,11 @@
 		$where['id'] = $id; // need where clause to update/delete record
 		$update = $db->update("account", $body, $where);
 		echo json_encode($update);
+	}
+	if($reqMethod=="POST" && $_GET['METHOD'] == 'DELETE'){
+		$where['id'] = $id; // need where clause to update/delete record
+		$delete = $db->delete("account", $where);
+		echo json_encode($delete);
 	}
 	
 	if($reqMethod=="POST" && $_GET['METHOD'] == 'POST'){

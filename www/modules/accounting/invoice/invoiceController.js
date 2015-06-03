@@ -16,71 +16,119 @@ define(['app'], function (app) {
 		$scope.alerts = [];
 		$scope.userInfo = {user_id : $rootScope.userDetails.id}; 
 		$scope.currentDate = dataService.currentDate;
-		$scope.currentDate = dataService.currentDate;
-		$scope.dates ={};
-		$scope.dates.date = $scope.currentDate;
-		$scope.today = new Date();
-		$scope.todayDt = $scope.today.getFullYear() + "-" + ($scope.today.getMonth() + 1) + "-" + $scope.today.getDate();
-		$scope.duration = {start : $scope.todayDt};
-		//addincome.description.payment_type.date
+/*******************************************************************/
+		var curDate = new Date();
+		var month = curDate.getMonth() + 1;
+		month = (month <= 9) ? '0' + month : month;
+		$scope.currentDate = curDate.getFullYear() + "-" + month + "-" + curDate.getDate();
+		$scope.rentParams = {};
+		
+		
+		var accountConfig = $rootScope.userDetails.config.rentsetting;
+		$scope.config = {
+			other_tax : accountConfig.other_tax,
+			service_tax : accountConfig.service_tax,
+			primary_edu_cess : accountConfig.primary_edu_cess,
+			secondary_edu_cess : accountConfig.secondary_edu_cess,
+			pan_no : accountConfig.pan_no,
+			tds : accountConfig.tds,
+			service_tax_no : accountConfig.service_tax_no
+		}
+		
+		var dueDate = new Date();
+		dueDate.setDate(dueDate.getDate() + 10);
+		var dueMonth = dueDate.getMonth() + 1;
+		dueMonth = (dueMonth <= 9) ? '0' + dueMonth : dueMonth;
+		$scope.dueDate = dueDate.getFullYear() + "-" + dueMonth + "-" + dueDate.getDate();
+		
+		$scope.otherTax = function(rent){
+			if($rootScope.userDetails.config.rentsetting.other_tax == 0){ 
+				return 0;
+			}else{
+				return rent * parseInt($rootScope.userDetails.config.rentsetting.other_tax) / 100;
+			}
+		}
+		$scope.tds = function(rent){
+			if($rootScope.userDetails.config.rentsetting.tds == 0){ 
+				return 0;
+			}else{
+				return rent * parseInt($rootScope.userDetails.config.rentsetting.tds) / 100;
+			}
+		}
+		$scope.serviceTax = function(rent){
+			//console.log(parseFloat($rootScope.userDetails.config.rentsetting.service_tax));
+			return rent * parseFloat($rootScope.userDetails.config.rentsetting.service_tax) / 100; // other_tax - secondary_edu_cess - primary_edu_cess
+		}
+		$scope.primaryEduCess = function(rent){
+			return $scope.serviceTax(rent) * parseInt($rootScope.userDetails.config.rentsetting.primary_edu_cess) / 100;
+		}
+		$scope.secondaryEduCess = function(rent){
+			return $scope.serviceTax(rent) * parseInt($rootScope.userDetails.config.rentsetting.secondary_edu_cess) / 100;
+		}
+		
+		$scope.printDiv = function(divName) {
+			var printContents = document.getElementById(divName).innerHTML;
+			var popupWin = window.open('', '_blank', 'width=1000,height=620');
+			popupWin.document.open()
+			popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /><link rel="stylesheet" type="text/css" href="css/style.css" /></head><body onload="window.print()">' + printContents + '</html>');
+			popupWin.document.close();
+		} 
+		
+		$scope.rentDate = {};
 /***********************************************************************************/
-/*Addaccount Model*/
-		$scope.openGenerateinvoice = function (url,EditId) {
-			dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
-			.then(function(response) {
-			var modalDefaults = {
+$scope.openGenerateinvoice = function (url,invoice) {
+			$scope.rentYear = [];
+				var modalDefaults = {
 					templateUrl: url,	
 					size : 'lg'
-			};
-			var modalOptions={
-				editAccount : EditId,
-				customerList : (response.data),
-				date : $scope.currentDate,
-				account : {},
-				postData : function(account) {
-					dataService.post("post/account",account)
+				};
+				var modalOptions = {
+					rentList : invoice,
+					rentDate: { date : $scope.currentDate, due_date : $scope.dueDate },
+					accountConfig : $rootScope.userDetails.config.rentsetting,
+					total_amount : 0,
+					rentData : {},
+					getTotal : function(rentData, modalOptions){
+						if(rentData.perticulars == undefined) rentData.perticulars = {};
+						console.log(rentData.perticulars);
+						rentData.perticulars.tax = $scope.serviceTax(rentData.rent);
+						rentData.perticulars.tds = $scope.tds(rentData.rent);
+						rentData.perticulars.other_tax = $scope.otherTax(rentData.rent);
+						rentData.perticulars.primaryeducation = $scope.primaryEduCess(rentData.rent);
+						rentData.perticulars.secondaryeducation = $scope.secondaryEduCess(rentData.rent);
+						
+						var rent = parseFloat(rentData.rent);
+						var maintenance = (rentData.maintenance) ? rentData.maintenance : 0;
+						var electricity_bill = (rentData.electricity_bill) ? rentData.electricity_bill : 0;
+						var water_charge = (rentData.water_charge) ? rentData.water_charge : 0;
+						
+						var totalAmount = ((parseFloat(rent) + parseFloat($scope.serviceTax(rent)) + parseFloat($scope.otherTax(rent)) + parseFloat($scope.primaryEduCess(rent)) + parseFloat($scope.secondaryEduCess(rent)) + parseFloat(maintenance) + parseFloat(electricity_bill) + parseFloat(water_charge))  - parseFloat($scope.tds(rent)));
+						modalOptions.service_tax = parseFloat(service_tax);
+						modalOptions.other_tar = parseFloat(other_tax);
+						modalOptions.total_amount = parseFloat(totalAmount);
+					},
+					formData : function(rentData, total_amount){
+						var due_date = new Date(rentData.generated_date);
+						rentData.user_id = modalOptions.rentList.user_id;
+						rentData.property_id = modalOptions.rentList.property_id;
+						due_date.setDate(due_date.getMonth() + modalOptions.rentList.duration);
+						rentData.due_date = due_date;
+						rentData.total_amount = total_amount;
+						modalOptions.invoice = rentData;
+					},
+					
+				};
+				modalService.showModal(modalDefaults,modalOptions).then(function (result) {
+					console.log(modalOptions.invoice);
+					 dataService.post("post/invoice",modalOptions.invoice)
 					.then(function(response) {  
 						if(response.status == "success"){
+							console.log(response);
 						}
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-						$notification[response.status]("Add record", response.message);
-					});
-			   },
-			   updateData : function(account) {
-					dataService.put("put/account/"+EditId,account)
-					.then(function(response) {
-						if(response.status == "success"){
-						}
-						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-						$notification[response.status]("Add record", response.message);
-					});
-			   }
-			   
-			};
-			if(EditId){
-				dataService.get("getsingle/account/"+EditId)
-				.then(function(response) {  
-					if(response.status == "success"){
-						modalOptions.account = {
-							account_name : response.data.account_name,
-							account_no : response.data.account_no,
-							category : response.data.category,
-							user_id : response.data.user_id,
-							id : response.data.id,
-							description : response.data.description,
-							date : response.data.description
-						};
-						modalService.show(modalDefaults,modalOptions).then(function (result) {
-						});
-					}
-					console.log(response);
-					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+						$notification[response.status]("Rent Receipt Generated", response.message);
+					});  
 				});
-			}else{
-				modalService.show(modalDefaults,modalOptions).then(function (result) {
-				});
-			}
-			});
 		};
 /***********************************************************************************/
 		$scope.getInvoices = function(page){
@@ -101,14 +149,19 @@ define(['app'], function (app) {
 /*Delete Account Funtion*/
 			$scope.deleted = function(id, status){
 				$scope.deletedData = {status : status};
-				dataService.put("put/invoice/"+id, $scope.deletedData)
-				.then(function(response) { 
-					if(response.status == 'success'){
-						$scope.hideDeleted = 1;
-					}
-					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$notification[response.status]("Delete Invoice", response.message);
-				});
+				var del = confirm("Are you sure?");
+				if(del){
+					dataService.put("put/invoice/"+id, $scope.deletedData)
+					.then(function(response) { 
+						if(response.status == 'success'){
+							$scope.hideDeleted = 1;
+						}
+						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+						$notification[response.status]("Delete Invoice", response.message);
+					});
+				}else{
+					alert("canceled!");
+				}
 			};
 /**************************************************************/
 	};

@@ -32,7 +32,7 @@
 	<td>{{ x.account_name }}</td>
 	<td>{{ x.category }}</td>
 	<td>{{ x.description}}</td>
-	<td><a ng-click="openAddaccount('modules/accounting/account/addaccount.html',x.id)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="Edit Account Information"> <span class="glyphicon glyphicon-pencil"></span></a>
+	<td><a ng-click="openAddaccount('modules/accounting/account/addaccount.html',x)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="Edit Account Information"> <span class="glyphicon glyphicon-pencil"></span></a>
 	<a type="button" tooltip="Delete Account" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox="" btn-checkbox-true="'1'" btn-checkbox-false="'0'" class="ng-pristine ng-valid active btn btn-success"><span class="glyphicon glyphicon-remove"></span></a></td>
 	</tr>
 	</tbody>

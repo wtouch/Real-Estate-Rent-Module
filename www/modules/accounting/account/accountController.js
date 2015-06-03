@@ -25,18 +25,19 @@ define(['app'], function (app) {
 		//addincome.description.payment_type.date
 /***********************************************************************************/
 /*Addaccount Model*/
-		$scope.openAddaccount = function (url,EditId) {
-			dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
-			.then(function(response) {
+		$scope.openAddaccount = function (url,account) {
 			var modalDefaults = {
 					templateUrl: url,	
 					size : 'lg'
 			};
 			var modalOptions={
-				editAccount : EditId,
-				customerList : (response.data),
 				date : $scope.currentDate,
-				account : {},
+				account : (account) ? account : {},
+				getParty: function(modalOptions){
+					dataService.get("getmultiple/user/1/100", {status: 1, user_id : $rootScope.userDetails.id}).then(function(response){
+						modalOptions.customerList = (response.data);
+					});
+				},
 				postData : function(account) {
 					dataService.post("post/account",account)
 					.then(function(response) {  
@@ -46,8 +47,8 @@ define(['app'], function (app) {
 						$notification[response.status]("Add record", response.message);
 					});
 			   },
-			   updateData : function(account) {
-					dataService.put("put/account/"+EditId,account)
+			   updateData : function(id,account) {
+					dataService.put("put/account/"+id,account)
 					.then(function(response) {
 						if(response.status == "success"){
 						}
@@ -57,55 +58,26 @@ define(['app'], function (app) {
 			   }
 			   
 			};
-			if(EditId){
-				dataService.get("getsingle/account/"+EditId)
-				.then(function(response) {  
-					if(response.status == "success"){
-						modalOptions.account = {
-							account_name : response.data.account_name,
-							account_no : response.data.account_no,
-							category : response.data.category,
-							user_id : response.data.user_id,
-							id : response.data.id,
-							description : response.data.description,
-							date : response.data.description
-						};
-						modalService.show(modalDefaults,modalOptions).then(function (result) {
-						});
-					}
-					console.log(response);
-					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-				});
-			}else{
-				modalService.show(modalDefaults,modalOptions).then(function (result) {
-				});
-			}
+			modalService.show(modalDefaults,modalOptions).then(function (result) {
+				if(modalOptions.account.id != undefined){
+					modalOptions.updateData(modalOptions.account.id, modalOptions.account);
+				}else{
+					modalOptions.postData(modalOptions.account);
+				}
+				
 			});
 		};
 /***********************************************************************************/
-		/*$scope.getAccounts = function(page,statusCol, showStatus){
-			dataService.get("getmultiple/account/"+page+"/"+$scope.pageItems, $scope.userInfo)
-			.then(function(response) {  
-				if(response.status == 'success'){
-					$scope.accounts = response.data;
-					$scope.totalRecords = response.totalRecords;
-				}else{
-					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$notification[response.status]("Get Customers", response.message);
-				}
-			});
-			}*/
-/***********************************************************/
 /*Delete Account Funtion*/
 			$scope.deleted = function(id, status){
 				$scope.deletedData = {status : status};
-				dataService.put("put/account/"+id, $scope.deletedData)
+				dataService.delete("delete/account/"+id, $scope.deletedData)
 				.then(function(response) { 
 					if(response.status == 'success'){
 						$scope.hideDeleted = 1;
 					}
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$notification[response.status]("Delete Property", response.message);
+					$notification[response.status]("The Account is deleted", response.message);
 				});
 			};
 /**************************************************************/
@@ -124,7 +96,7 @@ $scope.changeStatus = function(page, column, value, search) {
 				$scope.filterStatus.search = search;
 			}
 
-			if((search == true && value.length <= 4 && value.length != 0)){
+			if((search == true && value.length <= 3 && value.length != 0)){
 				return false;
 			}
 			

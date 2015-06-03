@@ -75,7 +75,7 @@
 	
 	
 	if($reqMethod=="POST" && $_GET['METHOD'] == 'PUT' || $reqMethod=="DELETE" && $_GET['METHOD'] == 'DELETE'){
-		$where['id'] = $id; // need where clause to update/delete record
+		$where['id'] = $id;
 		$update = $db->update("invoice", $body, $where);
 		echo json_encode($update);
 	}
