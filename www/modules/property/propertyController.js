@@ -138,7 +138,7 @@ define(['app'], function (app) {
 		};
 /*****************************************************************************************/		
 	//view single property modal
-		$scope.openProperty = function (url, propertyData,EditId) {
+		$scope.openProperty = function (url, propertyData, EditId) {
 			var modalDefaults = {
 				templateUrl: url,	// apply template to modal
 				size : 'lg'
@@ -238,34 +238,10 @@ define(['app'], function (app) {
 					});
 				}
 			};
-			if(EditId){
-				dataService.get("getsingle/property/"+EditId)
-				.then(function(response) {  
-					if(response.status == "success"){
-						modalOptions.property = {
-							title : response.data.title,
-							property_description : response.data.property_description,
-							category : response.data.category,
-							bedrooms : response.data.property_info.bedrooms,
-							bathrooms : response.data.property_info.bathrooms,
-							property_images : response.data.property_images,
-							address : response.data.property_images,
-							date : response.data.description
-						};
-							modalService.show(modalDefaults,modalOptions).then(function (result) {
-						});
-					}
-					console.log(response);
-					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-				});
-			}else{
-				modalService.show(modalDefaults,modalOptions).then(function (result) {
-				});
-			}
-			//console.log(response.data);
-			modalService.showModal(modalDefaults, modalOptions).then(function (result) {
-				console.log("modalOpened");
+			
+			modalService.show(modalDefaults,modalOptions).then(function (result) {
 			});
+			
 		};
 /*****************************************************************************************/			
 		//setrent form post data to rent table

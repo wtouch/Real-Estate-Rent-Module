@@ -2,10 +2,10 @@
 		<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
 		<h3 class="text-center">Add New Property</h3>
 </div>
-<form name="addPropertyForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="addPropertyForm.$valid" ng-init="modalOptions.configData(modalOptions)">
+<form name="addPropertyForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="addPropertyForm.$valid" ng-init="modalOptions.configData(modalOptions); modalOptions.property = modalOptions.propertyData"" >
 <accordion close-others="true"><!--close-others="oneAtATime"-->
 	<accordion-group heading="Property Structure" is-open="modalOptions.status.isFirstOpen">
-	<div class="form-group">
+	<div class="form-group">{{modalOptions.property}}
 		<label for="title" class="col-sm-2 control-label">Property Title *</label>
 		<div class="col-sm-9">
 			<input type="text" id="title" class="form-control" name="title" ng-model="modalOptions.property.title" required>
