@@ -2,143 +2,98 @@
 	<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
 </div>
 <div class="modal-body">
+	<h3 class="text-center">{{modalOptions.propertyData.title}}</h3>
+	<div class="content">
+		<blockquote ng-bind-html="modalOptions.propertyData.property_description">
+		</blockquote>
+	</div>
 	<div class="row">
-	    <div class="col-sm-12">
-			<h3 class="text-center">{{modalOptions.viewProperty.title}}</h3>
-			<div class="content">
-				<blockquote ng-bind-html="">
-				{{modalOptions.viewProperty.property_description}}
-				</blockquote>
-			</div>			
-			<div class="row">
-			    <div class="col-sm-9">
-					<table class="table table-hover table-responsive">
-						<tr>
-							 <td><b>Property Title </b></td>
-							 <td><ul>							
-									<p>{{modalOptions.viewProperty.title}}  <!-- {{modalOptions.viewProperty.property_for}} --></p>
-								</ul>	
-							 </td>	
-						</tr>
-						<tr>
-							<td><b>Property Type</b> </td>
-							<td>
-							<!-- {{modalOptions.viewProperty.property_info.type}} -->	
-							{{modalOptions.viewProperty.property_for}}			
-							</td>		
-						</tr>
-						<tr>
-							<td><b>Location </b></td>
-							<td>								
-								<p><b>Country :</b> {{modalOptions.viewProperty.property_location.country}}
-								
-								<br><b>State :</b> {{modalOptions.viewProperty.property_location.state}}
-								
-								<br><b>City :</b>								
-								{{modalOptions.viewProperty.property_location.city}}
-								
-								<br><b>Address :</b> {{modalOptions.viewProperty.property_location.address}}</p>
-							</td>					
-						</tr>
-						<tr>
-							<td><b>Area</b> 
-							<td>
-								 <p><b>Built_up area :</b>
-								 {{modalOptions.viewProperty.property_info.buildup_area}}		 
-								 {{modalOptions.viewProperty.property_info.build_unit}}</p>
-								 
-								 <p><b>Plot/ Land Area</b>
-								 {{modalOptions.viewProperty.property_info.land_area}}
-								 {{modalOptions.viewProperty.property_info.land_unit}}
-								 </p>
-								 
-								 <p><b>Carpet Area</b>							 
-								 {{modalOptions.viewProperty.property_info.carpet_area}}
-								 {{modalOptions.viewProperty.property_info.carpet_unit}}
-								 </p>
-							</td>					
-						</tr>
-						<tr>
-							<td ng-if="modalOptions.viewProperty.price"><b>Price </b>
-							<td ng-if="modalOptions.viewProperty.price">{{modalOptions.viewProperty.price}}</td>			
-						</tr>
-						<tr>
-							<td ng-if="modalOptions.viewProperty.contact_details.contact_person"><b>Contact US! </b> </td> 
-							<td ng-if="modalOptions.viewProperty.contact_details.contact_person">{{modalOptions.viewProperty.contact_details.contact_person}}</td>
-						</tr>
-					</table>	
-				</div>
-				<div class="col-sm-3">
-					<table class="table table-bordered">
-						<tr "modalOptions.templates">
-							<img class="img-responsive" ng-model="modalOptions.viewProperty.imgkey" ng-src="{{appConfig.assetPath + modalOptions.viewProperty.property_images[modalOptions.viewProperty.imgkey].file_relative_path}}" ng-init="modalOptions.viewProperty.imgkey = 0"/>
-							<span class="thumbs" ng-repeat="(key, value) in modalOptions.viewProperty.property_images">
-								<img class="img-thumbnail" width="40px" ng-src="{{appConfig.assetPath +value.file_relative_path}}" ng-click="modalOptions.viewProperty.imgkey = key"/>
-							</span>
-						</tr>		
-					</table>
-				</div>
-			</div>
-			<hr>	
+		<div class="col-sm-4">
+			<h3>Location Details</h3>
+			<table class="table table-hover table-responsive">
+				<tr>
+					<td>								
+						<p>
+							<b>Address :</b> {{modalOptions.propertyData.property_location.address}}
+							<br>
+							{{modalOptions.propertyData.property_location.city}},
+							</br>
+							{{modalOptions.propertyData.property_location.state}},
+							</br>
+							{{modalOptions.propertyData.property_location.country}} - {{modalOptions.propertyData.property_location.pincode}}
+						</p>
+					</td>					
+				</tr>
+				<tr>
+					<td><b>Built Up area :</b> 
+				</tr>
+				<tr>
+					<td>
+						 <p ng-if="modalOptions.propertyData.property_info.buildup_area">
+							<b>Area :</b>
+							 {{modalOptions.propertyData.property_info.buildup_area}}		 
+							 {{modalOptions.propertyData.property_info.build_unit}}</p>
+						 
+						 <p ng-if="modalOptions.propertyData.property_info.land_area">
+							 <b>Plot/ Land Area: </b>
+							 {{modalOptions.propertyData.property_info.land_area}}
+							 {{modalOptions.propertyData.property_info.land_unit}}
+						 </p>
+						 
+						 <p ng-if="modalOptions.propertyData.property_info.carpet_area">
+							 <b>Carpet Area: </b>							 
+							 {{modalOptions.propertyData.property_info.carpet_area}}
+							 {{modalOptions.propertyData.property_info.carpet_unit}}
+						 </p>
+					</td>					
+				</tr>
+				<tr>
+					<td ng-if="modalOptions.propertyData.price">
+						<b>Licence Fee: </b>{{modalOptions.propertyData.price}}
+					</td>
+				</tr>
+			</table>	
+		</div>
+		<div class="col-sm-4">
 			<h3>Property Built Up Details</h3>
-				<table class="table table-bordered table-responsive">
-					<thead>
-						<th ng-if="modalOptions.viewProperty.optional_property_details.furnished">Furnishing</th>
-						<th ng-if="modalOptions.viewProperty.optional_property_details.transType">Transaction</th>
-						<th ng-if="modalOptions.viewProperty.property_info.bedrooms">Bedrooms</th>
-						<th ng-if="modalOptions.viewProperty.property_info.bathrooms">Bathrooms</th>
-						<th ng-if="modalOptions.viewProperty.optional_property_details.parking">Reserved Parking</th>
-					</thead>
-					<tbody>
-						<tr>
-							<td ng-if="modalOptions.viewProperty.optional_property_details.furnished">{{modalOptions.viewProperty.optional_property_details.furnished}}</td>
-							
-							<td ng-if="modalOptions.viewProperty.optional_property_details.transType">{{modalOptions.viewProperty.optional_property_details.transType}}</td>
-							
-							<td ng-if="modalOptions.viewProperty.property_info.bedrooms">{{modalOptions.viewProperty.property_info.bedrooms}}</td>
-							
-							<td ng-if="modalOptions.viewProperty.property_info.bathrooms">{{modalOptions.viewProperty.property_info.bathrooms}}</td>
-							
-							<td ng-if="modalOptions.viewProperty.optional_property_details.parking">{{modalOptions.viewProperty.optional_property_details.parking}}</td>
-						</tr>
-					</tbody>
-				</table>
-			<hr>
-				<table class="table table-hover table-responsive">
-					<tbody>
-						<h3>Amenities</h3>	
-						<tr>
-							{{modalOptions.viewProperty.amenities}}
-						</tr>
-					<hr>			
-						<h3>Property Address</h3>
-						<td></td>
-						<td>{{modalOptions.viewProperty.property_location.address}}</td>
-					</tbody>
-				</table>		
-			<hr>			
-			<h3>Property Seller Detail</h3>
-				<table class="table table-bordered table-responsive">
-					<tbody>
-						<tr>
-							<td>Contact Person</td>
-							<td>{{modalOptions.viewProperty.contact_details.contact_person}}</td>
-						</tr>
-						<tr>
-							<td>Mobile</td>
-							<td>{{modalOptions.viewProperty.contact_details.mobile}}</td>
-						</tr>
-						<tr>
-							<td>Email</td>
-							<td>{{modalOptions.viewProperty.contact_details.email}}</td>
-						</tr>
-						<tr>
-							<td>Contact Address</td>
-							<td>{{modalOptions.viewProperty.contact_details.cont_address}}</td>
-						</tr>
-					</tbody>
-				</table>				
+			<table class="table table-bordered table-responsive">
+				<tbody>
+					<tr>
+						<th ng-if="modalOptions.propertyData.optional_property_details.furnished">Furnishing</th>
+						<td ng-if="modalOptions.propertyData.optional_property_details.furnished">{{modalOptions.propertyData.optional_property_details.furnished}}</td>
+					</tr>
+					<tr>
+						<th ng-if="modalOptions.propertyData.optional_property_details.transType">Transaction</th>
+						<td ng-if="modalOptions.propertyData.optional_property_details.transType">{{modalOptions.propertyData.optional_property_details.transType}}</td>
+					</tr>
+					<tr>	
+						<th ng-if="modalOptions.propertyData.property_info.bedrooms">Bedrooms</th>
+						<td ng-if="modalOptions.propertyData.property_info.bedrooms">{{modalOptions.propertyData.property_info.bedrooms}}</td>
+					</tr>
+					<tr>	
+						<th ng-if="modalOptions.propertyData.property_info.bathrooms">Bathrooms</th>
+						<td ng-if="modalOptions.propertyData.property_info.bathrooms">{{modalOptions.propertyData.property_info.bathrooms}}</td>
+					</tr>
+					<tr>	
+						<th ng-if="modalOptions.propertyData.optional_property_details.parking">Reserved Parking</th>
+						<td ng-if="modalOptions.propertyData.optional_property_details.parking">{{modalOptions.propertyData.optional_property_details.parking}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-sm-4">
+			<h3>Amenities</h3>
+			<ul>
+				<li ng-repeat="x in modalOptions.propertyData.amenities">
+					{{x}}
+				</li>
+			</ul>
 		</div>
 	</div>
+	<div class="property-images">
+		<img class="img-responsive" ng-model="modalOptions.propertyData.imgkey" ng-src="{{appConfig.assetPath + modalOptions.propertyData.property_images[modalOptions.propertyData.imgkey].file_relative_path}}" ng-init="modalOptions.propertyData.imgkey = 0"/>
+		<span class="thumbs" ng-repeat="(key, value) in modalOptions.propertyData.property_images">
+			<img class="img-thumbnail" width="40px" ng-src="{{appConfig.assetPath +value.file_relative_path}}" ng-click="modalOptions.propertyData.imgkey = key"/>
+		</span>
+	</div>
 </div>
-

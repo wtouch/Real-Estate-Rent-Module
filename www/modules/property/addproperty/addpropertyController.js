@@ -12,10 +12,6 @@ define(['app'], function (app) {
 		$scope.property = { property_images : []};
 		$scope.editId = $routeParams.id;
 		
-		dataService.config('config', {config_name : "property"}).then(function(response){
-			$scope.propertyConfig = response.config_data;
-		});
-		
 		//function for Users list response
 		dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
 		.then(function(response) {  
@@ -56,8 +52,31 @@ define(['app'], function (app) {
 		dataService.get('getmultiple/property/1/50', $scope.userInfo).then(function(response){
 				$scope.addPropStruct = response.data;				
 		});
-		
 		/************************************************************************************/
+		$scope.openProperty = function (url) {
+			dataService.config('config', {config_name : "property"}).then(function(response){
+				console.log(response);
+				var modalDefaults = {
+					templateUrl: url,
+					size : 'lg'
+				};
+				var modalOptions = {
+					status : {
+					isFirstOpen: true,
+					isFirstDisabled: false,
+					},
+					propertyConfig : response.config_data,
+					Date :  $scope.currentDate,
+					userInfo : {user_id : $rootScope.userDetails.id},
+					property : { property_images : []}
+					//property.user_id : $rootScope.userDetails.id
+				};
+				modalService.show(modalDefaults, modalOptions).then(function (result) {
+				});
+			});
+		};
+		/************************************************************************************/
+		
 		//Add property
 		$scope.addPropertyFun = function(property){	
 			$scope.property.user_id= $rootScope.userDetails.id;
@@ -75,13 +94,40 @@ define(['app'], function (app) {
 		};
 		//update into property
 		if($scope.editId){//Update user
-			dataService.get("getsingle/property/"+$routeParams.id)
-			.then(function(response) {
-				$scope.property = response.data;
-				if($scope.property.property_images == "") $scope.property.property_images = [];
-				console.log($scope.property);					
-			});	
-
+			updateData : function(account) {
+					dataService.put("put/account/"+EditId,account)
+					.then(function(response) {
+						if(response.status == "success"){
+						}
+						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+						$notification[response.status]("Add record", response.message);
+					});
+			   }
+			   
+			};
+			if(EditId){
+				dataService.get("getsingle/account/"+EditId)
+				.then(function(response) {  
+					if(response.status == "success"){
+						modalOptions.account = {
+							account_name : response.data.account_name,
+							account_no : response.data.account_no,
+							category : response.data.category,
+							user_id : response.data.user_id,
+							id : response.data.id,
+							description : response.data.description,
+							date : response.data.description
+						};
+						modalService.show(modalDefaults,modalOptions).then(function (result) {
+						});
+					}
+					console.log(response);
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+				});
+			}else{
+				modalService.show(modalDefaults,modalOptions).then(function (result) {
+				});
+			}
 			$scope.update = function(property){
 				dataService.put("put/property/"+$routeParams.id,property)
 				.then(function(response) { //function for response of request temp

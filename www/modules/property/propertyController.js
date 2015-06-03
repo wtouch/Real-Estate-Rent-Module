@@ -13,10 +13,7 @@ define(['app'], function (app) {
 		$scope.alerts = [];
 		$scope.userInfo = {user_id : $rootScope.userDetails.id};
 		$scope.currentDate = dataService.currentDate;
-		console.log($scope.currentDate);
-		$scope.dates ={};
-		$scope.dates.date=$scope.currentDate;
-		$scope.setrent={};
+		$scope.setrent = {};
 		
 		//for dynamic tooltip
 		$scope.dynamicTooltip = function(status, active, notActive){
@@ -45,7 +42,6 @@ define(['app'], function (app) {
 			service_tax_no : accountConfig.service_tax_no
 		}
 		
-		
 		// function for edit your profile
 		$scope.changeSetting = function(setting){
 			console.log(setting);
@@ -61,7 +57,6 @@ define(['app'], function (app) {
 				$notification[response.status]("Edit Profile", response.message);
 			})
 		}	
-		
 		/*******************************************************************************************/
 		// code for delete button 
 			$scope.deleted = function(id, status){
@@ -142,29 +137,136 @@ define(['app'], function (app) {
 			});
 		};
 /*****************************************************************************************/		
-	//view single property modal		 
-		$scope.openProperty = function (url, propId) {
-			dataService.get("getsingle/property/"+ propId)
-			.then(function(response) {
+	//view single property modal
+		$scope.openProperty = function (url, propertyData,EditId) {
+			var modalDefaults = {
+				templateUrl: url,	// apply template to modal
+				size : 'lg'
+			};
+			var modalOptions = {
+				editProperty : EditId,
+				propDate  : $scope.currentDate,
+				propertyData : propertyData,
+				getCustomer : function(modalOptions){
+					dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id}).then(function(customer) {
+						modalOptions.customerList = customer.data;
+					})
+				},
+				configData : function(modalOptions){
+					dataService.config('config', {config_name : "property"}).then(function(response){
+						//console.log(response);
+						modalOptions.propertyConfig = response.config_data;
+					})
+				},
+				postData : function(setrent,duration) {
+					//calculate duration in months
+					//setrent.user_id = $scope.userDetails.id;
+					var year = duration.year;
+					var month = duration.month;
+					
+					setrent.duration = parseInt((year * 12) + parseInt(month));
+					
+					var esc_year = duration.esc_year;
+					var esc_month = duration.esc_month;
+					
+					var escduration = parseInt((esc_year * 12) + parseInt(esc_month));
+					setrent.escduration = escduration;
+					console.log(escduration);
+					
+					//calculate leaving date from starting date
+					var taken_date = new Date(setrent.taken_date);
+			
+					console.log('the original date is '+taken_date);
+					var leaving_date = new Date(taken_date); //
+					leaving_date.setMonth(leaving_date.getMonth() + setrent.duration);
+					
+					setrent.leaving_date = leaving_date;
+					setrent.taken_date = taken_date;
+					
+					console.log(setrent);
+					dataService.post("post/rent/setrent",setrent)
+					.then(function(response) {  
+						if(response.status == "success"){
+							console.log(response.message);
+							dataService.put("put/property/"+propertyData.id, {availability : 0}).then(function(response) {
+								console.log(response.message);
+							})
+						}
+						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+						$notification[response.status]("Rent Property", response.message);
+					});
+				},
+				addProperty : function(property){
+					console.log(property);
+				 var userInfo = $rootScope.userDetails.id;
+				property.user_id= $rootScope.userDetails.id;
+				property.date = $scope.currentDate;
+				property : { property_images : []}
+				dataService.post("post/property",property,$scope.userInfo)
+				.then(function(response) {
+					if(response.status=="success"){
+						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+						$notification[response.status]("Add record", response.message);
+					}else{
+						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+						$notification[response.status]("", response.message);
+					}
+				}); 
+				},
 				
-				console.log(response);
-				var modalDefaults = {
-					templateUrl: url,	// apply template to modal
-					size : 'lg'
-				};
-				var modalOptions = {
-					viewProperty: dataService.parse(response.data)  // assign data to modal
-				};
-				//console.log(response.data);
-				modalService.showModal(modalDefaults, modalOptions).then(function (result) {
-					console.log("modalOpened");
+				upload : function(files,path,userInfo, picArr){
+					upload.upload(files,path,userInfo,function(data){
+						if(data.status === 'success'){
+							modalOptions.property_images = data.data.file_relative_path;
+						}else{
+							if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+							$notification[response.status]("", response.message);
+						}
+					});
+					},
+					generateThumb : function(files){  
+						upload.generateThumbs(files);
+					},
+				
+				updateData : function(property) {
+					dataService.put("put/property/"+EditId,property)
+					.then(function(response) {
+						if(response.status == "success"){
+						}
+						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+						$notification[response.status]("Add record", response.message);
+					});
+				}
+			};
+			if(EditId){
+				dataService.get("getsingle/property/"+EditId)
+				.then(function(response) {  
+					if(response.status == "success"){
+						modalOptions.property = {
+							title : response.data.title,
+							property_description : response.data.property_description,
+							category : response.data.category,
+							bedrooms : response.data.property_info.bedrooms,
+							bathrooms : response.data.property_info.bathrooms,
+							property_images : response.data.property_images,
+							address : response.data.property_images,
+							date : response.data.description
+						};
+							modalService.show(modalDefaults,modalOptions).then(function (result) {
+						});
+					}
+					console.log(response);
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 				});
-			});			
+			}else{
+				modalService.show(modalDefaults,modalOptions).then(function (result) {
+				});
+			}
+			//console.log(response.data);
+			modalService.showModal(modalDefaults, modalOptions).then(function (result) {
+				console.log("modalOpened");
+			});
 		};
-		
-		$scope.ok = function () {
-			$modalOptions.close('ok');
-		};	//end of modal function		
 /*****************************************************************************************/			
 		//setrent form post data to rent table
 		$scope.postData = function(setrent,duration) {
@@ -203,17 +305,7 @@ define(['app'], function (app) {
 				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 				$notification[response.status]("Add record", response.message);
 			});  
-		}   
-		
-		 if($routeParams.id){
-				dataService.get("getsingle/property/"+$routeParams.id)
-				.then(function(response) {
-					if(response.status == "success"){
-						$scope.setrent.title = response.data.title;
-						$scope.setrent.property_id = response.data.id; 
-					}
-			})
-		} 
+		}  
 		$scope.updateData = function(setrent) {
 				setrent.modified_date = dataService.currentDate;
 				delete setrent.id;
@@ -221,9 +313,7 @@ define(['app'], function (app) {
 				.then(function(response) {
 					if(response.status == "success"){
 						$scope.reset();
-						/*setTimeout(function(){*/
 							 $location.path("/dashboard/templates/custometemplates"); 
-						/*},500); */
 					 }
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 					$notification[response.status]("Submit Custom Template", response.message);
@@ -246,22 +336,22 @@ define(['app'], function (app) {
 		};
 /**************************************************************************************/				
 		//view multiple records
-			$scope.propertyParam = {status : 1};			
-			angular.extend($scope.propertyParam,$scope.userInfo);
-			dataService.get("getmultiple/property/1/"+$scope.pageItems, $scope.propertyParam)
-			.then(function(response) { //function for property list response  
-				//console.log(response.data);				
-					if(response.status == 'success'){
-						$scope.totalRecords = response.totalRecords;
-						$scope.properties = response.data; 					
-						
-					}else{
-						$scope.alerts.push({type: response.status, msg: response.message});
-					}
-			});	
+		$scope.propertyParam = {status : 1};			
+		angular.extend($scope.propertyParam,$scope.userInfo);
+		dataService.get("getmultiple/property/1/"+$scope.pageItems, $scope.propertyParam)
+		.then(function(response) { //function for property list response  
+			//console.log(response.data);				
+				if(response.status == 'success'){
+					$scope.totalRecords = response.totalRecords;
+					$scope.properties = response.data; 					
+					
+				}else{
+					$scope.alerts.push({type: response.status, msg: response.message});
+				}
+		});	
 			
-	};		
 /***************************************************************************************/
+	};
 	// Inject controller's dependencies
 	propertyController.$inject = injectParams;
 	// Register/apply controller dynamically

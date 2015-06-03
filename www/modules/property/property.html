@@ -6,7 +6,9 @@
 			<div class="row bottom-space">
 				<div class="col-sm-2"> 
 					<label class="control-label"> </label><br>
-					<a href="#/dashboard/property/addproperty" class="btn btn-primary" title="Add new property">Add New Property</a>				
+					<!-- <a href="#/dashboard/property/addproperty" ng-click="openProperty('modules/property/addproperty/property.html')" class="btn btn-primary" title="Add new property">Add New Property</a> -->
+					
+				<a ng-click="openProperty('modules/property/addproperty/property.html')" class="btn btn-primary" title="Add new property">Add New Property</a>	
 				</div>	
 		 		
 				<div class="col-sm-2"> 
@@ -96,8 +98,6 @@
 												<td><b>Country :</b>{{x.property_location.country}}<br>
 												<b>State :</b>{{x.property_location.state}}<br>
 												<b>City :</b>{{x.property_location.city}}<br>
-												
-												
 												</td>
 											</tr>
 										</table>  
@@ -115,12 +115,14 @@
 									
 									<td class="col-sm-3" style="max-width:150px">
 										<div class="btn-group">
-											<a type="button" ng-disabled="x.availability==0" disabled="disabled" tooltip="Rent This Property" class="btn btn-info" href="#/dashboard/property/setrent/{{x.id}}">Rent This</a>	
+											<!-- <a type="button" ng-disabled="x.availability==0" disabled="disabled" tooltip="Rent This Property" class="btn btn-info" href="#/dashboard/property/setrent/{{x.id}}">Rent This</a> -->	
+											<a type="button" ng-disabled="x.availability==0" disabled="disabled" tooltip="Rent This Property" class="btn btn-info" ng-click="openProperty('modules/property/setrent.html', x)">Rent This</a>
+											<!--ng-change="modalOptions.getData(modalOptions.setrent.title, modalOptions)"-->
 										</div>
-										<a href="#/dashboard/property/addproperty/{{x.id}}" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="Edit User Information"> 
+										<a ng-click="openProperty('modules/property/addproperty/property.html', x.id)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="Edit User Information"> 
 											<span class="glyphicon glyphicon-pencil"></span>
 										</a>
-										<a ng-click="openProperty('modules/property/viewProperty.html', x.id)" class="btn btn-success responsive" title="View">View</a> 
+										<a ng-click="openProperty('modules/property/viewProperty.html', x)" class="btn btn-success responsive" title="View">View</a> 
 									</td>
 								</tr>				
 							</tbody>

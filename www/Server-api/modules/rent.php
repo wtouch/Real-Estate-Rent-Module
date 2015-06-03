@@ -36,6 +36,7 @@
 			$user = $db->getUsers($userId,$userCols);
 			$db->setLimit($limit);
 			$table = $db->setJoinString("INNER JOIN", "rent", array("user_id"=>$user.".id"));
+			//$db->setOrderBy(array("property_id"=>"desc"),$t0);
 			$db->setWhere($where, $table);
 			$db->setWhere($like, $table, true);
 			$selectInnerJoinCols[0] = "*";

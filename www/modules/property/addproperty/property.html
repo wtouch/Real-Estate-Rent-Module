@@ -1,65 +1,70 @@
+<div class="modal-header" style="margin-bottom: 14px">
+		<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
+		<h3 class="text-center">Add New Property</h3>
+</div>
+<form name="addPropertyForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="addPropertyForm.$valid" ng-init="modalOptions.configData(modalOptions)">
 <accordion close-others="true"><!--close-others="oneAtATime"-->
-	<accordion-group heading="Property Structure" is-open="status.isFirstOpen">
+	<accordion-group heading="Property Structure" is-open="modalOptions.status.isFirstOpen">
 	<div class="form-group">
 		<label for="title" class="col-sm-2 control-label">Property Title *</label>
 		<div class="col-sm-9">
-			<input type="text" id="title" class="form-control" name="title" ng-model="property.title" required>
-			<span class="text-danger" ng-show="addProperty.title.$dirty && addProperty.title.$invalid">
-				<span ng-show="addProperty.title.$error.required">Property title is must.</span>
+			<input type="text" id="title" class="form-control" name="title" ng-model="modalOptions.property.title" required>
+			<span class="text-danger" ng-show="addPropertyForm.title.$dirty && addPropertyForm.title.$invalid">
+				<span ng-show="addPropertyForm.title.$error.required">Property title is must.</span>
 			</span>											 
 		</div>				
 	</div>
 		
-	<div class="form-group">
+	<div class="form-group" ng-init="modalOptions.configData(modalOptions)">
 		<label for="category" class="col-sm-2 control-label">Property Category *</label>
 		<div class="col-sm-3">
-			<select id="category" name="category" ng-model="property.category" class="form-control" required ng-options="item.category_name as item.category_name for item in propertyConfig.category">
+			<select id="category" name="category" ng-model="modalOptions.property.category" class="form-control" required  ng-options="item.category_name as item.category_name for item in modalOptions.propertyConfig.category">
 				<option value="">Select  Property Category</option>			
 			</select>
 			
-			<span class="text-danger" ng-show="addProperty.category.$dirty && addProperty.category.$invalid">
-				<span ng-show="addProperty.category.$error.required">Selection of Property category is must.</span>
+			<span class="text-danger" ng-show="addPropertyForm.category.$dirty && addPropertyForm.category.$invalid">
+				<span ng-show="addPropertyForm.category.$error.required">Selection of Property category is must.</span>
 			</span>				 
 		</div>
-		 <label for="type" class="col-sm-2  control-label">Property Type *</label>
-			<div class="col-sm-4">
-				<select  id="type"  name="type" ng-model="property.type" class="form-control" required ng-options="item.type as item.type for item in propertyConfig.types" >
-					<option value=""> Select Property Type</option>		
+		<label for="type" class="col-sm-2  control-label">Property Type *</label>
+			<div class="col-sm-4" ng-init="modalOptions.configData(modalOptions)">
+				<select  id="type"  name="type" ng-model="modalOptions.property.type" class="form-control" required ng-options="item.type as item.type for item in modalOptions.propertyConfig.types" >
+					<option value="">Select Property Type</option>		
 				</select>
-					<span class="text-danger" ng-show="addProperty.type.$dirty && addProperty.type.$invalid">
-						<span ng-show="addProperty.type.$error.required">Selection of Property type is must.</span>
+					<span class="text-danger" ng-show="addPropertyForm.type.$dirty && addPropertyForm.type.$invalid">
+						<span ng-show="addPropertyForm.type.$error.required">Selection of Property type is must.</span>
 					</span>	
 			</div>
 	</div>
 	<div class="form-group">
 		<label for="prop_desc" class="col-sm-2 control-label">Property Discription *</label>
 		<div class="col-sm-9">
-			<textarea type="text" class="form-control" name="prop_desc" ng-model="property.property_description" cols="30" rows="4" ng-maxlength="700" required></textarea>
+			<textarea type="text" class="form-control" name="prop_desc" ng-model="modalOptions.property.property_description" cols="30" rows="4" ng-maxlength="700" required></textarea>
 			
-			<p ng-hide="addProperty.property_description.$error.maxlength">{{ 700 - property.property_description.length + " Chars left" }}</p>
+			<p ng-hide="addPropertyForm.property_description.$error.maxlength">{{ 700 - modalOptions.property.property_description.length + " Chars left" }}</p>
 			
-			<span class="text-danger" ng-show="addProperty.prop_desc.$error.maxlength">
+			<span class="text-danger" ng-show="addPropertyForm.prop_desc.$error.maxlength">
 				Sorry You are Exceeding the Limit
 			</span>	
-			<span class="text-danger" ng-show="addProperty.prop_desc.$dirty && addProperty.prop_desc.$invalid">
-				<span ng-show="addProperty.prop_desc.$error.required">Property Description is required .</span>
+			<span class="text-danger" ng-show="addPropertyForm.prop_desc.$dirty && addPropertyForm.prop_desc.$invalid">
+				<span ng-show="addPropertyForm.prop_desc.$error.required">Property Description is required .</span>
 		</div>				
 	</div>
 	<div class="form-group">
 		<label for="bedrooms" class="col-sm-2 control-label">Bedrooms </label>
-		<div class="col-sm-4">
-			<select class="form-control" id="bedrooms" name="bedrooms" ng-model="property.property_info.bedrooms"  ng-options="item as item for item in propertyConfig.Bedrooms" required>
+		<div class="col-sm-4" ng-init="modalOptions.configData(modalOptions)">
+			<select class="form-control" id="bedrooms" name="bedrooms" ng-model="modalOptions.property.property_info.bedrooms"  ng-options="item as item for item in modalOptions.propertyConfig.Bedrooms" required>
 				<option value="" selected>Select one</option>						
 			</select>
-			<span class="text-danger" ng-show="addProperty.bedrooms.$dirty && addProperty.bedrooms.$invalid">
+			<span class="text-danger" ng-show="addPropertyForm.bedrooms.$dirty && addPropertyForm.bedrooms.$invalid">
 			</span>
 		</div>
 		<label for="bathrooms" class="col-sm-1 control-label">Bathrooms </label>
-			<div class="col-sm-4">
-				<select class="form-control" id="bathrooms"  name="bathrooms" ng-model="property.property_info.bathrooms" required ng-options="item as item for item in propertyConfig.Bathrooms">
+			<div class="col-sm-4" ng-init="modalOptions.configData(modalOptions)">
+				<select class="form-control" id="bathrooms"  name="bathrooms" ng-model="modalOptions.property.property_info.bathrooms" required ng-options="item as item for item in modalOptions.propertyConfig.Bathrooms">
 					<option value="" selected>Select one</option>	
 				</select>	
-				 <span class="text-danger" ng-show="addProperty.bathrooms.$dirty && addProperty.bathrooms.$invalid">
+				 <span class="text-danger" ng-show="addPropertyForm.bathrooms.$dirty && addPropertyForm.bathrooms.$invalid">
 				</span>				 
 			</div>									
 	</div>
@@ -67,17 +72,17 @@
 	<div class="form-group">
 		<label for="propertyPrice" class="col-sm-2 control-label ">Licence Fees*</label>
 		<div class="col-sm-4">
-			<input type="text" id="propertyPrice" class="form-control" name="propertyPrice" ng-model="property.price" ng-pattern="/^\d{0,9}[0-9]$/" required>
-			<span class="help-block" ng-show="addProperty.propertyPrice.$dirty && addProperty.propertyPrice.$invalid">
-			<span ng-show="addProperty.propertyPrice.$error.pattern" class="text-danger">Fees is Number</span>
-			<span class="text-danger" ng-show="addProperty.propertyPrice.$error.required">Licence Fees is required.</span></span>
+			<input type="text" id="propertyPrice" class="form-control" name="propertyPrice" ng-model="modalOptions.property.price" ng-pattern="/^\d{0,9}[0-9]$/" required>
+			<span class="help-block" ng-show="addPropertyForm.propertyPrice.$dirty && addPropertyForm.propertyPrice.$invalid">
+			<span ng-show="addPropertyForm.propertyPrice.$error.pattern" class="text-danger">Fees is Number</span>
+			<span class="text-danger" ng-show="addPropertyForm.propertyPrice.$error.required">Licence Fees is required.</span></span>
 		</div>
 		<label for="deposit" class="col-sm-1 control-label ">Deposit*</label>
 		<div class="col-sm-4">
-			<input type="text" id="deposit" name="deposit" class="form-control" ng-model="property.deposit" ng-pattern="/^\d{0,9}[0-9]$/" required>
-			<span class="help-block" ng-show="addProperty.deposit.$dirty && addProperty.deposit.$invalid">
-			<span ng-show="addProperty.deposit.$error.pattern" class="text-danger">Deposit is Number</span>
-			<span class="text-danger" ng-show="addProperty.deposit.$error.required">Licence Fees is required.</span></span>
+			<input type="text" id="deposit" name="deposit" class="form-control" ng-model="modalOptions.property.deposit" ng-pattern="/^\d{0,9}[0-9]$/" required>
+			<span class="help-block" ng-show="addPropertyForm.deposit.$dirty && addPropertyForm.deposit.$invalid">
+			<span ng-show="addPropertyForm.deposit.$error.pattern" class="text-danger">Deposit is Number</span>
+			<span class="text-danger" ng-show="addPropertyForm.deposit.$error.required">Licence Fees is required.</span></span>
 		</div>		
 			
 	</div>
@@ -86,27 +91,27 @@
 	  <label for="property_images" class="col-sm-2 control-label" >Property Images *</label>
 		<div class="col-sm-9">
 			<!-- This is file input for select images -->
-			<input type="file" id="property_images" ng-file-select ng-multiple="true" accept="image/jpeg,image/png,image/gif" ng-file-change="generateThumb($files)" ng-model="property_images" required>		
+			<input type="file" id="property_images" ng-file-select ng-multiple="true" accept="image/jpeg,image/png,image/gif" ng-file-change="modalOptions.generateThumb($files)" ng-model="property_images" required>		
 			<!-- This will show thumbnails & progress of images -->
 			<file-preview url="property_images"></file-preview>
 			<!-- This button will show if file/s selected -->
-			<button ng-show="property_images" ng-click="upload(property_images,path,userInfo,'property_images')" type="button">Upload</button>
+			<button ng-show="property_images" ng-click="modalOptions.upload(property_images,path,userInfo,modalOptions.property.property_images)" type="button">Upload</button>
 			<!-- This hidden input will store image path in array after successful uploading -->
-			<input type="hidden" ng-model="property.property_images">
-		</div>	 <!-- end property  -->	
+			<input type="hidden" ng-model="modalOptions.property.property_images">
+		</div>
 	</div>
 	
 	<h4>Property Location:</h4>	
 	<div class="form-group">
 	<label for="address" class="col-sm-2 control-label">Address*</label>
 	<div class="col-sm-9">
-		<textarea type="text" class="form-control" id="address" name="address" ng-model="addProperty.property_location.address" cols="30" rows="3" ng-maxlength="500" placeholder="Enter address"  required></textarea>
-		<p ng-hide="addProperty.address.$error.maxlength">
-			{{ 500 - addProperty.property_location.address.length + " Chars left" }}
+		<textarea type="text" class="form-control" id="address" name="address" ng-model="addPropertyForm.property_location.address" cols="30" rows="3" ng-maxlength="500" placeholder="Enter address"  required></textarea>
+		<p ng-hide="addPropertyForm.address.$error.maxlength">
+			{{ 500 - addPropertyForm.property_location.address.length + " Chars left" }}
 		</p>
-		<span class="help-block" ng-show="addProperty.address.$dirty && addProperty.address.$invalid">
-			<span ng-show="addProperty.address.$error.maxlength"class="text-danger">Sorry You are Exceeding the Limit</span>
-			<span class="text-danger" ng-show="addProperty.address.$error.required">Address is required.</span>
+		<span class="help-block" ng-show="addPropertyForm.address.$dirty && addPropertyForm.address.$invalid">
+			<span ng-show="addPropertyForm.address.$error.maxlength"class="text-danger">Sorry You are Exceeding the Limit</span>
+			<span class="text-danger" ng-show="addPropertyForm.address.$error.required">Address is required.</span>
 		</span>					
 	</div> 
 	</div>	
@@ -114,63 +119,62 @@
 	<div class="form-group">
 		<label for="area" class="col-sm-2 control-label">Area*</label>
 		<div class="col-sm-4">
-			<input type="text" id="area" name="area" class="form-control" ng-model="property.property_location.area" placeholder="Enter area" required>
-			<span class="help-block" ng-show="addProperty.area.$dirty && addProperty.area.$invalid">
-				<span class="text-danger" ng-show="addProperty.area.$error.required && (addProperty.area.$dirty || submitted)">Enter Area Code.</span>
+			<input type="text" id="area" name="area" class="form-control" ng-model="modalOptions.property.property_location.area" placeholder="Enter area" required>
+			<span class="help-block" ng-show="addPropertyForm.area.$dirty && addPropertyForm.area.$invalid">
+				<span class="text-danger" ng-show="addPropertyForm.area.$error.required && (addPropertyForm.area.$dirty || submitted)">Enter Area Code.</span>
 			</span>
 		</div>	
 		<label for="location" class="col-sm-1 control-label">Location*</label>
 		<div class="col-sm-4">
-			<input type="text"name="location" id="location" ng-model="property.property_location.location" placeholder="Location" class="form-control" required>
-				<span class="help-block" ng-show="addProperty.location.$dirty && addProperty.location.$invalid || addProperty.location.$dirty">
-					<span class="text-danger" ng-show="addProperty.location.$dirty && (addProperty.location.$error.required )">Location required.If Location not found enter pincode.</span>
+			<input type="text"name="location" id="location" ng-model="modalOptions.property.property_location.location" placeholder="Location" class="form-control" required>
+				<span class="help-block" ng-show="addPropertyForm.location.$dirty && addPropertyForm.location.$invalid || addPropertyForm.location.$dirty">
+					<span class="text-danger" ng-show="addPropertyForm.location.$dirty && (addPropertyForm.location.$error.required )">Location required.If Location not found enter pincode.</span>
 				</span>
 		</div>				
-			
 	</div>			
 	
 	<div class="form-group">			
 		<label for="pincode" class="col-sm-2 control-label">PinCode*</label>
 		<div class="col-sm-4">
-			<input type="text" id="pincode" name="pincode" class="form-control" ng-model="property.property_location.pincode" placeholder="Enter Pin Code" ng-pattern="/^\d{0,9}[0-9]$/" maxlength="6"  ng-minlength="6">
-			<span class="help-block" ng-show="addProperty.pincode.$dirty && addProperty.pincode.$invalid">
-				<span ng-show="addProperty.pincode.$error.pattern && (addProperty.pincode.$dirty || submitted)" class="text-danger">Enter a valid Pin Code</span>
-				<span class="text-danger" ng-show="addProperty.pincode.$error.minlength && (addProperty.pincode.$dirty || submitted)">Enter Valid Length Of Pin Code.</span>
+			<input type="text" id="pincode" name="pincode" class="form-control" ng-model="modalOptions.property.property_location.pincode" placeholder="Enter Pin Code" ng-pattern="/^\d{0,9}[0-9]$/" maxlength="6"  ng-minlength="6">
+			<span class="help-block" ng-show="addPropertyForm.pincode.$dirty && addPropertyForm.pincode.$invalid">
+				<span ng-show="addPropertyForm.pincode.$error.pattern && (addPropertyForm.pincode.$dirty || submitted)" class="text-danger">Enter a valid Pin Code</span>
+				<span class="text-danger" ng-show="addPropertyForm.pincode.$error.minlength && (addPropertyForm.pincode.$dirty || submitted)">Enter Valid Length Of Pin Code.</span>
 			</span>
 		</div>	
 		
 		<label for="City" class="col-sm-1 control-label">City *</label>
 		<div class="col-sm-4">
-			<input type="text" name="City" id="City" ng-model="property.property_location.city" placeholder="Enter Your City"  class="form-control" required>
-			<span class="help-block" ng-show="addProperty.City.$dirty && addProperty.City.$invalid">
-				<span ng-show="addProperty.City.$error.required || addProperty.City.$dirty" class="text-danger">City is required.</span>
+			<input type="text" name="City" id="City" ng-model="modalOptions.property.property_location.city" placeholder="Enter Your City"  class="form-control" required>
+			<span class="help-block" ng-show="addPropertyForm.City.$dirty && addPropertyForm.City.$invalid">
+				<span ng-show="addPropertyForm.City.$error.required || addPropertyForm.City.$dirty" class="text-danger">City is required.</span>
 			</span>				
 		</div>
 	</div>
-	
 	
 	<div class="form-group">
 		<label for="state" class="col-sm-2 control-label">State *</label>
 		<div class="col-sm-4">
-		<input type="text" id="state" name="state" class="form-control" ng-model="property.property_location.state" placeholder="Enter state" required>
-			<span class="help-block" ng-show="addProperty.state.$dirty && addProperty.state.$invalid">
-				<span ng-show="addProperty.state.$error.required" class="text-danger">State is required.</span>
+		<input type="text" id="state" name="state" class="form-control" ng-model="modalOptions.property.property_location.state" placeholder="Enter state" required>
+			<span class="help-block" ng-show="addPropertyForm.state.$dirty && addPropertyForm.state.$invalid">
+				<span ng-show="addPropertyForm.state.$error.required" class="text-danger">State is required.</span>
 			</span>				
 		</div>
 		<label for="Country" class="col-sm-1 control-label">Country*</label>
 		<div class="col-sm-4">
-			<input type="text"name="Country" id="Country" ng-model="property.property_location.country" placeholder="Enter Your Country" class="form-control" required>
-			<span class="help-block" ng-show="addProperty.Country.$dirty && addProperty.Country.$invalid">
-				<span ng-show="addProperty.Country.$error.required || addProperty.Country.$dirty" class="text-danger">Country is required.</span>
+			<input type="text"name="Country" id="Country" ng-model="modalOptions.property.property_location.country" placeholder="Enter Your Country" class="form-control" required>
+			<span class="help-block" ng-show="addPropertyForm.Country.$dirty && addPropertyForm.Country.$invalid">
+				<span ng-show="addPropertyForm.Country.$error.required || addPropertyForm.Country.$dirty" class="text-danger">Country is required.</span>
 			</span>				
 		</div>
 		
 	</div>
+	
 	<h4>Amenities:</h4>
 		<div class="form-group row">
-			<div class="checkbox col-sm-12">
-				<label class="col-sm-3" ng-repeat="x in propertyConfig.amenities">
-					<input type="checkbox" checklist-model="property.amenities" checklist-value="x"/ required>
+			<div class="checkbox col-sm-12" ng-init="modalOptions.configData(modalOptions)">
+				<label class="col-sm-3" ng-repeat="x in modalOptions.propertyConfig.amenities">
+					<input type="checkbox" checklist-model="modalOptions.property.amenities" checklist-value="x" required />
 					{{x}}
 				</label>
 			</div>					
@@ -182,14 +186,14 @@
 	<h3>Property Details:</h3>
 		<div class="form-group">
 			<label for="prop_age" class="col-sm-2 control-label">Property Age</label>
-			<div class="col-sm-4">
-				<select class="form-control"  id="prop_age" ng-model="property.optional_property_details.property_age"  ng-options="item for item in propertyConfig.propertyAge" required>
+			<div class="col-sm-4" ng-init="modalOptions.configData(modalOptions)">
+				<select class="form-control"  id="prop_age" ng-model="modalOptions.property.optional_property_details.property_age"  ng-options="item for item in modalOptions.propertyConfig.propertyAge" required>
 					<option value="" selected>Select One</option>	
 				</select>
 			</div>	
 			<label for="prop_owner" class="col-sm-1 control-label">Ownership</label>
-			<div class="col-sm-4">
-				<select class="form-control" id="prop_owner" ng-model="property.optional_property_details.ownership" ng-options="item for item in propertyConfig.ownership" required>
+			<div class="col-sm-4" ng-init="modalOptions.configData(modalOptions)">
+				<select class="form-control" id="prop_owner" ng-model="modalOptions.property.optional_property_details.ownership" ng-options="item for item in modalOptions.propertyConfig.ownership" required>
 					<option value="" selected>Select One</option>					
 				</select>
 			</div>
@@ -197,14 +201,14 @@
 		
 		<div class="form-group">
 			<label for="furnished" class="col-sm-2 control-label">Furnished</label>
-			<div class="col-sm-4">
-				<select class="form-control" id="furnished" ng-model="property.optional_property_details.furnished" ng-options="item for item in propertyConfig.furnished" required>
+			<div class="col-sm-4" ng-init="modalOptions.configData(modalOptions)">
+				<select class="form-control" id="furnished" ng-model="modalOptions.property.optional_property_details.furnished" ng-options="item for item in modalOptions.propertyConfig.furnished" required>
 					<option value="" selected>Select One</option>				
 				</select>
 			</div>
 			<label for="floors" class="col-sm-1 control-label">TotalFloors</label>
-			<div class="col-sm-4">
-				<select class="form-control" id="floors" ng-model="property.optional_property_details.property_floor" ng-options="item for item in propertyConfig.floors" required>
+			<div class="col-sm-4" ng-init="modalOptions.configData(modalOptions)">
+				<select class="form-control" id="floors" ng-model="modalOptions.property.optional_property_details.property_floor" ng-options="item for item in modalOptions.propertyConfig.floors" required>
 					<option value="" selected>Select One</option>
 					
 				</select>
@@ -213,14 +217,14 @@
 		
 		<div class="form-group">
 			<label for="facing" class="col-sm-2 control-label">Facing</label>
-			<div class="col-sm-4">
-				<select class="form-control" id="facing" ng-model="property.optional_property_details.facing" ng-options="item for item in propertyConfig.facing" required>
+			<div class="col-sm-4" ng-init="modalOptions.configData(modalOptions)">
+				<select class="form-control" id="facing" ng-model="modalOptions.property.optional_property_details.facing" ng-options="item for item in modalOptions.propertyConfig.facing" required>
 					<option value="">Select One</option>										
 				</select>
 			</div>
 			<label for="parking" class="col-sm-1 control-label">Parking</label>
-			<div class="col-sm-4">
-				<select class="form-control" id="parking" ng-model="property.optional_property_details.parking" ng-options="item for item in propertyConfig.parking" required>
+			<div class="col-sm-4" ng-init="modalOptions.configData(modalOptions)">
+				<select class="form-control" id="parking" ng-model="modalOptions.property.optional_property_details.parking" ng-options="item for item in modalOptions.propertyConfig.parking" required>
 					<option value="" selected>Select One</option>				
 				</select>
 			</div>
@@ -228,8 +232,8 @@
 		
 		<div class="form-group">
 			<label for=" transType" class="col-sm-2 control-label">Transaction Type</label>
-			<div class="col-sm-4">
-				<select class="form-control" id="transType" ng-model="property.optional_property_details.transType" ng-options="item for item in propertyConfig.transaction_type" required>							
+			<div class="col-sm-4" ng-init="modalOptions.configData(modalOptions)">
+				<select class="form-control" id="transType" ng-model="modalOptions.property.optional_property_details.transType" ng-options="item for item in modalOptions.propertyConfig.transaction_type" required>							
 					<option value="">Select Transaction Type</option>				
 				</select>
 			</div>
@@ -239,7 +243,7 @@
 		<div class="form-group">
 				<label for="hospitals" class="col-sm-2 control-label">Hospitals </label>
 				<div class="col-sm-4">
-					<input type="text"  id="hospitals" class="form-control" name="hospitals" ng-model="property.landmarks.hospitals" required /> kms						
+					<input type="text"  id="hospitals" class="form-control" name="hospitals" ng-model="modalOptions.property.landmarks.hospitals" required /> kms						
 				<span class="help-block" ng-show="addProperty.hospitals.$dirty && addProperty.hospitals.$invalid">
 					<span ng-show="addProperty.hospitals.$error.pattern && (addProperty.hospitals.$dirty || submitted)" class="text-danger">Enter only numbers. 
 					.</span>
@@ -247,26 +251,29 @@
 				</div>							
 				<label for="airport" class="col-sm-1 control-label">Airport</label>
 				<div class="col-sm-4">
-					<input type="text" id="airport" class="form-control"  name="airport" ng-model="property.landmarks.airport" required >	kms						 
+					<input type="text" id="airport" class="form-control"  name="airport" ng-model="modalOptions.property.landmarks.airport" required >	kms						 
 				</div>											
 		</div>
+		
 		<div class="form-group">
 				<label for="railway" class="col-sm-2 control-label">Railway Station</label>
 				<div class="col-sm-4">
-					<input type="text" id="railway" class="form-control" name="railway" ng-model="property.landmarks.railway" required>kms	
+					<input type="text" id="railway" class="form-control" name="railway" ng-model="modalOptions.property.landmarks.railway" required>kms	
 				</div>										
 				<label for="school" class="col-sm-1 control-label">School </label>
 				<div class="col-sm-4">
-					<input type="text" id="school" class="form-control" name="school" ng-model="property.landmarks.school" required>kms	
+					<input type="text" id="school" class="form-control" name="school" ng-model="modalOptions.property.landmarks.school" required>kms	
 				</div>											
 		</div>
 
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-9">
-				<button type="submit" ng-if="!editId" ng-click="addPropertyFun(property)" class="btn btn-primary" title="Add new property" ng-disabled="addPropertyForm.$invalid">Submit Property</button><!--ng-disabled="addPropertyForm.$invalid"-->
+				<button type="submit" ng-if="!editId" ng-click="modalOptions.addProperty(modalOptions.property); modalOptions.ok()" class="btn btn-primary" title="Add new property">Submit Property</button><!--ng-disabled="addPropertyForm.$invalid"-->
 				<button type="submit" ng-if="editId" ng-click="update(property)" title="Update your property" class="btn btn-success text-center ">Edit Property</button>
 				<button type="reset" ng-click="reset()" title="Cancel" class="btn btn-danger text-center ">Cancel</button>
 			</div>
-		</div>					
+		</div>	
+		
 	</accordion-group>
 	</accordion>	
+</form>
