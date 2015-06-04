@@ -47,10 +47,10 @@
 		<div class="form-group">
 			<label for="rent" class="col-sm-2 control-label">Licence Fee *</label>		
 				<div class="col-sm-9">
-					<input type="text" id="rent" class="form-control" name="rent" placeholder="Set Rent"  ng-pattern="/^[a-zA-Z0-9(_)]*$/" ng-model="modalOptions.setrent.rent" required>
+					<input type="text" id="rent" class="form-control" name="rent" placeholder="Set Rent"  ng-pattern="/^\d{0,9}[0-9]$/" ng-model="modalOptions.setrent.rent" required>
 					
 					<span class="help-block" ng-show="setrentForm.partyName.$dirty && setrentForm.partyName.$invalid">
-						<span ng-show="modalOptions.setrent.rent.$error.pattern" class="text-danger">Enter Number only</span>
+						<span ng-show="setrent.rent.$error.pattern" class="text-danger">Enter Number only</span>
 					</span>
 				</div>
 		</div>

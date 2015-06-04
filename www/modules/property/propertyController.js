@@ -78,7 +78,6 @@ define(['app'], function (app) {
 			(searchProp =="") ? delete $scope.propertyParam[statusCol] : $scope.filterStatus[statusCol] = searchProp;
 			angular.extend($scope.propertyParam, $scope.filterStatus);
 			angular.extend($scope.propertyParam, $scope.search);			
-			
 			dataService.get("/getmultiple/property/1/"+$scope.pageItems, $scope.propertyParam)
 			.then(function(response) {  //function for propertylist response
 				if(response.status == 'success'){
@@ -138,15 +137,53 @@ define(['app'], function (app) {
 		};
 /*****************************************************************************************/		
 	//view single property modal
-		$scope.openProperty = function (url, propertyData, EditId) {
+		$scope.openProperty = function (url, propertyData, id) {
 			var modalDefaults = {
-				templateUrl: url,	// apply template to modal
+				templateUrl: url,
 				size : 'lg'
 			};
 			var modalOptions = {
-				editProperty : EditId,
+				editProperty : id,
 				propDate  : $scope.currentDate,
 				propertyData : propertyData,
+				/* property : {
+					title : propertyData.title,
+					category : propertyData.category,
+					type : propertyData.type,
+					property_description : propertyData.property_description,
+					property_info : 
+					{
+						bedrooms: propertyData.property_info.bedrooms,
+						bathrooms : propertyData.property_info.bathrooms
+					},
+					propertyPrice : propertyData.propertyPrice,
+					deposit : propertyData.deposit,
+					property_images: propertyData.property_images,
+					
+					property_location:{
+					address: propertyData.property_location.address,
+					area: propertyData.property_location.area,
+					location : propertyData.property_location.location,
+					pincode : propertyData.property_location.pincode,
+					city : propertyData.property_location.city,
+					state : propertyData.property_location.state,
+					country : propertyData.property_location.country,
+						optional_property_details:
+						{
+						property_age : propertyData.property_age,
+						ownership : propertyData.ownership,
+						furnished : propertyData.furnished,
+						property_floor : propertyData.property_floor,
+						facing:propertyData.facing,
+						parking : propertyData.parking,
+						transType : propertyData.transType
+						},
+					},
+					landmarks:{
+					hospitals : propertyData.landmarks.hospitals,
+					railway : propertyData.landmarks.railway
+					}
+				}, */
 				getCustomer : function(modalOptions){
 					dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id}).then(function(customer) {
 						modalOptions.customerList = customer.data;
@@ -198,7 +235,7 @@ define(['app'], function (app) {
 				},
 				addProperty : function(property){
 					console.log(property);
-				 var userInfo = $rootScope.userDetails.id;
+				var userInfo = $rootScope.userDetails.id;
 				property.user_id= $rootScope.userDetails.id;
 				property.date = $scope.currentDate;
 				property : { property_images : []}
@@ -223,23 +260,32 @@ define(['app'], function (app) {
 							$notification[response.status]("", response.message);
 						}
 					});
-					},
-					generateThumb : function(files){  
-						upload.generateThumbs(files);
-					},
+				},
+				generateThumb : function(files){  
+					upload.generateThumbs(files);
+				},
 				
-				updateData : function(property) {
-					dataService.put("put/property/"+EditId,property)
+				updateData : function(id,property) {
+					dataService.put("put/property/"+id,property)
 					.then(function(response) {
 						if(response.status == "success"){
-						}
+							if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+							$notification[response.status]("Property Updated", response.message);
+						}else{
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-						$notification[response.status]("Add record", response.message);
+						$notification[response.status]("Update Failed", response.message);
+						}
 					});
 				}
 			};
 			
 			modalService.show(modalDefaults,modalOptions).then(function (result) {
+				if(modalOptions.property.id == undefined){
+					modalOptions.updateData(modalOptions.property.id,modalOptions.property);
+				}
+				else{
+					modalOptions.addProperty(modalOptions.property);
+				}
 			});
 			
 		};
@@ -312,6 +358,7 @@ define(['app'], function (app) {
 		};
 /**************************************************************************************/				
 		//view multiple records
+		
 		$scope.propertyParam = {status : 1};			
 		angular.extend($scope.propertyParam,$scope.userInfo);
 		dataService.get("getmultiple/property/1/"+$scope.pageItems, $scope.propertyParam)
