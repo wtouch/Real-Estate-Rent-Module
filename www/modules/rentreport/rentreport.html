@@ -45,9 +45,9 @@
 				<td>{{x.taken_date}}</td>
 				<td>{{x.leaving_date}}</td>
 				<td>
-					<a class="btn btn-primary"  ng-click="openRent('modules/rentreport/generateInvoice.html',x)">Generate Invoice</a>
+					<a class="btn btn-primary" ng-disabled="disableInvoice(x.leaving_date)" ng-click="openRent('modules/rentreport/generateInvoice.html',x)">Generate Invoice</a>
 					<a class="btn btn-warning" href="#/dashboard/rentreport/invoice/{{x.property_id}}/{{x.user_id}}">View Invoice</a>
-					<a class="btn btn-info"  ng-click="propertyRelease(x.id)">Release Property</a>
+					<a class="btn btn-info"  ng-click="propertyRelease(x)">Release Property</a>
 				</td>
 			</tr>
 		</table>

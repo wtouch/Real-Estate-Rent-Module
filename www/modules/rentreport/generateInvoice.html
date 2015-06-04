@@ -2,7 +2,7 @@
 	<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
 	<h3>Generate Invoice</h3>
 </div>
-<div class="modal-body row">
+<div class="modal-body row" ng-init="modalOptions.rentData=modalOptions.invoice">
 	<div class="col-sm-6">
 		<form class="form-horizontal" name="receiptForm" name="applyTemplateForm"  novalidate="novalidate" 	ng-submit="receiptForm.$valid">
 			<div class="form-group">
@@ -20,7 +20,7 @@
 			<div class="form-group">
 				<label for="electricity_bill" class="col-sm-6 control-label">Electricity Bill *</label>
 				<div class="col-sm-6">
-					<input type="text" class="form-control" id="electricity_bill"  name="electricity_bill" ng-model="modalOptions.rentData.electricity_bill" ng-init="modalOptions.rentData.electricity_bill = 0" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"  required>
+					<input type="text" class="form-control" id="electricity_bill"  name="electricity_bill" ng-model="modalOptions.rentData.perticulars.electricity_bill" ng-init="modalOptions.rentData.perticulars.electricity_bill = 0" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"  required>
 					<span class="help-block" ng-show="receiptForm.electricity_bill.$dirty && receiptForm.electricity_bill.$invalid">
 					<span ng-show="receiptForm.electricity_bill.$error.required" class="text-danger">Electricity Bill is required.</span>
 					<span ng-show="receiptForm.electricity_bill.$error.pattern" class="text-danger">Enter numbers Only.
@@ -31,7 +31,7 @@
 			<div class="form-group">
 				<label for="water" class="col-sm-6 control-label">Water Bill *</label>
 				<div class="col-sm-6">
-					<input type="text" class="form-control " id="water"  name="water" ng-model="modalOptions.rentData.water_charge" ng-init="modalOptions.rentData.water_charge = modalOptions.rentList.water_charge" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"  required>
+					<input type="text" class="form-control " id="water"  name="water" ng-model="modalOptions.rentData.perticulars.water_charge" ng-init="modalOptions.rentData.perticulars.water_charge = modalOptions.rentList.water_charge" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"  required>
 					<span class="help-block" ng-show="receiptForm.water.$dirty && receiptForm.water.$invalid">
 					<span ng-show="receiptForm.water.$error.required" class="text-danger">Water Bill is required.</span>
 					<span ng-show="receiptForm.water.$error.pattern" class="text-danger">Enter numbers Only.
@@ -42,7 +42,7 @@
 			<div class="form-group">
 				<label for="maintenance" class="col-sm-6 control-label">Maintenance *</label>
 				<div class="col-sm-6">
-					<input type="text" class="form-control " id="maintenance" name="maintenance" ng-model="modalOptions.rentData.maintenance" ng-init="modalOptions.rentData.maintenance = modalOptions.rentList.maintenance" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"  required>
+					<input type="text" class="form-control " id="maintenance" name="maintenance" ng-model="modalOptions.rentData.perticulars.maintenance" ng-init="modalOptions.rentData.perticulars.maintenance = modalOptions.rentList.maintenance" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"  required>
 					<span class="help-block" ng-show="receiptForm.maintenance.$dirty && receiptForm.maintenance.$invalid">
 					<span ng-show="receiptForm.maintenance.$error.required" class="text-danger">maintenance is required.</span>
 					<span ng-show="receiptForm.maintenance.$error.pattern" class="text-danger">Enter numbers Only.
@@ -87,21 +87,21 @@
 		<div class="table-responsive">
 			<table class="table bordered" ng-init="modalOptions.getTotal(modalOptions.rentData, modalOptions); modalOptions.rentData.total_amount = modalOptions.total_amount">
 				<thead><th colspan="2">Total Amount Details</th></thead>
-				<tr><td>Licence Fees :</td><td class="text-right">{{modalOptions.rentData.rent}}</td></tr>
-				<tr><td>Electricity_bill :</td><td class="text-right">{{modalOptions.rentData.electricity_bill}}</td></tr>
-				<tr><td>Water charge :</td><td class="text-right">{{modalOptions.rentData.water_charge}}</td></tr>
-				<tr><td>maintenance :</td><td class="text-right">{{modalOptions.rentData.maintenance}}</td></tr>
-				<tr><td>Service Tax :</td><td class="text-right"> {{modalOptions.rentData.perticulars.tax}}</td></tr>
-				<tr><td>Other Tax :</td><td class="text-right">{{modalOptions.rentData.perticulars.other_tax}}</td></tr>
-				<tr><td>LESS TDS :</td><td class="text-right"> -{{modalOptions.rentData.perticulars.tds}}</td></tr>
-				<tr><td>Primary Education Cess:</td><td class="text-right">{{modalOptions.rentData.perticulars.primaryeducation}}</td></tr>
-				<tr><td>Secondary Education Cess:</td><td class="text-right">{{modalOptions.rentData.perticulars.secondaryeducation}}</td></tr>
-				<tr><td><b>Total  :</b></td><td class="text-right">{{modalOptions.total_amount}}</td></tr>
+				<tr><td>Licence Fees :</td><td class="text-right">{{modalOptions.rentData.rent | number : 2}}</td></tr>
+				<tr><td>Electricity_bill :</td><td class="text-right">{{modalOptions.rentData.perticulars.electricity_bill | number : 2}}</td></tr>
+				<tr><td>Water charge :</td><td class="text-right">{{modalOptions.rentData.perticulars.water_charge | number : 2}}</td></tr>
+				<tr><td>maintenance :</td><td class="text-right">{{modalOptions.rentData.perticulars.maintenance | number : 2}}</td></tr>
+				<tr><td>Service Tax :</td><td class="text-right"> {{modalOptions.rentData.perticulars.tax | number : 2}}</td></tr>
+				<tr><td>Other Tax :</td><td class="text-right">{{modalOptions.rentData.perticulars.other_tax | number : 2}}</td></tr>
+				<tr><td>LESS TDS :</td><td class="text-right"> -{{modalOptions.rentData.perticulars.tds | number : 2}}</td></tr>
+				<tr><td>Primary Education Cess:</td><td class="text-right">{{modalOptions.rentData.perticulars.primaryeducation | number : 2}}</td></tr>
+				<tr><td>Secondary Education Cess:</td><td class="text-right">{{modalOptions.rentData.perticulars.secondaryeducation | number : 2}}</td></tr>
+				<tr><td><b>Total  :</b></td><td class="text-right">{{modalOptions.total_amount | number : 2}}</td></tr>
 			</table>
 		</div>
 	</div>
 </div>
 <div class="modal-footer">
 	<button type="submit" ng-disabled="receiptForm.$invalid" class="btn btn-success" ng-click="modalOptions.formData(modalOptions.rentData, modalOptions.total_amount); modalOptions.ok()">Generate Invoice</button>
-	<button type="reset" class="btn btn-warning">Reset</button>
+	<button type="button" class="btn btn-warning" ng-click="modalOptions.close()">Cancel</button>
 </div>

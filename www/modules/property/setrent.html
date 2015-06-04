@@ -64,7 +64,9 @@
 		<div class="form-group">	
 			<label for="taken_date" class="col-sm-2 control-label">Licence Fee Date*</label>
 			<div class="col-sm-9">
-				<input type="text" id="date_of_rent" class="form-control" name="date_of_rent" ng-model="modalOptions.setrent.date_of_rent"  ng-init="modalOptions.setrent.date_of_rent = modalOptions.propDate" readonly  placeholder="date" required/>
+				<select type="text" id="date_of_rent" class="form-control" name="date_of_rent" ng-model="modalOptions.setrent.date_of_rent"  placeholder="date" required>
+					<option value="">Select Licence Fee Date</option>
+				</select>
 			</div>						
 		</div>
 		

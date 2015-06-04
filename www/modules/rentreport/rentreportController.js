@@ -18,6 +18,12 @@ define(['app'], function (app) {
 		$scope.currentDate = curDate.getFullYear() + "-" + month + "-" + curDate.getDate();
 		$scope.rentParams = {};
 		
+		$scope.disableInvoice = function(leaving_date){
+			if(leaving_date <= $scope.currentDate){
+				return true;
+			}
+			return false;
+		}
 		
 		var accountConfig = $rootScope.userDetails.config.rentsetting;
 		$scope.config = {
@@ -51,8 +57,7 @@ define(['app'], function (app) {
 			}
 		}
 		$scope.serviceTax = function(rent){
-			//console.log(parseFloat($rootScope.userDetails.config.rentsetting.service_tax));
-			return rent * parseFloat($rootScope.userDetails.config.rentsetting.service_tax) / 100; // other_tax - secondary_edu_cess - primary_edu_cess
+			return rent * parseFloat($rootScope.userDetails.config.rentsetting.service_tax) / 100; 
 		}
 		$scope.primaryEduCess = function(rent){
 			return $scope.serviceTax(rent) * parseInt($rootScope.userDetails.config.rentsetting.primary_edu_cess) / 100;
@@ -72,14 +77,14 @@ define(['app'], function (app) {
 		$scope.rentDate = {};
 /**************************************************************************/
 /*Generate Invoice Modal function Open Rent*/
-		$scope.openRent = function (url,rent_data) {
+		$scope.openRent = function (url,invoice) {
 			$scope.rentYear = [];
 				var modalDefaults = {
 					templateUrl: url,	
 					size : 'lg'
 				};
 				var modalOptions = {
-					rentList : rent_data,
+					rentList : invoice,
 					rentDate: { date : $scope.currentDate, due_date : $scope.dueDate },
 					accountConfig : $rootScope.userDetails.config.rentsetting,
 					total_amount : 0,
@@ -87,21 +92,21 @@ define(['app'], function (app) {
 					getTotal : function(rentData, modalOptions){
 						if(rentData.perticulars == undefined) rentData.perticulars = {};
 						console.log(rentData.perticulars);
-						rentData.perticulars.tax = $scope.serviceTax(rentData.rent).toFixed(2);
-						rentData.perticulars.tds = $scope.tds(rentData.rent).toFixed(2);
-						rentData.perticulars.other_tax = $scope.otherTax(rentData.rent).toFixed(2);
-						rentData.perticulars.primaryeducation = $scope.primaryEduCess(rentData.rent).toFixed(2);
-						rentData.perticulars.secondaryeducation = $scope.secondaryEduCess(rentData.rent).toFixed(2);
-						rentData.rent = parseFloat(rentData.rent).toFixed(2);
-						var rent = parseFloat(rentData.rent).toFixed(2);
-						var maintainance = (rentData.maintainance) ? rentData.maintainance : 0;
+						rentData.perticulars.tax = $scope.serviceTax(rentData.rent);
+						rentData.perticulars.tds = $scope.tds(rentData.rent);
+						rentData.perticulars.other_tax = $scope.otherTax(rentData.rent);
+						rentData.perticulars.primaryeducation = $scope.primaryEduCess(rentData.rent);
+						rentData.perticulars.secondaryeducation = $scope.secondaryEduCess(rentData.rent);
+						
+						var rent = parseFloat(rentData.rent);
+						var maintenance = (rentData.maintenance) ? rentData.maintenance : 0;
 						var electricity_bill = (rentData.electricity_bill) ? rentData.electricity_bill : 0;
 						var water_charge = (rentData.water_charge) ? rentData.water_charge : 0;
 						
-						var totalAmount =  Math.round((parseFloat(rent) + parseFloat($scope.serviceTax(rent)) + parseFloat($scope.otherTax(rent)) + parseFloat($scope.primaryEduCess(rent)) + parseFloat($scope.secondaryEduCess(rent)) + parseFloat(maintainance) + parseFloat(electricity_bill) + parseFloat(water_charge))  - parseFloat($scope.tds(rent)));
-						modalOptions.service_tax = parseFloat(service_tax).toFixed(2);
-						modalOptions.other_tar = parseFloat(other_tax).toFixed(2);
-						modalOptions.total_amount = parseFloat(totalAmount).toFixed(2);
+						var totalAmount = ((parseFloat(rent) + parseFloat($scope.serviceTax(rent)) + parseFloat($scope.otherTax(rent)) + parseFloat($scope.primaryEduCess(rent)) + parseFloat($scope.secondaryEduCess(rent)) + parseFloat(maintenance) + parseFloat(electricity_bill) + parseFloat(water_charge))  - parseFloat($scope.tds(rent)));
+						modalOptions.service_tax = parseFloat(service_tax);
+						modalOptions.other_tar = parseFloat(other_tax);
+						modalOptions.total_amount = parseFloat(totalAmount);
 					},
 					formData : function(rentData, total_amount){
 						var due_date = new Date(rentData.generated_date);
@@ -128,14 +133,22 @@ define(['app'], function (app) {
 		};
 /**************************************************************************************************/
 /*Property Release Function*/
-$scope.propertyRelease = function (x){
-	dataService.put("put/account/"+id,x)
-					.then(function(response) {
-						if(response.status == "success"){
-						}
-						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-						$notification[response.status]("Add record", response.message);
-					});
+$scope.propertyRelease = function (data){
+	var curLeavingDate = new Date($scope.currentDate);
+	var leavingDate = {leaving_date : curLeavingDate};
+	var available = {availability : 1};
+	dataService.put("put/rent/"+data.id,leavingDate)
+	.then(function(response) {
+		if(response.status == "success"){
+			dataService.put("put/property/"+data.property_id,available)
+			.then(function(response) {
+				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+				$notification[response.status]("Property Availability", response.message);
+			});
+		}
+		if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+		$notification[response.status]("Release Property", response.message);
+	});
 }
 /**************************************************************************************************/		
 		// code for generate invoice
