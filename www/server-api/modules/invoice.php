@@ -80,6 +80,12 @@
 		echo json_encode($update);
 	}
 	
+	if($reqMethod=="POST" && $_GET['METHOD'] == 'DELETE'){
+		$where['id'] = $id;
+		$delete = $db->delete("invoice", $where);
+		echo json_encode($delete);
+	}
+	
 	if($reqMethod=="POST" && $_GET['METHOD'] == 'POST'){
 		$insert = $db->insert("invoice", $body);
 		echo json_encode($insert);

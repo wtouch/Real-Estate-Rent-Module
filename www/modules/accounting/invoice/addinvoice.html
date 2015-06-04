@@ -2,13 +2,13 @@
 	<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
 	<h3>Generate Invoice</h3>
 </div>
-<div class="modal-body row" ng-init="modalOptions.rentData=modalOptions.invoice">
+<div class="modal-body row">
 	<div class="col-sm-6">
 		<form class="form-horizontal" name="receiptForm" name="applyTemplateForm"  novalidate="novalidate" 	ng-submit="receiptForm.$valid">
 			<div class="form-group">
 				<label for="amount" class="col-sm-6 control-label">Licence Fees *</label>
 				<div class="col-sm-6">
-					<input type="text" class="form-control" id="amount" name="amount" ng-model="modalOptions.rentData.rent" ng-init="modalOptions.rentData.rent = modalOptions.rentList.rent" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" required>
+					<input type="text" class="form-control" id="amount" name="amount" ng-model="modalOptions.rentData.perticulars.rent" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" required>
 					<span class="help-block" ng-show="receiptForm.amount.$dirty && receiptForm.amount.$invalid">
 					<span ng-show="receiptForm.amount.$error.required" class="text-danger">Licence Fees Required is required.</span>
 					<span ng-show="receiptForm.amount.$error.pattern" class="text-danger">Enter numbers Only.
@@ -20,7 +20,7 @@
 			<div class="form-group">
 				<label for="electricity_bill" class="col-sm-6 control-label">Electricity Bill *</label>
 				<div class="col-sm-6">
-					<input type="text" class="form-control" id="electricity_bill"  name="electricity_bill" ng-model="modalOptions.rentData.perticulars.electricity_bill" ng-init="modalOptions.rentData.perticulars.electricity_bill = 0" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"  required>
+					<input type="text" class="form-control" id="electricity_bill"  name="electricity_bill" ng-model="modalOptions.rentData.perticulars.electricity_bill" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"  required>
 					<span class="help-block" ng-show="receiptForm.electricity_bill.$dirty && receiptForm.electricity_bill.$invalid">
 					<span ng-show="receiptForm.electricity_bill.$error.required" class="text-danger">Electricity Bill is required.</span>
 					<span ng-show="receiptForm.electricity_bill.$error.pattern" class="text-danger">Enter numbers Only.
@@ -31,7 +31,7 @@
 			<div class="form-group">
 				<label for="water" class="col-sm-6 control-label">Water Bill *</label>
 				<div class="col-sm-6">
-					<input type="text" class="form-control " id="water"  name="water" ng-model="modalOptions.rentData.perticulars.water_charge" ng-init="modalOptions.rentData.perticulars.water_charge = modalOptions.rentList.perticulars.water_charge" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"  required>
+					<input type="text" class="form-control " id="water"  name="water" ng-model="modalOptions.rentData.perticulars.water_charge"  ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"  required>
 					<span class="help-block" ng-show="receiptForm.water.$dirty && receiptForm.water.$invalid">
 					<span ng-show="receiptForm.water.$error.required" class="text-danger">Water Bill is required.</span>
 					<span ng-show="receiptForm.water.$error.pattern" class="text-danger">Enter numbers Only.
@@ -42,7 +42,7 @@
 			<div class="form-group">
 				<label for="maintenance" class="col-sm-6 control-label">Maintenance *</label>
 				<div class="col-sm-6">
-					<input type="text" class="form-control " id="maintenance" name="maintenance" ng-model="modalOptions.rentData.perticulars.maintenance" ng-init="modalOptions.rentData.perticulars.maintenance = modalOptions.rentList.perticulars.maintenance" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"  required>
+					<input type="text" class="form-control " id="maintenance" name="maintenance" ng-model="modalOptions.rentData.perticulars.maintenance" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"  required>
 					<span class="help-block" ng-show="receiptForm.maintenance.$dirty && receiptForm.maintenance.$invalid">
 					<span ng-show="receiptForm.maintenance.$error.required" class="text-danger">maintenance is required.</span>
 					<span ng-show="receiptForm.maintenance.$error.pattern" class="text-danger">Enter numbers Only.
@@ -87,7 +87,7 @@
 		<div class="table-responsive">
 			<table class="table bordered" ng-init="modalOptions.getTotal(modalOptions.rentData, modalOptions); modalOptions.rentData.total_amount = modalOptions.total_amount">
 				<thead><th colspan="2">Total Amount Details</th></thead>
-				<tr><td>Licence Fees :</td><td class="text-right">{{modalOptions.rentData.rent | number : 2}}</td></tr>
+				<tr><td>Licence Fees :</td><td class="text-right">{{modalOptions.rentData.perticulars.rent | number : 2}}</td></tr>
 				<tr><td>Electricity_bill :</td><td class="text-right">{{modalOptions.rentData.perticulars.electricity_bill | number : 2}}</td></tr>
 				<tr><td>Water charge :</td><td class="text-right">{{modalOptions.rentData.perticulars.water_charge | number : 2}}</td></tr>
 				<tr><td>maintenance :</td><td class="text-right">{{modalOptions.rentData.perticulars.maintenance | number : 2}}</td></tr>

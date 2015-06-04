@@ -18,9 +18,10 @@ define(['app'], function (app) {
 		$scope.currentDate = dataService.currentDate;
 /*******************************************************************/
 		var curDate = new Date();
-		var month = curDate.getMonth() + 1;
-		month = (month <= 9) ? '0' + month : month;
-		$scope.currentDate = curDate.getFullYear() + "-" + month + "-" + curDate.getDate();
+		var curMonth = curDate.getMonth() + 1;
+		curMonth = (curMonth <= 9) ? '0' + curMonth : curMonth;
+		$scope.currentDate = curDate.getFullYear() + "-" + curMonth + "-" + curDate.getDate();
+
 		$scope.rentParams = {};
 		
 		
@@ -74,33 +75,63 @@ define(['app'], function (app) {
 			popupWin.document.close();
 		} 
 		
-		$scope.rentDate = {};
-/***********************************************************************************/
-$scope.openGenerateinvoice = function (url,invoice) {
+		$scope.inWords = function(totalRent){
+			var a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
+			var b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
+			var num = totalRent;
+			
+			if ((num = num.toString()).length > 9) return 'overflow';
+			var n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+			if (!n) return; var str = '';
+			str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + ' ' + a[n[1][1]]) + 'crore ' : '';
+			str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + ' ' + a[n[2][1]]) + 'lakh ' : '';
+			str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + ' ' + a[n[3][1]]) + 'thousand ' : '';
+			str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + ' ' + a[n[4][1]]) + 'hundred ' : '';
+			str += (n[5] != 0) ? ((str != '') ? 'and ' : '') + (a[Number(n[5])] || b[n[5][0]] + ' ' + a[n[5][1]]) + 'only! ' : '';
+			return str;
+		}
+		
+		/***********************************************************************************/
+		$scope.openGenerateinvoice = function (url,invoice) {
 			$scope.rentYear = [];
 				var modalDefaults = {
 					templateUrl: url,	
 					size : 'lg'
 				};
+				if(invoice){
+					var genDate = (invoice.generated_date) ? new Date(invoice.generated_date) : {};
+				}
+
 				var modalOptions = {
-					rentList : invoice,
+					rentList : (invoice) ? invoice : {},
 					rentDate: { date : $scope.currentDate, due_date : $scope.dueDate },
 					accountConfig : $rootScope.userDetails.config.rentsetting,
 					total_amount : 0,
-					rentData : {},
+					rentData : (invoice) ? invoice : {},
+					inWords : (invoice) ? $scope.inWords(invoice.total_amount) : "",
+					generated_date : (genDate) ? {month : genDate.getMonth(), year : genDate.getFullYear()} : {},
+					generatedDate : {month : curMonth, year : curDate.getFullYear()},
+					printDiv : function(divName) {
+						var printContents = document.getElementById(divName).innerHTML;
+						var popupWin = window.open('', '_blank', 'width=1000,height=620');
+						popupWin.document.open()
+						popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /><link rel="stylesheet" type="text/css" href="css/style.css" /></head><body onload="window.print()">' + printContents + '</html>');
+						popupWin.document.close();
+					},
 					getTotal : function(rentData, modalOptions){
 						if(rentData.perticulars == undefined) rentData.perticulars = {};
 						console.log(rentData.perticulars);
-						rentData.perticulars.tax = $scope.serviceTax(rentData.rent);
-						rentData.perticulars.tds = $scope.tds(rentData.rent);
-						rentData.perticulars.other_tax = $scope.otherTax(rentData.rent);
-						rentData.perticulars.primaryeducation = $scope.primaryEduCess(rentData.rent);
-						rentData.perticulars.secondaryeducation = $scope.secondaryEduCess(rentData.rent);
+						var rent = parseFloat(rentData.perticulars.rent);
 						
-						var rent = parseFloat(rentData.rent);
-						var maintenance = (rentData.maintenance) ? rentData.maintenance : 0;
-						var electricity_bill = (rentData.electricity_bill) ? rentData.electricity_bill : 0;
-						var water_charge = (rentData.water_charge) ? rentData.water_charge : 0;
+						rentData.perticulars.tax = $scope.serviceTax(rent);
+						rentData.perticulars.tds = $scope.tds(rent);
+						rentData.perticulars.other_tax = $scope.otherTax(rent);
+						rentData.perticulars.primaryeducation = $scope.primaryEduCess(rent);
+						rentData.perticulars.secondaryeducation = $scope.secondaryEduCess(rent);
+						
+						var maintenance = (rentData.perticulars.maintenance) ? rentData.perticulars.maintenance : 0;
+						var electricity_bill = (rentData.perticulars.electricity_bill) ? rentData.perticulars.electricity_bill : 0;
+						var water_charge = (rentData.perticulars.water_charge) ? rentData.perticulars.water_charge : 0;
 						
 						var totalAmount = ((parseFloat(rent) + parseFloat($scope.serviceTax(rent)) + parseFloat($scope.otherTax(rent)) + parseFloat($scope.primaryEduCess(rent)) + parseFloat($scope.secondaryEduCess(rent)) + parseFloat(maintenance) + parseFloat(electricity_bill) + parseFloat(water_charge))  - parseFloat($scope.tds(rent)));
 						modalOptions.service_tax = parseFloat(service_tax);
@@ -109,6 +140,7 @@ $scope.openGenerateinvoice = function (url,invoice) {
 					},
 					formData : function(rentData, total_amount){
 						var due_date = new Date(rentData.generated_date);
+						rentData.id = modalOptions.rentList.id;
 						rentData.user_id = modalOptions.rentList.user_id;
 						rentData.property_id = modalOptions.rentList.property_id;
 						due_date.setDate(due_date.getMonth() + modalOptions.rentList.duration);
@@ -116,20 +148,26 @@ $scope.openGenerateinvoice = function (url,invoice) {
 						rentData.total_amount = total_amount;
 						modalOptions.invoice = rentData;
 					},
+					updateData : function(id,invoice){
+							dataService.put("put/invoice/"+id,invoice)
+							.then(function(response) {  
+							if(response.status == "success"){
+								console.log(response);
+							}
+							if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+							$notification[response.status]("Rent Receipt Generated", response.message);
+						});
+					}
 					
 				};
 				modalService.showModal(modalDefaults,modalOptions).then(function (result) {
-					console.log(modalOptions.invoice);
-					 dataService.post("post/invoice",modalOptions.invoice)
-					.then(function(response) {  
-						if(response.status == "success"){
-							console.log(response);
-						}
-						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-						$notification[response.status]("Rent Receipt Generated", response.message);
-					});  
+					if(modalOptions.invoice.id){modalOptions.updateData(modalOptions.invoice.id,modalOptions.invoice);}
 				});
 		};
+/*************************************************************************************/
+$scope.openGenerateinvoice = function (url,invoice) {
+	
+}
 /***********************************************************************************/
 		$scope.getInvoices = function(page){
 			dataService.get("getmultiple/invoice/"+page+"/"+$scope.pageItems, $scope.userInfo)
@@ -149,9 +187,9 @@ $scope.openGenerateinvoice = function (url,invoice) {
 /*Delete Account Funtion*/
 			$scope.deleted = function(id, status){
 				$scope.deletedData = {status : status};
-				var del = confirm("Are you sure?");
+				var del = confirm("Do you really want to delete this?");
 				if(del){
-					dataService.put("put/invoice/"+id, $scope.deletedData)
+					dataService.delete("delete/invoice/"+id, $scope.deletedData)
 					.then(function(response) { 
 						if(response.status == 'success'){
 							$scope.hideDeleted = 1;

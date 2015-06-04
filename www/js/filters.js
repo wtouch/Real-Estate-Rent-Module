@@ -23,10 +23,22 @@ define([], function () {
             }
             var result = [];
             for (var i = lowBound; i <= highBound; i++)
-                result.push(i);
+				if(i <=9) result.push("0" + i);
+				else result.push(i);
             return result;
         };
 	});
+	
+	app.filter('replace', function () {
+		return function(text, input, output) {
+			//console.log(input);
+			for(var x in input){
+				var re = new RegExp(x,"g");
+				return text.replace(re, input[x]);
+			}
+			
+		}
+	})
 	
 	return app;
 });
