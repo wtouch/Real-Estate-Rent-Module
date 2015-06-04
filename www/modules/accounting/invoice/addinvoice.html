@@ -31,7 +31,7 @@
 			<div class="form-group">
 				<label for="water" class="col-sm-6 control-label">Water Bill *</label>
 				<div class="col-sm-6">
-					<input type="text" class="form-control " id="water"  name="water" ng-model="modalOptions.rentData.perticulars.water_charge" ng-init="modalOptions.rentData.perticulars.water_charge = modalOptions.rentList.water_charge" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"  required>
+					<input type="text" class="form-control " id="water"  name="water" ng-model="modalOptions.rentData.perticulars.water_charge" ng-init="modalOptions.rentData.perticulars.water_charge = modalOptions.rentList.perticulars.water_charge" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"  required>
 					<span class="help-block" ng-show="receiptForm.water.$dirty && receiptForm.water.$invalid">
 					<span ng-show="receiptForm.water.$error.required" class="text-danger">Water Bill is required.</span>
 					<span ng-show="receiptForm.water.$error.pattern" class="text-danger">Enter numbers Only.
@@ -42,7 +42,7 @@
 			<div class="form-group">
 				<label for="maintenance" class="col-sm-6 control-label">Maintenance *</label>
 				<div class="col-sm-6">
-					<input type="text" class="form-control " id="maintenance" name="maintenance" ng-model="modalOptions.rentData.perticulars.maintenance" ng-init="modalOptions.rentData.perticulars.maintenance = modalOptions.rentList.maintenance" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"  required>
+					<input type="text" class="form-control " id="maintenance" name="maintenance" ng-model="modalOptions.rentData.perticulars.maintenance" ng-init="modalOptions.rentData.perticulars.maintenance = modalOptions.rentList.perticulars.maintenance" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/"  required>
 					<span class="help-block" ng-show="receiptForm.maintenance.$dirty && receiptForm.maintenance.$invalid">
 					<span ng-show="receiptForm.maintenance.$error.required" class="text-danger">maintenance is required.</span>
 					<span ng-show="receiptForm.maintenance.$error.pattern" class="text-danger">Enter numbers Only.

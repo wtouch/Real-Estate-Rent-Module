@@ -70,6 +70,8 @@ define(['app'], function (app) {
 /***********************************************************************************/
 /*Delete Account Funtion*/
 			$scope.deleted = function(id, status){
+				 var x = confirm("Do you really want to delete this.");
+				 if(x){
 				$scope.deletedData = {status : status};
 				dataService.delete("delete/account/"+id, $scope.deletedData)
 				.then(function(response) { 
@@ -79,6 +81,10 @@ define(['app'], function (app) {
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 					$notification[response.status]("The Account is deleted", response.message);
 				});
+				 }
+				 else{
+					 alert("cancelled");
+				 }
 			};
 /**************************************************************/
 $scope.changeStatus = function(page, column, value, search) {
