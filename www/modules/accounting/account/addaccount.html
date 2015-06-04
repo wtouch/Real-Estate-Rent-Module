@@ -1,8 +1,8 @@
 <div class="main-content" ng-init="account = modalOptions.account;account.user_id = userDetails.id;modalOptions.getParty(modalOptions)">
 					<div class="modal-header" style="margin-bottom: 18px">
 						<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
-						<h3 ng-if="!modalOptions.account">Add Account</h3>
-						<h3 ng-if="modalOptions.account">Edit Account</h3>
+						<h3 ng-if="!modalOptions.account.id">Add Account</h3>
+						<h3 ng-if="modalOptions.account.id">Edit Account</h3>
 					</div>
 		<form name="addAccountForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="addAccountForm.$valid">
 				<div class="form-group">
@@ -36,8 +36,9 @@
 						<label for="accountname" class="col-sm-2 control-label">Account Name * </label>
 						<div class="col-sm-9">
 							<input type="text"  id="accountname" class="form-control" name="accountname" placeholder=" Account Name" ng-model="modalOptions.account.account_name" required>
-							<input type="hidden"  id="user_id" class="form-control" name="user_id" placeholder=" Account Name" ng-model="modalOptions.account.user_id" required>
+							<input type="hidden"  id="user_id" class="form-control" name="user_id" placeholder=" Account Name" ng-model="modalOptions.account.user_id" ng-minlength="4" required>
 							<span class="help-block" ng-show="addAccountForm.accountname.$dirty && addAccountForm.accountname.$invalid">
+							<span class="text-danger" ng-show="addAccountForm.accountname.$error.minlength"> Account Name is too short !</span>
 							<span class="text-danger" ng-show="addAccountForm.accountname.$error.required"> Account Name is required.</span>
 						</span>
 						</div>
