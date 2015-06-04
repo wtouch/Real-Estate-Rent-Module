@@ -16,7 +16,7 @@ define(['app'], function (app) {
 		var month = curDate.getMonth() + 1;
 		month = (month <= 9) ? '0' + month : month;
 		$scope.currentDate = curDate.getFullYear() + "-" + month + "-" + curDate.getDate();
-		$scope.rentParams = {};
+		$scope.rentParams = {status : 1, user_id : $rootScope.userDetails.id};
 		
 		$scope.disableInvoice = function(leaving_date){
 			if(leaving_date <= $scope.currentDate){
@@ -133,23 +133,23 @@ define(['app'], function (app) {
 		};
 /**************************************************************************************************/
 /*Property Release Function*/
-$scope.propertyRelease = function (data){
-	var curLeavingDate = new Date($scope.currentDate);
-	var leavingDate = {leaving_date : curLeavingDate};
-	var available = {availability : 1};
-	dataService.put("put/rent/"+data.id,leavingDate)
-	.then(function(response) {
-		if(response.status == "success"){
-			dataService.put("put/property/"+data.property_id,available)
+		$scope.propertyRelease = function (data){
+			var curLeavingDate = new Date($scope.currentDate);
+			var leavingDate = {leaving_date : curLeavingDate};
+			var available = {availability : 1};
+			dataService.put("put/rent/"+data.id,leavingDate)
 			.then(function(response) {
+				if(response.status == "success"){
+					dataService.put("put/property/"+data.property_id,available)
+					.then(function(response) {
+						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+						$notification[response.status]("Property Availability", response.message);
+					});
+				}
 				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-				$notification[response.status]("Property Availability", response.message);
+				$notification[response.status]("Release Property", response.message);
 			});
 		}
-		if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-		$notification[response.status]("Release Property", response.message);
-	});
-}
 /**************************************************************************************************/		
 		// code for generate invoice
 		if($routeParams.propertyId) {
@@ -235,17 +235,19 @@ $scope.propertyRelease = function (data){
 			});
 		};
 			
-		$scope.pageChanged = function(page, rentParams) {
+		
+		$scope.getRentData = function(page, rentParams) {
 			dataService.get("getmultiple/rent/"+page+"/"+$scope.pageItems, rentParams)
-			.then(function(response) { 
-				$scope.rentData = response.data;			
-			});
-		}; 
-		$scope.getRentData = function() {
-			var rentParams = {user_id : $rootScope.userDetails.id};
-			dataService.get("getmultiple/rent/1/"+$scope.pageItems, rentParams)
-			.then(function(response) { 
-				$scope.rentData = response.data;			
+			.then(function(response) {  //function for templatelist response
+				if(response.status == 'success'){
+					$scope.rentData = response.data;
+					$scope.totalRecords = response.totalRecords;
+				}else{
+					$scope.rentData = [];
+					$scope.totalRecords = 0;
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Get Rent", response.message);
+				}
 			});
 		}; 
 		
@@ -261,50 +263,36 @@ $scope.propertyRelease = function (data){
 		});
 		
 		//global method for filter 
-		$scope.changeStatus = function(statusCol, colValue) {
-			$scope.filterStatus= {};
-			(colValue == "") ? delete $scope.rentParams[statusCol] : $scope.filterStatus[statusCol] = colValue;
-			angular.extend($scope.rentParams, $scope.filterStatus);
-			if(statusCol == 'user_id' && colValue == null) {
+		$scope.changeStatus = function(column, value, search) {
+			if(search){
+				$scope.rentParams.search = true;
+			}
+			if(search && value == ""){
+				delete $scope.rentParams['search'];
+			}
+			
+			(value == "") ? delete $scope.rentParams[column] : $scope.rentParams[column] = value;
+			
+			if(column == 'user_id' && value == null) {
 				angular.extend($scope.rentParams,  $scope.userInfo);
 			}
-			dataService.get("getmultiple/rent/1/"+$scope.pageItems, $scope.rentParams)
-			.then(function(response) {  //function for templatelist response
-				if(response.status == 'success'){
-					$scope.rentData = response.data;
-					$scope.totalRecords = response.totalRecords;
-				}else{
-					$scope.rentData = {};
-					$scope.totalRecords = {};
-					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$notification[response.status]("Get Rent", response.message);
-				}
-			});
-		};
-		
-		
-		//function to search filter
-		$scope.searchFilter = function(statusCol, colValue) {
-			$scope.search = {search: true};
-			$scope.filterStatus= {};
-			(colValue =="") ? delete $scope.rentParams[statusCol] : $scope.filterStatus[statusCol] = colValue;
-			angular.extend($scope.rentParams, $scope.filterStatus, $scope.search);
-			if(colValue.length >= 4 || colValue ==""){
-				dataService.get("getmultiple/rent/1/"+$scope.pageItems, $scope.rentParams)
-				.then(function(response) {  
-					if(response.status == 'success'){
-						$scope.rentData = response.data;
-						$scope.totalRecords = response.totalRecords;
-					}else{
-						$scope.rentData = {};
-						$scope.totalRecords = {};
-						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-						$notification[response.status]("Rent Filter", response.message);
-					}
-				});
+			if(search && (value.length >= 4 || value =="")){
+				$scope.getRentData($scope.rentListCurrentPage, $scope.rentParams);
+			}else{
+				$scope.getRentData($scope.rentListCurrentPage, $scope.rentParams);
 			}
 		};
-		
+		//global method for filter 
+		$scope.orderBy = function(column, value, orderBy) {
+			if(orderBy){
+				$scope.rentParams.orderBy = value;
+			}
+			if(orderBy && value == ""){
+				delete $scope.rentParams['orderBy'];
+			}
+			
+			$scope.getRentData($scope.rentListCurrentPage, $scope.rentParams);
+		};
 	};
 		
 	// Inject controller's dependencies

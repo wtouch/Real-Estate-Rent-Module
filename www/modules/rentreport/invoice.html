@@ -1,126 +1,134 @@
-<div class="main-content" >
-<ng-include src="'modules/component/toolbar.html'"></ng-include>
-<form class="form-horizontal" >
-	<button class="btn btn-primary pull-right" ng-click="printDiv('invoice')" >PRINT</button>
-		<div class="form-group">
-			<div class="col-sm-5">
-				<label for="year" class="control-label">Year</label>
-				<select class="form-control" name="year" id="year"  ng-model="generatedDate.year" ng-init="generatedDate.year = rentYear.curYear" ng-options="item as item for item in invoiceyear">	
-					<option value=" "></option>
-				</select>
+<div class="modal-header">
+	<button type="button" class="close" ng-click="modalOptions.close()">
+		<span aria-hidden="true">&times;</span></button>
+	<h3>Rent This Property</h3>
+</div>
+<div class="modal-body">
+	<form class="form-horizontal" >
+		<button class="btn btn-primary pull-right" ng-click="printDiv('invoice')" >PRINT</button>
+			<div class="form-group">
+				<div class="col-sm-5">
+					<label for="year" class="control-label">Year</label>
+					<select class="form-control" name="year" id="year"  ng-model="generatedDate.year" ng-init="generatedDate.year = rentYear.curYear" ng-options="item as item for item in invoiceyear">	
+						<option value="">Select Year</option>
+					</select>
+				</div>
+				<div class="col-sm-5">
+					<label for="month" class="control-label">Month</label>
+					<select ng-change="getReceiptByMonth(generatedDate)" class="form-control" name="month" id="month"  ng-model="generatedDate.month"  ng-init="generatedDate.month = rentYear.curMonth" ng-options="item as item for item in invoicemonth">
+						<option value="">Select Month</option>
+					</select>
+				</div>
 			</div>
-			<div class="col-sm-5">
-				<label for="month" class="control-label">Month</label>
-				<select ng-change="getReceiptByMonth(generatedDate)" class="form-control" name="month" id="month"  ng-model="generatedDate.month"  ng-init="generatedDate.month = rentYear.curMonth" ng-options="item as item for item in invoicemonth">
-					<option value=" "></option>	
-				</select>
-			</div>
-		</div>
 	</form>
 
-	<!-- Default panel contents -->
-<div class="panel panel-default" id="invoice" ng-if="receiptList">
-	<div class="panel-heading text-center">INVOICE</div>
-	<div class="panel-body row">
-		<div class="col-xs-6">
-			<address class="text-center">
-				{{userDetails.name}}<br>
-				{{userDetails.address.address}}<br>
-				E-Mail : {{userDetails.email}}
-			</address>
-			<hr>
-			<p>To,<br><strong>{{receiptList.name | uppercase}}</strong><br>
-			{{receiptList.address.address}}<br>{{receiptList.address.location}}<br>{{receiptList.address.city}}<br>{{receiptList.address.area}}<br>{{receiptList.address.pincode}}<br>
-			
-			</P>
-		</div>
-		<div class="col-xs-6">
-			<div class="table-responsive">
+	<div class="panel panel-default" id="invoice" ng-if="receiptList">
+		<div class="panel-heading text-center"><h2>INVOICE</h2></div>
+		<div class="panel-body row">
+			<div class="col-xs-6">
+				<address class="text-center">
+					<strong>{{userDetails.name | uppercase}}</strong><br>
+					{{userDetails.address.address}}<br>
+					E-Mail : {{userDetails.email}}
+				</address>
+				<hr>
+				<p>To,<br>
+					<strong>{{receiptList.name | uppercase}}</strong><br>
+					{{receiptList.address.address}}<br>{{receiptList.address.location}}<br>{{receiptList.address.city}}<br>{{receiptList.address.area}}<br>{{receiptList.address.pincode}}<br>				
+				</P>
+			</div>
+			<div class="col-xs-6">
+				<div class="table-responsive">
+					<table class="table table-bordered">
+						<tr class="amt">
+							<td>Invoice No.<br>{{receiptList.id}}
+							</td>
+							<td>Dated<br>
+							{{receiptList.generated_date}}</td>
+						</tr>
+						
+						<tr>
+							<td>Current Month<br>
+							{{generatedDate.month = rentYear.curMonth}}-
+							{{generatedDate.year = rentYear.curYear}}</td>
+							<td>Due Date<br>{{receiptList.due_date}}
+							</td>
+						</tr>
+						
+					</table>
+				</div>
+			</div>
+			<div class="table-responsive col-xs-12">
 				<table class="table table-bordered">
-					<tr class="amt">
-						<td>Invoice No.<br>{{receiptList.id}}
-						</td>
-						<td>Dated<br>
-						{{receiptList.generated_date}}</td>
-					</tr>
-					
-					<tr>
-						<td>Current Month<br>
-						{{generatedDate.month = rentYear.curMonth}}-
-						{{generatedDate.year = rentYear.curYear}}</td>
-						<td>Due Date<br>{{receiptList.due_date}}
-						</td>
-					</tr>
-					
+					<thead>
+						<tr class="head">
+							<th class=" col-xs-8">Particulars</th>
+							<th class=" col-xs-2">Amount</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Rent</td>
+							<td>{{receiptList.rent}}</td>
+						</tr>
+						
+						<tr>
+							<td>Service Tax</td>
+							<td>{{ serviceTax(receiptList.rent)}}</td>
+						</tr>
+						
+						<tr>
+							<td>Primary Education CESS @{{userDetails.config.rentsetting.primary_edu_cess}}%</td>
+							<td>{{ primaryEduCess(receiptList.rent) }}</td>
+						</tr>
+						
+						<tr>
+							<td>Secondary Education CESS @{{userDetails.config.rentsetting.secondary_edu_cess}}%</td>
+							<td>{{ secondaryEduCess(receiptList.rent) }}</td>
+						</tr>
+						
+						<tr ng-if="receiptList.maintainance">
+							<td>Maintainance</td>
+							<td>{{receiptList.maintainance}}</td>
+						</tr>
+						<tr ng-if="receiptList.electricity_bill">
+							<td>Electricity Bill</td>
+							<td>{{receiptList.electricity_bill}}</td>
+						</tr>
+						<tr ng-if="receiptList.water_charge">
+							<td>Water Charge</td>
+							<td>{{receiptList.water_charge}}</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td class="text-right"><strong>Total Rent</strong></td>
+							<td class="amt text-center">{{totalRent(receiptList.rent)}}</td>
+						</tr>
+					</tfoot>
 				</table>
 			</div>
+			<div class="col-xs-12">
+				<p>Amount Chargeable(in words) : 
+				<strong><em>{{amountInWords | uppercase}}</em></strong>
+				<!-- <p ng-if="receiptList.remark">Remarks :</p> -->
+				<p><b>Remarks :</b>Being Invoice for{{generatedDate.month = rentYear.curMonth}}-
+				{{generatedDate.year = rentYear.curYear}} Licence Fee & Maintance Charges against Agr. for
+				4th floor premise area PAYEKO Tower,Kothrud,Pune-38.</p>
+				<p>Companys Service Tax No:{{config.service_tax_no}}</p>
+				<p>Companys Pan: {{config.pan_no}}</p>
+				<p ng-if="receiptList.remark">{{receiptList.remark}} </p>
+				<p class="text-right">For <strong><em>{{userDetails.name}}</em></strong><br><br><br>
+				Authorised Signatory</p>
+			</div>
 		</div>
-		<div class="table-responsive col-xs-12">
-			<table class="table table-bordered">
-				<thead>
-					<tr class="head">
-						<th class=" col-xs-8">Particulars</th>
-						<th class=" col-xs-2">Amount</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Rent</td>
-						<td>{{receiptList.rent}}</td>
-					</tr>
-					
-					<tr>
-						<td>Service Tax</td>
-						<td>{{ serviceTax(receiptList.rent)}}</td>
-					</tr>
-					
-					<tr>
-						<td>Primary Education CESS @{{userDetails.config.rentsetting.primary_edu_cess}}%</td>
-						<td>{{ primaryEduCess(receiptList.rent) }}</td>
-					</tr>
-					
-					<tr>
-						<td>Secondary Education CESS @{{userDetails.config.rentsetting.secondary_edu_cess}}%</td>
-						<td>{{ secondaryEduCess(receiptList.rent) }}</td>
-					</tr>
-					
-					<tr ng-if="receiptList.maintainance">
-						<td>Maintainance</td>
-						<td>{{receiptList.maintainance}}</td>
-					</tr>
-					<tr ng-if="receiptList.electricity_bill">
-						<td>Electricity Bill</td>
-						<td>{{receiptList.electricity_bill}}</td>
-					</tr>
-					<tr ng-if="receiptList.water_charge">
-						<td>Water Charge</td>
-						<td>{{receiptList.water_charge}}</td>
-					</tr>
-				</tbody>
-				<tfoot>
-					<tr>
-						<td class="text-right"><strong>Total Rent</strong></td>
-						<td class="amt text-center">{{totalRent(receiptList.rent)}}</td>
-					</tr>
-				</tfoot>
-			</table>
-		</div>
-		<div class="col-xs-12">
-			<p>Amount Chargeable(in words) : 
-			<strong><em>{{amountInWords | uppercase}}</em></strong>
-			<!-- <p ng-if="receiptList.remark">Remarks :</p> -->
-			<p><b>Remarks :</b>Being Invoice for{{generatedDate.month = rentYear.curMonth}}-
-			{{generatedDate.year = rentYear.curYear}} Licence Fee & Maintance Charges against Agr. for
-			4th floor premise area PAYEKO Tower,Kothrud,Pune-38.</p>
-			<p>Companys Service Tax No:{{config.service_tax_no}}</p>
-			<p>Companys Pan: {{config.pan_no}}</p>
-			<p ng-if="receiptList.remark">{{receiptList.remark}} </p>
-			<p class="text-right">For <strong><em>{{userDetails.name}}</em></strong><br><br><br>
-			Authorised Signatory</p>
+	</div>
+	<div class="panel panel-default" id="invoice" ng-if="receiptList.length <= 0">
+		<div class="panel-body">
+			<h2> No Data Found </h2>
 		</div>
 	</div>
 </div>
-<div class="panel panel-default" id="invoice" ng-if="receiptList.length <= 0">
-<h2> No Data Found </h2>
-</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-danger" ng-click="modalOptions.close()">Close</button>
 </div>

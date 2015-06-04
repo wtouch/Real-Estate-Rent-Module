@@ -20,16 +20,22 @@
 			$limit[0] = $pageNo;
 			$limit[1] = $records;
 			$where = array();
+			$orderBy = array();
 			if(isset($_GET['user_id'])) $userId = $_GET['user_id'];
 			if(isset($_GET['property_id'])) $where['property_id'] = $_GET['property_id'];
 			
 			if(isset($_GET['search']) && $_GET['search'] == true){
 				(isset($_GET['title'])) ? $like['title'] = $_GET['title'] : "";
 			}
+			
+			if(isset($_GET['orderBy'])){
+				$orderBy[str_replace("-","",$_GET['orderBy'])] = ($_GET['orderBy'][0] == "-" ? "desc" : "asc");
+			}
+			
 			(isset($_GET['name'])) ? $where['name'] = $_GET['name'] : "";
 			(isset($_GET['username'])) ? $like['username'] = $_GET['username'] : "";
 			(isset($_GET['status'])) ? $where['status'] = $_GET['status'] : "";
-			(isset($_GET['title']))?$where['title'] =$_GET['title'] : "";
+			
 			$userCols['name'] = "name";
 			$userCols['username'] = "username";
 			$userCols['address'] = "address";
@@ -39,6 +45,7 @@
 			//$db->setOrderBy(array("property_id"=>"desc"),$t0);
 			$db->setWhere($where, $table);
 			$db->setWhere($like, $table, true);
+			$db->setOrderBy($orderBy, $table);
 			$selectInnerJoinCols[0] = "*";
 			$db->setColumns($table, $selectInnerJoinCols);
 			$data = $db->select();

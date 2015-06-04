@@ -1,9 +1,10 @@
-<div class="modal-header" style="margin-bottom: 14px">
+<div class="modal-header">
 	<button type="button" class="close" ng-click="modalOptions.close()">
 		<span aria-hidden="true">&times;</span></button>
 	<h3>Rent This Property</h3>
 </div>
-	<form name="setrentForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="setrentForm.$valid">
+<form name="setrentForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="setrentForm.$valid">
+	<div class="modal-body">
 		<div class="form-group">
 			<label  class="col-sm-2"></label>
 			<div class="col-sm-7">
@@ -36,9 +37,10 @@
 		<div class="form-group">
 			<label for="deposit" class="col-sm-2 control-label">Deposit* </label>		
 			<div class="col-sm-9">
-				<input type="text" id="deposit" class="form-control" name="deposit" ng-model="modalOptions.setrent.deposit" placeholder="Enter Deposit Amount" required>
+				<input type="text" id="deposit" ng-pattern="/^[0-9]*$/" class="form-control" name="deposit" ng-model="modalOptions.setrent.deposit" placeholder="Enter Deposit Amount" required>
 				
 				<span class="text-danger" ng-show="setrentForm.deposit.$dirty && setrentForm.deposit.$invalid">
+					<span ng-show="setrentForm.deposit.$error.pattern" class="text-danger">Enter Number only</span>
 					<span ng-show="setrentForm.deposit.$error.required">Deposit is required.</span>
 				</span>
 			</div>
@@ -46,75 +48,52 @@
 		
 		<div class="form-group">
 			<label for="rent" class="col-sm-2 control-label">Licence Fee *</label>		
-				<div class="col-sm-9">
-					<input type="text" id="rent" class="form-control" name="rent" placeholder="Set Rent"  ng-pattern="/^\d{0,9}[0-9]$/" ng-model="modalOptions.setrent.rent" required>
-					
-					<span class="help-block" ng-show="setrentForm.partyName.$dirty && setrentForm.partyName.$invalid">
-						<span ng-show="setrent.rent.$error.pattern" class="text-danger">Enter Number only</span>
-					</span>
-				</div>
-		</div>
-		<div class="form-group">	
-			<label for="taken_date" class="col-sm-2 control-label">Taken Date*</label>
 			<div class="col-sm-9">
-				<input type="text" id="taken_date" class="form-control" name="taken_date" ng-model="modalOptions.setrent.taken_date"  ng-init="modalOptions.setrent.taken_date = modalOptions.propDate" readonly  placeholder="date" required/>
-			</div>						
-		</div>
-		
-		<div class="form-group">	
-			<label for="taken_date" class="col-sm-2 control-label">Licence Fee Date*</label>
-			<div class="col-sm-9">
-				<select type="text" id="date_of_rent" class="form-control" name="date_of_rent" ng-model="modalOptions.setrent.date_of_rent"  placeholder="date" required>
-					<option value="">Select Licence Fee Date</option>
-				</select>
-			</div>						
-		</div>
-		
-		<div class="form-group">
-			<label for="maintenance" class="col-sm-2 control-label">Maintenance *</label>		
-			<div class="col-sm-9">
-				<input type="text" id="maintenance" class="form-control" name="maintenance" placeholder="Enter Maintenance Amount" ng-model="modalOptions.setrent.maintenance" required>
-				<span class="text-danger" ng-show="setrentForm.maintenance.$dirty && setrentForm.maintenance.$invalid">
-					<span ng-show="setrentForm.maintenance.$error.required">Maintenance is required.</span>
+				<input type="text" id="rent" class="form-control" name="rent" placeholder="Set Rent"  ng-pattern="/^[0-9]*$/" ng-model="modalOptions.setrent.rent" required>
+				<span class="help-block" ng-show="setrentForm.rent.$dirty && setrentForm.rent.$invalid">
+					<span ng-show="setrentForm.rent.$error.pattern" class="text-danger">Enter Number only</span>
+					<span ng-show="setrentForm.rent.$error.required" class="text-danger">Licence Fee Required</span>
 				</span>
 			</div>
 		</div>
 		<div class="form-group">
+			<label for="maintenance" class="col-sm-2 control-label">Maintenance *</label>		
+			<div class="col-sm-9">
+				<input type="text" id="maintenance" ng-pattern="/^[0-9]*$/" class="form-control" name="maintenance" placeholder="Enter Maintenance Amount" ng-model="modalOptions.setrent.maintenance" required>
+				<span class="text-danger" ng-show="setrentForm.maintenance.$dirty && setrentForm.maintenance.$invalid">
+					<span ng-show="setrentForm.maintenance.$error.pattern" class="text-danger">Enter Number only</span>
+					<span ng-show="setrentForm.maintenance.$error.required">Maintenance is required.</span>
+				</span>
+			</div>
+		</div>
+		<div class="form-group">	
+			<label for="taken_date" class="col-sm-2 control-label">Taken Date*</label>
+			<div class="col-sm-4">
+				<input type="text" id="taken_date" class="form-control" name="taken_date" ng-model="modalOptions.setrent.taken_date"  ng-init="modalOptions.setrent.taken_date = modalOptions.propDate" readonly  placeholder="date" required/>
+			</div>						
+		
+			<label for="taken_date" class="col-sm-2 control-label">Licence Fee Day*</label>
+			<div class="col-sm-3">
+				<select type="text" id="date_of_rent" class="form-control" name="date_of_rent" ng-model="modalOptions.setrent.date_of_rent" ng-options="item for item in [1,31] | range" placeholder="date" required>
+					<option value="">Select Licence Fee Day</option>
+				</select>
+				<span class="text-danger" ng-show="setrentForm.date_of_rent.$dirty && setrentForm.date_of_rent.$invalid">
+					<span ng-show="setrentForm.date_of_rent.$error.required">Licence Fee Day required.</span>
+				</span>
+			</div>						
+		</div>
+		
+		<div class="form-group">
 			<label  for="duration" class="col-sm-2 control-label">Duration For*</label>
 				<div class="col-sm-3">
-					<label  for="year" class="col-sm-3 control-label">Year</label>
-						<select id="year" class="form-control" ng-model="duration.year">
+					<select id="year" class="form-control" ng-model="duration.year" ng-options="item for item in [0,10] | range">
 						<option value="" selected>Select Year</option><!-- added value & selected attr -->
-						<option value="0">0</option>
-						<option value="1" >1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-						</select>
+					</select>
 				</div>
 				<div class="col-sm-3">
-					<label  for="month" class="col-sm-3 control-label">Month</label>
-						<select id="month" class="form-control" ng-model="duration.month">
+					<select id="month" class="form-control" ng-model="duration.month" ng-options="item for item in [0,11] | range">
 						<option value="" selected>Select Month</option>
-						<option value="0" >0</option>
-						<option value="1" >1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-						<option value="11">11</option>
-						</select>
+					</select>
 				</div>		
 		</div>
 		
@@ -123,39 +102,14 @@
 		<div class="form-group">	
 			<label  for="escalation" class="col-sm-2 control-label">Escalation After*</label>
 				<div class="col-sm-3">
-					<label  for="esc_year" class="col-sm-3 control-label">Year</label>
-						<select id="esc_year" class="form-control" ng-model="duration.esc_year">
+					<select id="esc_year" class="form-control" ng-model="duration.esc_year" ng-options="item for item in [0,10] | range">
 						<option value="" selected>Select Year</option>
-						<option value="0">0</option>
-						<option value="1" >1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-						</select>
+					</select>
 				</div>	
 				<div class="col-sm-3">
-						<label  for="esc_month" class="col-sm-3 control-label">Month</label>
-						<select id="esc_month" class="form-control" ng-model="duration.esc_month">
+					<select id="esc_month" class="form-control" ng-model="duration.esc_month" ng-options="item for item in [0,11] | range">
 						<option value="" selected>Select Month</option>
-						<option value="0" >0</option>
-						<option value="1" >1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-						<option value="11">11</option>
-						</select>
+					</select>
 				</div>		
 		</div>
 		
@@ -170,11 +124,14 @@
 				</span>
 			</div>
 		</div> 
-			
+		
+	</div> 
+	<div class="modal-footer">
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-9">
 				<button type="submit" class="btn btn-success" ng-disabled="setrentForm.$invalid" ng-click="modalOptions.postData(modalOptions.setrent,duration); modalOptions.ok()">Submit</button>
 				<button type="button" class="btn btn-danger" ng-click="modalOptions.close()">Cancel</button>
 			</div>
 		</div>					
-	</form>	
+	</div>					
+</form>	
