@@ -1,16 +1,17 @@
 <div class="modal-header" style="margin-bottom: 14px">
 	<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
-		<h3 class="text-center">Add New Property</h3>
+		<h3 ng-if="!modalOptions.propertyData.id || modalOptions.copy"class="text-center">Add New Property</h3>
+		<h3 ng-if="modalOptions.propertyData.id  && !modalOptions.copy"class="text-center">Update Property</h3>
 </div>
-<form name="addPropertyForm" class="form-horizontal modal-body" role="form" novalidate="novalidate" ng-submit="addPropertyForm.$valid" ng-init="modalOptions.configData(modalOptions); modalOptions.property = modalOptions.propertyData">
+<form name="addPropertyForm" class="form-horizontal modal-body" role="form" novalidate="novalidate" ng-submit="addPropertyForm.$valid" ng-init="modalOptions.configData(modalOptions)">
 <accordion close-others="true">
 	<accordion-group heading="Property Structure" is-open="modalOptions.status.isFirstOpen">
 	<div class="form-group">
 		<label for="title" class="col-sm-2 control-label">Property Title *</label>
 		<div class="col-sm-9">
-			<input type="text" id="title" class="form-control" name="title" ng-model="modalOptions.property.title" required>
+			<input type="text" id="title" class="form-control" name="title" ng-model="modalOptions.property.title" required placeholder="Property Title"/>
 			<span class="text-danger" ng-show="addPropertyForm.title.$dirty && addPropertyForm.title.$invalid">
-				<span ng-show="addPropertyForm.title.$error.required">Property title is must.</span>
+				<span ng-show="addPropertyForm.title.$error.required">Property title is Required.</span>
 			</span>											 
 		</div>				
 	</div>
@@ -36,6 +37,19 @@
 					</span>	
 			</div>
 	</div>
+	
+	<div class="form-group">
+	<label for="floor_no" class="col-sm-2">Floor Number</label>
+		<div class="col-sm-9">
+			<select id="floor_no" name="floor_no" class="form-control" ng-model="modalOptions.property.floor_no" ng-options="item for item in [0,12] | range" required />
+				<option value="" selected>Select Floor Number</option>
+			</select>
+			<span class="text-danger" ng-show="addPropertyForm.floor_no.$dirty && addPropertyForm.floor_no.$invalid">
+				<span ng-show="addPropertyForm.floor_no.$error.required">Floor Number is Required.</span>
+			</span>	
+		</div>
+	</div>
+	
 	<div class="form-group">
 		<label for="prop_desc" class="col-sm-2 control-label">Property Discription *</label>
 		<div class="col-sm-9">
@@ -83,15 +97,14 @@
 			<span class="help-block" ng-show="addPropertyForm.deposit.$dirty && addPropertyForm.deposit.$invalid">
 			<span ng-show="addPropertyForm.deposit.$error.pattern" class="text-danger">Deposit is Number</span>
 			<span class="text-danger" ng-show="addPropertyForm.deposit.$error.required">Licence Fees is required.</span></span>
-		</div>		
-			
+		</div>	
 	</div>
 	
 	<div class="form-group">
 	  <label for="property_images" class="col-sm-2 control-label" >Property Images *</label>
 		<div class="col-sm-9">
 			<!-- This is file input for select images -->
-			<input type="file" id="property_images" ng-file-select ng-multiple="true" accept="image/jpeg,image/png,image/gif" ng-file-change="modalOptions.generateThumb($files)" ng-model="property_images" required>		
+			<input type="file" id="property_images" ng-file-select ng-multiple="true" accept="image/jpeg,image/png,image/gif" ng-file-change="modalOptions.generateThumb($files)" ng-src="{{appConfig.assetPath + '/' + value.file_relative_path}}" ng-model="property_images" required />		
 			<!-- This will show thumbnails & progress of images -->
 			<file-preview url="property_images"></file-preview>
 			<!-- This button will show if file/s selected -->
@@ -180,7 +193,7 @@
 			</div>					
 		</div>
 		
-		<button type="button" class="btn btn-primary center-block" ng-click="status.open = !status.open">Next</button>
+		<button type="button" class="btn btn-primary" ng-click="status.open = !status.open">Next</button>
 	</accordion-group>
 	<accordion-group heading="Optional Details" is-open="status.open">
 	<h3>Property Details:</h3>
@@ -268,25 +281,12 @@
 
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-9">
-			<button type="submit" ng-if="!modalOptions.property.id"ng-click="modalOptions.addProperty(modalOptions.property); modalOptions.ok()" class="btn btn-primary" title="Add new property">Submit</button>
+			<button type="submit" ng-if="!modalOptions.propertyData.id || modalOptions.copy" ng-click="modalOptions.addProperty(modalOptions.property); modalOptions.ok()" class="btn btn-primary" title="Add new property">Add Property</button>
 				
-			<button type="submit" ng-if="modalOptions.property.id" ng-click="modalOptions.updateData(modalOptions.property.id,modalOptions.property)" title="Update your property" class="btn btn-success text-center ">Edit Property</button>
+			<button type="submit" ng-if="modalOptions.propertyData.id  && !modalOptions.copy" ng-click="modalOptions.updateData(modalOptions.propertyData.id,modalOptions.property)" title="Update your property" class="btn btn-success text-center ">Update Property</button>
 				<button type="button" title="Cancel" class="btn btn-danger text-center" ng-click="modalOptions.ok()">Cancel</button>
 			</div>
 		</div>	
-		
 	</accordion-group>
-	</accordion>	
+	</accordion>
 </form>
-
-
-
-
-
-
-
-
-<!-- <button type="submit" ng-click="modalOptions.ok()" class="btn btn-primary"  title="Add new property">
-				<span ng-if="!modalOptions.property.id">Submit</span>
-				<span ng-if="modalOptions.property.id">Update</span> 
-				</button> -->

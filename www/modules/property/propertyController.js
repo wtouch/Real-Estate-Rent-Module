@@ -3,17 +3,16 @@ define(['app'], function (app) {
     var injectParams = ['$scope', '$injector','$routeParams','$http','$log', 'modalService', '$rootScope','dataService','upload','$notification'];
     // This is controller for this view
 	var propertyController = function ($scope, $injector,$routeParams,$http, $log, modalService, $rootScope,dataService,upload,$notification) {
-		$rootScope.metaTitle = "Real Estate Properties";
-	
+		$rootScope.metaTitle = "Real Rent Properties";
 		$scope.maxSize = 5;
 		$scope.totalRecords = "";
 		$scope.currentPage = 1;
 		$scope.pageItems = 10;
-		$scope.numPages = "";		
-		$scope.alerts = [];
+		$scope.numPages = "";	
 		$scope.userInfo = {user_id : $rootScope.userDetails.id};
 		$scope.currentDate = dataService.currentDate;
 		$scope.setrent = {};
+		$scope.propertyParam = {status: 1, user_id : $rootScope.userDetails.id};
 		
 		//for dynamic tooltip
 		$scope.dynamicTooltip = function(status, active, notActive){
@@ -25,10 +24,9 @@ define(['app'], function (app) {
 			angular.extend($scope.propertyParam, $scope.userInfo);
 			dataService.get("getmultiple/property/"+page+"/"+$scope.pageItems,$scope.propertyParam)
 			.then(function(response) {
-				$scope.properties = response.data;
-				//console.log(response.data);				
+				$scope.properties = response.data;			
 			});			
-		};//end pagination
+		};
 		/********************************************************************************************/
 		//code for rent setting
 		var accountConfig = $rootScope.userDetails.config.rentsetting;
@@ -41,22 +39,6 @@ define(['app'], function (app) {
 			tds : accountConfig.tds,
 			service_tax_no : accountConfig.service_tax_no
 		}
-		
-		// function for edit your profile
-		$scope.changeSetting = function(setting){
-			console.log(setting);
-			if($rootScope.userDetails.config == "") $rootScope.userDetails.config = {};
-			$rootScope.userDetails.config.rentsetting = setting;
-			
-			dataService.put('put/user/'+$rootScope.userDetails.id, {config : $rootScope.userDetails.config}).then(function(response){
-				if(response.status == "success"){
-					dataService.setUserDetails(JSON.stringify($rootScope.userDetails));
-					$rootScope.userDetails = dataService.parse(dataService.userDetails);
-				}
-				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-				$notification[response.status]("Edit Profile", response.message);
-			})
-		}	
 		/*******************************************************************************************/
 		// code for delete button 
 			$scope.deleted = function(id, status){
@@ -70,7 +52,7 @@ define(['app'], function (app) {
 					$notification[response.status]("Delete Property", response.message);
 				});
 			};			
-			
+	/************************************************************************************/		
 		//search filter function
 		$scope.searchFilter = function(statusCol, searchProp) {
 			$scope.search = {search: true};
@@ -86,35 +68,11 @@ define(['app'], function (app) {
 				}else{
 					$scope.properties = {};
 					$scope.totalRecords = {};
-					$scope.alerts.push({type: response.status, msg: response.message});
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Delete Property", response.message);
 				}
 			});
-		};
-/**************************************************************************************/
-		//function for Users list response
-		dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id})
-		.then(function(response) {  
-			if(response.status == 'success'){
-				$scope.customerList = response.data;
-			}else{
-				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-				$notification[response.status]("Get Customers", response.message);
-			}
-		});
-/**************************************************************************************/			
-		//upload method for multiple images
-		$scope.uploadMultiple = function(files,path,userInfo,picArr){ //this function for uploading files
-		console.log(picArr);
-			 upload.upload(files,path,userInfo,function(data){
-				if(data.status === 'success'){
-					console.log(picArr);
-					picArr.push(data.data);
-				}else{
-					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$notification[response.status]("Upload Images", response.message);
-				}
-			}); 
-		};    
+		}; 
 /**************************************************************************************/					
 		//changevalue function
 		$scope.changeValue = function(statusCol,status) {
@@ -122,7 +80,6 @@ define(['app'], function (app) {
 			(status =="") ? delete $scope.propertyParam[statusCol] : $scope.filterStatus[statusCol] = status;
 			angular.extend($scope.propertyParam, $scope.filterStatus);
 			angular.extend($scope.propertyParam, $scope.search);			
-			
 			dataService.get("/getmultiple/property/1/"+$scope.pageItems, $scope.propertyParam)
 			.then(function(response) {  //function for property response
 				if(response.status == 'success'){
@@ -131,59 +88,40 @@ define(['app'], function (app) {
 				}else{
 					$scope.properties = {};
 					$scope.totalRecords = {};
-					$scope.alerts.push({type: response.status, msg: response.message});
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Delete Property", response.message);
 				}				
 			});
 		};
 /*****************************************************************************************/		
 	//view single property modal
-		$scope.openProperty = function (url, propertyData, id) {
+		$scope.openProperty = function (url, propertyData, copy) {
 			var modalDefaults = {
 				templateUrl: url,
 				size : 'lg'
 			};
 			var modalOptions = {
-				editProperty : id,
+				status : {
+					isFirstOpen: true,
+					isFirstDisabled: false,
+				},
+				copy : copy,
 				propDate  : $scope.currentDate,
 				propertyData : propertyData,
-				/* property : {
+				property : (propertyData) ? {
 					title : propertyData.title,
 					category : propertyData.category,
 					type : propertyData.type,
 					property_description : propertyData.property_description,
-					property_info : 
-					{
-						bedrooms: propertyData.property_info.bedrooms,
-						bathrooms : propertyData.property_info.bathrooms
-					},
+					property_info : propertyData.property_info,
 					propertyPrice : propertyData.propertyPrice,
 					deposit : propertyData.deposit,
+					amenities : propertyData.amenities,
 					property_images: propertyData.property_images,
-					
-					property_location:{
-					address: propertyData.property_location.address,
-					area: propertyData.property_location.area,
-					location : propertyData.property_location.location,
-					pincode : propertyData.property_location.pincode,
-					city : propertyData.property_location.city,
-					state : propertyData.property_location.state,
-					country : propertyData.property_location.country,
-						optional_property_details:
-						{
-						property_age : propertyData.property_age,
-						ownership : propertyData.ownership,
-						furnished : propertyData.furnished,
-						property_floor : propertyData.property_floor,
-						facing:propertyData.facing,
-						parking : propertyData.parking,
-						transType : propertyData.transType
-						},
-					},
-					landmarks:{
-					hospitals : propertyData.landmarks.hospitals,
-					railway : propertyData.landmarks.railway
-					}
-				}, */
+					property_location: propertyData.property_location,
+					optional_property_details: propertyData.optional_property_details,
+					landmarks:propertyData.landmarks
+				} : {}, 
 				getCustomer : function(modalOptions){
 					dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id}).then(function(customer) {
 						modalOptions.customerList = customer.data;
@@ -191,13 +129,11 @@ define(['app'], function (app) {
 				},
 				configData : function(modalOptions){
 					dataService.config('config', {config_name : "property"}).then(function(response){
-						//console.log(response);
 						modalOptions.propertyConfig = response.config_data;
 					})
 				},
 				postData : function(setrent,duration) {
 					//calculate duration in months
-					//setrent.user_id = $scope.userDetails.id;
 					var year = duration.year;
 					var month = duration.month;
 					
@@ -250,7 +186,6 @@ define(['app'], function (app) {
 					}
 				}); 
 				},
-				
 				upload : function(files,path,userInfo, picArr){
 					upload.upload(files,path,userInfo,function(data){
 						if(data.status === 'success'){
@@ -264,9 +199,9 @@ define(['app'], function (app) {
 				generateThumb : function(files){  
 					upload.generateThumbs(files);
 				},
-				
-				updateData : function(id,property) {
-					dataService.put("put/property/"+id,property)
+	
+				updateData : function(propId,property) {
+					dataService.put("put/property/"+propId,property)
 					.then(function(response) {
 						if(response.status == "success"){
 							if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
@@ -278,16 +213,8 @@ define(['app'], function (app) {
 					});
 				}
 			};
-			
-			modalService.show(modalDefaults,modalOptions).then(function (result) {
-				if(modalOptions.property.id == undefined){
-					modalOptions.updateData(modalOptions.property.id,modalOptions.property);
-				}
-				else{
-					modalOptions.addProperty(modalOptions.property);
-				}
+			modalService.show(modalDefaults,modalOptions).then(function (result) {	
 			});
-			
 		};
 /*****************************************************************************************/			
 		//setrent form post data to rent table
@@ -322,10 +249,11 @@ define(['app'], function (app) {
 			dataService.post("post/rent/setrent",setrent)
 			.then(function(response) {  
 				if(response.status == "success"){
-					//$scope.reset();
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Add record", response.message);
 				}
 				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-				$notification[response.status]("Add record", response.message);
+				$notification[response.status]("", response.message);
 			});  
 		}  
 		$scope.updateData = function(setrent) {
@@ -335,10 +263,10 @@ define(['app'], function (app) {
 				.then(function(response) {
 					if(response.status == "success"){
 						$scope.reset();
-							 $location.path("/dashboard/templates/custometemplates"); 
+							$location.path("/dashboard/templates/custometemplates"); 
 					 }
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$notification[response.status]("Submit Custom Template", response.message);
+					$notification[response.status]("", response.message);
 				});
 		} 
 /**************************************************************************************/						
@@ -358,21 +286,19 @@ define(['app'], function (app) {
 		};
 /**************************************************************************************/				
 		//view multiple records
-		
-		$scope.propertyParam = {status : 1};			
+		$scope.propertyParam = {status : 1};	
 		angular.extend($scope.propertyParam,$scope.userInfo);
 		dataService.get("getmultiple/property/1/"+$scope.pageItems, $scope.propertyParam)
-		.then(function(response) { //function for property list response  
-			//console.log(response.data);				
+		.then(function(response) { 
 				if(response.status == 'success'){
 					$scope.totalRecords = response.totalRecords;
 					$scope.properties = response.data; 					
 					
 				}else{
-					$scope.alerts.push({type: response.status, msg: response.message});
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("", response.message);
 				}
-		});	
-			
+		});		
 /***************************************************************************************/
 	};
 	// Inject controller's dependencies

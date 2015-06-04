@@ -26,8 +26,8 @@
 				</tr>
 				<tr>
 					<td><b>Built Up area :</b> 
-				</tr>
-				<tr>
+				</tr> 
+				<tr ng-if="modalOptions.propertyData.property_info">
 					<td>
 						 <p ng-if="modalOptions.propertyData.property_info.buildup_area">
 							<b>Area :</b>
@@ -45,7 +45,7 @@
 							 {{modalOptions.propertyData.property_info.carpet_area}}
 							 {{modalOptions.propertyData.property_info.carpet_unit}}
 						 </p>
-					</td>					
+					</td>
 				</tr>
 				<tr>
 					<td ng-if="modalOptions.propertyData.price">
@@ -77,6 +77,11 @@
 					<tr>	
 						<th ng-if="modalOptions.propertyData.optional_property_details.parking">Reserved Parking</th>
 						<td ng-if="modalOptions.propertyData.optional_property_details.parking">{{modalOptions.propertyData.optional_property_details.parking}}</td>
+					</tr>
+					<tr>	
+						<th ng-if="modalOptions.propertyData.floor_no">Floor Number</th>
+						<td ng-if="modalOptions.propertyData.floor_no">
+						{{modalOptions.propertyData.floor_no}}</td>
 					</tr>
 				</tbody>
 			</table>

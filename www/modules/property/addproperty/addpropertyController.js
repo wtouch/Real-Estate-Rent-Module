@@ -22,12 +22,6 @@ define(['app'], function (app) {
 				$notification[response.status]("Get Customers", response.message);
 			}
 		});
-		
-		// to next button code
-			$scope.status = {
-				isFirstOpen: true,
-				isFirstDisabled: false,
-			};
 	/*****************************************************************************/
 		// this function for uploading files
 		$scope.upload = function(files,path,userInfo, picArr){
@@ -61,10 +55,6 @@ define(['app'], function (app) {
 					size : 'lg'
 				};
 				var modalOptions = {
-					status : {
-					isFirstOpen: true,
-					isFirstDisabled: false,
-					},
 					propertyConfig : response.config_data,
 					Date :  $scope.currentDate,
 					userInfo : {user_id : $rootScope.userDetails.id},
