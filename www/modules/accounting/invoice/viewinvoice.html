@@ -34,11 +34,9 @@
 						</tr>
 						
 						<tr>
-							<td><strong>Licence Fee Month</strong><br> {{modalOptions.rentList.generated_date | date : 'MMM-yyyy'}}</td>
+							<td><strong>Invoice Month</strong><br> {{modalOptions.rentList.generated_date | date : 'MMM-yyyy'}}</td>
 							<td><strong>Due Date</strong><br>{{modalOptions.rentList.due_date}}</td>
-							
 						</tr>
-						
 					</table>
 				</div>
 			</div>
@@ -51,10 +49,6 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<th>Rent</th>
-							<td class="text-right">{{ modalOptions.rentList.rent }}</td>
-						</tr>
 						<tr ng-repeat="(key,value) in modalOptions.rentList.perticulars">
 							<td>{{key | uppercase | replace : {"_" : " "} }}</td>
 							<td class="text-right">{{ value | number : 2 }}</td>
@@ -72,13 +66,11 @@
 				<p>Amount Chargeable(in words) : 
 				<strong><em>{{modalOptions.inWords | uppercase}}</em></strong>
 				<!-- <p ng-if="modalOptions.rentList.remark">Remarks :</p> -->
-				<p><strong>Remarks: </strong>Being Invoice for <strong>{{modalOptions.rentList.generated_date | date : 'MMM-yyyy'}} </strong> Licence Fee & Maintance Charges against Agr. for
-				<strong>{{modalOptions.rentList.property_name}}</strong> premise area <span ng-if="modalOptions.rentList.address.address">{{modalOptions.rentList.property_location.address}},</span> <span ng-if="modalOptions.rentList.property_location.location">{{modalOptions.rentList.property_location.location}},</span> <span ng-if="modalOptions.rentList.property_location.area">{{modalOptions.rentList.property_location.area}}, </span><span ng-if="modalOptions.rentList.property_location.city">{{modalOptions.rentList.property_location.city}}, </span><span ng-if="modalOptions.rentList.property_location.state">{{modalOptions.rentList.property_location.state}}, <span ng-if="modalOptions.rentList.property_location.country">{{modalOptions.rentList.property_location.country}} </span> <span ng-if="modalOptions.rentList.property_location.pincode">- {{modalOptions.rentList.property_location.pincode}} </span></p>
+				<p><strong>Remarks:</strong> <span ng-bind-html="modalOptions.rentList.remark"></span></p>
 				
 				<hr/>
 				<p><strong>Company's Service Tax No: </strong>{{modalOptions.accountConfig.service_tax_no}}</p>
 				<p><strong>Company's Pan: </strong>{{modalOptions.accountConfig.pan_no}} </strong></p>
-				<p ng-if="modalOptions.rentList.remark">{{modalOptions.rentList.remark}} </p>
 				<p class="text-right">For <strong><em>{{userDetails.name}}</em></strong><br><br><br>
 				Authorised Signatory</p>
 			</div>

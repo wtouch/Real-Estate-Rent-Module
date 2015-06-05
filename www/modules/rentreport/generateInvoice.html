@@ -8,7 +8,7 @@
 			<div class="form-group">
 				<label for="amount" class="col-sm-6 control-label">Licence Fees *</label>
 				<div class="col-sm-6">
-					<input type="text" class="form-control" id="amount" name="amount" ng-model="modalOptions.rentData.rent" ng-init="modalOptions.rentData.rent = modalOptions.rentList.rent" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" required>
+					<input type="text" class="form-control" id="amount" name="amount" ng-model="modalOptions.rentData.rent" ng-init="modalOptions.rentData.perticulars.rent = modalOptions.rentList.rent" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" required>
 					<span class="help-block" ng-show="receiptForm.amount.$dirty && receiptForm.amount.$invalid">
 					<span ng-show="receiptForm.amount.$error.required" class="text-danger">Licence Fees Required is required.</span>
 					<span ng-show="receiptForm.amount.$error.pattern" class="text-danger">Enter numbers Only.

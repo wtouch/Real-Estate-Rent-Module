@@ -28,6 +28,7 @@
 			if(isset($_GET['property_id'])) $where['property_id'] = $_GET['property_id'];
 			if(isset($_GET['invoice_id'])) $whereTrans['invoice_id'] = $_GET['invoice_id'];
 			if(isset($_GET['generated_date'])) $like['generated_date'] = $_GET['generated_date'];
+			if(isset($_GET['due_date'])) $like['due_date'] = $_GET['due_date'];
 			if(isset($_GET['groupBy'])) $groupBy[] = $_GET['groupBy'];
 			
 			$userCols['name'] = "name";
@@ -44,16 +45,6 @@
 			$db->setColumns($table, $selectInnerJoinCols);
 			
 			
-			$rent = $db->setJoinString("INNER JOIN", "rent", array("id"=>$table.".property_id"));
-			$rentCols['id'] = "RentProperty_id";
-			$db->setColumns($rent, $rentCols);
-			
-			$property = $db->setJoinString("INNER JOIN", "property", array("id"=>$rent.".property_id"));
-			$propertyCols['id'] = "main_property_id";
-			$propertyCols['title'] = "property_name";
-			$propertyCols['property_location'] = "property_location";
-			$db->setColumns($property, $propertyCols);
-			$db->setWhere($where, $table);
 			$paid = $db->setJoinString("LEFT JOIN", "transaction", array("invoice_id"=>$table.".id"));
 			$db->setColumns($paid, array($paid.".id as receipt_id, ".$paid.".date as paid_date, ifnull(sum(".$paid.".credit_amount), 0) as paid") , true);
 			$db->setColumns($paid, array("ifnull(".$table.".total_amount, 0) - ifnull(sum(".$paid.".credit_amount), 0) as due_amount"), true);

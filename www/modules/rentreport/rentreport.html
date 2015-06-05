@@ -55,6 +55,8 @@
 				<td>{{x.taken_date}}</td>
 				<td>{{x.leaving_date}}</td>
 				<td>
+					<a class="btn btn-info"  ng-click="openRent('modules/rentreport/generateInvoice.html',x)">Generate Invoice</a>
+					<a class="btn btn-info"  ng-click="openRent('modules/rentreport/invoice.html',x)">View Invoice</a>
 					<a class="btn btn-info"  ng-click="propertyRelease(x)">Release Property</a>
 				</td>
 			</tr>

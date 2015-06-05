@@ -120,7 +120,6 @@ define(['app'], function (app) {
 					},
 					getTotal : function(rentData, modalOptions){
 						if(rentData.perticulars == undefined) rentData.perticulars = {};
-						console.log(rentData.perticulars);
 						var rent = parseFloat(rentData.perticulars.rent);
 						
 						rentData.perticulars.tax = $scope.serviceTax(rent);
@@ -158,6 +157,17 @@ define(['app'], function (app) {
 							$notification[response.status]("Rent Receipt Generated", response.message);
 						});
 					},
+					postData : function(invoice, total_amount){
+							invoice.total_amount = total_amount;
+							dataService.post("post/invoice",invoice)
+							.then(function(response) {  
+							if(response.status == "success"){
+								console.log(response);
+							}
+							if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+							$notification[response.status]("Rent Receipt Generated", response.message);
+						});
+					},
 					payInvoice : function(payment){
 							if(modalOptions.rentList.due_amount - payment.credit_amount <= 0){
 								var paymentStatus = { payment_status : 1};
@@ -183,15 +193,9 @@ define(['app'], function (app) {
 				};
 				modalService.show(modalDefaults,modalOptions).then(function (result) {
 					if(modalOptions.invoice.id){modalOptions.updateData(modalOptions.invoice.id,modalOptions.invoice);}
+					else{modalOptions.postData(modalOptions.invoice);}
 				});
 		};
-		
-		/* modalOptions.invoicePayment.amount = ng-init =  invoice.total_amount
-if(invoice.total_amount - modalOptions.invoicePayment.amount <= 0){
-	payment_status = 1;
-}else{
-	payment_status = 2;
-} */
 /*************************************************************************************/
 
 /***********************************************************************************/
@@ -201,6 +205,7 @@ if(invoice.total_amount - modalOptions.invoicePayment.amount <= 0){
 			.then(function(response) {  
 				if(response.status == 'success'){
 					$scope.invoices = response.data;
+					$scope.total_paid = response.total_paid;
 					$scope.total_due = response.total_due;
 					$scope.total_amount = response.total_rent;
 					$scope.totalRecords = response.totalRecords;

@@ -10,8 +10,8 @@
 	<th>Amount</th>
 	<th>Paid Amount</th>
 	<th>Due Amount</th>
+	<th>Due Date</th>
 	<th>Manage</th>
-	<th>View Invoice</th>
 	</thead>
 	<tbody>
 	<tr ng-repeat="x in invoices | orderBy:sort">
@@ -23,18 +23,18 @@
 	<td class="text-right">{{ x.total_amount | number : 2}}</td>
 	<td class="text-right">{{ x.paid | number : 2}}</td>
 	<td class="text-right">{{ x.due_amount | number : 2}}</td>
+	<td class="text-right">{{ x.due_date}}</td>
 	<td><a ng-click="openGenerateinvoice('modules/accounting/invoice/addinvoice.html',x)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="Edit Invoice Information"> <span class="glyphicon glyphicon-pencil"></span></a>
 	<a type="button" tooltip="Delete Invoice" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox="" btn-checkbox-true="'1'" btn-checkbox-false="'0'" class="ng-pristine ng-valid active btn btn-success"><span class="glyphicon glyphicon-remove"></span></a>
-	<a ng-disabled="x.due_amount <= 0" ng-click="openGenerateinvoice('modules/accounting/invoice/payinvoice.html',x)" class="btn btn-primary">Pay Invoice</a></td>
-	<td>
-	<a ng-click="openGenerateinvoice('modules/accounting/invoice/viewinvoice.html',x)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="View Invoice">View Invoice</a>
-	
-	<a ng-click="openGenerateinvoice('modules/accounting/invoice/viewreceipt.html',x)"  class="btn btn-warning" type="button" tooltip-animation="true" tooltip="View Receipt">View Receipt</a>
+	<a ng-disabled="x.due_amount <= 0" ng-click="openGenerateinvoice('modules/accounting/invoice/payinvoice.html',x)" class="btn btn-primary"  tooltip-animation="true" tooltip="Pay Invoice"><span class="glyphicon glyphicon-eye-open"></a>
+	<a ng-click="openGenerateinvoice('modules/accounting/invoice/viewinvoice.html',x)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="View Invoice"><span class="glyphicon glyphicon-eye-open"></span></a>
+	<a ng-click="openGenerateinvoice('modules/accounting/invoice/viewreceipt.html',x)"  class="btn btn-warning" type="button" tooltip-animation="true" tooltip="View Receipt"><span class="glyphicon glyphicon-eye-open"></span></a>
 	</td>
 	</tr>
 	<tr>
 		<td colspan="5" class="text-right"><strong>Total</strong></td>
 		<td  class="text-right">{{total_amount}}</td>
+		<td  class="text-right">{{total_paid}}</td>
 		<td class="text-right">{{total_due}}</td>
 		<td colspan="3"></td>
 	</tr>
