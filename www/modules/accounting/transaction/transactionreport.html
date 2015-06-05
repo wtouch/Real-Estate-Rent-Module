@@ -48,18 +48,9 @@
 		<div class="col-sm-2" ng-if="type == 'year'">
 			<div class="bottomspace">
 				<label for="year1" class="control-label">View  duration report</label>
-					<select id="year1" class="form-control " ng-model="duration" ng-init="duration.getFullYear(duration)"
+					<select id="year1" class="form-control" ng-model="duration" ng-init="duration.getFullYear(duration)" ng-options="item for item in [2010,2019] | range"
 					ng-change="calcDuration(type, duration)"> 
-						<option value="2010">2010</option>	
-						<option value="2011">2011</option>	
-						<option value="2012">2012</option>
-						<option value="2013">2013</option>
-						<option value="2014">2014</option>
-						<option value="2015">2015</option>
-						<option value="2016">2016</option>
-						<option value="2017">2017</option>
-						<option value="2018">2018</option>
-						<option value="2019">2019</option>
+						<option value="">Select Year</option>
 					</select> 
 			</div>
 		</div> 
@@ -94,7 +85,9 @@
 				<select id="type" class="form-control" ng-model="types" title="type"  ng-change="changeStatus('type',types)">
 					<option value="" selected>Select Type</option>
 					<option value="income">Income</option>
-					<option value="expence">Expence</option>   
+					<option value="expence">Expence</option>
+					<option value="invoice_payment">Invoice Payment</option>
+					<option value="bill_payment">Bill Payment</option>
 				</select>
 		</div>
 		<div class="col-sm-2">
@@ -103,6 +96,7 @@
 					<option value="" selected>Select Category</option>
 				</select>
 		</div>
+		
 		<div class="col-sm-2">
 			<label for="account_no" class="control-label" ng-init="getAccount(addincome.account_no)">Account     Name*</label>
 				<select class="form-control" name="account_no" id="account_no" ng-change="changeStatus('account_no',account_name)" ng-model="account_name"  ng-options="item.id as item.account_name for item in accountList" required>

@@ -74,6 +74,7 @@ define(['app'], function (app) {
 		dataService.config('config', {config_name : "category"}).then(function(response){
 			$scope.categoryConfig = response.config_data;
 		});
+	
 	/*****************************************************************************************/
 	$scope.getAccount = function(){
 		dataService.get("getmultiple/account/1/100", {status: 1, user_id : $rootScope.userDetails.id}).then(function(response){
@@ -84,7 +85,7 @@ define(['app'], function (app) {
 				$notification[response.status]("Get Customers", response.message);
 			}
 		});
-	}
+	} 
 	/***********************************************************************************************/
 //Modlal For add income form
 	$scope.incomeDate = {};
@@ -97,7 +98,7 @@ define(['app'], function (app) {
 			};
 			var modalOptions = {
 				incomeDate : { date : $scope.currentDate},
-				accountList : (account.data),
+				accountList : account.data,
 				addincome : {},
 				categoryConfig : response.config_data,
 				amount : response.data,
@@ -111,6 +112,7 @@ define(['app'], function (app) {
 					 dataService.post("post/transaction",addincome)
 					.then(function(response) {  
 						if(response.status == "success"){
+							$location.path("/dashboard/accounting/account"); 
 						}
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 						$notification[response.status]("Add record", response.message);
@@ -131,8 +133,10 @@ define(['app'], function (app) {
 						}
 					});   
 				}
+			
 			}; 
 			modalService.show(modalDefaults, modalOptions).then(function (result) {
+				
 			});
 		});
 		});

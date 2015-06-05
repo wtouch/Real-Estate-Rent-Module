@@ -37,7 +37,7 @@
 			<div class="form-group">
 				<label for="account_no" class="col-sm-2 control-label">Account Name* </label>
 					<div class="col-sm-9">
-					<select class="form-control" name="account_no" id="account_no"  ng-model="modalOptions.addincome.account_no" ng-change="modalOptions.getData(modalOptions.addincome.account_no, modalOptions)" ng-options="item.id as item.account_name for item in modalOptions.accountList" required>
+					<select class="form-control" name="account_no" id="account_no" ng-model="modalOptions.addincome.account_no" ng-change="modalOptions.getData(modalOptions.addincome.account_no, modalOptions)" ng-options="item.id as item.account_name for item in modalOptions.accountList" required>
 						<option value="" selected>Select Account Name</option>
 					</select>
 					<span class="help-block" ng-show="addIncomeForm.account_no.$dirty && addIncomeForm.account_no.$invalid">
@@ -72,13 +72,6 @@
 			<input type="hidden" class="form-control" ng-model="userDetails.id"  readonly/>
 			<input type="hidden"  ng-if="type !='other'" ng-model="modalOptions.addincome.category"/>
 			<input type="hidden" ng-model="modalOptions.addincome.type" ng-init="modalOptions.addincome.type='income'"/> 
-			
-			<!-- <div class="form-group" ng-if="type =='other'">
-				<label for="income_expence" class="col-sm-2 control-label">other</label>
-					<div class="col-sm-9">
-						<input type="text" id="income_expence" class="form-control" ng-model="modalOptions.addincome.category" />
-					</div>
-			</div> -->
 			
 			<div class="form-group">	
 				<label  for="date" class="col-sm-2 control-label">Date</label>
@@ -132,7 +125,7 @@
 			<div class="form-group" ng-if="modalOptions.addincome.description.payment_type.type == 'Cheque' || modalOptions.addincome.description.payment_type.type == 'Net Banking' || modalOptions.addincome.description.payment_type.type == 'DD'">
 				<label for="Date" class="col-sm-2 control-label">Date</label>
 				 <div class="col-sm-9">
-					<input type="text" id="date" class="form-control" value="{{dates.date}}"  ng-model="modalOptions.addincome.date" ng-init="modalOptions.addincome.date = modalOptions.incomeDate.date"  name="date" 
+					<input type="text" id="date" class="form-control" value="{{dates.date}}"  ng-model="modalOptions.addincome.description.date" ng-init="modalOptions.addincome.description.date = modalOptions.incomeDate.date"  name="date" 
 					placeholder="date">
 				</div>					
 			</div>
@@ -169,8 +162,8 @@
 			</div>
 			
 			<div class="form-group modal-footer">
-				<div class="col-sm-11">
-					<button type="submit" class="btn btn-success" ng-disabled="addIncomeForm.$invalid" ng-click="modalOptions.postData(modalOptions.addincome); modalOptions.ok()">Submit</button>
+				<div class="col-sm-11"><!--ng-disabled="addIncomeForm.$invalid"-->
+					<button type="submit" class="btn btn-success"  ng-click="modalOptions.postData(modalOptions.addincome); modalOptions.ok()">Submit</button>
 					<button type="reset" class="btn btn-danger" ng-click="modalOptions.close()">Cancel</button>
 				</div>
 			</div>		
