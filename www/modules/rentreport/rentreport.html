@@ -10,19 +10,19 @@
 		</div>			 				  
 		<div class="col-sm-3">
 			<div class="bottomspace">
-				<label for="username" class="control-label">View Rent By Party</label>
+				<label for="username" class="control-label">Filter By Tenant</label>
 					<select id="filterbycustomerid" class="form-control" ng-model="filterbycustomerid"  ng-change="changeStatus('user_id', filterbycustomerid)" ng-options="user.id as user.name for user in userList | filter : {group_name : 'customer'}">
-						<option value="">Select Party</option>
+						<option value="">Select Tenant</option>
 					</select>
 			</div>
 		</div>
 		<div class="col-sm-3">
 			<div class="bottomspace">
-				<label for="leaving_date" class="control-label">Sort by Leaving Date</label>
+				<label for="leaving_date" class="control-label">Sort by Leaving</label>
 					<select id="leaving_date" class="form-control" ng-model="leaving_date" ng-change="orderBy('leaving_date', leaving_date, true)">
 						<option value="">Select Order</option>
-						<option value="-leaving_date">Older First</option>
-						<option value="leaving_date">Newer First</option>
+						<option value="-leaving_date">Will Leave First</option>
+						<option value="leaving_date">Leaved First</option>
 					</select>
 			</div>
 		</div>
@@ -55,9 +55,9 @@
 				<td>{{x.taken_date}}</td>
 				<td>{{x.leaving_date}}</td>
 				<td>
-					<a class="btn btn-info"  ng-click="openRent('modules/rentreport/generateInvoice.html',x)">Generate Invoice</a>
-					<a class="btn btn-info"  ng-click="openRent('modules/rentreport/invoice.html',x)">View Invoice</a>
-					<a class="btn btn-info"  ng-click="propertyRelease(x)">Release Property</a>
+					<a ng-disabled="disableInvoice(x.leaving_date)" class="btn btn-primary"  ng-click="openRent('modules/rentreport/generateInvoice.html',x)">Generate Invoice</a>
+					
+					<a ng-disabled="disableInvoice(x.leaving_date)" class="btn btn-warning"  ng-click="propertyRelease(x)">Release Property</a>
 				</td>
 			</tr>
 		</table>

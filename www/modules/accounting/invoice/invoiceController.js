@@ -253,7 +253,7 @@ define(['app'], function (app) {
 		};
 /*******************************************************************************************/
 		$scope.getInvoices = function(page){
-			var invouceParams = {groupBy : 'id' , user_id : $scope.userInfo.user_id};
+			var invouceParams = {groupBy : 'invoice_id' , user_id : $scope.userInfo.user_id};
 			dataService.get("getmultiple/invoice/"+page+"/"+$scope.pageItems, invouceParams)
 			.then(function(response) {  
 				if(response.status == 'success'){

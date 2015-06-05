@@ -9,55 +9,29 @@
 					<a class="btn btn-primary center-block" name="btn1" href="#/dashboard/property">Property</a>
 				</div>
 			</div>
+			
 			<div class="col-md-3 col-lg-3 col-sm-6 col-xs-12">
 				<div class="gridblock" ng-if="userDetails.permission.user_module.user_list">
 					<h4>
-						<span tooltip="List of users you have added!" class="glyphicon glyphicon-info-sign"></span> Users
+						<span tooltip="View your all property rent details!" class="glyphicon glyphicon-info-sign"></span> View Rent Details</h4>
+					<a class="btn btn-primary center-block" name="btn1" href="#/dashboard/rentreport">Rent Details</a>
+				</div>
+			</div>
+			<div class="col-md-3 col-lg-3 col-sm-6 col-xs-12">
+				<div class="gridblock" ng-if="userDetails.permission.user_module.user_list">
+					<h4>
+						<span tooltip="View your  property income & expense details!" class="glyphicon glyphicon-info-sign"></span> Accounting</h4>
+					<a class="btn btn-primary center-block" name="btn1" href="#/dashboard/accounting">Accounting</a>
+				</div>
+			</div>
+			<div class="col-md-3 col-lg-3 col-sm-6 col-xs-12">
+				<div class="gridblock" ng-if="userDetails.permission.user_module.user_list">
+					<h4>
+						<span tooltip="List of users you have added!" class="glyphicon glyphicon-info-sign"></span> Party List
 					</h4>
-					<a class="btn btn-primary center-block" name="btn1" href="#/dashboard/users/userslist">Users</a>
+					<a class="btn btn-primary center-block" name="btn1" href="#/dashboard/users/userslist">Party List</a>
 				</div>
 			</div>	
-			<div class="col-md-3 col-lg-3 col-sm-6 col-xs-12">
-				<div class="gridblock" ng-if="userDetails.permission.user_module.user_list">
-					<h4>
-						<span tooltip="View your all property rent details!" class="glyphicon glyphicon-info-sign"></span> View Rent Report</h4>
-					<a class="btn btn-primary center-block" name="btn1" href="#/dashboard/rentreport">Rent Report</a>
-				</div>
-			</div>
-			<div class="col-md-3 col-lg-3 col-sm-6 col-xs-12">
-				<div class="gridblock" ng-if="userDetails.permission.user_module.user_list">
-					<h4>
-						<span tooltip="View your  property income & expense details!" class="glyphicon glyphicon-info-sign"></span>Account</h4>
-					<a class="btn btn-primary center-block" name="btn1" href="#/dashboard/accounting">Account</a>
-				</div>
-			</div>	
-		</div>
-		<h3>Property Overview</h3>
-		<div class="row">
-			<div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
-				<div class="overview-block" ng-if="userDetails.permission.user_module.user_list">
-					<table class="table table-bordered">
-						<tr><th>Total Properties</th></tr>
-						<tr><td>  <span popover="Number of properties" popover-trigger="mouseenter" >10</span> * <span popover="Per property rent" popover-trigger="mouseenter" >7000 </span>= <span popover="Average rent amount" popover-trigger="mouseenter" >70000</span></td></tr>
-					</table>
-				</div>
-			</div>	
-			<div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
-				<div class="overview-block" ng-if="userDetails.permission.user_module.user_list">
-					<table class="table table-bordered">
-							<tr><th> Received Rent Amount</th></tr>
-							<tr><td>   <span popover="Average rent amount" popover-trigger="mouseenter" >50000</span></td></tr>
-					</table>
-				</div>
-			</div>	
-			<div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
-				<div class="overview-block" ng-if="userDetails.permission.user_module.user_list">
-						<table class="table table-bordered">
-							<tr><th> Total Due Rent Amount</th></tr>
-							<tr><td> <span popover="Total property rent" popover-trigger="mouseenter" >70000 </span>- <span popover="Received rent amount" popover-trigger="mouseenter" >50000</span>  =<span popover="Due Amount" popover-trigger="mouseenter" >20000</span> </td></tr>
-						</table>
-				</div>
-			</div>
 		</div>
 	</div>
 </div>

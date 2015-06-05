@@ -16,10 +16,13 @@ define(['app'], function (app) {
 		var month = curDate.getMonth() + 1;
 		month = (month <= 9) ? '0' + month : month;
 		$scope.currentDate = curDate.getFullYear() + "-" + month + "-" + curDate.getDate();
-		$scope.rentParams = {status : 1, user_id : $rootScope.userDetails.id};
+		$scope.rentParams = {status : 1, user_id : $rootScope.userDetails.id, orderBy : '-leaving_date'};
+		$scope.leaving_date = '-leaving_date';
 		
 		$scope.disableInvoice = function(leaving_date){
-			if(leaving_date <= $scope.currentDate){
+			var CurDt = new Date();
+			var leavDt = new Date(leaving_date);
+			if(leavDt <= CurDt){
 				return true;
 			}
 			return false;
@@ -74,10 +77,10 @@ define(['app'], function (app) {
 			popupWin.document.close();
 		} 
 		
-		$scope.rentDate = {};
 /**************************************************************************/
 /*Generate Invoice Modal function Open Rent*/
 		$scope.openRent = function (url,invoice) {
+			console.log(invoice);
 			$scope.rentYear = [];
 				var modalDefaults = {
 					templateUrl: url,	
@@ -91,17 +94,16 @@ define(['app'], function (app) {
 					rentData : {},
 					getTotal : function(rentData, modalOptions){
 						if(rentData.perticulars == undefined) rentData.perticulars = {};
-						console.log(rentData.perticulars);
-						rentData.perticulars.tax = $scope.serviceTax(rentData.rent);
-						rentData.perticulars.tds = $scope.tds(rentData.rent);
-						rentData.perticulars.other_tax = $scope.otherTax(rentData.rent);
-						rentData.perticulars.primaryeducation = $scope.primaryEduCess(rentData.rent);
-						rentData.perticulars.secondaryeducation = $scope.secondaryEduCess(rentData.rent);
+						rentData.perticulars.tax = $scope.serviceTax(rentData.perticulars.rent);
+						rentData.perticulars.tds = $scope.tds(rentData.perticulars.rent);
+						rentData.perticulars.other_tax = $scope.otherTax(rentData.perticulars.rent);
+						rentData.perticulars.primaryeducation = $scope.primaryEduCess(rentData.perticulars.rent);
+						rentData.perticulars.secondaryeducation = $scope.secondaryEduCess(rentData.perticulars.rent);
 						
-						var rent = parseFloat(rentData.rent);
-						var maintenance = (rentData.maintenance) ? rentData.maintenance : 0;
-						var electricity_bill = (rentData.electricity_bill) ? rentData.electricity_bill : 0;
-						var water_charge = (rentData.water_charge) ? rentData.water_charge : 0;
+						var rent = parseFloat(rentData.perticulars.rent);
+						var maintenance = (rentData.perticulars.maintenance) ? rentData.perticulars.maintenance : 0;
+						var electricity_bill = (rentData.perticulars.electricity_bill) ? rentData.perticulars.electricity_bill : 0;
+						var water_charge = (rentData.perticulars.water_charge) ? rentData.perticulars.water_charge : 0;
 						
 						var totalAmount = ((parseFloat(rent) + parseFloat($scope.serviceTax(rent)) + parseFloat($scope.otherTax(rent)) + parseFloat($scope.primaryEduCess(rent)) + parseFloat($scope.secondaryEduCess(rent)) + parseFloat(maintenance) + parseFloat(electricity_bill) + parseFloat(water_charge))  - parseFloat($scope.tds(rent)));
 						modalOptions.service_tax = parseFloat(service_tax);
@@ -109,35 +111,49 @@ define(['app'], function (app) {
 						modalOptions.total_amount = parseFloat(totalAmount);
 					},
 					formData : function(rentData, total_amount){
-						var due_date = new Date(rentData.generated_date);
 						rentData.user_id = modalOptions.rentList.user_id;
 						rentData.property_id = modalOptions.rentList.property_id;
-						due_date.setDate(due_date.getMonth() + modalOptions.rentList.duration);
-						rentData.due_date = due_date;
 						rentData.total_amount = total_amount;
+						var generatedMonth = new Date(rentData.generated_date);
+						var month = new Array();
+						month[0] = "January";
+						month[1] = "February";
+						month[2] = "March";
+						month[3] = "April";
+						month[4] = "May";
+						month[5] = "June";
+						month[6] = "July";
+						month[7] = "August";
+						month[8] = "September";
+						month[9] = "October";
+						month[10] = "November";
+						month[11] = "December";
+						var monthName = month[generatedMonth.getMonth()];
+						rentData.remark = "Being Invoice for " + monthName + "-" + generatedMonth.getFullYear()+ " " + "Licence Fee & Maintance Charges against Agr. for" + " "+ modalOptions.rentList.title + " "+modalOptions.rentList.address.address + ", premise area " + modalOptions.rentList.address.area + ", " + modalOptions.rentList.address.city + ", "+ modalOptions.rentList.address.location + "-" + modalOptions.rentList.address.pincode;
 						modalOptions.invoice = rentData;
 					},
 					
 				};
 				modalService.showModal(modalDefaults,modalOptions).then(function (result) {
 					console.log(modalOptions.invoice);
-					 dataService.post("post/invoice",modalOptions.invoice)
+					 /* dataService.post("post/invoice",modalOptions.invoice)
 					.then(function(response) {  
 						if(response.status == "success"){
 							console.log(response);
 						}
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 						$notification[response.status]("Rent Receipt Generated", response.message);
-					});  
+					});   */
 				});
 		};
 /**************************************************************************************************/
 /*Property Release Function*/
 		$scope.propertyRelease = function (data){
-			var curLeavingDate = new Date($scope.currentDate);
-			var leavingDate = {leaving_date : curLeavingDate};
+			var curLeavingDate = new Date();
+			
+			var leavingDt = {leaving_date : curLeavingDate.getFullYear() + "-" + (curLeavingDate.getMonth() + 1) + "-" + curLeavingDate.getDate()};
 			var available = {availability : 1};
-			dataService.put("put/rent/"+data.id,leavingDate)
+			dataService.put("put/rent/"+data.id,leavingDt)
 			.then(function(response) {
 				if(response.status == "success"){
 					dataService.put("put/property/"+data.property_id,available)

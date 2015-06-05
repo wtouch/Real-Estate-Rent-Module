@@ -2,13 +2,13 @@
 	<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
 	<h3>Generate Invoice</h3>
 </div>
-<div class="modal-body row" ng-init="modalOptions.rentData=modalOptions.invoice">
+<div class="modal-body row">
 	<div class="col-sm-6">
 		<form class="form-horizontal" name="receiptForm" name="applyTemplateForm"  novalidate="novalidate" 	ng-submit="receiptForm.$valid">
 			<div class="form-group">
 				<label for="amount" class="col-sm-6 control-label">Licence Fees *</label>
 				<div class="col-sm-6">
-					<input type="text" class="form-control" id="amount" name="amount" ng-model="modalOptions.rentData.rent" ng-init="modalOptions.rentData.perticulars.rent = modalOptions.rentList.rent" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" required>
+					<input type="text" class="form-control" id="amount" name="amount" ng-model="modalOptions.rentData.perticulars.rent" ng-init="modalOptions.rentData.perticulars.rent = modalOptions.rentList.rent" ng-change="modalOptions.getTotal(modalOptions.rentData, modalOptions)" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" required>
 					<span class="help-block" ng-show="receiptForm.amount.$dirty && receiptForm.amount.$invalid">
 					<span ng-show="receiptForm.amount.$error.required" class="text-danger">Licence Fees Required is required.</span>
 					<span ng-show="receiptForm.amount.$error.pattern" class="text-danger">Enter numbers Only.
@@ -76,9 +76,10 @@
 			</div>
 				
 			<div class="form-group">
-				<label  for="due_date" class="col-sm-6 control-label">Date *</label>
+				<label  for="generated_date" class="col-sm-6 control-label">Date *</label>
 				<div class="col-sm-6">
-					<input type="text" class="form-control " placeholder="YYYY-DD-MM" id="due_date" name="due_date" ng-model="modalOptions.rentData.generated_date" ng-init="modalOptions.rentData.generated_date = modalOptions.rentDate.date" />
+					<input type="text" class="form-control " placeholder="YYYY-DD-MM" id="generated_date" name="generated_date" ng-model="modalOptions.rentData.generated_date" ng-init="modalOptions.rentData.generated_date = modalOptions.rentDate.date" />
+					<input type="hidden" class="form-control " placeholder="YYYY-DD-MM" id="due_date" name="due_date" ng-model="modalOptions.rentData.due_date" ng-init="modalOptions.rentData.due_date = modalOptions.rentDate.due_date"/>
 				</div>
 			</div>
 		</form>
@@ -87,7 +88,7 @@
 		<div class="table-responsive">
 			<table class="table bordered" ng-init="modalOptions.getTotal(modalOptions.rentData, modalOptions); modalOptions.rentData.total_amount = modalOptions.total_amount">
 				<thead><th colspan="2">Total Amount Details</th></thead>
-				<tr><td>Licence Fees :</td><td class="text-right">{{modalOptions.rentData.rent | number : 2}}</td></tr>
+				<tr><td>Licence Fees :</td><td class="text-right">{{modalOptions.rentData.perticulars.rent | number : 2}}</td></tr>
 				<tr><td>Electricity_bill :</td><td class="text-right">{{modalOptions.rentData.perticulars.electricity_bill | number : 2}}</td></tr>
 				<tr><td>Water charge :</td><td class="text-right">{{modalOptions.rentData.perticulars.water_charge | number : 2}}</td></tr>
 				<tr><td>maintenance :</td><td class="text-right">{{modalOptions.rentData.perticulars.maintenance | number : 2}}</td></tr>

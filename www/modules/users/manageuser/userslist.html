@@ -14,7 +14,7 @@
 		</div>
 		<div class="col-sm-2">
 			<div class="bottomspace">
-				<label for="status" class="control-label">Select Status</label>
+				<label for="status" class="control-label">Filter By Status</label>
 					<select id="status" class="form-control" 
 					ng-change="changeStatus('status',showStatus)" ng-model="showStatus">
 						<option value="">Select Status</option>
@@ -26,9 +26,9 @@
 	
 		<div class="col-sm-2">
 			<div class="bottomspace">
-				<label for="filterbycustomerid" class="control-label">Select By Customer</label>
+				<label for="filterbycustomerid" class="control-label">Filter By Party</label>
 					<select id="filterbycustomerid" class="form-control" ng-model="filterbycustomerid"  ng-change="changeStatus('user_id', filterbycustomerid)" ng-options="user.id as user.name for user in customerList">
-						<option value="">Select Customer</option>
+						<option value="">Select Party</option>
 					</select>
 			</div>
 		</div>
@@ -40,11 +40,7 @@
 		<table class="table table-bordered">
 			<thead>
 				<th>Sr.No.</th>
-				<th>User Name</th>
-				<th>User Group</th>
-				<th>Users</th>
-				<th>Manager</th>
-				<th>Admin</th>
+				<th>Party Name</th>
 				<th>Email</th>
 				<th>Registered Date</th>
 				<th>Manage</th>
@@ -53,47 +49,17 @@
 				<tr ng-repeat="users in userList |orderBy:sort">
 					<td>{{((usersListCurrentPage - 1) * pageItems ) + $index + 1}}</td>
 					<td>{{users.name}}</td>
-					<td style="max-width:150px">
-						<div class="input-group">
-							<p class="form-control-static" ng-hide="users.boxId ==1">{{users.group_name}}</p>
-							<select ng-if="permission.assign_user_group" ng-hide="users.boxId ==0 || !users.boxId" class="form-control" ng-show="users.boxId == 1" ng-model="users.group_id" ng-options="item.id as item.group_name for item in groups" ng-required="true">
-								<option value="">Select Group</option>
-							</select>
-							
-							<div  ng-if="permission.assign_user_group" class="input-group-btn" >
-								<a type="button" ng-class="(users.boxId == 0 || !users.boxId) ? 'btn btn-info' : 'btn btn-success'" ng-model="users.boxId" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'" ng-change="editGroupName('group_id', users.group_id, users.id, users.boxId); users.group_name = changeGroupName(users.group_id, groups)" tooltip="Edit User Group">
-									<span ng-class="(users.boxId ==1) ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-pencil'"></span>
-								</a>
-							</div>
-						</div> 
-					</td>
-					<td>{{users.userCount}}</td>
-					<td><span ng-if="users.manager">{{users.manager}}</span><span ng-if="!users.manager">-</span></td>
-					<td><span ng-if="users.admin">{{users.admin}}</span><span ng-if="!users.admin">-</span></td>
 					<td>{{users.email}}</td>
 					<td>{{users.register_date}}</td>
 					<td>
-						<div ng-if="permission.reset_user_password" class="btn-group">
-							<a ng-disabled="users.group_name == 'superadmin'" type="button" tooltip="Reset Password" class="btn btn-info " ng-model="users.email" ng-click="forgotPass('email', users.email, users.id)">
-								<span class="glyphicon glyphicon-refresh"></span>
-							</a>
-						</div>
-						
 						<div  ng-if="permission.edit_user" class="btn-group">
-							<a class="btn btn-info" href="#/dashboard/users/adduser/{{users.id}}" tooltip-animation="true" tooltip="Edit User Information">
+							<a class="btn btn-info" href="#/dashboard/users/adduser/{{users.id}}" tooltip-animation="true" tooltip="Edit Party Information">
 								<span class="glyphicon glyphicon-pencil"></span>
 							</a>
 						</div>
 						
-						<div ng-if="permission.ban_user" class="btn-group">
-							<button type="button" tooltip="{{dynamicTooltip(users.baned, 'Re-active User','Baned User')}}" ng-class="(users.baned==0) ? 'btn btn-success' : 'btn btn-danger'" ng-model="users.baned" ng-change="changeStatusFn('baned', users.baned, users.id)" btn-checkbox btn-checkbox-true="'0'" btn-checkbox-false="'1'">
-								<span ng-if="users.baned==0" class="glyphicon glyphicon-repeat"></span>
-								<span ng-if="users.baned==1" class="glyphicon glyphicon-ban-circle"></span>
-							</button>
-						</div>
-						
 						<div ng-if="permission.delete_user" class="btn-group" role="group" aria-label="third group">
-							<button type="button" tooltip="{{dynamicTooltip(users.status, 'Remove User','Approve User')}}" ng-class="(users.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="users.status" ng-change="changeStatusFn('status', users.status, users.id)" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'">
+							<button type="button" tooltip="{{dynamicTooltip(users.status, 'Remove Party','Approve Party')}}" ng-class="(users.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="users.status" ng-change="changeStatusFn('status', users.status, users.id)" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'">
 								<span ng-if="users.status==1" class="glyphicon glyphicon-ok"></span>
 								<span ng-if="users.status==0" class="glyphicon glyphicon-remove"></span>
 							</button>

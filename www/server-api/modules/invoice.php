@@ -51,9 +51,9 @@
 			$db->setColumns($paid, array("ifnull(".$table.".total_amount, 0) - ifnull(sum(".$paid.".credit_amount), 0) as due_amount"), true);
 			
 			$db->setWhere($whereTrans, $paid);
-			$db->setGroupBy($groupBy, $paid);
+			$db->setGroupBy(array("id"), $table);
 			
-			$db->setOrderBy(array("invoice_id"=>"asc"), $paid);
+			$db->setOrderBy(array("id"=>"asc"), $table);
 			
 			
 			
