@@ -1,5 +1,4 @@
 'use strict';
-
 define(['app'], function (app) {
     var injectParams = ['$scope','$rootScope','$injector','modalService','$routeParams' ,'$notification', 'dataService'];
     
@@ -38,7 +37,7 @@ define(['app'], function (app) {
 				$notification[response.status](response.message);
 			});
 		};	
-
+		
 		//datepicker
 		$scope.open = function($event,rentdate){
 			$event.preventDefault();
@@ -72,7 +71,7 @@ define(['app'], function (app) {
 				}
 			});
 		} 
-		/***********************************************************************************************/
+	/******************************************************************************************/
 		//Modlal For add income form
 		$scope.openAddincome = function (url) {
 			dataService.config('config', {config_name : "category"}).then(function(response){
