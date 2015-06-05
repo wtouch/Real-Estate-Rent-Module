@@ -8,6 +8,7 @@
 	<th>Generated Date</th>
 	<th>Payment Status</th>
 	<th>Amount</th>
+	<th>Paid Amount</th>
 	<th>Due Amount</th>
 	<th>Manage</th>
 	<th>View Invoice</th>
@@ -18,15 +19,17 @@
 	<td>{{ x.id }}</td>
 	<td>{{ x.username }}</td>
 	<td>{{ x.generated_date }}</td>
-	<td>{{ (x.payment_status == 1) ? 'Paid' : 'Unpaid' }}</td>
-	<td class="text-right">{{ x.total_amount}}</td>
-	<td class="text-right">{{ x.due_amount}}</td>
+	<td><span ng-if="(x.payment_status == 1)">Paid</span> <span ng-if="(x.payment_status == 0)">Unpaid</span> <span ng-if="(x.payment_status == 2)">Partial Paid</span></td>
+	<td class="text-right">{{ x.total_amount | number : 2}}</td>
+	<td class="text-right">{{ x.paid | number : 2}}</td>
+	<td class="text-right">{{ x.due_amount | number : 2}}</td>
 	<td><a ng-click="openGenerateinvoice('modules/accounting/invoice/addinvoice.html',x)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="Edit Invoice Information"> <span class="glyphicon glyphicon-pencil"></span></a>
 	<a type="button" tooltip="Delete Invoice" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox="" btn-checkbox-true="'1'" btn-checkbox-false="'0'" class="ng-pristine ng-valid active btn btn-success"><span class="glyphicon glyphicon-remove"></span></a>
-	<button class="btn btn-primary">Pay Invoice</button></td>
+	<a ng-disabled="x.due_amount <= 0" ng-click="openGenerateinvoice('modules/accounting/invoice/payinvoice.html',x)" class="btn btn-primary">Pay Invoice</a></td>
 	<td>
-	<a ng-click="openGenerateinvoice('modules/accounting/invoice/receipt.html',x)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="View Invoice">View Invoice</a>
-	<a ng-click="openPayinvoice('modules/accounting/invoice/payinvoice.html',x.id)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="View Invoice">View Invoice</a>
+	<a ng-click="openGenerateinvoice('modules/accounting/invoice/viewinvoice.html',x)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="View Invoice">View Invoice</a>
+	
+	<a ng-click="openGenerateinvoice('modules/accounting/invoice/viewreceipt.html',x)"  class="btn btn-warning" type="button" tooltip-animation="true" tooltip="View Receipt">View Receipt</a>
 	</td>
 	</tr>
 	<tr>

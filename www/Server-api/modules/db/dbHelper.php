@@ -271,7 +271,7 @@ class dbHelper {
 		$where = $this->getWhere();
 		$limit = $this->getLimit();
 		if($total == true){
-			$this->queryString ="(SELECT COUNT(t0.id) as totalRecords FROM ".$table." ".$joinCols." ".$where." ".$orderBy.") ";
+			$this->queryString ="(SELECT COUNT(*) as totalRecords FROM (SELECT t0.id FROM "." ".$table." ".$joinCols." ".$where." ".$groupBy.") as totalRec)";
 		}else{
 			$this->queryString = "SELECT ".$columns." FROM ".$table." ".$joinCols." ".$where." ".$groupBy." ".$orderBy." ".$limit;
 		}

@@ -93,6 +93,7 @@ define(['app'], function (app) {
 		
 		/***********************************************************************************/
 		$scope.openGenerateinvoice = function (url,invoice) {
+
 			$scope.rentYear = [];
 				var modalDefaults = {
 					templateUrl: url,	
@@ -101,7 +102,6 @@ define(['app'], function (app) {
 				if(invoice){
 					var genDate = (invoice.generated_date) ? new Date(invoice.generated_date) : {};
 				}
-
 				var modalOptions = {
 					rentList : (invoice) ? invoice : {},
 					rentDate: { date : $scope.currentDate, due_date : $scope.dueDate },
@@ -157,20 +157,47 @@ define(['app'], function (app) {
 							if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 							$notification[response.status]("Rent Receipt Generated", response.message);
 						});
+					},
+					payInvoice : function(payment){
+							if(modalOptions.rentList.due_amount - payment.credit_amount <= 0){
+								var paymentStatus = { payment_status : 1};
+								}else{
+									var paymentStatus = { payment_status : 2};
+								}
+								dataService.post("post/transaction",payment)
+								.then(function(response) {  
+									if(response.status == "success"){
+										console.log(response);
+										dataService.put("put/invoice/"+invoice.id,paymentStatus)
+										.then(function(response) {
+											if(response.status == "success"){
+												console.log(response);
+											}
+										});
+									}
+									if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+									$notification[response.status]("Rent Receipt Generated", response.message);
+								});
 					}
 					
 				};
-				modalService.showModal(modalDefaults,modalOptions).then(function (result) {
+				modalService.show(modalDefaults,modalOptions).then(function (result) {
 					if(modalOptions.invoice.id){modalOptions.updateData(modalOptions.invoice.id,modalOptions.invoice);}
 				});
 		};
+		
+		/* modalOptions.invoicePayment.amount = ng-init =  invoice.total_amount
+if(invoice.total_amount - modalOptions.invoicePayment.amount <= 0){
+	payment_status = 1;
+}else{
+	payment_status = 2;
+} */
 /*************************************************************************************/
-$scope.openGenerateinvoice = function (url,invoice) {
-	
-}
+
 /***********************************************************************************/
 		$scope.getInvoices = function(page){
-			dataService.get("getmultiple/invoice/"+page+"/"+$scope.pageItems, $scope.userInfo)
+			var invouceParams = {groupBy : 'id' , user_id : $scope.userInfo.user_id};
+			dataService.get("getmultiple/invoice/"+page+"/"+$scope.pageItems, invouceParams)
 			.then(function(response) {  
 				if(response.status == 'success'){
 					$scope.invoices = response.data;
