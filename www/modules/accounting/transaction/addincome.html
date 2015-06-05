@@ -7,7 +7,7 @@
 			<div class="form-group">
 				<label for="category" class="col-sm-2 control-label">Category</label>
 					<div class="col-sm-9">
-						<select class="form-control" name="category" id="category" ng-model="type" ng-options="item.system_name as item.name for item in modalOptions.categoryConfig.category" ng-change="modalOptions.addincome.category = type" required>
+						<select class="form-control" name="category" id="category" ng-model="type" ng-options="item.system_name as item.name for item in modalOptions.categoryConfig.category | filter : { type : 'income'}" ng-change="modalOptions.addincome.category = type" required>
 						<option value="" selected>Select Type</option>
 						</select>
 						<span class="help-block" ng-show="addIncomeForm.category.$dirty && addIncomeForm.category.$invalid">

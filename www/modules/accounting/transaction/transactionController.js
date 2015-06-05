@@ -224,10 +224,10 @@ define(['app'], function (app) {
 				duration = parseInt(duration);
 				var today = new Date();
 				var start = new Date(duration, 3, 1);
-				var endt = new Date(duration + 1, 2 + 1, 0);
+				var endt = new Date(duration + 1, 3, 1);
 				
 				var startDt = start.getFullYear() +"-" + (start.getMonth() + 1) + "-"+start.getDate();
-				var endtDt = endt.getFullYear() +"-" + (endt.getMonth() + 1) + "-"+ (endt.getDate() + 1);
+				var endtDt = endt.getFullYear() +"-" + (endt.getMonth() + 1) + "-"+ (endt.getDate());
 			}
 			
 			$scope.transactionParams.endtDt = endtDt;

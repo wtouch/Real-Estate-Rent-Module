@@ -7,7 +7,7 @@
 			<div class="form-group">
 				<label for="category" class="col-sm-2 control-label">Category</label>
 					<div class="col-sm-9">
-							<select id="category" class="form-control" name="category" ng-model="modalOptions.addexpence.category" ng-options="item.system_name as item.name for item in modalOptions.categoryConfig.categoryExpense" ng-change="addincome.category = type" required>
+							<select id="category" class="form-control" name="category" ng-model="modalOptions.addexpence.category" ng-options="item.system_name as item.name for item in modalOptions.categoryConfig.category | filter : {type : 'expense'}" ng-change="addincome.category = type" required>
 								<option value="" selected>Select Type</option>
 							</select>
 							<span class="help-block" ng-show="addExpenceForm.category.$dirty && addExpenceForm.category.$invalid">
@@ -45,7 +45,7 @@
 					</div>						
 			</div>
 			
-			<input type="hidden" ng-model="modalOptions.addexpence.balancesheet_type" ng-init="modalOptions.addexpence.type = 'expence'" />
+			<input type="hidden" ng-model="modalOptions.addexpence.balancesheet_type" ng-init="modalOptions.addexpence.type = 'expense'" />
 			
 			<div class="form-group">
 				<label for="payment_type" class="col-sm-2 control-label">Payment Type </label>

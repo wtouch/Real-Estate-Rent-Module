@@ -83,16 +83,16 @@
 		<div class="col-sm-2">
 			<label for="type" class="control-label">Select Type</label>
 				<select id="type" class="form-control" ng-model="types" title="type"  ng-change="changeStatus('type',types)">
-					<option value="" selected>Select Type</option>
+					<option value="">Select Type</option>
 					<option value="income">Income</option>
-					<option value="expence">Expence</option>
+					<option value="expense">Expense</option>
 					<option value="invoice_payment">Invoice Payment</option>
 					<option value="bill_payment">Bill Payment</option>
 				</select>
 		</div>
-		<div class="col-sm-2">
+		<div class="col-sm-2" ng-if="types == 'income' || types == 'expense'">
 			<label for="category" class="control-label">Select Category</label>
-				<select class="form-control" name="category" id="category" ng-model="filterCategory" ng-options="item.system_name as item.name for item in categoryConfig.category" ng-change="addincome.category = type;changeStatus('category',filterCategory)" required>
+				<select class="form-control" name="category" id="category" ng-model="filterCategory" ng-options="item.system_name as item.name for item in categoryConfig.category | filter : { 'type' : types}" ng-change="addincome.category = type;changeStatus('category',filterCategory)" required>
 					<option value="" selected>Select Category</option>
 				</select>
 		</div>
