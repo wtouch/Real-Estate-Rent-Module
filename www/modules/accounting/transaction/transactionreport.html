@@ -14,9 +14,9 @@
 		
 		<div class="col-sm-2" ng-if="type == 'daily'">
 			<div class="bottomspace">
-			<label for="year" class="control-label"></label>
+			<label for="date" class="control-label"></label>
 				<p class="input-group">
-				  <input class="form-control" type="text" ng-change="calcDuration(type,duration)" id="date" name="date" datepicker-popup="yyyy-MM-dd" ng-model="duration.start" is-open="rentdate1" min-date="minDate" ng-required="true" close-text="Close" ng-click="open($event,'rentdate1')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
+				  <input class="form-control" type="text" ng-change="calcDuration(type,duration)" id="date" name="date" datepicker-popup="yyyy-MM-dd" ng-model="duration.start" is-open="rentdate1" min-date="minDate" ng-required="true" close-text="Close" ng-click="open($event,'rentdate1')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-init="calcDuration(type, duration)" />
 						<span class="input-group-btn">
 							<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate1')">
 							<i class="glyphicon glyphicon-calendar"></i></button>
@@ -27,8 +27,8 @@
 	
 		<div class="col-sm-2" ng-if="type == 'month'">
 			<div class="bottomspace">
-			<label for="year" class="control-label"></label>
-				<select id="month"  class="form-control " ng-model="duration" ng-init="start.getMonth(start)" ng-change="calcDuration(type, duration)"> 
+			<label for="month" class="control-label"></label>
+				<select id="month"  class="form-control " ng-model="duration" ng-init="duration = today.getMonth() + 1; calcDuration(type, duration)" ng-change="calcDuration(type, duration)"> 
 					<option value="1" selected>January</option>	
 					<option value="2">February</option>	
 					<option value="3">March</option>	
@@ -48,7 +48,7 @@
 		<div class="col-sm-2" ng-if="type == 'year'">
 			<div class="bottomspace">
 				<label for="year1" class="control-label">View  duration report</label>
-					<select id="year1" class="form-control" ng-model="duration" ng-init="duration.getFullYear(duration)" ng-options="item for item in [2010,2019] | range"
+					<select id="year1" class="form-control" ng-model="duration" ng-init="duration = today.getFullYear(); calcDuration(type, duration)" ng-options="item for item in [2010,2019] | range"
 					ng-change="calcDuration(type, duration)"> 
 						<option value="">Select Year</option>
 					</select> 
@@ -125,7 +125,7 @@
 					<tbody>
 						<tr ng-repeat="x in transaction | orderBy:sort">
 							<td>{{((CurrentPage - 1) * pageItems) + $index + 1}}</td>
-							<td>{{x.date | date : 'MM-DD-yyyy'}}</td>
+							<td>{{ toDate(x.date) | date:'dd-MMM-yyyy'}}</td>
 							<td>{{x.category}}</td>
 							<td><strong>{{x.description.payment_type.type}}</strong> <span ng-if="x.description.payment_type.Bank"> - {{x.description.payment_type.Bank}}</span>
 							</td>

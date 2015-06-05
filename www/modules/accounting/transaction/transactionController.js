@@ -18,8 +18,12 @@ define(['app'], function (app) {
 		$scope.today = new Date();
 		$scope.todayDt = $scope.today.getFullYear() + "-" + ($scope.today.getMonth() + 1) + "-" + $scope.today.getDate();
 		$scope.duration = {start : $scope.todayDt};
+
 		$scope.transactionParams = {status: 1, user_id : $rootScope.userDetails.id};
 		
+		$scope.toDate = function(date){
+			return new Date(date);
+		}
 		//for dynamic tooltip
 		$scope.dynamicTooltip = function(status, active, notActive){
 			return (status==1) ? active : notActive;
