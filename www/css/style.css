@@ -3,6 +3,10 @@
     border-color: rgba(138, 109, 59, 0.52);
 }
 
+.imgpropwidth
+{
+	width : 40px;
+}
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
    border : none; 
 }
