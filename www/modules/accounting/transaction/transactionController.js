@@ -12,17 +12,14 @@ define(['app'], function (app) {
 		$scope.totalRecords = "";
 		$scope.CurrentPage = 1;
 		$scope.pageItems = 10;
-		$scope.numPages = "";		
-		$scope.alerts = [];
+		$scope.numPages = "";	
 		$scope.userInfo = {user_id : $rootScope.userDetails.id}; 
 		$scope.currentDate = dataService.currentDate;
-		$scope.currentDate = dataService.currentDate;
-		$scope.dates = {};
 		$scope.hideDeleted = "";
-		$scope.dates.date = $scope.currentDate;
 		$scope.today = new Date();
 		$scope.todayDt = $scope.today.getFullYear() + "-" + ($scope.today.getMonth() + 1) + "-" + $scope.today.getDate();
 		$scope.duration = {start : $scope.todayDt};
+		$scope.transactionParams={status: 1, user_id : $rootScope.userDetails.id};
 		
 		//for dynamic tooltip
 		$scope.dynamicTooltip = function(status, active, notActive){
@@ -42,6 +39,7 @@ define(['app'], function (app) {
 			});
 		};	
 
+		//datepicker
 		$scope.open = function($event,rentdate){
 			$event.preventDefault();
 			$event.stopPropagation();
@@ -50,10 +48,10 @@ define(['app'], function (app) {
 		/***********************************************************************************/
 		//this is global method for filter 
 		$scope.changeStatus = function(statusCol, showStatus) { 
-			$scope.filterStatus= {};
-			$scope.transactionParams={status: 1, user_id : $rootScope.userDetails.id};
-			(showStatus =="") ? delete $scope.transactionParams[statusCol] : $scope.filterStatus[statusCol] = showStatus;
-			angular.extend($scope.transactionParams, $scope.filterStatus);
+			//$scope.transactionParams= {};
+			//$scope.transactionParams={status: 1, user_id : $rootScope.userDetails.id};
+			(showStatus =="") ? delete $scope.transactionParams[statusCol] : $scope.transactionParams[statusCol] = showStatus;
+			angular.extend($scope.transactionParams, $scope.transactionParams);
 			if(statusCol == 'user_id' && showStatus == null) {
 				angular.extend($scope.transactionParams, $scope.userInfo);
 			}
@@ -112,7 +110,7 @@ define(['app'], function (app) {
 					 dataService.post("post/transaction",addincome)
 					.then(function(response) {  
 						if(response.status == "success"){
-							$location.path("/dashboard/accounting/account"); 
+							
 						}
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 						$notification[response.status]("Add record", response.message);
@@ -162,8 +160,7 @@ define(['app'], function (app) {
 				modalOptions.addexpence.balance = Math.round(parseFloat(modalOptions.previousBalance) - parseFloat(modalOptions.addexpence.debit_amount));
 			},
 			postDataExpence : function(addexpence) {
-				//$scope.addexpence.user_id= $rootScope.userDetails.id;
-				 dataService.post("post/transaction/addexpence",addexpence)
+				dataService.post("post/transaction/addexpence",addexpence)
 				.then(function(response) {  
 					if(response.status == "success"){
 						

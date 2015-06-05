@@ -31,6 +31,9 @@ define(['app'], function (app) {
 			upload.generateThumbs(files);
 		};
 		
+		$scope.removeImg = function(item, imgObject) {
+			imgObject.splice(item, 1);     
+		},
 		$scope.getData = function(location){
 			$scope.readOnly = true;
 			$scope.editprofile.address.location = location.location;
