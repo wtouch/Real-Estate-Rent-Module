@@ -219,7 +219,7 @@ define(['app'], function (app) {
 			});
 		} 
 /************************************************************************************/
-	$scope.changeStatus = function(page, column, value, search) {
+		$scope.changeStatus = function(page, column, value, search) {
 			$scope.filterStatus = ($scope.filterStatus) ? $scope.filterStatus : {status: 1, user_id : $rootScope.userDetails.id};
 			(value == "none") ? delete $scope.filterStatus[column] : $scope.filterStatus[column] = value;
 			
@@ -243,12 +243,12 @@ define(['app'], function (app) {
 				if(response.status == 'success'){
 					$scope.invoices = response.data;
 					$scope.totalRecords = response.totalRecords;
-				}else{
+				}/* else{
 					$scope.invoices = {};
 					$scope.totalRecords = {};
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 					$notification[response.status]("Get a List", response.message);
-				}
+				} */
 			});
 		};
 /*******************************************************************************************/

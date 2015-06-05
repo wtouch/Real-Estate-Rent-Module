@@ -56,12 +56,12 @@ define(['app'], function (app) {
 			}
 			$scope.getTransaction($scope.CurrentPage);
 		};
-		/*******************************************************************************************/
+	/******************************************************************************************/
 		dataService.config('config', {config_name : "category"}).then(function(response){
 			$scope.categoryConfig = response.config_data;
 		});
 	
-		/*****************************************************************************************/
+	/*****************************************************************************************/
 		$scope.getAccount = function(){
 			dataService.get("getmultiple/account/1/100", {status: 1, user_id : $rootScope.userDetails.id}).then(function(response){
 				if(response.status == 'success'){
