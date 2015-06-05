@@ -42,7 +42,10 @@
 			if(isset($_GET['account_no'])) $where['account_no'] = $_GET['account_no'];
 			
 			if(isset($_GET['startDt']) && isset($_GET['endtDt'])){
-				$db->setWhere(array("(date BETWEEN '".$_GET['startDt']."' AND '".$_GET['endtDt']."')"), "transaction", false, true);
+				$sDate = date('Y-m-d H:i:s',strtotime($_GET['startDt']));
+				$eDate = date('Y-m-d H:i:s',strtotime($_GET['endtDt']));
+				//echo $sDate;
+				$db->setWhere(array("(date BETWEEN '".$sDate."' AND '".$eDate."')"), "transaction", false, true);
 			}
 			$t0 = $db->setTable("transaction");
 			$db->setWhere($where, $t0);
@@ -50,6 +53,18 @@
 			$db->setLimit($limit);
 			
 			$data = $db->select();
+			if($data['status'] == "success"){
+				$credit_amount = 0;
+				$debit_amount = 0;
+				$total_balance = 0;
+				foreach($data['data'] as $row){
+					$credit_amount += (int) $row['credit_amount'];
+					$debit_amount += (int) $row['debit_amount'];
+				}
+				$data['credit_amount'] = $credit_amount;
+				$data['debit_amount'] = $debit_amount;
+				$data['total_balance'] = $credit_amount - $debit_amount;
+			}
 			echo json_encode($data);
 		}
 	}//end get
