@@ -28,6 +28,7 @@
 			if(isset($_GET['property_id'])) $where['property_id'] = $_GET['property_id'];
 			if(isset($_GET['invoice_id'])) $whereTrans['invoice_id'] = $_GET['invoice_id'];
 			if(isset($_GET['generated_date'])) $like['generated_date'] = $_GET['generated_date'];
+			if(isset($_GET['payment_status'])) $like['payment_status'] = $_GET['payment_status'];
 			if(isset($_GET['due_date'])) $like['due_date'] = $_GET['due_date'];
 			if(isset($_GET['groupBy'])) $groupBy[] = $_GET['groupBy'];
 			

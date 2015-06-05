@@ -98,7 +98,7 @@
 		</div>
 		
 		<div class="col-sm-2">
-			<label for="account_no" class="control-label" ng-init="getAccount(addincome.account_no)">Account     Name*</label>
+			<label for="account_no" class="control-label" ng-init="getAccount(addincome.account_no)">Account Name*</label>
 				<select class="form-control" name="account_no" id="account_no" ng-change="changeStatus('account_no',account_name)" ng-model="account_name"  ng-options="item.id as item.account_name for item in accountList" required>
 					<option value="" selected>Select Account</option>
 				</select>

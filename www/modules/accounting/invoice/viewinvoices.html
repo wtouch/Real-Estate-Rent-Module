@@ -1,4 +1,33 @@
 <h3>Invoices</h3>
+<div class="row">	 				  
+		<div class="col-sm-2">
+			<div class="bottomspace">
+				<label for="payment_status" class="control-label" >Payment Status</label>
+					<select id="payment_status" class="form-control" ng-change="changeStatus(currentPage,'payment_status',payment_status)" ng-model="payment_status">
+						<option value="" selected>Payment Status</option>
+						<option value="0">Unpaid</option>	
+						<option value="1">Paid</option>	
+						<option value="2">Partial Paid</option>
+					</select>
+			</div>
+		</div>
+		
+		<div class="col-sm-2">
+			<label for="account_no" class="control-label" ng-init="getAccount()">Account Name*</label>
+				<select class="form-control" name="account_no" id="account_no" ng-change="changeStatus(currentPage,'account_no',account_name)" ng-model="account_name"  ng-options="item.id as item.account_name for item in accountList" required>
+					<option value="" selected>Select Account</option>
+				</select>
+		</div>
+		
+		<div class="col-sm-2">
+			<label for="party" class="control-label" ng-init="getCustomer()">Party</label>
+			<select class="form-control" name="party" id="party" ng-model="party" ng-change="changeStatus(currentPage,'user_id',party)" ng-options="item as item.name for item in customerList | filter: { group_name : 'customer'} "required>
+				<option value="">Select Party</option>
+			</select>
+		</div>
+		
+		
+	</div>
 <div class="table-responsive" ng-init="getInvoices(currentPage)">
 <table class="table  table-hover table-bordered">
 	<thead>
