@@ -125,7 +125,7 @@
 					<tbody>
 						<tr ng-repeat="x in transaction | orderBy:sort">
 							<td>{{((CurrentPage - 1) * pageItems) + $index + 1}}</td>
-							<td>{{x.date}}</td>
+							<td>{{x.date | date : 'MM-DD-yyyy'}}</td>
 							<td>{{x.category}}</td>
 							<td><strong>{{x.description.payment_type.type}}</strong> <span ng-if="x.description.payment_type.Bank"> - {{x.description.payment_type.Bank}}</span>
 							</td>

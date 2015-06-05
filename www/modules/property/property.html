@@ -22,8 +22,8 @@
 					<label for="sort" class="control-label">Sort by Order</label>		
 					<select id="sort" class="form-control" ng-model="sort" title="Select order">  
 							<option value="">Select Order</option>		<!-- added value & selected attr -->	
-							<option value="-id">Desending</option>
-							<option value="id">Asending</option>  
+							<option value="-title">Desending</option>
+							<option value="title">Asending</option>  
 					</select>
 				</div>
 				
@@ -58,7 +58,6 @@
 									<th>Property Details</th>
 									<th>Availability</th>
 									<th>Status</th>
-									<!-- <th>Manage</th> -->
 									<th>Manage</th> 
 								</tr>
 							</thead>
@@ -67,10 +66,10 @@
 									<td>{{((currentPage - 1) * pageItems) + $index + 1}}</td>
 									<td class="col-sm-2">
 										<div class="media-left">
-										<div class="media-object text-center"><!--width="150px"-->
+										<div class="media-object text-center">
 											<img class="imgwidths"  ng-model="x.imgkey" ng-src="{{appConfig.assetPath + x.property_images[x.imgkey].file_relative_path}}" ng-init="x.imgkey = 0"/>
 											<span class="thumbs" ng-repeat="(key, value) in x.property_images">
-												<img class="img-thumbnail" width="40px" ng-src="{{appConfig.assetPath + value.file_relative_path}}" ng-click="x.imgkey = key"/>
+												<img class="img-thumbnail imgpropwidth" ng-src="{{appConfig.assetPath + value.file_relative_path}}" ng-click="x.imgkey = key"/>
 											</span>
 										</div>
 										</div>
