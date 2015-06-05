@@ -11,6 +11,7 @@
 				<p> <small>Note that Fields Marked * are Required.</small></p>
 			</div>
 		</div>
+		
 		<div class="form-group" ng-init="modalOptions.getCustomer(modalOptions)">
 			<label for="customer" class="col-sm-2 control-label">Select Party* </label>
 			<div class="col-sm-7">
@@ -25,6 +26,7 @@
 				<a class="btn btn-default" ng-click="modalOptions.close()" href="/#/dashboard/users/adduser">Add user</a>
 			</div>
 		</div>
+		
 		<div class="form-group">
 			<label for="title" class="col-sm-2 control-label">Property Name* </label>		
 				<div class="col-sm-9">
@@ -38,10 +40,9 @@
 			<label for="deposit" class="col-sm-2 control-label">Deposit* </label>		
 			<div class="col-sm-9">
 				<input type="text" id="deposit" ng-pattern="/^[0-9]*$/" class="form-control" name="deposit" ng-model="modalOptions.setrent.deposit" placeholder="Enter Deposit Amount" required>
-				
 				<span class="text-danger" ng-show="setrentForm.deposit.$dirty && setrentForm.deposit.$invalid">
 					<span ng-show="setrentForm.deposit.$error.pattern" class="text-danger">Enter Number only</span>
-					<span ng-show="setrentForm.deposit.$error.required">Deposit is required.</span>
+					<span ng-show="setrentForm.deposit.$error.required">Deposit required.</span>
 				</span>
 			</div>
 		</div>
@@ -56,6 +57,7 @@
 				</span>
 			</div>
 		</div>
+		
 		<div class="form-group">
 			<label for="maintenance" class="col-sm-2 control-label">Maintenance *</label>		
 			<div class="col-sm-9">
@@ -66,6 +68,7 @@
 				</span>
 			</div>
 		</div>
+		
 		<div class="form-group">	
 			<label for="taken_date" class="col-sm-2 control-label">Taken Date*</label>
 			<div class="col-sm-4">
@@ -86,14 +89,20 @@
 		<div class="form-group">
 			<label  for="duration" class="col-sm-2 control-label">Duration For*</label>
 				<div class="col-sm-3">
-					<select id="year" class="form-control" ng-model="duration.year" ng-options="item for item in [0,10] | range">
-						<option value="" selected>Select Year</option><!-- added value & selected attr -->
+					<select id="year" class="form-control" ng-model="duration.year" name="year" ng-options="item for item in [0,10] | range" required>
+						<option value="" selected>Select Year</option>
 					</select>
+					<span class="help-block" ng-show="setrentForm.year.$dirty && setrentForm.year.$invalid">
+						<span ng-show="setrentForm.year.$error.required" class="text-danger">Year required.</span>
+					</span>	
 				</div>
 				<div class="col-sm-3">
-					<select id="month" class="form-control" ng-model="duration.month" ng-options="item for item in [0,11] | range">
+					<select id="month" class="form-control" ng-model="duration.month" name="month"ng-options="item for item in [0,11] | range" required>
 						<option value="" selected>Select Month</option>
 					</select>
+					<span class="help-block" ng-show="setrentForm.month.$dirty && setrentForm.month.$invalid">
+						<span ng-show="setrentForm.month.$error.required" class="text-danger">Month  required.</span>
+					</span>	
 				</div>		
 		</div>
 		
@@ -102,14 +111,20 @@
 		<div class="form-group">	
 			<label  for="escalation" class="col-sm-2 control-label">Escalation After*</label>
 				<div class="col-sm-3">
-					<select id="esc_year" class="form-control" ng-model="duration.esc_year" ng-options="item for item in [0,10] | range">
+					<select id="esc_year" class="form-control" ng-model="duration.esc_year" name="esc_year" ng-options="item for item in [0,10] | range" required>
 						<option value="" selected>Select Year</option>
 					</select>
+					<span class="help-block" ng-show="setrentForm.esc_year.$dirty && setrentForm.esc_year.$invalid">
+						<span ng-show="setrentForm.esc_year.$error.required" class="text-danger">Escalation Year required.</span>
+					</span>	
 				</div>	
 				<div class="col-sm-3">
-					<select id="esc_month" class="form-control" ng-model="duration.esc_month" ng-options="item for item in [0,11] | range">
+					<select id="esc_month" class="form-control" name="esc_month" ng-model="duration.esc_month" ng-options="item for item in [0,11] | range" required>
 						<option value="" selected>Select Month</option>
 					</select>
+					<span class="help-block" ng-show="setrentForm.esc_month.$dirty && setrentForm.esc_month.$invalid">
+						<span ng-show="setrentForm.esc_month.$error.required" class="text-danger">Escalation Month required.</span>
+					</span>	
 				</div>		
 		</div>
 		
@@ -118,14 +133,15 @@
 		<div class="form-group">
 			<label for="escalation_amount" class="col-sm-2 control-label">Escalation Amount (%) * </label>		
 			<div class="col-sm-9">
-				<input type="text" id="escalation_amount" class="form-control" name="escalation_amount" placeholder="Set Escalation Percentage" ng-model="modalOptions.setrent.escalation_amount" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
+				<input type="text" id="escalation_amount" class="form-control" name="escalation_amount" placeholder="Set Escalation Percentage" ng-model="modalOptions.setrent.escalation_amount" ng-pattern="/^[0-9]*$/" required />
 				<span class="text-danger" ng-show="setrentForm.escalation_amount.$dirty && setrentForm.escalation_amount.$invalid">
+					<span ng-show="setrentForm.escalation_amount.$error.pattern" class="text-danger">Enter Number only</span>
 					<span ng-show="setrentForm.escalation_amount.$error.required">Escalation Amount is required.</span>
 				</span>
 			</div>
 		</div> 
-		
 	</div> 
+	
 	<div class="modal-footer">
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-9">

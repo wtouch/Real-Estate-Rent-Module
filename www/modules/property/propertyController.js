@@ -4,6 +4,7 @@ define(['app'], function (app) {
     // This is controller for this view
 	var propertyController = function ($scope, $injector,$routeParams,$http, $log, modalService, $rootScope,dataService,upload,$notification) {
 		$rootScope.metaTitle = "Real Rent Properties";
+		
 		$scope.maxSize = 5;
 		$scope.totalRecords = "";
 		$scope.currentPage = 1;
@@ -105,6 +106,7 @@ define(['app'], function (app) {
 					isFirstOpen: true,
 					isFirstDisabled: false,
 				},
+				property_images:{},
 				copy : copy,
 				propDate  : $scope.currentDate,
 				propertyData : propertyData,
@@ -121,7 +123,7 @@ define(['app'], function (app) {
 					property_location: propertyData.property_location,
 					optional_property_details: propertyData.optional_property_details,
 					landmarks:propertyData.landmarks
-				} : {}, 
+				} : {property_images : []}, 
 				getCustomer : function(modalOptions){
 					dataService.get("getmultiple/user/1/500", {status: 1, user_id : $rootScope.userDetails.id}).then(function(customer) {
 						modalOptions.customerList = customer.data;
@@ -163,6 +165,7 @@ define(['app'], function (app) {
 							console.log(response.message);
 							dataService.put("put/property/"+propertyData.id, {availability : 0}).then(function(response) {
 								console.log(response.message);
+								console.log(setrent);
 							})
 						}
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
@@ -186,10 +189,14 @@ define(['app'], function (app) {
 					}
 				}); 
 				},
+				removeImg : function(item, imgObject) {
+				   imgObject.splice(item, 1);     
+				},
 				upload : function(files,path,userInfo, picArr){
 					upload.upload(files,path,userInfo,function(data){
 						if(data.status === 'success'){
-							modalOptions.property_images = data.data.file_relative_path;
+							picArr.property.property_images = angular.isArray(picArr.property.property_images) ? picArr.property.property_images : [];
+							picArr.property.property_images.push(data.data);
 						}else{
 							if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 							$notification[response.status]("", response.message);

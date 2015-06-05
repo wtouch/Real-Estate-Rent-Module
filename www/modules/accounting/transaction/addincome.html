@@ -76,7 +76,7 @@
 			<div class="form-group">	
 				<label  for="date" class="col-sm-2 control-label">Date</label>
 					<div class="col-sm-9">
-						<input type="text" id="date" class="form-control" value="{{dates.date}}"  ng-model="modalOptions.addincome.date" ng-init="modalOptions.addincome.date = modalOptions.incomeDate.date"  name="date" readonly 
+						<input type="text" id="date" class="form-control" ng-model="modalOptions.addincome.date" ng-init="modalOptions.addincome.date = modalOptions.incomeDate.date"  name="date" readonly 
 						placeholder="date">
 					</div>						
 			</div>
@@ -85,7 +85,7 @@
 				<label for="payment_type" class="col-sm-2 control-label">Payment Type </label>
 					<div class="col-sm-9">
 						<select id="payment_type" class="form-control" name="payment_type"  ng-model="modalOptions.addincome.description.payment_type.type" required>
-						<option value="" selected>Select Type</option><!-- added value & selected attr -->
+						<option value="" selected>Select Type</option>
 						<option value="Cash" >Cash</option>
 						<option value="Cheque">Cheque</option>
 						<option value="Net Banking">Net Banking</option>
@@ -125,7 +125,7 @@
 			<div class="form-group" ng-if="modalOptions.addincome.description.payment_type.type == 'Cheque' || modalOptions.addincome.description.payment_type.type == 'Net Banking' || modalOptions.addincome.description.payment_type.type == 'DD'">
 				<label for="Date" class="col-sm-2 control-label">Date</label>
 				 <div class="col-sm-9">
-					<input type="text" id="date" class="form-control" value="{{dates.date}}"  ng-model="modalOptions.addincome.description.date" ng-init="modalOptions.addincome.description.date = modalOptions.incomeDate.date"  name="date" 
+					<input type="text" id="date" class="form-control"   ng-model="modalOptions.addincome.description.date" ng-init="modalOptions.addincome.description.date = modalOptions.incomeDate.date"  name="date" 
 					placeholder="date">
 				</div>					
 			</div>

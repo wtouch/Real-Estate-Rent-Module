@@ -20,7 +20,7 @@
 		<label for="category" class="col-sm-2 control-label">Property Category *</label>
 		<div class="col-sm-3">
 			<select id="category" name="category" ng-model="modalOptions.property.category" class="form-control" required  ng-options="item.category_name as item.category_name for item in modalOptions.propertyConfig.category">
-				<option value="">Select  Property Category</option>			
+				<option value="">Select Property Category</option>			
 			</select>
 			
 			<span class="text-danger" ng-show="addPropertyForm.category.$dirty && addPropertyForm.category.$invalid">
@@ -104,13 +104,17 @@
 	  <label for="property_images" class="col-sm-2 control-label" >Property Images *</label>
 		<div class="col-sm-9">
 			<!-- This is file input for select images -->
-			<input type="file" id="property_images" ng-file-select ng-multiple="true" accept="image/jpeg,image/png,image/gif" ng-file-change="modalOptions.generateThumb($files)" ng-src="{{appConfig.assetPath + '/' + value.file_relative_path}}" ng-model="property_images" required />		
+			<input type="file" id="property_images" ng-file-select ng-multiple="true" accept="image/jpeg,image/png,image/gif" ng-file-change="modalOptions.generateThumb($files)"  ng-model="property_images" ng-src="{{appConfig.assetPath + '/' + value.file_relative_path}}"required />		
 			<!-- This will show thumbnails & progress of images -->
 			<file-preview url="property_images"></file-preview>
 			<!-- This button will show if file/s selected -->
-			<button ng-show="property_images" ng-click="modalOptions.upload(property_images,path,userInfo,modalOptions.property.property_images)" type="button">Upload</button>
+			<button ng-show="property_images" ng-click="modalOptions.upload(property_images,path,userInfo,modalOptions)" type="button">Upload</button>
 			<!-- This hidden input will store image path in array after successful uploading -->
-			<input type="hidden" ng-model="modalOptions.property.property_images">
+			<input type="hidden" ng-model="modalOptions.property.property_images"/>	
+			<span class="thumbs" ng-repeat="(key, value) in modalOptions.property.property_images">
+				<img class="img-thumbnail" width="40px" ng-src="{{appConfig.assetPath + value.file_relative_path}}" />
+				<span class="close" ng-click="modalOptions.removeImg(key, modalOptions.property.property_images)">X</span>
+			</span>		
 		</div>
 	</div>
 	
@@ -173,7 +177,7 @@
 				<span ng-show="addPropertyForm.state.$error.required" class="text-danger">State is required.</span>
 			</span>				
 		</div>
-		<label for="Country" class="col-sm-1 control-label">Country*</label>
+		<label for="Country" class="col-sm-1 control-label">Country *</label>
 		<div class="col-sm-4">
 			<input type="text"name="Country" id="Country" ng-model="modalOptions.property.property_location.country" placeholder="Enter Your Country" class="form-control" required>
 			<span class="help-block" ng-show="addPropertyForm.Country.$dirty && addPropertyForm.Country.$invalid">
@@ -254,7 +258,7 @@
 					
 		<h4>Land Mark:</h4>
 		<div class="form-group">
-				<label for="hospitals" class="col-sm-2 control-label">Hospitals </label>
+				<label for="hospitals" class="col-sm-2 control-label">Hospitals</label>
 				<div class="col-sm-4">
 					<input type="text"  id="hospitals" class="form-control" name="hospitals" ng-model="modalOptions.property.landmarks.hospitals" required /> kms						
 				<span class="help-block" ng-show="addProperty.hospitals.$dirty && addProperty.hospitals.$invalid">
@@ -262,9 +266,9 @@
 					.</span>
 				</span>		
 				</div>							
-				<label for="airport" class="col-sm-1 control-label">Airport</label>
+				<label for="airport" class="col-sm-1 control-label">Airport </label>
 				<div class="col-sm-4">
-					<input type="text" id="airport" class="form-control"  name="airport" ng-model="modalOptions.property.landmarks.airport" required >	kms						 
+					<input type="text" id="airport" class="form-control" name="airport" ng-model="modalOptions.property.landmarks.airport" required />	kms						 
 				</div>											
 		</div>
 		
@@ -273,7 +277,7 @@
 				<div class="col-sm-4">
 					<input type="text" id="railway" class="form-control" name="railway" ng-model="modalOptions.property.landmarks.railway" required>kms	
 				</div>										
-				<label for="school" class="col-sm-1 control-label">School </label>
+				<label for="school" class="col-sm-1 control-label">School</label>
 				<div class="col-sm-4">
 					<input type="text" id="school" class="form-control" name="school" ng-model="modalOptions.property.landmarks.school" required>kms	
 				</div>											
@@ -283,7 +287,7 @@
 			<div class="col-sm-offset-2 col-sm-9">
 			<button type="submit" ng-if="!modalOptions.propertyData.id || modalOptions.copy" ng-click="modalOptions.addProperty(modalOptions.property); modalOptions.ok()" class="btn btn-primary" title="Add new property">Add Property</button>
 				
-			<button type="submit" ng-if="modalOptions.propertyData.id  && !modalOptions.copy" ng-click="modalOptions.updateData(modalOptions.propertyData.id,modalOptions.property)" title="Update your property" class="btn btn-success text-center ">Update Property</button>
+			<button type="submit" ng-if="modalOptions.propertyData.id  && !modalOptions.copy" ng-click="modalOptions.updateData(modalOptions.propertyData.id,modalOptions.property); modalOptions.ok()" title="Update your property" class="btn btn-success text-center ">Update Property</button>
 				<button type="button" title="Cancel" class="btn btn-danger text-center" ng-click="modalOptions.ok()">Cancel</button>
 			</div>
 		</div>	
