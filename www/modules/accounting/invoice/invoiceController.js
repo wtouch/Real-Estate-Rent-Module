@@ -111,6 +111,11 @@ define(['app'], function (app) {
 					inWords : (invoice) ? $scope.inWords(invoice.total_amount) : "",
 					generated_date : (genDate) ? {month : genDate.getMonth(), year : genDate.getFullYear()} : {},
 					generatedDate : {month : curMonth, year : curDate.getFullYear()},
+					add : function(modalOptions,perticulars){
+						modalOptions.rentData.perticulars = (modalOptions.rentData.perticulars) ? modalOptions.rentData.perticulars : {};
+						console.log(perticulars);
+						modalOptions.rentData.perticulars[perticulars.label] = perticulars.rent;
+					},
 					printDiv : function(divName) {
 						var printContents = document.getElementById(divName).innerHTML;
 						var popupWin = window.open('', '_blank', 'width=1000,height=620');
@@ -118,9 +123,13 @@ define(['app'], function (app) {
 						popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /><link rel="stylesheet" type="text/css" href="css/style.css" /></head><body onload="window.print()">' + printContents + '</html>');
 						popupWin.document.close();
 					},
-					getTotal : function(rentData, modalOptions){
+					getTotal : function(rentData, modalOptions, input, tax){
 						if(rentData.perticulars == undefined) rentData.perticulars = {};
 						var rent = parseFloat(rentData.perticulars.rent);
+						var serviceTax = (rentData.perticulars.service_tax) ? rentData.perticulars.tax : 0;
+						var pEduCess = (rentData.perticulars.primaryeducation) ? rentData.perticulars.primaryeducation : 0;
+						
+						var sEduCess = (rentData.perticulars.secondaryeducation) ? rentData.perticulars.secondaryeducation : 0;
 						
 						rentData.perticulars.tax = $scope.serviceTax(rent);
 						rentData.perticulars.tds = $scope.tds(rent);
@@ -133,8 +142,8 @@ define(['app'], function (app) {
 						var water_charge = (rentData.perticulars.water_charge) ? rentData.perticulars.water_charge : 0;
 						
 						var totalAmount = ((parseFloat(rent) + parseFloat($scope.serviceTax(rent)) + parseFloat($scope.otherTax(rent)) + parseFloat($scope.primaryEduCess(rent)) + parseFloat($scope.secondaryEduCess(rent)) + parseFloat(maintenance) + parseFloat(electricity_bill) + parseFloat(water_charge))  - parseFloat($scope.tds(rent)));
-						modalOptions.service_tax = parseFloat(service_tax);
-						modalOptions.other_tar = parseFloat(other_tax);
+						modalOptions.service_tax = parseFloat(rentData.perticulars.tax);
+						modalOptions.other_tar = parseFloat(rentData.perticulars.other_tax);
 						modalOptions.total_amount = parseFloat(totalAmount);
 					},
 					formData : function(rentData, total_amount){
@@ -254,6 +263,7 @@ define(['app'], function (app) {
 /*******************************************************************************************/
 		$scope.getInvoices = function(page){
 			var invouceParams = {groupBy : 'invoice_id' , user_id : $scope.userInfo.user_id};
+			return true;
 			dataService.get("getmultiple/invoice/"+page+"/"+$scope.pageItems, invouceParams)
 			.then(function(response) {  
 				if(response.status == 'success'){
