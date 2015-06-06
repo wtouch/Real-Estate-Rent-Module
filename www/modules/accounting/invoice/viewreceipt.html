@@ -1,13 +1,23 @@
-<div class="modal-header">
+<div class="modal-header" ng-init="modalOptions.getData(modalOptions.invoice)">
 	<button type="button" class="close" ng-click="modalOptions.close()">
 		<span aria-hidden="true">&times;</span></button>
-	<h3>View Receipt</h3>
+		<h3>View Receipt</h3>
+		<div class="clearfix">
+			<button type="button" class="btn btn-primary pull-right" ng-click="modalOptions.printDiv('invoice')">Print</button>
+			<button type="button" class="btn btn-danger pull-right" ng-click="modalOptions.close()">Close</button>
+		</div>
 </div>
+<br>
+<div class="form-group">
+				<label for="receipts" class="col-sm-2 control-label">Receipt Id</label>
+				<div class="col-sm-9">
+					<select class="form-control" name="receipts" id="receipts" ng-model="receipts" ng-options="item as item.receipt_id for item in modalOptions.receiptList" ng-change="modalOptions.rentList = receipts">
+					<option value="">Select Date</option>
+					</select>
+				</div>
+</div>
+</br>
 <div class="modal-body">
-<div class="clearfix">
-	<button type="button" class="btn btn-primary pull-right" ng-click="modalOptions.printDiv('invoice')">Print</button>
-	<button type="button" class="btn btn-danger pull-right" ng-click="modalOptions.close()">Close</button>
-</div>
 	<div class="panel panel-default" id="invoice" ng-if="modalOptions.rentList">
 		<div class="panel-heading text-center"><h2>Receipt</h2></div>
 		<div class="panel-body row">
@@ -27,18 +37,11 @@
 				<div class="table-responsive">
 					<table class="table table-bordered">
 						<tr class="amt">
-							<td><strong>Invoice No.</strong><br>{{modalOptions.rentList.id}}
+							<td><strong>Receipt No.</strong><br>{{modalOptions.rentList.receipt_id}}
 							</td>
 							<td><strong>Dated</strong><br>
-							{{modalOptions.rentList.generated_date}}</td>
+							{{modalOptions.rentList.receipt_date}}</td>
 						</tr>
-						
-						<tr>
-							<td><strong>Licence Fee Month</strong><br> {{modalOptions.rentList.generated_date | date : 'MMM-yyyy'}}</td>
-							<td><strong>Due Date</strong><br>{{modalOptions.rentList.due_date}}</td>
-							
-						</tr>
-						
 					</table>
 				</div>
 			</div>
@@ -52,29 +55,29 @@
 					</thead>
 					<tbody>
 						<tr>
-							<th>Rent</th>
-							<td class="text-right">{{ modalOptions.rentList.rent }}</td>
+							<td>Total Amount</td>
+							<td class="text-right">{{modalOptions.rentList.total_amount | number : 2}}</td>
 						</tr>
-						<tr ng-repeat="(key,value) in modalOptions.rentList.perticulars">
-							<td>{{key | uppercase | replace : {"_" : " "} }}</td>
-							<td class="text-right">{{ value | number : 2 }}</td>
+						<tr>
+							<td>Received Amount</td>
+							<td class="text-right">{{modalOptions.rentList.paid | number : 2}}</td>
 						</tr>
 					</tbody>
 					<tfoot>
 						<tr>
-							<td class="text-right"><strong>Total Rent</strong></td>
-							<td class="amt text-right">{{modalOptions.rentList.total_amount | number : 2}}</td>
+							<td><strong>Due Amount</strong></td>
+							<td class="amt text-right">{{modalOptions.rentList.due_amount | number : 2}}</td>
 						</tr>
 					</tfoot>
 				</table>
 			</div>
 			<div class="col-xs-12">
 				<p>Amount Chargeable(in words) : 
-				<strong><em>{{modalOptions.inWords | uppercase}}</em></strong>
-				<!-- <p ng-if="modalOptions.rentList.remark">Remarks :</p> -->
+				<strong><em>{{inWords | uppercase}}</em></strong></p>
+				<p><strong>Payment Details:</strong>
+				Paid By <strong>{{modalOptions.rentList.description.payment_type.type}}</strong>  Against Invoice No.<strong>{{modalOptions.rentList.id}}</strong></p>
 				<p><strong>Remarks: </strong>Being Invoice for <strong>{{modalOptions.rentList.generated_date | date : 'MMM-yyyy'}} </strong> Licence Fee & Maintance Charges against Agr. for
 				<strong>{{modalOptions.rentList.property_name}}</strong> premise area <span ng-if="modalOptions.rentList.address.address">{{modalOptions.rentList.property_location.address}},</span> <span ng-if="modalOptions.rentList.property_location.location">{{modalOptions.rentList.property_location.location}},</span> <span ng-if="modalOptions.rentList.property_location.area">{{modalOptions.rentList.property_location.area}}, </span><span ng-if="modalOptions.rentList.property_location.city">{{modalOptions.rentList.property_location.city}}, </span><span ng-if="modalOptions.rentList.property_location.state">{{modalOptions.rentList.property_location.state}}, <span ng-if="modalOptions.rentList.property_location.country">{{modalOptions.rentList.property_location.country}} </span> <span ng-if="modalOptions.rentList.property_location.pincode">- {{modalOptions.rentList.property_location.pincode}} </span></p>
-				
 				<hr/>
 				<p><strong>Company's Service Tax No: </strong>{{modalOptions.accountConfig.service_tax_no}}</p>
 				<p><strong>Company's Pan: </strong>{{modalOptions.accountConfig.pan_no}} </strong></p>
@@ -82,11 +85,6 @@
 				<p class="text-right">For <strong><em>{{userDetails.name}}</em></strong><br><br><br>
 				Authorised Signatory</p>
 			</div>
-		</div>
-	</div>
-	<div class="panel panel-default" id="invoice" ng-if="modalOptions.rentList.length <= 0">
-		<div class="panel-body">
-			<h2> No Data Found </h2>
 		</div>
 	</div>
 </div>

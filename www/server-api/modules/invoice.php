@@ -47,15 +47,16 @@
 			
 			
 			$paid = $db->setJoinString("LEFT JOIN", "transaction", array("invoice_id"=>$table.".id"));
-			$db->setColumns($paid, array($paid.".id as receipt_id, ".$paid.".date as paid_date, ifnull(sum(".$paid.".credit_amount), 0) as paid") , true);
+			$db->setColumns($paid, array($paid.".id as receipt_id, ".$paid.".date as receipt_date, ".$paid.".description as description, ifnull(sum(".$paid.".credit_amount), 0) as paid"), true);
 			$db->setColumns($paid, array("ifnull(".$table.".total_amount, 0) - ifnull(sum(".$paid.".credit_amount), 0) as due_amount"), true);
 			
 			$db->setWhere($whereTrans, $paid);
-			$db->setGroupBy($groupBy, $paid);
 			
-			$db->setOrderBy(array("invoice_id"=>"asc"), $paid);
+			if(isset($_GET['groupBy'])){
+				($_GET['groupBy'] == 'invoice_id') ? $db->setGroupBy(array("id"), $table) : $db->setGroupBy(array("id"), $paid);
+			}
 			
-			
+			$db->setOrderBy(array("id"=>"desc"), $table);
 			
 			$data = $db->select();
 			if($data['status'] == "success"){

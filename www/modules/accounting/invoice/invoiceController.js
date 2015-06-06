@@ -206,6 +206,35 @@ define(['app'], function (app) {
 				});
 		};
 /*************************************************************************************/
+/*Receipt Generation Modal*/
+
+$scope.viewReceipt = function (url,invoice) {
+	var getParams = {user_id : $rootScope.userDetails.id,invoice_id :invoice.id,groupBy :invoice.id};
+	dataService.get("getmultiple/invoice/1/1000",getParams)
+							.then(function(response) {
+							var modalDefaults = {
+											templateUrl: url,	
+											size : 'lg'
+										};
+							var modalOptions = {
+								invoice	: (invoice) ? invoice : {},
+								receiptList : (response.data),
+								accountConfig : $rootScope.userDetails.config.rentsetting,
+								printDiv : function(divName) {
+										var printContents = document.getElementById(divName).innerHTML;
+										var popupWin = window.open('', '_blank', 'width=1000,height=620');
+										popupWin.document.open()
+										popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /><link rel="stylesheet" type="text/css" href="css/style.css" /></head><body onload="window.print()">' + printContents + '</html>');
+										popupWin.document.close();
+									},
+							};
+					modalService.show(modalDefaults,modalOptions).then(function (result) {
+						
+						
+					});
+	});
+};
+/*************************************************************************************/
 	$scope.getCustomer = function(){
 			dataService.get("getmultiple/user/1/100", {status: 1, user_id : $rootScope.userDetails.id}).then(function(response){
 				if(response.status == 'success'){
@@ -263,7 +292,6 @@ define(['app'], function (app) {
 /*******************************************************************************************/
 		$scope.getInvoices = function(page){
 			var invouceParams = {groupBy : 'invoice_id' , user_id : $scope.userInfo.user_id};
-			return true;
 			dataService.get("getmultiple/invoice/"+page+"/"+$scope.pageItems, invouceParams)
 			.then(function(response) {  
 				if(response.status == 'success'){
