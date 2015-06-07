@@ -58,7 +58,7 @@
 				<label  for="dob" class="col-sm-2 control-label">Birth Date *</label>
 				<div class="col-sm-9">
 					<p class="input-group">
-						<input type="text" placeholder="YYYY-DD-MM" id="dob" name="dob" class="form-control ng-isolate-scope ng-valid-date ng-dirty ng-valid ng-valid-required" ng-model="register.dob" datepicker-popup="yyyy-MM-dd" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-click="open($event)" required="required">
+						<input type="text" placeholder="YYYY-DD-MM" id="dob" name="dob" class="form-control ng-isolate-scope ng-valid-date ng-dirty ng-valid ng-valid-required" ng-model="adduser.dob" datepicker-popup="yyyy-MM-dd" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-click="open($event)" required="required">
 						<span class="input-group-btn">
 							<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 						</span>
@@ -111,7 +111,7 @@
 			 <div class="form-group">
 					<label for="state" class="col-sm-2 control-label">State *</label>
 					<div class="col-sm-4">
-					<input type="text" id="state" name="state" class="form-control" ng-model="adduser.address.state" placeholder="Enter state" required>
+					<input type="text" id="state" name="state" class="form-control" ng-model="adduser.state" placeholder="Enter state" required>
 						<span class="help-block" ng-show="adduserForm.state.$dirty && adduserForm.state.$invalid">
 							<span ng-show="adduserForm.state.$error.required" class="text-danger">State is required.</span>
 						</span>				

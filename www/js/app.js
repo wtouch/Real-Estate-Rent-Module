@@ -144,7 +144,7 @@ define(['angular',
 		$rootScope.$on("$routeChangeStart", function (event, next, current) {
 			$rootScope.userDetails = dataService.userDetails;
 			
-			$rootScope.breadcrumbs = breadcrumbs;
+			//$rootScope.breadcrumbs = breadcrumbs;
 			$rootScope.appConfig = {
 				metaTitle : "Small Business",
 				headerTitle : next.$$route.label,
@@ -159,13 +159,13 @@ define(['angular',
 			
 			if(dataService.auth == false || $rootScope.userDetails == null){
 				var changePassUrl = '"/changepass/'+next.pathParams.resetPassKey+'"';
-				if (nextUrl == '/forgotpass' || nextUrl == '/register' || nextUrl == '/login' || nextUrl == '/' || nextUrl == '/logout' || nextUrl == '/changepass/:resetPassKey' || nextUrl == '/activate/:activateKey/:email/:pass?') {
+				if (nextUrl == '/forgotpass' || nextUrl == '/register' || nextUrl == '/dynamic' || nextUrl == '/login' || nextUrl == '/' || nextUrl == '/logout' || nextUrl == '/changepass/:resetPassKey' || nextUrl == '/activate/:activateKey/:email/:pass?') {
 				} else {
 					$location.path("/login");
 					$notification.warning("Login", "You are not logged in!");
 				}
 			}else{
-				if (nextUrl == '/forgotpass' || nextUrl == '/register' || nextUrl == '/login' || nextUrl == '/' || nextUrl == '/changepass/:resetPassKey' || nextUrl == '/activate/:activateKey/:email/:pass?') {
+				if (nextUrl == '/forgotpass' || nextUrl == '/register'  || nextUrl == '/dynamic' || nextUrl == '/login' || nextUrl == '/' || nextUrl == '/changepass/:resetPassKey' || nextUrl == '/activate/:activateKey/:email/:pass?') {
 					$location.path("/dashboard");
 				}
 				

@@ -2,9 +2,12 @@
 'use strict';
 
 define(['app'], function (app) {
-    var injectParams = ['$scope','$injector','dataService','$notification'];
+    var injectParams = ['$scope','$injector','dataService','$notification','$route'];
 
-	var registerController = function ($scope,$injector,dataService,$notification) {
+	var registerController = function ($scope,$injector,dataService,$notification,$route) {
+		
+		$route.routes['/dynamic'] = {templateUrl: "modules/users/register/reg.html",label: "dynamic Url", controller : "registerController", originalPath: "/dynamic"};
+		console.log($route.routes);
 		$scope.currentDate = dataService.currentDate;
 		$scope.alerts = [];
 		$scope.formats = ['yyyy-MM-dd', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
