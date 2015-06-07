@@ -1,13 +1,11 @@
 <div class="modal-header">
-	<button type="button" class="close" ng-click="modalOptions.close()">
+	<button type="button" class="close buttondistance" ng-click="modalOptions.close()">
 		<span aria-hidden="true">&times;</span></button>
-	<h3>Rent This Property</h3>
+	<button type="button" class="btn btn-primary pull-right buttondistance" ng-click="modalOptions.printDiv('invoice')">Print</button>
+	<button type="button" class="btn btn-danger pull-right buttondistance" ng-click="modalOptions.close()">Close</button>
+	<h3>INVOICE</h3>
 </div>
 <div class="modal-body">
-<div class="clearfix">
-	<button type="button" class="btn btn-primary pull-right" ng-click="modalOptions.printDiv('invoice')">Print</button>
-	<button type="button" class="btn btn-danger pull-right" ng-click="modalOptions.close()">Close</button>
-</div>
 	<div class="panel panel-default" id="invoice" ng-if="modalOptions.rentList">
 		<div class="panel-heading text-center"><h2>INVOICE</h2></div>
 		<div class="panel-body row">

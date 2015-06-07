@@ -168,6 +168,7 @@ define(['app'], function (app) {
 					},
 					postData : function(invoice, total_amount){
 							invoice.total_amount = total_amount;
+							invoice.user_id = $scope.userInfo.user_id;
 							dataService.post("post/invoice",invoice)
 							.then(function(response) {  
 							if(response.status == "success"){
@@ -183,6 +184,9 @@ define(['app'], function (app) {
 								}else{
 									var paymentStatus = { payment_status : 2};
 								}
+								payment.user_id = $scope.userInfo.user_id;
+								payment.type = 'invoice_payment';
+								payment.category = 'invoice';
 								dataService.post("post/transaction",payment)
 								.then(function(response) {  
 									if(response.status == "success"){
@@ -208,32 +212,35 @@ define(['app'], function (app) {
 /*************************************************************************************/
 /*Receipt Generation Modal*/
 
-$scope.viewReceipt = function (url,invoice) {
-	var getParams = {user_id : $rootScope.userDetails.id,invoice_id :invoice.id,groupBy :invoice.id};
-	dataService.get("getmultiple/invoice/1/1000",getParams)
-							.then(function(response) {
-							var modalDefaults = {
-											templateUrl: url,	
-											size : 'lg'
-										};
-							var modalOptions = {
-								invoice	: (invoice) ? invoice : {},
-								receiptList : (response.data),
-								accountConfig : $rootScope.userDetails.config.rentsetting,
-								printDiv : function(divName) {
-										var printContents = document.getElementById(divName).innerHTML;
-										var popupWin = window.open('', '_blank', 'width=1000,height=620');
-										popupWin.document.open()
-										popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /><link rel="stylesheet" type="text/css" href="css/style.css" /></head><body onload="window.print()">' + printContents + '</html>');
-										popupWin.document.close();
-									},
-							};
-					modalService.show(modalDefaults,modalOptions).then(function (result) {
-						
-						
-					});
-	});
-};
+	$scope.viewReceipt = function (url,invoice) {
+		var getParams = {user_id : $rootScope.userDetails.id,invoice_id :invoice.id,groupBy :invoice.id};
+		dataService.get("getmultiple/invoice/1/1000",getParams)
+			.then(function(response) {
+			var modalDefaults = {
+							templateUrl: url,	
+							size : 'lg'
+						};
+			var modalOptions = {
+				invoice	: (invoice) ? invoice : {},
+				receiptList : (response.data),
+				inWords : function(total_amount){
+					return $scope.inWords(total_amount);
+				},
+				accountConfig : $rootScope.userDetails.config.rentsetting,
+				printDiv : function(divName) {
+						var printContents = document.getElementById(divName).innerHTML;
+						var popupWin = window.open('', '_blank', 'width=1000,height=620');
+						popupWin.document.open()
+						popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /><link rel="stylesheet" type="text/css" href="css/style.css" /></head><body onload="window.print()">' + printContents + '</html>');
+						popupWin.document.close();
+					},
+				};
+			modalService.show(modalDefaults,modalOptions).then(function (result) {
+				
+				
+			});
+		});
+	};
 /*************************************************************************************/
 	$scope.getCustomer = function(){
 			dataService.get("getmultiple/user/1/100", {status: 1, user_id : $rootScope.userDetails.id}).then(function(response){
@@ -256,9 +263,9 @@ $scope.viewReceipt = function (url,invoice) {
 				}
 			});
 		} 
-/************************************************************************************/
-		$scope.changeStatus = function(page, column, value, search) {
-			$scope.filterStatus = ($scope.filterStatus) ? $scope.filterStatus : {status: 1, user_id : $rootScope.userDetails.id};
+/*******************************************************************************************/
+		$scope.getInvoices = function(page, column, value, search){
+			$scope.filterStatus = ($scope.filterStatus) ? $scope.filterStatus : {status: 1, user_id : $rootScope.userDetails.id, groupBy : 'invoice_id' };
 			(value == "none") ? delete $scope.filterStatus[column] : $scope.filterStatus[column] = value;
 			
 			if(column == 'user_id' && value == null) {
@@ -275,24 +282,7 @@ $scope.viewReceipt = function (url,invoice) {
 			if((search == true && value.length <= 3 && value.length != 0)){
 				return false;
 			}
-			
 			dataService.get("getmultiple/invoice/"+page+"/"+$scope.pageItems,$scope.filterStatus)
-			.then(function(response) {  
-				if(response.status == 'success'){
-					$scope.invoices = response.data;
-					$scope.totalRecords = response.totalRecords;
-				}/* else{
-					$scope.invoices = {};
-					$scope.totalRecords = {};
-					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$notification[response.status]("Get a List", response.message);
-				} */
-			});
-		};
-/*******************************************************************************************/
-		$scope.getInvoices = function(page){
-			var invouceParams = {groupBy : 'invoice_id' , user_id : $scope.userInfo.user_id};
-			dataService.get("getmultiple/invoice/"+page+"/"+$scope.pageItems, invouceParams)
 			.then(function(response) {  
 				if(response.status == 'success'){
 					$scope.invoices = response.data;
@@ -302,7 +292,11 @@ $scope.viewReceipt = function (url,invoice) {
 					$scope.totalRecords = response.totalRecords;
 				}else{
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$notification[response.status]("Get Invoices", response.message);
+					$scope.invoices = {};
+					$scope.total_paid = 0;
+					$scope.total_due = 0;
+					$scope.total_amount = 0;
+					$scope.totalRecords = response.totalRecords;
 				}
 			});
 			}

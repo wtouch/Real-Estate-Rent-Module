@@ -135,7 +135,6 @@ a.brand
 	border: 1px solid #ccc;
 	margin: 0;
 	padding:15px;
-	min-height: 450px;
 }
 #invoice .panel-heading,#invoice  .head{
 	background-color : #A9D08E;
@@ -335,3 +334,4 @@ footer.navbar.navbar-default.text-center p{
 .bs-wizard > .bs-wizard-step:last-child  > .progress {width: 50%;}
 .bs-wizard > .bs-wizard-step.disabled a.bs-wizard-dot{ pointer-events: none; }
 /*END Form Wizard*/
+.buttondistance{margin: 10px 10px;}

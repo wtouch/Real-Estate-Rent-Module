@@ -93,7 +93,7 @@
 			
 			<div class="form-group modal-footer">
 				<div class="col-sm-11">
-					<button type="submit" class="btn btn-success" ng-disabled="payInvoiceForm.$invalid" ng-click="modalOptions.payInvoice(modalOptions.invoicePayment);">Pay Invoice</button>
+					<button type="submit" class="btn btn-success" ng-disabled="payInvoiceForm.$invalid" ng-click="modalOptions.payInvoice(modalOptions.invoicePayment);modalOptions.close()">Pay Invoice</button>
 					<button type="reset" class="btn btn-danger" ng-click="modalOptions.close()">Cancel</button>
 				</div>
 			</div>		
