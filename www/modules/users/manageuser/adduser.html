@@ -58,8 +58,7 @@
 				<label  for="dob" class="col-sm-2 control-label">Birth Date *</label>
 				<div class="col-sm-9">
 					<p class="input-group">
-						<input type="text" id="dob" name="dob" placeholder="YYYY-DD-MM" class="form-control" datepicker-popup="{{format}}" ng-model="adduser.dob" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" required close-text="Close" ng-click="open($event)" />
-						
+						<input type="text" placeholder="YYYY-DD-MM" id="dob" name="dob" class="form-control ng-isolate-scope ng-valid-date ng-dirty ng-valid ng-valid-required" ng-model="register.dob" datepicker-popup="yyyy-MM-dd" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-click="open($event)" required="required">
 						<span class="input-group-btn">
 							<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 						</span>
@@ -68,6 +67,8 @@
 							<span class="text-danger" ng-show="adduserForm.dob.$error.required">Date of birth required in YYYY-DD-MM format.</span>
 						</span>
 				</div>
+</span>
+
 			</div>
 			<div class="form-group">
 				<label for="address" class="col-sm-2 control-label">Address *</label>
@@ -90,21 +91,19 @@
 			<div class="form-group">
 				<label for="location" class="col-sm-2 control-label">Location *</label>
 					<div class="col-sm-9">
-						<input typeahead-template-url="customTemplate.html" type="text" required name="location" id="location" ng-model="adduser.address.location" typeahead-on-select="getData($item)" placeholder="Enter your location" typeahead="address.location for address in getTypeaheadData('locations','location', $viewValue)" typeahead-loading="locationLoading" typeahead-editable="false" class="form-control" autocomplete="off">
-						<i ng-show="locationLoading" class="glyphicon glyphicon-refresh"></i>
-							<span class="help-block" ng-show="adduserForm.location.$dirty && adduserForm.location.$invalid || adduserForm.location.$dirty && !adduser.location">							
-							</span>
+						<input type="text" required name="location" id="location" ng-model="adduser.address.location" placeholder="Enter your location" class="form-control" required>
+						<span class="help-block" ng-show="adduserForm.location.$dirty && adduserForm.location.$invalid">
+							<span ng-show="adduserForm.location.$error.required" class="text-danger">Location is required.</span>
+						</span>
 					</div>						
 			</div>
 			
 			<div class="form-group">
 				<label for="area" class="col-sm-2 control-label">Area *</label>
 				<div class="col-sm-9">
-					<input ng-disabled="readOnly" type="text" id="area" name="area" class="form-control" ng-model="adduser.address.area" placeholder="Enter area" required>
+					<input type="text" id="area" name="area" class="form-control" ng-model="adduser.address.area" placeholder="Enter area" required>
 					<span class="help-block" ng-show="adduserForm.area.$dirty && adduserForm.area.$invalid">
-						<span class="text-danger" ng-show="adduserForm.area.$error.required">Area is required.</span>
-						<span ng-show="adduserForm.area.$error.pattern && (adduserForm.area.$dirty || submitted)" class="text-danger">Enter Area</span>
-						<span class="text-danger" ng-show="adduserForm.area.$error.minlength && (adduserForm.area.$dirty || submitted)">Enter correct Area.</span>
+					<span ng-show="adduserForm.area.$error.required" class="text-danger">Area is Required</span>					
 					</span>
 				</div>						
 			</div>			
@@ -112,18 +111,17 @@
 			 <div class="form-group">
 					<label for="state" class="col-sm-2 control-label">State *</label>
 					<div class="col-sm-4">
-					<input ng-disabled="readOnly" type="text" id="state" name="state" class="form-control" ng-model="adduser.state" placeholder="Enter state">
+					<input type="text" id="state" name="state" class="form-control" ng-model="adduser.address.state" placeholder="Enter state" required>
 						<span class="help-block" ng-show="adduserForm.state.$dirty && adduserForm.state.$invalid">
 							<span ng-show="adduserForm.state.$error.required" class="text-danger">State is required.</span>
 						</span>				
 					</div>	
 					<label for="city" class="col-sm-1 control-label">City *</label>
 					<div class="col-sm-4" >
-						<input type="text" required name="City" id="City" ng-model="adduser.address.city"placeholder="Enter Your City"  ng-disabled="readOnly" class="form-control" autocomplete="off">	
-							<i ng-show="cityLoading" class="glyphicon glyphicon-refresh"></i>
-						<span class="help-block" ng-show="adduserForm.City.$dirty && adduserForm.City.$invalid || adduserForm.City.$dirty && !adduser.address.city">
-							<span ng-show="adduserForm.City.$error.required || adduserForm.City.$dirty && !adduser.address.city" class="text-danger">City is required.</span>
-						</span>				
+						<input type="text" id="city" name="city" class="form-control" ng-model="adduser.address.city" placeholder="Enter city" required>
+						<span class="help-block" ng-show="adduserForm.city.$dirty && adduserForm.state.$invalid">
+							<span ng-show="adduserForm.city.$error.required" class="text-danger">City is required.</span>
+						</span>						
 					</div>
 			</div> 
 				
@@ -131,9 +129,9 @@
 			<div class="form-group">
 				<label for="Country" class="col-sm-2 control-label">Country *</label>
 				<div class="col-sm-9">
-					<input type="text" required name="Country" id="Country" ng-model="adduser.country" placeholder="Enter Your Country" ng-disabled="readOnly" class="form-control" autocomplete="off">
-					<span class="help-block" ng-show="adduserForm.Country.$dirty && adduserForm.Country.$invalid || adduserForm.Country.$dirty && !adduser.country">
-						<span ng-show="adduserForm.Country.$error.required || adduserForm.Country.$dirty && !adduser.country" class="text-danger">Country is required.</span>
+					<input type="text" required name="Country" id="Country" ng-model="adduser.country" placeholder="Enter Your Country" ng-disabled="readOnly" class="form-control">
+					<span class="help-block" ng-show="adduserForm.Country.$dirty && adduserForm.Country.$invalid">
+						<span ng-show="adduserForm.Country.$error.required"class="text-danger">Country is required.</span>
 					</span>				
 				</div>
 			</div>	
@@ -141,10 +139,10 @@
 			<div class="form-group">
 				<label for="pincode" class="col-sm-2 control-label">Pin Code *</label>
 				<div class="col-sm-9">
-					<input ng-disabled="readOnly" type="text" id="pincode" name="pincode" class="form-control" ng-model="adduser.address.pincode" placeholder="Enter Zip Code" ng-pattern="/^\d{0,9}[0-9]$/" maxlength="6"  ng-minlength="6">
+					<input ng-disabled="readOnly" type="text" id="pincode" name="pincode" class="form-control" ng-model="adduser.address.pincode" placeholder="Enter Pin Code" ng-pattern="/^\d{0,9}[0-9]$/" maxlength="6"  ng-minlength="6">
 					<span class="help-block" ng-show="adduserForm.pincode.$dirty && adduserForm.pincode.$invalid">
-						<span ng-show="adduserForm.pincode.$error.pattern && (adduserForm.pincode.$dirty || submitted)" class="text-danger">Enter a valid ZIP Code</span>
-						<span class="text-danger" ng-show="adduserForm.pincode.$error.minlength && (adduserForm.pincode.$dirty || submitted)">Enter Valid Length Of Zip Code.</span>
+						<span ng-show="adduserForm.pincode.$error.pattern && (adduserForm.pincode.$dirty || submitted)" class="text-danger">Enter a valid Pin Code</span>
+						<span class="text-danger" ng-show="adduserForm.pincode.$error.minlength && (adduserForm.pincode.$dirty || submitted)">Enter Valid Length Of Pin Code.</span>
 					</span>
 				</div>						
 			</div>
