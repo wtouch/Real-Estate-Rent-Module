@@ -55,19 +55,6 @@
 			</div>
 			
 			<input type="hidden"  ng-model="modalOptions.addincome.balance"/>
-			 
-			<!-- <div class="form-group" ng-if="modalOptions.addincome.description.user_id" ng-init="getPropertylist(modalOptions.addincome.description.user_id,'user')">
-				<label for="receipt" class="col-sm-2 control-label">* Receipt</label>
-					<div class="col-sm-7">
-						<select class="form-control" name="receipt" id="receipt" ng-model="modalOptions.addincome.receipt_id" ng-options="item.id as item.generated_date for item in receiptList | filter : { due_amount : '0' }" required>
-							<option value="">Select Receipt</option>
-						</select>
-						<span class="help-block" ng-show="addIncomeForm.receipt.$dirty && addIncomeForm.receipt.$invalid">
-							<span ng-show="addIncomeForm.receipt.$error.required" class="text-danger">Receipt is required.</span>
-						</span>	
-					
-					</div>
-			</div> -->
 		
 			<input type="hidden" class="form-control" ng-model="userDetails.id"  readonly/>
 			<input type="hidden"  ng-if="type !='other'" ng-model="modalOptions.addincome.category"/>

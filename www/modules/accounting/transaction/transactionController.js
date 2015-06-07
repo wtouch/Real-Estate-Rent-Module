@@ -96,7 +96,6 @@ define(['app'], function (app) {
 						modalOptions.addincome.balance = Math.round(parseFloat(modalOptions.previousBalance) + parseFloat(modalOptions.addincome.credit_amount));
 					},
 					postData : function(addincome) {
-						//$scope.addincomes.user_id= $rootScope.userDetails.id;
 						 dataService.post("post/transaction",addincome)
 						.then(function(response) {  
 							if(response.status == "success"){

@@ -5,7 +5,7 @@ define(['app'], function (app) {
 	var addpropertyController = function ($scope, $injector,$routeParams,$http,$rootScope, upload, $timeout,
 	dataService,$location,$notification) {
 		$rootScope.metaTitle = "Add Real Estate Property";
-		
+		propertyConfig
 		// all $scope object goes here
 		$scope.userInfo = {user_id : $rootScope.userDetails.id};
 		$scope.currentDate = dataService.currentDate;
@@ -62,6 +62,7 @@ define(['app'], function (app) {
 					//property.user_id : $rootScope.userDetails.id
 				};
 				modalService.show(modalDefaults, modalOptions).then(function (result) {
+					
 				});
 			});
 		};

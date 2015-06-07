@@ -40,6 +40,29 @@ define(['app'], function (app) {
 			tds : accountConfig.tds,
 			service_tax_no : accountConfig.service_tax_no
 		}
+		
+		$scope.changeSetting = function(config){
+			if($rootScope.userDetails.config == "") $rootScope.userDetails.config = {};
+			if($rootScope.userDetails.config.rentsetting === undefined){
+				$rootScope.userDetails.config.rentsetting = {
+					service_tax : 0,
+					other_tax : 0,
+					primary_edu_cess : 0,
+					secondary_edu_cess : 0,
+					tds : 0,
+					pan_no : 0,
+					service_tax_no : 0
+				}
+			}
+			angular.extend($rootScope.userDetails.config.rentsetting, config);
+			dataService.put('put/user/'+$rootScope.userDetails.id, {config : $rootScope.userDetails.config}).then(function(response){
+				if(response.status == "success"){
+					dataService.setUserDetails(JSON.stringify($rootScope.userDetails));
+					$rootScope.userDetails = dataService.parse(dataService.userDetails);
+				}
+			})
+		}
+		
 		/*******************************************************************************************/
 		// code for delete button 
 			$scope.deleted = function(id, status){

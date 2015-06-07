@@ -68,10 +68,9 @@
 					<div class="form-group">
 						<label for="location" class="col-sm-2 control-label">Location *</label>
 							<div class="col-sm-9">
-								<input typeahead-template-url="customTemplate.html" type="text" required name="location" id="location" ng-model="register.address.location" typeahead-on-select="getData($item)" placeholder="Start typing to select your location" typeahead="address.location for address in getTypeaheadData('locations','location', $viewValue)" typeahead-loading="locationLoading" typeahead-editable="false" class="form-control" autocomplete="off">						
-								<i ng-show="locationLoading" class="glyphicon glyphicon-refresh"></i>
-								
-								<span class="help-block" ng-show="registerForm.location.$dirty && registerForm.location.$invalid || registerForm.location.$dirty && !register.location">	
+								<input type="text" required name="location" id="location" ng-model="register.address.location" placeholder="Enter your location" class="form-control" required>
+								<span class="help-block" ng-show="registerForm.location.$dirty && registerForm.location.$invalid">
+									<span ng-show="registerForm.location.$error.required" class="text-danger">Location is required.</span>
 								</span>
 							</div>						
 					</div>
@@ -79,51 +78,47 @@
 					<div class="form-group">
 						<label for="area" class="col-sm-2 control-label">Area *</label>
 						<div class="col-sm-9">
-							<input ng-disabled="readOnly" type="text" id="area" name="area" class="form-control" ng-model="register.address.area" placeholder="Enter Area">
+							<input type="text" id="area" name="area" class="form-control" ng-model="register.address.area" placeholder="Enter area" required>
 							<span class="help-block" ng-show="registerForm.area.$dirty && registerForm.area.$invalid">
-								<span ng-show="registerForm.area.$error.pattern && (registerForm.area.$dirty || submitted)" class="text-danger">Enter Area</span>
-								<span class="text-danger" ng-show="registerForm.area.$error.minlength && (registerForm.area.$dirty || submitted)">Enter correct Code.</span>
+							<span ng-show="registerForm.area.$error.required" class="text-danger">Area is Required</span>					
 							</span>
 						</div>						
 					</div>			
 							
-					<div class="form-group">
-						<label for="state" class="col-sm-2 control-label">State*</label>						
-						
-						<div class="col-sm-4">
-							<input ng-disabled="readOnly" type="text" id="state" name="state" class="form-control" ng-model="register.state" placeholder="Enter Your State Name">
-							<span class="help-block" ng-show="registerForm.state.$dirty && registerForm.state.$invalid">
-								<span ng-show="registerForm.state.$error.required" class="text-danger">State is required.</span>
-							</span>				
-						</div>						
-						<label for="state" class="col-sm-1 control-label">City *</label>
-						<div class="col-sm-4">
-							<input type="text" required name="city" id="city" ng-model="register.address.city" placeholder="Enter Your City"  ng-disabled="readOnly" class="form-control" autocomplete="off">
+			<div class="form-group">
+					<label for="state" class="col-sm-2 control-label">State *</label>
+					<div class="col-sm-4">
+					<input type="text" id="state" name="state" class="form-control" ng-model="register.state" placeholder="Enter state" required>
+						<span class="help-block" ng-show="registerForm.state.$dirty && registerForm.state.$invalid">
+							<span ng-show="registerForm.state.$error.required" class="text-danger">State is required.</span>
+						</span>				
+					</div>	
+					<label for="city" class="col-sm-1 control-label">City *</label>
+					<div class="col-sm-4" >
+						<input type="text" id="city" name="city" class="form-control" ng-model="register.address.city" placeholder="Enter city" required>
+						<span class="help-block" ng-show="registerForm.city.$dirty && registerForm.state.$invalid">
+							<span ng-show="registerForm.city.$error.required" class="text-danger">City is required.</span>
+						</span>						
+					</div>
+			</div>
 							
-							<i ng-show="cityLoading" class="glyphicon glyphicon-refresh"></i>
-							<span class="help-block" ng-show="registerForm.city.$dirty && registerForm.city.$invalid">
-								<span ng-show="registerForm.city.$error.required" class="text-danger">City is required.</span>
+					<div class="form-group">
+						<label for="Country" class="col-sm-2 control-label">Country *</label>
+						<div class="col-sm-9">
+							<input type="text" required name="Country" id="Country" ng-model="register.country" placeholder="Enter Your Country" ng-disabled="readOnly" class="form-control">
+							<span class="help-block" ng-show="registerForm.Country.$dirty && registerForm.Country.$invalid">
+								<span ng-show="registerForm.Country.$error.required"class="text-danger">Country is required.</span>
 							</span>				
 						</div>
 					</div>
-							
-					<div class="form-group">
-						<label for="Country" class="col-sm-2 control-label">Country*</label>
-						<div class="col-sm-9">
-							<input type="text" required name="Country" id="Country" ng-model="register.country" placeholder="Enter Your Country" ng-disabled="readOnly" class="form-control" autocomplete="off">
-								<span class="help-block" ng-show="registerForm.Country.$dirty && registerForm.Country.$invalid">
-									<span ng-show="registerForm.Country.$error.required" class="text-danger">Country Name required.</span>
-								</span>				
-						</div>
-					</div>	
 					
 					<div class="form-group">
 						<label for="pincode" class="col-sm-2 control-label">Pin Code</label>
 						<div class="col-sm-9">
-							<input ng-disabled="readOnly" type="text" id="pincode" name="pincode" class="form-control" ng-model="register.address.pincode" placeholder="Enetr Zip Code" ng-pattern="/^\d{0,9}[0-9]$/" maxlength="6"  ng-minlength="6">
+							<input ng-disabled="readOnly" type="text" id="pincode" name="pincode" class="form-control" ng-model="register.address.pincode" placeholder="Enetr Pin Code" ng-pattern="/^\d{0,9}[0-9]$/" maxlength="6"  ng-minlength="6">
 							<span class="help-block" ng-show="registerForm.pincode.$dirty && registerForm.pincode.$invalid">
-								<span ng-show="registerForm.pincode.$error.pattern && (registerForm.pincode.$dirty || submitted)" class="text-danger">Enter a valid ZIP Code</span>
-								<span class="text-danger" ng-show="registerForm.pincode.$error.minlength && (registerForm.pincode.$dirty || submitted)">Enter Valid Length Of Zip Code.</span>
+								<span ng-show="registerForm.pincode.$error.pattern && (registerForm.pincode.$dirty || submitted)" class="text-danger">Enter a valid PIN Code</span>
+								<span class="text-danger" ng-show="registerForm.pincode.$error.minlength && (registerForm.pincode.$dirty || submitted)">Enter Valid Length Of Pin Code.</span>
 							</span>
 						</div>						
 					</div>

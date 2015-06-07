@@ -23,7 +23,7 @@
 				</span>	
 			</div>
 			<div class="col-sm-2">
-				<a class="btn btn-default" ng-click="modalOptions.close()" href="/#/dashboard/users/adduser">Add user</a>
+				<a class="btn btn-default" ng-click="modalOptions.close()" href="/#/dashboard/users/adduser">Add Party</a>
 			</div>
 		</div>
 		
@@ -50,7 +50,7 @@
 		<div class="form-group">
 			<label for="rent" class="col-sm-2 control-label">Licence Fee *</label>		
 			<div class="col-sm-9">
-				<input type="text" id="rent" class="form-control" name="rent" placeholder="Set Rent"  ng-pattern="/^[0-9]*$/" ng-model="modalOptions.setrent.rent" required>
+				<input type="text" id="rent" class="form-control" name="rent" placeholder="Set Licence Fee"  ng-pattern="/^[0-9]*$/" ng-model="modalOptions.setrent.rent" required>
 				<span class="help-block" ng-show="setrentForm.rent.$dirty && setrentForm.rent.$invalid">
 					<span ng-show="setrentForm.rent.$error.pattern" class="text-danger">Enter Number only</span>
 					<span ng-show="setrentForm.rent.$error.required" class="text-danger">Licence Fee Required</span>
@@ -77,7 +77,7 @@
 		
 			<label for="taken_date" class="col-sm-2 control-label">Licence Fee Day*</label>
 			<div class="col-sm-3">
-				<select type="text" id="date_of_rent" class="form-control" name="date_of_rent" ng-model="modalOptions.setrent.date_of_rent" ng-options="item for item in [1,31] | range" placeholder="date" required>
+				<select type="text" id="date_of_rent" class="form-control" name="date_of_rent" ng-model="modalOptions.setrent.date_of_rent" ng-options="item for item in [0,31] | range" placeholder="date" required>
 					<option value="">Select Licence Fee Day</option>
 				</select>
 				<span class="text-danger" ng-show="setrentForm.date_of_rent.$dirty && setrentForm.date_of_rent.$invalid">

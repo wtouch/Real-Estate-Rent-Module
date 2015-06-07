@@ -56,46 +56,43 @@
 <div class="form-group">
 	<label for="location" class="col-sm-3 control-label">Location*</label>
 	<div class="col-sm-9">
-		<input typeahead-template-url="customTemplate.html" type="text" required name="location" id="location" ng-model="addbusiness.location" typeahead-on-select="getData($item)" placeholder="Location" typeahead="address.location for address in getTypeaheadData('locations','location', $viewValue)" typeahead-loading="locationLoading" typeahead-editable="false" class="form-control" autocomplete="off">
-		<i ng-show="locationLoading" class="glyphicon glyphicon-refresh"></i>
-			<span class="help-block" ng-show="businessContactForm.location.$dirty && businessContactForm.location.$invalid || businessContactForm.location.$dirty && !addbusiness.location">
-				<span class="text-danger" ng-show="businessContactForm.location.$dirty && (businessContactForm.location.$error.required || !addbusiness.location)">Location required.</span>
+		<input type="text" name="location" id="location" ng-model="addbusiness.location"  placeholder="Location" class="form-control" required>
+			<span class="help-block" ng-show="businessContactForm.location.$dirty && businessContactForm.location.$invalid">
+				<span class="text-danger" ng-show="businessContactForm.location.$error.required">Location required.</span>
 			</span>
 	</div>						
 </div>
 <div class="form-group">
 	<label for="area" class="col-sm-3 control-label">Area</label>
 	<div class="col-sm-9">
-		<input ng-disabled="readOnly" type="text" id="area" name="area" class="form-control" ng-model="addbusiness.area" placeholder="Enter area">
+		<input type="text" id="area" name="area" class="form-control" ng-model="addbusiness.area" placeholder="Enter area" required>
 		<span class="help-block" ng-show="businessContactForm.area.$dirty && businessContactForm.area.$invalid">
-			<span ng-show="businessContactForm.area.$error.pattern && (businessContactForm.area.$dirty || submitted)" class="text-danger">Enter Area</span>
-			<span class="text-danger" ng-show="businessContactForm.area.$error.minlength && (businessContactForm.area.$dirty || submitted)">Enter correct Code.</span>
+			<span ng-show="businessContactForm.area.$error.required" class="text-danger">Enter Area</span
 		</span>
 	</div>						
 </div>			
 <div class="form-group">
 	<label for="state" class="col-sm-3 control-label">State</label>
 	<div class="col-sm-4">
-	<input ng-disabled="readOnly" type="text" id="state" name="state" class="form-control" ng-model="addbusiness.state" placeholder="Enter state">
+	<input type="text" id="state" name="state" class="form-control" ng-model="addbusiness.state" placeholder="Enter state">
 		<span class="help-block" ng-show="businessContactForm.state.$dirty && businessContactForm.state.$invalid">
 			<span ng-show="businessContactForm.state.$error.required" class="text-danger">State is required.</span>
 		</span>				
 	</div>
 	<label for="state" class="col-sm-1 control-label">City</label>
 	<div class="col-sm-4">
-		<input type="text" required name="City" id="City" ng-model="addbusiness.city" placeholder="Enter Your City"  ng-disabled="readOnly" class="form-control" autocomplete="off">	
-		<i ng-show="cityLoading" class="glyphicon glyphicon-refresh"></i>
-		<span class="help-block" ng-show="businessContactForm.City.$dirty && businessContactForm.City.$invalid || businessContactForm.City.$dirty && !addbusiness.City">
-			<span ng-show="businessContactForm.City.$error.required || businessContactForm.City.$dirty && !addbusiness.city" class="text-danger">City is required.</span>
+		<input type="text" name="City" id="City" ng-model="addbusiness.city" placeholder="Enter Your City"  class="form-control">
+		<span class="help-block" ng-show="businessContactForm.City.$dirty && businessContactForm.City.$invalid">
+			<span ng-show="businessContactForm.City.$error.required" class="text-danger">City is required.</span>
 		</span>				
 	</div>
 </div>
 <div class="form-group">
 	<label for="Country" class="col-sm-3 control-label">Country</label>
 	<div class="col-sm-9">
-		<input type="text" required name="Country" id="Country" ng-model="addbusiness.country" placeholder="Enter Your Country" ng-disabled="readOnly" class="form-control" autocomplete="off">
-		<span class="help-block" ng-show="businessContactForm.Country.$dirty && businessContactForm.Country.$invalid || businessContactForm.Country.$dirty && !addbusiness.Country">
-			<span ng-show="businessContactForm.Country.$error.required || businessContactForm.Country.$dirty && !addbusiness.Country" class="text-danger">Country is required.</span>
+		<input type="text" name="Country" id="Country" ng-model="addbusiness.country" placeholder="Enter Your Country"class="form-control" required>
+		<span class="help-block" ng-show="businessContactForm.Country.$dirty && businessContactForm.Country.$invalid">
+			<span ng-show="businessContactForm.Country.$error.required" class="text-danger">Country is required.</span>
 		</span>				
 	</div>
 </div>					

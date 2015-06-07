@@ -144,7 +144,7 @@ define(['angular',
 		$rootScope.$on("$routeChangeStart", function (event, next, current) {
 			$rootScope.userDetails = dataService.userDetails;
 			
-			//$rootScope.breadcrumbs = breadcrumbs;
+			$rootScope.breadcrumbs = breadcrumbs;
 			$rootScope.appConfig = {
 				metaTitle : "Small Business",
 				headerTitle : next.$$route.label,
@@ -159,13 +159,13 @@ define(['angular',
 			
 			if(dataService.auth == false || $rootScope.userDetails == null){
 				var changePassUrl = '"/changepass/'+next.pathParams.resetPassKey+'"';
-				if (nextUrl == '/forgotpass' || nextUrl == '/register' || nextUrl == '/dynamic' || nextUrl == '/login' || nextUrl == '/' || nextUrl == '/logout' || nextUrl == '/changepass/:resetPassKey' || nextUrl == '/activate/:activateKey/:email/:pass?') {
+				if (nextUrl == '/forgotpass' || nextUrl == '/register' || nextUrl == '/login' || nextUrl == '/' || nextUrl == '/logout' || nextUrl == '/changepass/:resetPassKey' || nextUrl == '/activate/:activateKey/:email/:pass?') {
 				} else {
 					$location.path("/login");
 					$notification.warning("Login", "You are not logged in!");
 				}
 			}else{
-				if (nextUrl == '/forgotpass' || nextUrl == '/register'  || nextUrl == '/dynamic' || nextUrl == '/login' || nextUrl == '/' || nextUrl == '/changepass/:resetPassKey' || nextUrl == '/activate/:activateKey/:email/:pass?') {
+				if (nextUrl == '/forgotpass' || nextUrl == '/register' || nextUrl == '/login' || nextUrl == '/' || nextUrl == '/changepass/:resetPassKey' || nextUrl == '/activate/:activateKey/:email/:pass?') {
 					$location.path("/dashboard");
 				}
 				
@@ -176,8 +176,11 @@ define(['angular',
 					$rootScope.userDetails.config.rentsetting = {
 						service_tax : 0,
 						other_tax : 0,
+						primary_edu_cess : 0,
+						secondary_edu_cess : 0,
+						tds : 0,
 						pan_no : 0,
-						tin_no : 0
+						service_tax_no : 0
 					}
 					dataService.put('put/user/'+$rootScope.userDetails.id, {config : $rootScope.userDetails.config}).then(function(response){
 						if(response.status == "success"){
@@ -186,66 +189,9 @@ define(['angular',
 						}
 					})
 				}
-				if($rootScope.userDetails.group_id == 4){
-					if($rootScope.userDetails.config.addbusiness === undefined){
-						
-						$rootScope.userDetails.config = {
-							addbusiness : false,
-							addbusinessDetails : false,
-							addProducts : false,
-							chooseTemplate : false,
-							requestSite : false
-						}
-						
-						dataService.put('put/user/'+$rootScope.userDetails.id, {config : $rootScope.userDetails.config}).then(function(response){
-							
-							if(response.status == "success"){
-								dataService.setUserDetails(JSON.stringify($rootScope.userDetails));
-								$rootScope.userDetails = dataService.parse(dataService.userDetails);
-							}
-						})
-					}
-					
-					if($rootScope.userDetails.config.addbusiness == false){
-						$location.path("/dashboard/business/addbusiness");
-						$rootScope.addbusinessClass = 'col-xs-3 bs-wizard-step active';
-						$rootScope.addProductsClass = 'col-xs-3 bs-wizard-step disabled';
-						$rootScope.chooseTemplateClass = 'col-xs-3 bs-wizard-step disabled';
-						$rootScope.requestSiteClass = 'col-xs-3 bs-wizard-step disabled';
-					}else if($rootScope.userDetails.config.addbusinessDetails != true){
-						$location.path("/dashboard/business/adddetails/"+$rootScope.userDetails.config.addbusinessDetails);
-						$rootScope.addbusinessClass = 'col-xs-3 bs-wizard-step active';
-						$rootScope.addProductsClass = 'col-xs-3 bs-wizard-step disabled';
-						$rootScope.chooseTemplateClass = 'col-xs-3 bs-wizard-step disabled';
-						$rootScope.requestSiteClass = 'col-xs-3 bs-wizard-step disabled';
-					}else if($rootScope.userDetails.config.addProducts != true){
-						$location.path("/dashboard/business/products/"+$rootScope.userDetails.config.addProducts);
-						$rootScope.addbusinessClass = 'col-xs-3 bs-wizard-step complete';
-						$rootScope.addProductsClass = 'col-xs-3 bs-wizard-step active';
-						
-						$rootScope.chooseTemplateClass = 'col-xs-3 bs-wizard-step disabled';
-						$rootScope.requestSiteClass = 'col-xs-3 bs-wizard-step disabled';
-						
-					}else if($rootScope.userDetails.config.chooseTemplate == false){
-						//$location.path("/dashboard/templates/listoftemplates");
-						$rootScope.addbusinessClass = 'col-xs-3 bs-wizard-step complete';
-						$rootScope.addProductsClass = 'col-xs-3 bs-wizard-step complete';
-						$rootScope.chooseTemplateClass = 'col-xs-3 bs-wizard-step active';
-						$rootScope.requestSiteClass = 'col-xs-3 bs-wizard-step disabled';
-						
-					}else if($rootScope.userDetails.config.requestSite == false){
-						$location.path("/dashboard/websites/requestnewsite");
-						$rootScope.addbusinessClass = 'col-xs-3 bs-wizard-step complete';
-						$rootScope.addProductsClass = 'col-xs-3 bs-wizard-step complete';
-						$rootScope.chooseTemplateClass = 'col-xs-3 bs-wizard-step complete';
-						$rootScope.requestSiteClass = 'col-xs-3 bs-wizard-step active';
-					}
-				}
 			}
 			
 		});
-		
-		//(userDetails.config.chooseTemplate=='true')
 	}]);
 	return app;
 });

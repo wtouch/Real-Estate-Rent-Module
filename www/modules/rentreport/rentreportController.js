@@ -136,14 +136,14 @@ define(['app'], function (app) {
 				};
 				modalService.showModal(modalDefaults,modalOptions).then(function (result) {
 					console.log(modalOptions.invoice);
-					 /* dataService.post("post/invoice",modalOptions.invoice)
+					 dataService.post("post/invoice",modalOptions.invoice)
 					.then(function(response) {  
 						if(response.status == "success"){
 							console.log(response);
 						}
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 						$notification[response.status]("Rent Receipt Generated", response.message);
-					});   */
+					});
 				});
 		};
 /**************************************************************************************************/

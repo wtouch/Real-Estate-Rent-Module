@@ -76,7 +76,6 @@ define(['app'], function (app) {
 		$scope.dynamicTooltip = function(status, active, notActive){
 			return (status==1) ? active : notActive;
 		};
-		
 		//datepicker {sonali}	
 		$scope.today = function() {
 			$scope.date = new Date();

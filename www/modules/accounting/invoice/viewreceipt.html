@@ -54,7 +54,7 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>Paid By {{modalOptions.rentList.description.payment_type.type}} Against Invoice No.{{modalOptions.rentList.id}}
+							<td>Paid By <strong>{{modalOptions.rentList.description.payment_type.type}}</strong> Against Invoice No.<strong>{{modalOptions.rentList.id}}</strong>
 							<p ng-if="modalOptions.rentList.description.payment_type.type != 'Cash'">
 								<span ng-repeat="(key, value) in modalOptions.rentList.description.payment_type">
 									<strong>{{key}}</strong><span> {{value}} </span></br>
