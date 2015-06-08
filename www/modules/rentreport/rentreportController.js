@@ -23,6 +23,7 @@ define(['app'], function (app) {
 			var CurDt = new Date();
 			var leavDt = new Date(leaving_date);
 			if(leavDt <= CurDt){
+				
 				return true;
 			}
 			return false;
@@ -160,6 +161,7 @@ define(['app'], function (app) {
 					.then(function(response) {
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 						$notification[response.status]("Property Availability", response.message);
+						$scope.getRentData($scope.rentListCurrentPage, $scope.rentParams);
 					});
 				}
 				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};

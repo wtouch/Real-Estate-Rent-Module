@@ -161,6 +161,7 @@ define(['app'], function (app) {
 							.then(function(response) {  
 							if(response.status == "success"){
 								console.log(response);
+								$scope.getInvoices($scope.currentPage);
 							}
 							if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 							$notification[response.status]("Rent Receipt Generated", response.message);
@@ -173,6 +174,7 @@ define(['app'], function (app) {
 							.then(function(response) {  
 							if(response.status == "success"){
 								console.log(response);
+								$scope.getInvoices($scope.currentPage);
 							}
 							if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 							$notification[response.status]("Rent Receipt Generated", response.message);
@@ -195,6 +197,7 @@ define(['app'], function (app) {
 										.then(function(response) {
 											if(response.status == "success"){
 												console.log(response);
+												$scope.getInvoices($scope.currentPage);
 											}
 										});
 									}
@@ -310,6 +313,7 @@ define(['app'], function (app) {
 					.then(function(response) { 
 						if(response.status == 'success'){
 							$scope.hideDeleted = 1;
+							$scope.getInvoices($scope.currentPage);
 						}
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 						$notification[response.status]("Delete Invoice", response.message);

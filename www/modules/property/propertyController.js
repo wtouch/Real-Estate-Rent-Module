@@ -206,7 +206,8 @@ define(['app'], function (app) {
 					if(response.status=="success"){
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 						$notification[response.status]("Add record", response.message);
-					}else{
+						$scope.getProperties();
+						}else{
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 						$notification[response.status]("", response.message);
 					}
@@ -236,6 +237,7 @@ define(['app'], function (app) {
 						if(response.status == "success"){
 							if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 							$notification[response.status]("Property Updated", response.message);
+							$scope.getProperties();
 						}else{
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 						$notification[response.status]("Update Failed", response.message);
@@ -316,6 +318,7 @@ define(['app'], function (app) {
 		};
 /**************************************************************************************/				
 		//view multiple records
+		$scope.getProperties = function(){
 		$scope.propertyParam = {status : 1};	
 		angular.extend($scope.propertyParam,$scope.userInfo);
 		dataService.get("getmultiple/property/1/"+$scope.pageItems, $scope.propertyParam)
@@ -328,7 +331,8 @@ define(['app'], function (app) {
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 					$notification[response.status]("", response.message);
 				}
-		});		
+			});	
+		};	
 /***************************************************************************************/
 	};
 	// Inject controller's dependencies
