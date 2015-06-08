@@ -71,6 +71,8 @@ define(['app'], function (app) {
 				.then(function(response) { 
 					if(response.status == 'success'){
 						$scope.hideDeleted = 1;
+						$scope.getProperties();
+						
 					}
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 					$notification[response.status]("Delete Property", response.message);
