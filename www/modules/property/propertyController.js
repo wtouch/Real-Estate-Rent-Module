@@ -158,7 +158,7 @@ define(['app'], function (app) {
 					if(response.status=="success"){
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 						$notification[response.status]("Add record", response.message);
-						$scope.getProperties();
+						$scope.getProperties($scope.currentPage);
 						}else{
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 						$notification[response.status]("", response.message);
