@@ -121,7 +121,7 @@
 	<div class="form-group">
 	<label for="address" class="col-sm-2 control-label">Address*</label>
 	<div class="col-sm-9">
-		<textarea type="text" class="form-control" id="address" name="address" ng-model="addPropertyForm.property_location.address" cols="30" rows="3" ng-maxlength="500" placeholder="Enter address"  required></textarea>
+		<textarea type="text" class="form-control" id="address" name="address" ng-model="modalOptions.property.property_location.address" cols="30" rows="3" ng-maxlength="500" placeholder="Enter address"  required></textarea>
 		<p ng-hide="addPropertyForm.address.$error.maxlength">
 			{{ 500 - addPropertyForm.property_location.address.length + " Chars left" }}
 		</p>

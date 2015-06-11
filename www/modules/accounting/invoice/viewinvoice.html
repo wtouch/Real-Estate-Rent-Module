@@ -47,9 +47,17 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="(key,value) in modalOptions.rentList.perticulars">
-							<td>{{key | uppercase | replace : {"_" : " "} }}</td>
-							<td class="text-right">{{ value | number : 2 }}</td>
+						<tr>
+							<td>
+								<p ng-repeat="(key,value) in modalOptions.rentList.perticulars">
+									<span ng-if="value">{{key | uppercase | replace : {"_" : " "} }}</span>
+								</p>
+							</td>
+							<td>
+								<p class="text-right" ng-repeat="(key,value) in modalOptions.rentList.perticulars">
+									<span ng-if="value" class="text-right">{{ value | number : 2 }}</span>
+								</p>
+							</td>
 						</tr>
 					</tbody>
 					<tfoot>

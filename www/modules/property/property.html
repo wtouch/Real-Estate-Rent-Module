@@ -2,52 +2,53 @@
 	<div class="col-sm-12">	
 		<div class="main-content">	
 			<ng-include src="'modules/component/toolbar.html'"></ng-include>
-			<div class="row bottom-space">
-				<div class="col-sm-2"> 
-					<label class="control-label"> </label><br>
-				<a ng-click="openProperty('modules/property/addproperty/property.html')" class="btn btn-primary" title="Add new property">Add New Property</a>	
-				</div>	
-		 		
-				<div class="col-sm-2"> 
-					<label for="searchProp" class="control-label">Search </label>		
-					<div class="input-group">					
-						<input id="searchProp" type="text" class="form-control" placeholder="Search for..." ng-model="searchProp" ng-change="searchFilter('title', searchProp)">
-						<span class="input-group-btn">
-							<button class="btn btn-success" type="button">Go!</button>
-						</span>
+				<div class="row bottom-space">
+					<div class="col-sm-2"> 
+						<label class="control-label"> </label><br>
+						<a ng-click="openProperty('modules/property/addproperty/property.html')" class="btn btn-primary" title="Add new property">Add New Property</a>	
+					</div>	
+					<div class="col-sm-2"> 
+						<label for="searchProp" class="control-label">Search </label>		
+						<div class="input-group">					
+							<input id="searchProp" type="text" class="form-control" placeholder="Search for..." ng-model="searchProp" ng-change="getProperties(currentPage,'title', searchProp,true)">
+							<span class="input-group-btn">
+								<button class="btn btn-success" type="button">Go!</button>
+							</span>
+						</div>
+					</div>	
+			
+					<div class="col-sm-2">
+						<div class="bottomspace">
+							<label for="sort" class="control-label">Sort by Property</label>
+								<select id="sort" class="form-control" ng-model="property_name" ng-change="orderBy('title', property_name, true)">
+									<option value="">Select Order</option>	
+									<option value="-title">Desending</option>
+									<option value="title">Asending</option>
+								</select>
+						</div>
 					</div>
-				</div>	
-		
-				<div class="col-sm-2">
-					<label for="sort" class="control-label">Sort by Order</label>		
-					<select id="sort" class="form-control" ng-model="sort" title="Select order">  
-							<option value="">Select Order</option>		<!-- added value & selected attr -->	
-							<option value="-title">Desending</option>
-							<option value="title">Asending</option>  
-					</select>
-				</div>
-				
-				<div class="col-sm-2">
-					<label for="status" class="control-label">Select Status</label>
-					<select id="status" class="form-control" ng-model="status" title="status"  ng-change="changeValue('status',status)">
-						<option value="" selected>Select Status</option> <!-- add value attribute empty & selected for initial selected option -->
-						<option value="1">Active</option>
-						<option value="0">Deleted</option>   
-					</select>
-				</div>
-				
-				<div class="col-sm-2">
-					<label for="availability" class="control-label">Filter By Availability</label>
-					<select id="availability" class="form-control" ng-model="availability" ng-change="changeValue('availability',availability)">
-						<option value="" selected>Select Availability</option><!--added value & selected attr -->
-						<option value="1">Available</option>
-						<option value="0">Not Available</option> 
-					</select>
+					
+					<div class="col-sm-2">
+						<label for="status" class="control-label">Select Status</label>
+						<select id="status" class="form-control" ng-model="status" title="status"  ng-change="getProperties(currentPage,'status',status)">
+							<option value="" selected>Select Status</option> <!-- add value attribute empty & selected for initial selected option -->
+							<option value="1">Active</option>
+							<option value="0">Deleted</option>   
+						</select>
+					</div>
+					
+					<div class="col-sm-2">
+						<label for="availability" class="control-label">Filter By Availability</label>
+						<select id="availability" class="form-control" ng-model="availability" ng-change="getProperties(currentPage,'availability',availability)">
+							<option value="" selected>Select Availability</option><!--added value & selected attr -->
+							<option value="1">Available</option>
+							<option value="0">Not Available</option> 
+						</select>
+					</div>		
 				</div>		
-			</div>		
 			
 			<h3> Property List</h3>
-			<div class="row" ng-init="getProperties()">
+			<div class="row" ng-init="getProperties(currentPage)">
 				<div class="col-sm-12 ">
 					<div class="table-responsive">
 						<table class="table table-bordered ">
@@ -127,7 +128,7 @@
 						</table>
 					</div>					
 					<div class="text-center">
-						<pagination total-items="totalRecords" items-per-page="pageItems"  ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged(currentPage,propertyParam)"></pagination>	<pre>Page: {{currentPage}} / {{numPages}}</pre>
+						<pagination total-items="totalRecords" items-per-page="pageItems"  ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="getProperties(currentPage,propertyParam)"></pagination>	<pre>Page: {{currentPage}} / {{numPages}}</pre>
 					</div>
 				</div>
 			</div>
