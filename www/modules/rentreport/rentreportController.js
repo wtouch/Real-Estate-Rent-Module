@@ -114,7 +114,7 @@ var generatedMonth = new Date($scope.currentDate);
 					getTotal : function(rentData, modalOptions){
 						if(rentData.perticulars == undefined) rentData.perticulars = {};
 						rentData.perticulars.tax = $scope.serviceTax(rentData.perticulars.licence_fee);
-						rentData.perticulars.tds = $scope.tds(rentData.perticulars.licence_fee);
+						rentData.perticulars.less_tds = $scope.tds(rentData.perticulars.licence_fee);
 						rentData.perticulars.other_tax = $scope.otherTax(rentData.perticulars.licence_fee);
 						rentData.perticulars.primary_education_cess = $scope.primaryEduCess(rentData.perticulars.licence_fee);
 						rentData.perticulars.secondary_education_cess = $scope.secondaryEduCess(rentData.perticulars.licence_fee);

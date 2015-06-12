@@ -63,6 +63,12 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<label  for="less_tds" class="col-sm-6 control-label">Less TDS *</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control "  id="less_tds" name="less_tds" ng-model="less_tds" ng-init="less_tds = modalOptions.accountConfig.tds" readonly/>
+				</div>
+			</div>
+			<div class="form-group">
 				<label  for="primary_tax" class="col-sm-6 control-label">Primary Education Cess *</label>
 				<div class="col-sm-6">
 					<input type="text" class="form-control "  id="primary_tax" name="primary_tax" ng-model="primary_tax" ng-init="primary_tax = modalOptions.accountConfig.primary_edu_cess" readonly/>
@@ -98,7 +104,7 @@
 				<tr><td>maintenance :</td><td class="text-right">{{modalOptions.rentData.perticulars.maintenance | number : 2}}</td></tr>
 				<tr><td>Service Tax :</td><td class="text-right"> {{modalOptions.rentData.perticulars.tax | number : 2}}</td></tr>
 				<tr><td>Other Tax :</td><td class="text-right">{{modalOptions.rentData.perticulars.other_tax | number : 2}}</td></tr>
-				<tr><td>LESS TDS :</td><td class="text-right"> -{{modalOptions.rentData.perticulars.tds | number : 2}}</td></tr>
+				<tr><td>LESS TDS :</td><td class="text-right"> -{{modalOptions.rentData.perticulars.less_tds | number : 2}}</td></tr>
 				<tr><td>Primary Education Cess:</td><td class="text-right">{{modalOptions.rentData.perticulars.primary_education_cess | number : 2}}</td></tr>
 				<tr><td>Secondary Education Cess:</td><td class="text-right">{{modalOptions.rentData.perticulars.secondary_education_cess | number : 2}}</td></tr>
 				<tr><td><b>Total  :</b></td><td class="text-right">{{modalOptions.total_amount | number : 2}}</td></tr>

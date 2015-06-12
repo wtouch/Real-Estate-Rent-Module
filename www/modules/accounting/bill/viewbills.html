@@ -1,4 +1,4 @@
-<h3>Invoices</h3>
+<h3>Bills</h3>
 <div class="row">	 				  
 		<div class="col-sm-2">
 			<div class="bottomspace">
@@ -57,7 +57,7 @@
 	<a type="button" tooltip="Delete Invoice" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox="" btn-checkbox-true="'1'" btn-checkbox-false="'0'" class="ng-pristine ng-valid active btn btn-success"><span class="glyphicon glyphicon-remove"></span></a>
 	<a ng-disabled="x.due_amount <= 0" ng-click="openGenerateinvoice('modules/accounting/invoice/payinvoice.html',x)" class="btn btn-primary"  tooltip-animation="true" tooltip="Pay Invoice"><span class="glyphicon glyphicon-eye-open"></a>
 	<a ng-click="openGenerateinvoice('modules/accounting/invoice/viewinvoice.html',x)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="View Invoice"><span class="glyphicon glyphicon-eye-open"></span></a>
-	<a ng-disabled="(x.payment_status == 0)" ng-click="viewReceipt('modules/accounting/invoice/viewreceipt.html',x)"  class="btn btn-warning" type="button" tooltip-animation="true" tooltip="View Receipt"><span class="glyphicon glyphicon-eye-open"></span></a>
+	<a ng-disabled="(x.payment_status == 0)" ng-click="viewBill('modules/accounting/bill/viewbill.html',x)"  class="btn btn-warning" type="button" tooltip-animation="true" tooltip="View Bill"><span class="glyphicon glyphicon-eye-open"></span></a>
 	</td>
 	</tr>
 	<tr>

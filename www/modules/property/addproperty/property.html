@@ -199,6 +199,65 @@
 		<button type="button" class="btn btn-primary" ng-click="status.open = !status.open">Next</button>
 	</accordion-group>
 	<accordion-group heading="Optional Details" is-open="status.open">
+	<h3>Built Up Details</h3>
+	<div class="form-group">
+		<label for="buildup_area" class="col-sm-2 control-label">Built Up Area * </label>
+		<div class="col-sm-6">
+			<input type="text"  id="buildup_area" class="form-control help-block" name="buildup_area" ng-model="modalOptions.property.property_info.buildup_area" ng-pattern="/^\d{0,9}[0-9]$/" required>
+			
+			<p ng-show="addProperty.buildup_area.$error.pattern && (addProperty.buildup_area.$dirty || submitted)" class="text-danger">Enter only no.</p>
+		</div>							
+		<div class="col-sm-3">
+			<select class="form-control" ng-model="modalOptions.property.property_info.build_unit"  title="" required >
+				<option selected value="">Unit Area</option>
+				<option value="Feet">Sq. Feet</option>
+				<option value="Cent">Cent</option>
+				<option value="Yard">Sq. Yard</option>					
+			</select>
+			<span class="text-danger" ng-show="addProperty.buildup_area.$dirty && addProperty.buildup_area.$invalid">
+			  <span ng-show="addProperty.buildup_area.$error.required">Built Area is required .</span>
+			</span>				 
+		</div>
+	</div>	
+	
+	<div class="form-group">
+		<label for="land_area" class="col-sm-2 control-label ">Plot/ Land Area * </label>
+		<div class="col-sm-6">
+			<input type="text" id="land_area" class="form-control" name="land_area" ng-model="modalOptions.property.property_info.land_area"  ng-pattern="/^\d{0,9}[0-9]$/" required>
+			<p ng-show="addProperty.land_area.$error.pattern && (addProperty.land_area.$dirty || submitted)" class="help-block">Enter only no.</p>
+		</div>
+		<div class="col-sm-3">
+			<select class="form-control" ng-model="modalOptions.property.property_info.land_unit" required>
+				<option selected value="">Unit Area</option>
+				<option value="Feet">Sq. Feet</option>
+				<option value="Cent">Cent</option>
+				<option value="Yard">Sq. Yard</option>					
+			</select>
+			<span class="text-danger" ng-show="addProperty.land_area.$dirty && addProperty.land_area.$invalid">
+			  <span ng-show="addProperty.land_area.$error.required">Land Area is required .</span>
+			</span>				 
+		</div>				
+	</div>	
+
+	<div class="form-group">
+		<label for="carpet_area" class="col-sm-2 control-label">Carpet Area </label>
+		<div class="col-sm-6">
+			<input type="text" id="carpet_area" class="form-control" name="carpet_area" ng-model="modalOptions.property.property_info.carpet_area" ng-pattern="/^\d{0,9}[0-9]$/" required>
+			<p ng-show="addProperty.carpet_area.$error.pattern && (addProperty.carpet_area.$dirty || submitted)" class="help-block">Enter only no.</p>				 
+		</div>
+		<div class="col-sm-3">
+			<select class="form-control" ng-model="modalOptions.property.property_info.carpet_unit" required>
+				<option selected value="">Unit Area</option>
+					<option value="Feet">Sq. Feet</option>
+					<option value="Cent">Cent</option>
+					<option value="Yard">Sq. Yard</option>				
+			</select>
+			
+			<span class="text-danger" ng-show="addProperty.carpet_area.$dirty && addProperty.carpet_area.$invalid">
+				<span ng-show="addProperty.carpet_area.$error.required">Carpet Area is required .</span>
+			</span>				 
+		</div>				
+	</div>
 	<h3>Property Details:</h3>
 		<div class="form-group">
 			<label for="prop_age" class="col-sm-2 control-label">Property Age</label>

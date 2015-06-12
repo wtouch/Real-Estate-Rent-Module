@@ -3,7 +3,7 @@
 	$db = new dbHelper();
 	$reqMethod = $app->request->getMethod();
 	
-		$table = "invoice";
+		$table = "bill";
 	//getMethod
 	if($reqMethod=="GET"){
 		if(isset($id)){
@@ -24,7 +24,6 @@
 			$where = array();
 			$whereTrans = array();
 			$groupBy = array();
-			$orderBy = array();
 			if(isset($_GET['user_id'])) $userId = $_GET['user_id'];
 			if(isset($_GET['property_id'])) $where['property_id'] = $_GET['property_id'];
 			if(isset($_GET['invoice_id'])) $whereTrans['invoice_id'] = $_GET['invoice_id'];
@@ -40,7 +39,7 @@
 			$user = $db->getUsers($userId,$userCols);
 			$db->setLimit($limit);
 			
-			$table = $db->setJoinString("INNER JOIN", "invoice", array("user_id"=>$user.".id"));
+			$table = $db->setJoinString("INNER JOIN", "bill", array("user_id"=>$user.".id"));
 			$db->setWhere($where, $table);
 			$db->setWhere($like, $table, true);
 			$selectInnerJoinCols[0] = "*";
@@ -57,10 +56,8 @@
 				($_GET['groupBy'] == 'invoice_id') ? $db->setGroupBy(array("id"), $table) : $db->setGroupBy(array("id"), $paid);
 			}
 			
-			if(isset($_GET['orderBy'])){
-				$orderBy[str_replace("-","",$_GET['orderBy'])] = ($_GET['orderBy'][0] == "-" ? "desc" : "asc");
-			}
-			$db->setOrderBy($orderBy, $table);
+			$db->setOrderBy(array("id"=>"desc"), $table);
+			
 			$data = $db->select();
 			if($data['status'] == "success"){
 				$total_due = 0;
@@ -82,18 +79,18 @@
 	
 	if($reqMethod=="POST" && $_GET['METHOD'] == 'PUT' || $reqMethod=="DELETE" && $_GET['METHOD'] == 'DELETE'){
 		$where['id'] = $id;
-		$update = $db->update("invoice", $body, $where);
+		$update = $db->update("bill", $body, $where);
 		echo json_encode($update);
 	}
 	
 	if($reqMethod=="POST" && $_GET['METHOD'] == 'DELETE'){
 		$where['id'] = $id;
-		$delete = $db->delete("invoice", $where);
+		$delete = $db->delete("bill", $where);
 		echo json_encode($delete);
 	}
-	
+	invoice
 	if($reqMethod=="POST" && $_GET['METHOD'] == 'POST'){
-		$insert = $db->insert("invoice", $body);
+		$insert = $db->insert("bill", $body);
 		echo json_encode($insert);
 	}
  ?>

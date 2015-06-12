@@ -25,6 +25,26 @@
 				<option value="">Select Party</option>
 			</select>
 		</div>
+		<div class="col-sm-2">
+						<div class="bottomspace">
+							<label for="sort" class="control-label">Sort by Invoice No</label>
+								<select id="sort" class="form-control ng-pristine ng-valid" ng-model="id" ng-change="orderBy('id', id, true)">
+									<option value="">Select Order</option>	
+									<option value="-id">Desending</option>
+									<option value="id">Asending</option>
+								</select>
+						</div>
+		</div>
+		<div class="col-sm-2">
+						<div class="bottomspace">
+							<label for="sort" class="control-label">Sort by Due Date</label>
+								<select id="sort" class="form-control ng-pristine ng-valid" ng-model="due_date" ng-change="orderBy('due_date', due_date, true)">
+									<option value="">Select Order</option>	
+									<option value="-due_date">Desending</option>
+									<option value="due_date">Asending</option>
+								</select>
+						</div>
+		</div>
 		
 		
 	</div>
@@ -43,7 +63,7 @@
 	<th>Manage</th>
 	</thead>
 	<tbody>
-	<tr ng-repeat="x in invoices | orderBy:sort">
+	<tr ng-repeat="x in invoices | orderBy:sort" ng-class="(x.due_date <= currentDate && x.payment_status == 0) ? 'bg-danger' : ''">
 	<td>{{ ((currentPage - 1) * pageItems ) + $index+1 }}</td>
 	<td>{{ x.id }}</td>
 	<td>{{ x.username }}</td>

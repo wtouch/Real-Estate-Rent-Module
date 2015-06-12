@@ -4,7 +4,7 @@ define(['app'], function (app) {
     var injectParams = ['$scope','$rootScope','$injector','modalService','$routeParams' ,'$notification', 'dataService'];
     
     // This is controller for this view
-	var invoiceController = function ($scope,$rootScope,$injector,modalService, $routeParams,$notification,dataService) {
+	var balanceController = function ($scope,$rootScope,$injector,modalService, $routeParams,$notification,dataService) {
 		
 		//global scope objects
 		$scope.invoice = true;
@@ -15,8 +15,7 @@ define(['app'], function (app) {
 		$scope.numPages = "";		
 		$scope.alerts = [];
 		$scope.userInfo = {user_id : $rootScope.userDetails.id}; 
-		//$scope.currentDate = dataService.currentDate;
-		$scope.today = new Date();
+		$scope.currentDate = dataService.currentDate;
 /*******************************************************************/
 		var curDate = new Date();
 		var curMonth = curDate.getMonth() + 1;
@@ -339,7 +338,7 @@ $scope.orderBy = function(column, value, orderBy) {
 	};
 		
 	// Inject controller's dependencies
-	invoiceController.$inject = injectParams;
+	balanceController.$inject = injectParams;
 	// Register/apply controller dynamically
-    app.register.controller('invoiceController', invoiceController);
+    app.register.controller('balanceController', balanceController);
 });

@@ -91,6 +91,7 @@ define(['app'], function (app) {
 					type : propertyData.type,
 					property_description : propertyData.property_description,
 					property_info : propertyData.property_info,
+					floor_no : propertyData.floor_no,
 					price : propertyData.price,
 					deposit : propertyData.deposit,
 					amenities : propertyData.amenities,

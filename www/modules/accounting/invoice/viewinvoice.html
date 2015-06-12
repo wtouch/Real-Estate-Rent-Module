@@ -53,7 +53,19 @@
 								<p ng-repeat="(key,value) in modalOptions.rentList.perticulars">
 									<span ng-if="value">{{key | uppercase | replace : {"_" : " "} }}
 									<span ng-if="key == 'tax'">
-										{{modalOptions.setting.tax}}
+										(@{{modalOptions.setting.service_tax}}%)
+									</span>
+									<span ng-if="key == 'other_tax'">
+										(@{{modalOptions.setting.other_tax}}%)
+									</span>
+									<span ng-if="key == 'primary_education_cess'">
+										(@{{modalOptions.setting.primary_edu_cess}}%)
+									</span>
+									<span ng-if="key == 'secondary_education_cess'">
+										(@{{modalOptions.setting.secondary_edu_cess}}%)
+									</span>
+									<span ng-if="key == 'less_tds'">
+										(@{{modalOptions.setting.tds}}%)
 									</span>
 									</span>
 								</p>
