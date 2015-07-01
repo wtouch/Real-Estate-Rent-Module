@@ -16,9 +16,7 @@ define(['app'], function (app) {
 		//for dynamic tooltip
 		$scope.dynamicTooltip = function(status, active, notActive){
 			return (status==1) ? active : notActive;
-		};	
-		
-		
+		};
 /********************************************************************************************/
 		//code for rent setting
 		var accountConfig = $rootScope.userDetails.config.rentsetting;

@@ -34,7 +34,7 @@ define(['app'], function (app) {
 			secondary_edu_cess : accountConfig.secondary_edu_cess,
 			pan_no : accountConfig.pan_no,
 			tds : accountConfig.tds,
-			service_tax_no : accountConfig.service_tax_no
+			service_tax_no : accountConfig.service_tax_no,
 		}
 		
 		var dueDate = new Date();
@@ -109,14 +109,52 @@ define(['app'], function (app) {
 					accountConfig : $rootScope.userDetails.config.rentsetting,
 					total_amount : 0,
 					setting :$scope.config,
+					taxes :[
+					{'name':'other_tax', 'value':accountConfig.other_tax},
+					{'name':'service_tax', 'value':accountConfig.service_tax},
+					{'name':'tds', 'value':accountConfig.tds}
+					],
+					perticulars : [],
 					rentData : (invoice) ? invoice : {},
 					inWords : (invoice) ? $scope.inWords(invoice.total_amount) : "",
 					generated_date : (genDate) ? {month : genDate.getMonth(), year : genDate.getFullYear()} : {},
 					generatedDate : {month : curMonth, year : curDate.getFullYear()},
-					add : function(modalOptions,perticulars){
-						modalOptions.rentData.perticulars = (modalOptions.rentData.perticulars) ? modalOptions.rentData.perticulars : {};
-						console.log(perticulars);
-						modalOptions.rentData.perticulars[perticulars.label] = perticulars.rent;
+					subTotal : 0,
+					taxTotal : 0,
+					totalCalculate : function(modalOptions){
+						modalOptions.subTotal = 0;
+						modalOptions.taxTotal = 0;
+						modalOptions.total = 0;
+						//console.log(modalOptions.rentData.particulars);
+						for(var x in modalOptions.rentData.particulars){
+							modalOptions.subTotal += modalOptions.rentData.particulars[x].amount;
+							modalOptions.taxTotal += dataService.calculateTax(modalOptions.rentData.particulars[x].tax, modalOptions.rentData.particulars[x].amount);
+							modalOptions.total = modalOptions.subTotal + modalOptions.taxTotal;
+							
+						}
+						return modalOptions;
+					},
+					singleparticular : {},
+					add : function(modalOptions){
+						modalOptions.rentData.particulars = (modalOptions.rentData.particulars) ? modalOptions.rentData.particulars : [];
+						
+						var dtlObj = JSON.stringify(modalOptions.singleparticular);
+						modalOptions.rentData.particulars.push(JSON.parse(dtlObj));
+						
+						var subTotal = modalOptions.totalCalculate(modalOptions);
+						
+						modalOptions.singleparticular = { label : " ", price : 0, quantity : 1};
+					},
+					remove : function(item, modalOptions) {
+						console.log(modalOptions);
+						var index = modalOptions.rentData.particulars.indexOf(item);
+						modalOptions.rentData.particulars.splice(index, 1);   
+						var subTotal = modalOptions.totalCalculate(modalOptions);
+					},
+					getParty: function(modalOptions){
+					dataService.get("getmultiple/user/1/100", {status: 1, user_id : $rootScope.userDetails.id}).then(function(response){
+						modalOptions.customerList = (response.data);
+					});
 					},
 					printDiv : function(divName) {
 						var printContents = document.getElementById(divName).innerHTML;
