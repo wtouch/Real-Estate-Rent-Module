@@ -50,8 +50,8 @@
 					<tbody>
 						<tr>
 							<td>
-								<p ng-repeat="(key,value) in modalOptions.rentList.perticulars">
-									<span ng-if="value">{{key | uppercase | replace : {"_" : " "} }}
+								<p ng-repeat="value in modalOptions.rentList.particulars">
+									<span ng-if="value">{{value.label | uppercase | replace : {"_" : " "} }}
 									<span ng-if="key == 'tax'">
 										(@{{modalOptions.setting.service_tax}}%)
 									</span>
@@ -71,8 +71,8 @@
 								</p>
 							</td>
 							<td>
-								<p class="text-right" ng-repeat="(key,value) in modalOptions.rentList.perticulars">
-									<span ng-if="value" class="text-right">{{ value | number : 2 }}</span>
+								<p class="text-right" ng-repeat="value in modalOptions.rentList.particulars">
+									<span ng-if="value.label" class="text-right">{{ value.amount | number : 2 }}</span>
 								</p>
 							</td>
 						</tr>

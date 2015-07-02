@@ -236,11 +236,11 @@ define(['app'], function (app) {
 			var obj = {};
 			obj.serviceTax = function(amount){
 				var st = amount * parseFloat($rootScope.userDetails.config.rentsetting.service_tax) / 100;
-				console.log(st, 'st');
+				//console.log(st, 'st');
 				var pec = st * parseFloat($rootScope.userDetails.config.rentsetting.primary_edu_cess) / 100;
-				console.log(pec, 'pec');
+				//console.log(pec, 'pec');
 				var sec = st * parseFloat($rootScope.userDetails.config.rentsetting.secondary_edu_cess) / 100;
-				console.log(sec, 'sec');
+				//console.log(sec, 'sec');
 				return parseFloat(st + pec + sec);
 			}
 			
@@ -257,17 +257,18 @@ define(['app'], function (app) {
 				}
 			}
 			
-			obj.calculateTax = function(taxObject, amount){
-				var tax = 0
+			obj.calculateTax = function(taxObject, amount, tax){
+				console.log(tax);
+				var tax = (tax) ? tax : {service_tax:0,other_tax:0,tds:0};
 				angular.forEach(taxObject, function(value, key) {
 					if(value.name == "service_tax"){
-						tax += obj.serviceTax(amount);
+						tax.service_tax += obj.serviceTax(amount);
 					}
 					if(value.name == "tds"){
-						tax += obj.tdsCalculate(amount);
+						tax.tds += obj.tdsCalculate(amount);
 					}
 					if(value.name == "other_tax"){
-						tax += obj.otherTax(amount);
+						tax.other_tax += obj.otherTax(amount);
 					}
 				})
 				return tax;

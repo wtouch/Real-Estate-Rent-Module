@@ -94,7 +94,6 @@ define(['app'], function (app) {
 		
 		/***********************************************************************************/
 		$scope.openGenerateinvoice = function (url,invoice) {
-
 			$scope.rentYear = [];
 				var modalDefaults = {
 					templateUrl: url,	
@@ -106,16 +105,30 @@ define(['app'], function (app) {
 				var modalOptions = {
 					rentList : (invoice) ? invoice : {},
 					rentDate: { date : $scope.currentDate, due_date : $scope.dueDate },
-					accountConfig : $rootScope.userDetails.config.rentsetting,
 					total_amount : 0,
-					setting :$scope.config,
+					accountConfig : $rootScope.userDetails.config.rentsetting,
 					taxes :[
-					{'name':'other_tax', 'value':accountConfig.other_tax},
-					{'name':'service_tax', 'value':accountConfig.service_tax},
-					{'name':'tds', 'value':accountConfig.tds}
+						{'name':'other_tax', 'value':accountConfig.other_tax},
+						{'name':'service_tax', 'value':accountConfig.service_tax},
+						{'name':'tds', 'value':accountConfig.tds}
 					],
 					perticulars : [],
-					rentData : (invoice) ? invoice : {},
+					rentData : (invoice) ? {
+						'id':invoice.id,
+						'user_id':invoice.user_id,
+						'property_id':invoice.property_id,
+						'due_date':invoice.due_date,
+						'previous_due':invoice.previous_due,
+						'subtotal':invoice.subtotal,
+						'tax':invoice.tax,
+						'total_amount':invoice.total_amount,
+						'duration':invoice.duration,
+						'generated_date':invoice.generated_date,
+						'particulars':invoice.particulars,
+						'remark':invoice.remark,
+						'payment_status':invoice.payment_status,
+						'status':invoice.status
+					} : {},
 					inWords : (invoice) ? $scope.inWords(invoice.total_amount) : "",
 					generated_date : (genDate) ? {month : genDate.getMonth(), year : genDate.getFullYear()} : {},
 					generatedDate : {month : curMonth, year : curDate.getFullYear()},
@@ -123,14 +136,12 @@ define(['app'], function (app) {
 					taxTotal : 0,
 					totalCalculate : function(modalOptions){
 						modalOptions.subTotal = 0;
-						modalOptions.taxTotal = 0;
 						modalOptions.total = 0;
-						//console.log(modalOptions.rentData.particulars);
+						modalOptions.tax = {service_tax:0,other_tax:0,tds:0};
 						for(var x in modalOptions.rentData.particulars){
+							modalOptions.tax = dataService.calculateTax(modalOptions.rentData.particulars[x].tax, modalOptions.rentData.particulars[x].amount,modalOptions.tax);
 							modalOptions.subTotal += modalOptions.rentData.particulars[x].amount;
-							modalOptions.taxTotal += dataService.calculateTax(modalOptions.rentData.particulars[x].tax, modalOptions.rentData.particulars[x].amount);
-							modalOptions.total = modalOptions.subTotal + modalOptions.taxTotal;
-							
+							modalOptions.total = modalOptions.subTotal + modalOptions.tax.service_tax + modalOptions.tax.other_tax - modalOptions.tax.tds;
 						}
 						return modalOptions;
 					},
@@ -186,18 +197,9 @@ define(['app'], function (app) {
 						modalOptions.other_tar = parseFloat(rentData.perticulars.other_tax);
 						modalOptions.total_amount = parseFloat(totalAmount);
 					},
-					formData : function(rentData, total_amount){
-						var due_date = new Date(rentData.generated_date);
-						rentData.id = modalOptions.rentList.id;
-						rentData.user_id = modalOptions.rentList.user_id;
-						rentData.property_id = modalOptions.rentList.property_id;
-						due_date.setDate(due_date.getMonth() + modalOptions.rentList.duration);
-						rentData.due_date = due_date;
-						rentData.total_amount = total_amount;
-						modalOptions.invoice = rentData;
-					},
-					updateData : function(id,invoice){
-							dataService.put("put/invoice/"+id,invoice)
+					
+					postData : function(invoice){
+							dataService.post("post/invoice",invoice)
 							.then(function(response) {  
 							if(response.status == "success"){
 								console.log(response);
@@ -207,10 +209,16 @@ define(['app'], function (app) {
 							$notification[response.status]("Rent Receipt Generated", response.message);
 						});
 					},
-					postData : function(invoice, total_amount){
-							invoice.total_amount = total_amount;
-							invoice.user_id = $scope.userInfo.user_id;
-							dataService.post("post/invoice",invoice)
+					formData : function(rentData,total_amount,subtotal,tax){
+						if(modalOptions.rentList.property_id) rentData.property_id = modalOptions.rentList.property_id;
+						rentData.user_id
+						rentData.total_amount = total_amount;
+						rentData.subtotal = subtotal;
+						rentData.tax = tax;
+						modalOptions.invoice = rentData;
+					},
+					updateData : function(id,invoice){
+							dataService.put("put/invoice/"+id,invoice)
 							.then(function(response) {  
 							if(response.status == "success"){
 								console.log(response);
@@ -226,7 +234,6 @@ define(['app'], function (app) {
 								}else{
 									var paymentStatus = { payment_status : 2};
 								}
-								payment.user_id = $scope.userInfo.user_id;
 								payment.type = 'invoice_payment';
 								payment.category = 'invoice';
 								dataService.post("post/transaction",payment)
@@ -247,6 +254,7 @@ define(['app'], function (app) {
 					}
 					
 				};
+				
 				modalService.show(modalDefaults,modalOptions).then(function (result) {
 					if(modalOptions.invoice.id){modalOptions.updateData(modalOptions.invoice.id,modalOptions.invoice);}
 					else{modalOptions.postData(modalOptions.invoice);}

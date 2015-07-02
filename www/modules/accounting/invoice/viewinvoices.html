@@ -73,9 +73,9 @@
 	<td class="text-right">{{ x.paid | number : 2}}</td>
 	<td class="text-right">{{ x.due_amount | number : 2}}</td>
 	<td class="text-right">{{ x.due_date}}</td>
-	<td><a disabled ng-click="openGenerateinvoice('modules/accounting/invoice/addinvoice.html',x)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="Edit Invoice Information"> <span class="glyphicon glyphicon-pencil"></span></a>
+	<td><a ng-disabled="x.payment_status == 1" ng-click="openGenerateinvoice('modules/accounting/invoice/addinvoice.html',x)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="Edit Invoice Information"> <span class="glyphicon glyphicon-pencil"></span></a>
 	<a type="button" tooltip="Delete Invoice" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox="" btn-checkbox-true="'1'" btn-checkbox-false="'0'" class="ng-pristine ng-valid active btn btn-success"><span class="glyphicon glyphicon-remove"></span></a>
-	<a ng-disabled="x.due_amount <= 0" ng-click="openGenerateinvoice('modules/accounting/invoice/payinvoice.html',x)" class="btn btn-primary"  tooltip-animation="true" tooltip="Pay Invoice"><span class="glyphicon glyphicon-eye-open"></a>
+	<a ng-disabled="x.due_amount <= 0" ng-click="openGenerateinvoice('modules/accounting/invoice/payinvoice.html',x)" class="btn btn-primary"  tooltip-animation="true" tooltip="Pay Invoice"><span class="glyphicon glyphicon-usd"></a>
 	<a ng-click="openGenerateinvoice('modules/accounting/invoice/viewinvoice.html',x)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="View Invoice"><span class="glyphicon glyphicon-eye-open"></span></a>
 	<a ng-disabled="(x.payment_status == 0)" ng-click="viewReceipt('modules/accounting/invoice/viewreceipt.html',x)"  class="btn btn-warning" type="button" tooltip-animation="true" tooltip="View Receipt"><span class="glyphicon glyphicon-eye-open"></span></a>
 	</td>
