@@ -1,0 +1,56 @@
+<div class="modal-header" ng-init="modalOptions.getAccountConfig()">
+	<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
+	<h3>Generate Invoice</h3>
+</div>
+<div class="modal-body row">
+	<div class="col-sm-6">
+		<form class="form-horizontal" name="receiptForm" name="applyTemplateForm"  novalidate="novalidate" 	ng-submit="receiptForm.$valid">
+			<div class="form-group">
+				<label for="amount" class="col-sm-6 control-label">Enter Particular Name *</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" id="amount" name="amount" ng-model="perticulars.label" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="amount" class="col-sm-6 control-label">Enter Amount*</label>
+				<div class="col-sm-6">					
+					<input type="text" class="form-control" id="amount" name="amount" ng-model="perticulars.rent" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" required>
+				</div>
+			</div>
+			{{perticulars}}
+			<div class="form-group">
+				  <label for="tax" class="col-sm-6 control-label">Service Tax</label>
+				  <div class="col-sm-6">	
+						<input type="checkbox" id="tax" name="tax" ng-model="perticulars.tax" value="true">
+					</div>
+			</div>
+			<input type="button" ng-click="modalOptions.add(modalOptions,perticulars)" value="Add +"/>
+			<div class="form-group">
+				<label  for="generated_date" class="col-sm-6 control-label">Date *</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control " placeholder="YYYY-DD-MM" id="generated_date" name="generated_date" ng-model="modalOptions.rentData.generated_date" ng-init="modalOptions.rentData.generated_date = modalOptions.rentDate.date" />
+					<input type="hidden" class="form-control " placeholder="YYYY-DD-MM" id="due_date" name="due_date" ng-model="modalOptions.rentData.due_date" ng-init="modalOptions.rentData.due_date = modalOptions.rentDate.due_date" />
+					<input type="hidden" class="form-control " id="user_id" name="user_id" ng-model="modalOptions.rentData.user_id" ng-init="modalOptions.rentData.user_id = userDetails.id"/>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="col-sm-6 ">
+		<div class="table-responsive">
+			<table class="table bordered" >
+				<thead><th colspan="2">Total Amount Details</th></thead>
+				{{modalOptions.rentData}}
+				<tr ng-repeat="(key,value) in modalOptions.rentData.perticulars">
+					<td>{{key}}</td><td class="text-right">{{value | number : 2}}</td>
+				</tr>
+				
+				<tr><td><b>Total  :</b></td><td class="text-right">{{modalOptions.total_amount | number : 2}}</td></tr>
+			</table>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button type="submit" ng-disabled="receiptForm.$invalid" class="btn btn-success" ng-click="modalOptions.formData(modalOptions.rentData, modalOptions.total_amount); modalOptions.ok()">Generate Invoice</button>
+	<button type="button" class="btn btn-warning" ng-click="modalOptions.close()">Cancel</button>
+</div>
+

@@ -1,4 +1,4 @@
-<h3>Bills</h3>
+<h3>Invoices</h3>
 <div class="row">	 				  
 		<div class="col-sm-2">
 			<div class="bottomspace">
@@ -25,6 +25,26 @@
 				<option value="">Select Party</option>
 			</select>
 		</div>
+		<div class="col-sm-2">
+						<div class="bottomspace">
+							<label for="sort" class="control-label">Sort by Invoice No</label>
+								<select id="sort" class="form-control ng-pristine ng-valid" ng-model="id" ng-change="orderBy('id', id, true)">
+									<option value="">Select Order</option>	
+									<option value="-id">Desending</option>
+									<option value="id">Asending</option>
+								</select>
+						</div>
+		</div>
+		<div class="col-sm-2">
+						<div class="bottomspace">
+							<label for="sort" class="control-label">Sort by Due Date</label>
+								<select id="sort" class="form-control ng-pristine ng-valid" ng-model="due_date" ng-change="orderBy('due_date', due_date, true)">
+									<option value="">Select Order</option>	
+									<option value="-due_date">Desending</option>
+									<option value="due_date">Asending</option>
+								</select>
+						</div>
+		</div>
 		
 		
 	</div>
@@ -43,7 +63,7 @@
 	<th>Manage</th>
 	</thead>
 	<tbody>
-	<tr ng-repeat="x in invoices | orderBy:sort">
+	<tr ng-repeat="x in invoices | orderBy:sort" ng-class="(x.due_date <= currentDate && x.payment_status == 0) ? 'bg-danger' : ''">
 	<td>{{ ((currentPage - 1) * pageItems ) + $index+1 }}</td>
 	<td>{{ x.id }}</td>
 	<td>{{ x.username }}</td>
@@ -53,11 +73,11 @@
 	<td class="text-right">{{ x.paid | number : 2}}</td>
 	<td class="text-right">{{ x.due_amount | number : 2}}</td>
 	<td class="text-right">{{ x.due_date}}</td>
-	<td><a disabled ng-click="openGenerateinvoice('modules/accounting/invoice/addinvoice.html',x)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="Edit Invoice Information"> <span class="glyphicon glyphicon-pencil"></span></a>
+	<td><a ng-disabled="x.payment_status == 1" ng-click="openGenerateinvoice('modules/accounting/invoice/addinvoice.html',x)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="Edit Invoice Information"> <span class="glyphicon glyphicon-pencil"></span></a>
 	<a type="button" tooltip="Delete Invoice" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox="" btn-checkbox-true="'1'" btn-checkbox-false="'0'" class="ng-pristine ng-valid active btn btn-success"><span class="glyphicon glyphicon-remove"></span></a>
-	<a ng-disabled="x.due_amount <= 0" ng-click="openGenerateinvoice('modules/accounting/invoice/payinvoice.html',x)" class="btn btn-primary"  tooltip-animation="true" tooltip="Pay Invoice"><span class="glyphicon glyphicon-eye-open"></a>
+	<a ng-disabled="x.due_amount <= 0" ng-click="openGenerateinvoice('modules/accounting/invoice/payinvoice.html',x)" class="btn btn-primary"  tooltip-animation="true" tooltip="Pay Invoice"><span class="glyphicon glyphicon-usd"></a>
 	<a ng-click="openGenerateinvoice('modules/accounting/invoice/viewinvoice.html',x)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="View Invoice"><span class="glyphicon glyphicon-eye-open"></span></a>
-	<a ng-disabled="(x.payment_status == 0)" ng-click="viewBill('modules/accounting/bill/viewbill.html',x)"  class="btn btn-warning" type="button" tooltip-animation="true" tooltip="View Bill"><span class="glyphicon glyphicon-eye-open"></span></a>
+	<a ng-disabled="(x.payment_status == 0)" ng-click="viewReceipt('modules/accounting/invoice/viewreceipt.html',x)"  class="btn btn-warning" type="button" tooltip-animation="true" tooltip="View Receipt"><span class="glyphicon glyphicon-eye-open"></span></a>
 	</td>
 	</tr>
 	<tr>
