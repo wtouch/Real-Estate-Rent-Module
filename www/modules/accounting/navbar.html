@@ -9,6 +9,7 @@
 	<div class="col-sm-6">
 		<a ng-if="transactionView" class="btn btn-primary" ng-click="openAddincome('modules/accounting/transaction/addincome.html')"><span class="glyphicon glyphicon glyphicon-plus"></span>  Add Income</a>
 		<a ng-if="transactionView" class="btn btn-primary" ng-click="openAddexpense('modules/accounting/transaction/addexpense.html')"><span class="glyphicon glyphicon glyphicon-plus"></span>  Add Expense</a>
+		<a ng-if="transactionView" class="btn btn-primary" ng-click="transfer('modules/accounting/transaction/transfer.html')"><span class="glyphicon glyphicon glyphicon-plus"></span>Transfer</a>
 		<a ng-if="account" class="btn btn-primary" ng-click="openAddaccount('modules/accounting/account/addaccount.html')">Add Account</a>
 		<a ng-if="invoice" class="btn btn-primary" ng-click="openGenerateinvoice('modules/accounting/invoice/addinvoice.html')">Add Invoice</a></span>
 		<a ng-if="bill" class="btn btn-primary" ng-click="openGenerateinvoice('modules/accounting/bill/addbill.html')">Add Bill</a></span>

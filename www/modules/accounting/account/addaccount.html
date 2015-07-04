@@ -11,7 +11,9 @@
 							<select id="category" name="category" class="form-control" ng-model="modalOptions.account.category" required>
 							<option value="" selected>Select Category</option>
 							<option value="Bank" >Bank Account</option>
-							<option value="Party">Party Account</option>
+							<option value="Cash" >Cash Account</option>
+							<option value="Credit" >Credit Card</option>
+							<option value="Loan">Loan</option>
 							</select>
 							<span class="help-block" ng-show="addAccountForm.category.$dirty && addAccountForm.category.$invalid">
 							<span ng-show="addAccountForm.category.$error.required" class="text-danger">Account Category is required.</span>
@@ -31,11 +33,11 @@
 						</div>
 					</div>
 			   </div>
-			   <div ng-if = "account.category =='Bank'">
+			   <div ng-if = "account.category =='Bank'||account.category =='Cash'||account.category =='Credit'||account.category =='Loan'">
 					<div class="form-group">
 						<label for="accountname" class="col-sm-2 control-label">Account Name * </label>
 						<div class="col-sm-9">
-							<input type="text"  id="accountname" class="form-control" name="accountname" placeholder=" Account Name" ng-model="modalOptions.account.account_name" required>
+							<input type="text"  id="accountname" class="form-control" name="accountname" placeholder="Account Name" ng-model="modalOptions.account.account_name" required>
 							<input type="hidden"  id="user_id" class="form-control" name="user_id" placeholder=" Account Name" ng-model="modalOptions.account.user_id" ng-minlength="4" required>
 							<span class="help-block" ng-show="addAccountForm.accountname.$dirty && addAccountForm.accountname.$invalid">
 							<span class="text-danger" ng-show="addAccountForm.accountname.$error.minlength"> Account Name is too short !</span>

@@ -148,7 +148,7 @@ define(['app'], function (app) {
 							modalOptions.addexpence.balance = Math.round(parseFloat(modalOptions.previousBalance) - parseFloat(modalOptions.addexpence.debit_amount));
 						},
 						postDataExpence : function(addexpence) {
-							dataService.post("post/transaction/addexpence",addexpence)
+							dataService.post("post/transaction",addexpence)
 							.then(function(response) {  
 								if(response.status == "success"){
 									
@@ -180,7 +180,83 @@ define(['app'], function (app) {
 				});	
 			});
 		};
-		/***************************************************************/
+/***************************************************************/
+		$scope.transfer = function (url) {
+			dataService.get("getmultiple/account/1/100", {status: 1, user_id : $rootScope.userDetails.id}).then(function(response){
+			var modalDefaults = {
+					templateUrl: url,	// apply template to modal
+					size : 'lg'
+				};
+			var modalOptions = {
+				accountList : response.data,
+				 date : $scope.currentDate,
+				 getFrom : function(id, modalOptions) {
+						var account = {account : "account_name"};
+						 dataService.get("getsingle/transaction/"+id,account)
+						.then(function(response) { 
+							if(response.status == "success"){
+								modalOptions.previousBalancefrom = response.data.balance;
+							}else{
+								modalOptions.previousBalancefrom = 0;
+								if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+								$notification[response.status]("", response.message);
+							}
+						});   
+					},
+					totalAmount : function(modalOptions){
+							if(modalOptions.amount == undefined) modalOptions.amount = {};
+							modalOptions.balance1 = Math.round(parseFloat(modalOptions.previousBalancefrom) - parseFloat(modalOptions.amount));
+							modalOptions.balance2 = Math.round(parseFloat(modalOptions.previousBalanceto) + parseFloat(modalOptions.amount));
+							console.log(modalOptions.balance1);
+							console.log(modalOptions.balance2);
+					},
+					getTo : function(id, modalOptions) {
+						var account = {account : "account_name"};
+						 dataService.get("getsingle/transaction/"+id,account)
+						.then(function(response) {
+							if(response.status == "success"){
+								modalOptions.previousBalanceto = response.data.balance;
+							}else{
+								modalOptions.previousBalanceto = 0;
+								if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+								$notification[response.status]("", response.message);
+							}
+						});   
+					},
+				postData: function(modalOptions) {
+					var debitTransfer = angular.copy(modalOptions.transfer);
+					debitTransfer.debit_amount = modalOptions.amount;
+					debitTransfer.account_no = modalOptions.transfer_from;
+					debitTransfer.balance = modalOptions.balance1;
+					console.log(debitTransfer);
+						dataService.post("post/transaction",debitTransfer)
+						.then(function(response) {  
+							if(response.status == "success"){
+								
+							}
+							if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+							$notification[response.status]("Debited", response.message);
+						});
+					var creditTransfer = angular.copy(modalOptions.transfer);
+					creditTransfer.credit_amount = modalOptions.amount;
+					creditTransfer.account_no = modalOptions.transfer_to;
+					creditTransfer.balance = modalOptions.balance2;
+					console.log(creditTransfer);
+					dataService.post("post/transaction",creditTransfer)
+					.then(function(response) {  
+						if(response.status == "success"){
+							
+						}
+						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+						$notification[response.status]("Credited", response.message);
+					});
+				},
+			};
+			modalService.show(modalDefaults, modalOptions).then(function (result) {
+			});
+			});
+		};
+/***************************************************************/
 		$scope.getTransaction = function(page,transactionParams){
 			transactionParams = (transactionParams) ? transactionParams : $scope.transactionParams;
 			
