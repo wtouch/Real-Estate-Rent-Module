@@ -120,9 +120,9 @@ function postRecord($getRequest, $postParams=null){
 	$baseUrl = substr( $_SERVER['PHP_SELF'], 0, $posIndex).'/index.php'; 
 	
 	try{
-		if(!isset($_SESSION['username']) && $postParams != ("login" || "forgotpass" || "changepass")){
+		 if(!isset($_SESSION['username']) && $postParams != ("login" || "forgotpass" || "changepass")){
 			throw new Exception('You are not logged in!');
-		}
+		} 
 		if($body===""){
 			throw new Exception('There is no input!');
 		}else{
@@ -180,7 +180,7 @@ function putRecord($getRequest, $id){
 	try{
 		if(!isset($_SESSION['username'])){
 			throw new Exception('You are not logged in!');
-		}
+		} 
 		if($id === 0 || $getRequest===null){
 			if($id === 0){
 				throw new Exception('Please Use proper id for record.');
