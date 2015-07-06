@@ -1,0 +1,78 @@
+	<h3 class="col-sm-offset-2 col-sm-9">Submit Template</h3>
+		<form name="submittempForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="submittempForm.$valid">
+			<div class="form-group">
+				<label for="template" class="col-sm-2 control-label" name="template"></label>
+					<div class="col-sm-7">
+						<p>Note that Fields Marked * are Required.</p>		
+					</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="template" class="col-sm-2 control-label" name="template" >Template Category *</label>
+					<div class="col-sm-3">
+						<select class="form-control" id="category" name="category" ng-model="addtemplate.category" required ng-options="item.system_name as item.name for item in temp.category">		
+							<option value="">Select Category</option>
+						</select>
+						<span class="help-block" ng-show="submittempForm.category.$dirty && submittempForm.category.$invalid">
+							<span class="text-danger" ng-show="submittempForm.category.$error.required">Template Category is required.</span>
+						</span>				
+					</div>
+			</div>
+			
+			<div class="form-group">	
+				<label  for="name" class="col-sm-2 control-label">Template Name *</label>
+					<div class="col-sm-9">
+						<input ng-disabled="tempId" type="text" id="name" class="form-control" name="name" placeholder="Enter Template Name" ng-model="addtemplate.template_name" ng-pattern="/^[a-zA-Z0-9(_)]*$/" required>
+						<span class="text-warning">Use a-z A-Z 0-9 _ only</span>
+						<span class="help-block" ng-show="submittempForm.name.$dirty && submittempForm.name.$invalid">
+							<span class="text-danger" ng-show="submittempForm.name.$error.required">Template Name is required.</span>
+							<span class="text-danger" ng-show="submittempForm.name.$error.pattern">Alphabets, Numbers & _ Only!</span>
+						</span>
+					</div>						
+			</div>	
+			
+			<div class="form-group">	
+				<label  for="date" class="col-sm-2 control-label">Date</label>
+				<div class="col-sm-9">
+					 <input type="text" id="date" class="form-control" name="dateInput" ng-model="addtemplate.date" readonly  placeholder="date">
+				</div>						
+			</div>
+			
+			<div class="form-group">
+				<label for="tempimage" class="col-sm-2 control-label">Template Image *</label>
+					<div class="col-sm-9">
+						<input required ng-disabled="!addtemplate.template_name || !addtemplate.category" type="file" id="tempImages" ng-file-select ng-multiple="true" accept="image/jpeg,image/png, image/gif" ng-file-change="generateThumb($files)" ng-model="tempImages">
+						
+							<!-- This will show thumbnails & progress of images -->
+							<file-preview url="tempImages"></file-preview>
+							
+							<!-- This button will show if file/s selected -->
+							<button ng-show="tempImages" ng-click="uploadZip(tempImages,zipPath+'/'+addtemplate.category+'/'+addtemplate.template_name,userInfo,'template_image')" type="button">Upload</button>
+							
+							<!-- This hidden input will store image path in array after successful uploading -->
+							<input type="hidden" ng-model="addtemplate.template_image">
+					</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="templatezip" class="col-sm-2 control-label">Template Zip *</label>
+					<div class="col-sm-9">
+						<input required ng-disabled="!addtemplate.template_name || !addtemplate.category" type="file" id="tempZip" ng-file-select ng-multiple="false" ng-accept="'.zip'" ng-file-change="uploadZip($files,zipPath+'/'+addtemplate.category+'/'+addtemplate.template_name,userInfo,'zip')" ng-model="tempZip">
+							<button ng-show="tempZip" ng-click="" type="button">Upload</button>
+							<!-- This hidden input will store image path in array after successful uploading -->
+							<input type="hidden" ng-model="addtemplate.template_zip">
+					</div>
+			</div>	
+			<div>
+				<input type="hidden" ng-model="addtemplate.user_id">
+			</div>		
+			
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-9">
+					<button ng-if="!tempId" type="submit" class="btn btn-success" ng-disabled="submittempForm.$invalid" ng-click="postData(addtemplate)">Submit</button>
+					<button ng-if="tempId" type="submit" class="btn btn-success" ng-disabled="submittempForm.$invalid" ng-click="updateData(addtemplate)">Update</button>
+					<button type="reset" class="btn btn-danger">Reset</button>
+				</div>
+			</div>					
+		</form>
+				

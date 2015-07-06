@@ -1,0 +1,14 @@
+/* $scope.uploadMultiple= function(files,path,userInfo, picArr){ // this function for uploading files	
+	upload.upload(files,path,userInfo,function(data){
+		var picArrKey = 0, x;
+			for(x in picArr) picArrKey++;
+				if(data.status === 'success'){
+					picArr[picArrKey] = data.details;
+					console.log(data.message);
+				}else{
+					$scope.alerts.push({type: data.status, msg: data.message});
+				}
+				
+			}); 
+	}; //end upload
+ */

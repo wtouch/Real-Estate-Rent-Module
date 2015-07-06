@@ -1,0 +1,31 @@
+<div class="main-content">
+	<ng-include src="'modules/component/toolbar.html'"></ng-include>
+		<div class="row">
+			<div class="col-sm-12 text-right">
+				<a ng-if="permission.template_list" href="#/dashboard/templates" class="btn btn-default" ng-click="addAlert()">List of Templates</a>
+				
+				<a ng-if="permission.my_template" href="#/dashboard/templates/mytemplates" class="btn btn-default" ng-click="addAlert()">My Templates</a>
+				
+				<a ng-if="permission.request_custom_template" href="#/dashboard/templates/requestcustomtemplates" class="btn btn-default" ng-click="addAlert()">Request Custom Template</a>
+				
+				<a ng-if="permission.add_template" href="#/dashboard/templates/addtemplate" class="btn btn-default">Add Template</a>
+				
+				<a href="#/dashboard/templates/custometemplates" class="btn btn-default"ng-click="addAlert()">Custom Templates</a>
+			</div>
+			
+			<div class="col-sm-12">
+				<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+			</div>
+			
+			<div class="col-sm-12">
+				<ng-include ng-if="tempPart=='listoftemplates'" src="'modules/templates/listoftemplates.html'"></ng-include>	
+				<ng-include ng-if="tempPart=='mytemplates'" src="'modules/templates/mytemplates.html'"></ng-include>	
+				
+				<ng-include ng-if="tempPart=='requestcustomtemplates'" src="'modules/templates/requestcustomtemplates.html'"></ng-include>	
+				
+				<ng-include ng-if="tempPart=='addtemplate'" src="'modules/templates/addtemplate.html'"></ng-include>	
+				
+				<ng-include ng-if="tempPart=='custometemplates'" src="'modules/templates/custometemplates.html'"></ng-include>	
+			</div>
+		</div>
+</div>
