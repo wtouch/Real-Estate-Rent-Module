@@ -39,10 +39,10 @@ define(['app'], function (app) {
 			popupWin.document.close();
 		}
 /*******************************************************************/
-		$scope.getTransaction = function(page,transactionParams){
+		$scope.getTransaction = function(page, transactionParams){
 					transactionParams = (transactionParams) ? transactionParams : $scope.transactionParams;
 					
-					dataService.get("getmultiple/transaction/"+page+"/"+$scope.pageItems, transactionParams)
+					dataService.get("getmultiple/transaction/1/10000", transactionParams)
 					.then(function(response) {
 						if(response.status == 'success'){
 							$scope.transaction = response.data;
@@ -62,26 +62,6 @@ define(['app'], function (app) {
 		$scope.calcDuration = function(type, duration){
 			//console.log(type, duration);
 			var curDate = new Date();
-			if(type == 'custom'){
-				var dateS = new Date(duration.start);
-				var dateE = new Date(duration.end);
-				var startDt = dateS.getFullYear() + "-" + (dateS.getMonth() + 1) + "-" + dateS.getDate();
-				var endtDt = dateE.getFullYear() + "-" + (dateE.getMonth() + 1) + "-" + (dateE.getDate() + 1 );
-			}
-			if(type == 'daily'){
-				var dateS = new Date(duration.start);
-				var startDt = dateS.getFullYear() + "-" + (dateS.getMonth() + 1) + "-" + dateS.getDate();
-				var endtDt = dateS.getFullYear() + "-" + (dateS.getMonth() + 1) + "-" + (dateS.getDate() + 1);
-			}
-			if(type == 'month'){
-				duration = parseInt(duration);
-				var today = new Date();
-				var start = new Date(today.getFullYear(), (duration - 1), 1);
-				var endt = new Date(today.getFullYear(), (duration - 1) + 1, 0);
-				
-				var startDt = start.getFullYear() +"-" + (start.getMonth() + 1) + "-"+start.getDate();
-				var endtDt = endt.getFullYear() +"-" + (endt.getMonth() + 1) + "-"+ (endt.getDate() + 1);
-			}
 			if(type == 'year'){
 				duration = parseInt(duration);
 				var today = new Date();

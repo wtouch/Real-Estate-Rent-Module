@@ -4,10 +4,10 @@ define(['app'], function (app) {
     var injectParams = ['$scope','$rootScope','$injector','modalService','$routeParams' ,'$notification', 'dataService'];
     
     // This is controller for this view
-	var invoiceController = function ($scope,$rootScope,$injector,modalService, $routeParams,$notification,dataService) {
+	var billController = function ($scope,$rootScope,$injector,modalService, $routeParams,$notification,dataService) {
 		
 		//global scope objects
-		$scope.invoice = true;
+		$scope.bill = true;
 		$scope.maxSize = 5;
 		$scope.totalRecords = "";
 		$scope.currentPage = 1;
@@ -93,17 +93,17 @@ define(['app'], function (app) {
 		}
 		
 		/***********************************************************************************/
-		$scope.openGenerateinvoice = function (url,invoice) {
+		$scope.openGeneratebill = function (url,bill) {
 			$scope.rentYear = [];
 				var modalDefaults = {
 					templateUrl: url,	
 					size : 'lg'
 				};
-				if(invoice){
-					var genDate = (invoice.generated_date) ? new Date(invoice.generated_date) : {};
+				if(bill){
+					var genDate = (bill.generated_date) ? new Date(bill.generated_date) : {};
 				}
 				var modalOptions = {
-					rentList : (invoice) ? invoice : {},
+					rentList : (bill) ? bill : {},
 					rentDate: { date : $scope.currentDate, due_date : $scope.dueDate },
 					total_amount : 0,
 					accountConfig : $rootScope.userDetails.config.rentsetting,
@@ -113,23 +113,23 @@ define(['app'], function (app) {
 						{'name':'tds', 'value':accountConfig.tds}
 					],
 					perticulars : [],
-					rentData : (invoice) ? {
-						'id':invoice.id,
-						'user_id':invoice.user_id,
-						'property_id':invoice.property_id,
-						'due_date':invoice.due_date,
-						'previous_due':invoice.previous_due,
-						'subtotal':invoice.subtotal,
-						'tax':invoice.tax,
-						'total_amount':invoice.total_amount,
-						'duration':invoice.duration,
-						'generated_date':invoice.generated_date,
-						'particulars':invoice.particulars,
-						'remark':invoice.remark,
-						'payment_status':invoice.payment_status,
-						'status':invoice.status
+					rentData : (bill) ? {
+						'id':bill.id,
+						'user_id':bill.user_id,
+						'property_id':bill.property_id,
+						'due_date':bill.due_date,
+						'previous_due':bill.previous_due,
+						'subtotal':bill.subtotal,
+						'tax':bill.tax,
+						'total_amount':bill.total_amount,
+						'duration':bill.duration,
+						'generated_date':bill.generated_date,
+						'particulars':bill.particulars,
+						'remark':bill.remark,
+						'payment_status':bill.payment_status,
+						'status':bill.status
 					} : {},
-					inWords : (invoice) ? $scope.inWords(invoice.total_amount) : "",
+					inWords : (bill) ? $scope.inWords(bill.total_amount) : "",
 					generated_date : (genDate) ? {month : genDate.getMonth(), year : genDate.getFullYear()} : {},
 					generatedDate : {month : curMonth, year : curDate.getFullYear()},
 					subTotal : 0,
@@ -198,12 +198,12 @@ define(['app'], function (app) {
 						modalOptions.total_amount = parseFloat(totalAmount);
 					},
 					
-					postData : function(invoice){
-							dataService.post("post/invoice",invoice)
+					postData : function(bill){
+							dataService.post("post/bill",bill)
 							.then(function(response) {  
 							if(response.status == "success"){
 								console.log(response);
-								$scope.getInvoices($scope.currentPage);
+								$scope.getBills($scope.currentPage);
 							}
 							if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 							$notification[response.status]("Rent Receipt Generated", response.message);
@@ -215,36 +215,36 @@ define(['app'], function (app) {
 						rentData.total_amount = total_amount;
 						rentData.subtotal = subtotal;
 						rentData.tax = tax;
-						modalOptions.invoice = rentData;
+						modalOptions.bill = rentData;
 					},
-					updateData : function(id,invoice){
-							dataService.put("put/invoice/"+id,invoice)
+					updateData : function(id,bill){
+							dataService.put("put/bill/"+id,bill)
 							.then(function(response) {  
 							if(response.status == "success"){
 								console.log(response);
-								$scope.getInvoices($scope.currentPage);
+								$scope.getBills($scope.currentPage);
 							}
 							if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 							$notification[response.status]("Rent Receipt Generated", response.message);
 						});
 					},
-					payInvoice : function(payment){
-							if(modalOptions.rentList.due_amount - payment.credit_amount <= 0){
+					payBill : function(payment){
+							if(modalOptions.rentList.due_amount - payment.debit_amount <= 0){
 								var paymentStatus = { payment_status : 1};
 								}else{
 									var paymentStatus = { payment_status : 2};
 								}
-								payment.type = 'invoice_payment';
-								payment.category = 'invoice';
+								payment.type = 'bill_payment';
+								payment.category = 'Bill';
 								dataService.post("post/transaction",payment)
 								.then(function(response) {  
 									if(response.status == "success"){
 										console.log(response);
-										dataService.put("put/invoice/"+invoice.id,paymentStatus)
+										dataService.put("put/bill/"+bill.id,paymentStatus)
 										.then(function(response) {
 											if(response.status == "success"){
 												console.log(response);
-												$scope.getInvoices($scope.currentPage);
+												$scope.getBills($scope.currentPage);
 											}
 										});
 									}
@@ -256,23 +256,23 @@ define(['app'], function (app) {
 				};
 				
 				modalService.show(modalDefaults,modalOptions).then(function (result) {
-					if(modalOptions.invoice.id){modalOptions.updateData(modalOptions.invoice.id,modalOptions.invoice);}
-					else{modalOptions.postData(modalOptions.invoice);}
+					if(modalOptions.bill.id){modalOptions.updateData(modalOptions.bill.id,modalOptions.bill);}
+					else{modalOptions.postData(modalOptions.bill);}
 				});
 		};
 /*************************************************************************************/
 /*Receipt Generation Modal*/
 
-	$scope.viewReceipt = function (url,invoice) {
-		var getParams = {user_id : $rootScope.userDetails.id,invoice_id :invoice.id,groupBy :invoice.id};
-		dataService.get("getmultiple/invoice/1/1000",getParams)
+	$scope.viewReceipt = function (url,bill) {
+		var getParams = {user_id : $rootScope.userDetails.id,invoice_id :bill.id,groupBy :bill.id};
+		dataService.get("getmultiple/bill/1/1000",getParams)
 			.then(function(response) {
 			var modalDefaults = {
 							templateUrl: url,	
 							size : 'lg'
 						};
 			var modalOptions = {
-				invoice	: (invoice) ? invoice : {},
+				bill	: (bill) ? bill : {},
 				receiptList : (response.data),
 				inWords : function(total_amount){
 					return $scope.inWords(total_amount);
@@ -315,8 +315,8 @@ define(['app'], function (app) {
 			});
 		} 
 /*******************************************************************************************/
-		$scope.getInvoices = function(page, column, value, search){
-			$scope.filterStatus = ($scope.filterStatus) ? $scope.filterStatus : {status: 1, user_id : $rootScope.userDetails.id, groupBy : 'invoice_id' };
+		$scope.getBills = function(page, column, value, search){
+			$scope.filterStatus = ($scope.filterStatus) ? $scope.filterStatus : {status: 1, user_id : $rootScope.userDetails.id, groupBy : 'bill_id' };
 			(value == "none") ? delete $scope.filterStatus[column] : $scope.filterStatus[column] = value;
 			
 			if(column == 'user_id' && value == null) {
@@ -333,17 +333,17 @@ define(['app'], function (app) {
 			if((search == true && value.length <= 3 && value.length != 0)){
 				return false;
 			}
-			dataService.get("getmultiple/invoice/"+page+"/"+$scope.pageItems,$scope.filterStatus)
+			dataService.get("getmultiple/bill/"+page+"/"+$scope.pageItems,$scope.filterStatus)
 			.then(function(response) {  
 				if(response.status == 'success'){
-					$scope.invoices = response.data;
+					$scope.bills = response.data;
 					$scope.total_paid = response.total_paid;
 					$scope.total_due = response.total_due;
 					$scope.total_amount = response.total_rent;
 					$scope.totalRecords = response.totalRecords;
 				}else{
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$scope.invoices = {};
+					$scope.bills = {};
 					$scope.total_paid = 0;
 					$scope.total_due = 0;
 					$scope.total_amount = 0;
@@ -360,7 +360,7 @@ $scope.orderBy = function(column, value, orderBy) {
 				delete $scope.filterStatus['orderBy'];
 			}
 			
-			$scope.getInvoices($scope.currentPage, $scope.filterStatus);
+			$scope.getBills($scope.currentPage, $scope.filterStatus);
 	};
 /***********************************************************/
 /*Delete Account Funtion*/
@@ -368,14 +368,14 @@ $scope.orderBy = function(column, value, orderBy) {
 				$scope.deletedData = {status : status};
 				var del = confirm("Do you really want to delete this?");
 				if(del){
-					dataService.delete("delete/invoice/"+id, $scope.deletedData)
+					dataService.delete("delete/bill/"+id, $scope.deletedData)
 					.then(function(response) { 
 						if(response.status == 'success'){
 							$scope.hideDeleted = 1;
-							$scope.getInvoices($scope.currentPage);
+							$scope.getBills($scope.currentPage);
 						}
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-						$notification[response.status]("Delete Invoice", response.message);
+						$notification[response.status]("Delete Bill", response.message);
 					});
 				}else{
 					alert("canceled!");
@@ -385,7 +385,7 @@ $scope.orderBy = function(column, value, orderBy) {
 	};
 		
 	// Inject controller's dependencies
-	invoiceController.$inject = injectParams;
+	billController.$inject = injectParams;
 	// Register/apply controller dynamically
-    app.register.controller('invoiceController', invoiceController);
+    app.register.controller('billController', billController);
 });

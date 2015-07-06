@@ -115,7 +115,7 @@ define(['angular',
 				 label: "Account"}, 'accounting/account/'))
 				 
 				 .when('/dashboard/accounting/bill', route.resolve({controller: 'bill', template: 'bill',
-				 label: "Balance Sheet"}, 'accounting/bill/'))
+				 label: "Purchase Bills"}, 'accounting/bill/'))
 				 
 				 .when('/dashboard/accounting/balance', route.resolve({controller: 'balance', template: 'balance',
 				 label: "Balance Sheet"}, 'accounting/balance/'))

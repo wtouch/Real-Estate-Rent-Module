@@ -1,9 +1,9 @@
-<h3>Invoices</h3>
+<h3>Bills</h3>
 <div class="row">	 				  
 		<div class="col-sm-2">
 			<div class="bottomspace">
 				<label for="payment_status" class="control-label" >Payment Status</label>
-					<select id="payment_status" class="form-control" ng-change="getInvoices(currentPage,'payment_status',payment_status)" ng-model="payment_status">
+					<select id="payment_status" class="form-control" ng-change="getBills(currentPage,'payment_status',payment_status)" ng-model="payment_status">
 						<option value="" selected>Payment Status</option>
 						<option value="0">Unpaid</option>	
 						<option value="1">Paid</option>	
@@ -14,20 +14,20 @@
 		
 		<div class="col-sm-2">
 			<label for="account_no" class="control-label" ng-init="getAccount()">Account Name*</label>
-				<select class="form-control" name="account_no" id="account_no" ng-change="getInvoices(currentPage,'account_no',account_name)" ng-model="account_name"  ng-options="item.id as item.account_name for item in accountList" required>
+				<select class="form-control" name="account_no" id="account_no" ng-change="getBills(currentPage,'account_no',account_name)" ng-model="account_name"  ng-options="item.id as item.account_name for item in accountList" required>
 					<option value="" selected>Select Account</option>
 				</select>
 		</div>
 		
 		<div class="col-sm-2">
 			<label for="party" class="control-label" ng-init="getCustomer()">Party</label>
-			<select class="form-control" name="party" id="party" ng-model="party" ng-change="getInvoices(currentPage,'user_id',party)" ng-options="item.id as item.name for item in customerList | filter: { group_name : 'customer'} "required>
+			<select class="form-control" name="party" id="party" ng-model="party" ng-change="getBills(currentPage,'user_id',party)" ng-options="item.id as item.name for item in customerList | filter: { group_name : 'customer'} "required>
 				<option value="">Select Party</option>
 			</select>
 		</div>
 		<div class="col-sm-2">
 						<div class="bottomspace">
-							<label for="sort" class="control-label">Sort by Invoice No</label>
+							<label for="sort" class="control-label">Sort by Bill No</label>
 								<select id="sort" class="form-control ng-pristine ng-valid" ng-model="id" ng-change="orderBy('id', id, true)">
 									<option value="">Select Order</option>	
 									<option value="-id">Desending</option>
@@ -48,11 +48,11 @@
 		
 		
 	</div>
-<div class="table-responsive" ng-init="getInvoices(currentPage)">
+<div class="table-responsive" ng-init="getBills(currentPage)">
 <table class="table  table-hover table-bordered">
 	<thead>
 	<th>Sr. No.</th>
-	<th>Invoice No</th>
+	<th>Bill No</th>
 	<th>Party Name</th>
 	<th>Generated Date</th>
 	<th>Payment Status</th>
@@ -63,7 +63,7 @@
 	<th>Manage</th>
 	</thead>
 	<tbody>
-	<tr ng-repeat="x in invoices | orderBy:sort" ng-class="(x.due_date <= currentDate && x.payment_status == 0) ? 'bg-danger' : ''">
+	<tr ng-repeat="x in bills | orderBy:sort" ng-class="(x.due_date <= currentDate && x.payment_status == 0) ? 'bg-danger' : ''">
 	<td>{{ ((currentPage - 1) * pageItems ) + $index+1 }}</td>
 	<td>{{ x.id }}</td>
 	<td>{{ x.username }}</td>
@@ -73,11 +73,11 @@
 	<td class="text-right">{{ x.paid | number : 2}}</td>
 	<td class="text-right">{{ x.due_amount | number : 2}}</td>
 	<td class="text-right">{{ x.due_date}}</td>
-	<td><a ng-disabled="x.payment_status == 1" ng-click="openGenerateinvoice('modules/accounting/invoice/addinvoice.html',x)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="Edit Invoice Information"> <span class="glyphicon glyphicon-pencil"></span></a>
-	<a type="button" tooltip="Delete Invoice" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox="" btn-checkbox-true="'1'" btn-checkbox-false="'0'" class="ng-pristine ng-valid active btn btn-success"><span class="glyphicon glyphicon-remove"></span></a>
-	<a ng-disabled="x.due_amount <= 0" ng-click="openGenerateinvoice('modules/accounting/invoice/payinvoice.html',x)" class="btn btn-primary"  tooltip-animation="true" tooltip="Pay Invoice"><span class="glyphicon glyphicon-usd"></a>
-	<a ng-click="openGenerateinvoice('modules/accounting/invoice/viewinvoice.html',x)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="View Invoice"><span class="glyphicon glyphicon-eye-open"></span></a>
-	<a ng-disabled="(x.payment_status == 0)" ng-click="viewReceipt('modules/accounting/invoice/viewreceipt.html',x)"  class="btn btn-warning" type="button" tooltip-animation="true" tooltip="View Receipt"><span class="glyphicon glyphicon-eye-open"></span></a>
+	<td><a ng-disabled="x.due_amount <= 0" ng-click="openGeneratebill('modules/accounting/bill/addbill.html',x)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="Edit Bill Information"> <span class="glyphicon glyphicon-pencil"></span></a>
+	<a type="button" tooltip="Delete Bill" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox="" btn-checkbox-true="'1'" btn-checkbox-false="'0'" class="ng-pristine ng-valid active btn btn-success"><span class="glyphicon glyphicon-remove"></span></a>
+	<a ng-disabled="x.due_amount <= 0" ng-click="openGeneratebill('modules/accounting/bill/paybill.html',x)" class="btn btn-primary"  tooltip-animation="true" tooltip="Pay Bill"><span class="glyphicon glyphicon-usd"></a>
+	<a ng-click="openGeneratebill('modules/accounting/bill/viewbill.html',x)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="View Bill"><span class="glyphicon glyphicon-eye-open"></span></a>
+	<a ng-disabled="(x.payment_status == 0)" ng-click="viewReceipt('modules/accounting/bill/viewreceipt.html',x)"  class="btn btn-warning" type="button" tooltip-animation="true" tooltip="View Receipt"><span class="glyphicon glyphicon-eye-open"></span></a>
 	</td>
 	</tr>
 	<tr>

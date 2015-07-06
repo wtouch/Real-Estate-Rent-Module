@@ -24,9 +24,10 @@
 			$where = array();
 			$whereTrans = array();
 			$groupBy = array();
+			$orderBy = array();
 			if(isset($_GET['user_id'])) $userId = $_GET['user_id'];
 			if(isset($_GET['property_id'])) $where['property_id'] = $_GET['property_id'];
-			if(isset($_GET['invoice_id'])) $whereTrans['invoice_id'] = $_GET['invoice_id'];
+			if(isset($_GET['bill_id'])) $whereTrans['bill_id'] = $_GET['bill_id'];
 			if(isset($_GET['generated_date'])) $like['generated_date'] = $_GET['generated_date'];
 			if(isset($_GET['payment_status'])) $like['payment_status'] = $_GET['payment_status'];
 			if(isset($_GET['due_date'])) $like['due_date'] = $_GET['due_date'];
@@ -46,18 +47,20 @@
 			$db->setColumns($table, $selectInnerJoinCols);
 			
 			
-			$paid = $db->setJoinString("LEFT JOIN", "transaction", array("invoice_id"=>$table.".id"));
-			$db->setColumns($paid, array($paid.".id as receipt_id, ".$paid.".date as receipt_date, ".$paid.".description as description, ifnull(sum(".$paid.".credit_amount), 0) as paid"), true);
-			$db->setColumns($paid, array("ifnull(".$table.".total_amount, 0) - ifnull(sum(".$paid.".credit_amount), 0) as due_amount"), true);
+			$paid = $db->setJoinString("LEFT JOIN", "transaction", array("bill_id"=>$table.".id"));
+			$db->setColumns($paid, array($paid.".id as receipt_id, ".$paid.".date as receipt_date, ".$paid.".description as description, ifnull(sum(".$paid.".debit_amount), 0) as paid"), true);
+			$db->setColumns($paid, array("ifnull(".$table.".total_amount, 0) - ifnull(sum(".$paid.".debit_amount), 0) as due_amount"), true);
 			
 			$db->setWhere($whereTrans, $paid);
 			
 			if(isset($_GET['groupBy'])){
-				($_GET['groupBy'] == 'invoice_id') ? $db->setGroupBy(array("id"), $table) : $db->setGroupBy(array("id"), $paid);
+				($_GET['groupBy'] == 'bill_id') ? $db->setGroupBy(array("id"), $table) : $db->setGroupBy(array("id"), $paid);
 			}
 			
-			$db->setOrderBy(array("id"=>"desc"), $table);
-			
+			if(isset($_GET['orderBy'])){
+				$orderBy[str_replace("-","",$_GET['orderBy'])] = ($_GET['orderBy'][0] == "-" ? "desc" : "asc");
+			}
+			$db->setOrderBy($orderBy, $table);
 			$data = $db->select();
 			if($data['status'] == "success"){
 				$total_due = 0;
@@ -88,7 +91,7 @@
 		$delete = $db->delete("bill", $where);
 		echo json_encode($delete);
 	}
-	invoice
+	
 	if($reqMethod=="POST" && $_GET['METHOD'] == 'POST'){
 		$insert = $db->insert("bill", $body);
 		echo json_encode($insert);

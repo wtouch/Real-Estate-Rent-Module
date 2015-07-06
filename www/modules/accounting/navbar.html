@@ -3,7 +3,7 @@
 		<a class="btn btn-primary" href="#/dashboard/accounting/invoice">Invoices</a>
 		<a class="btn btn-primary" href="#/dashboard/accounting/transaction">Transactions</a>
 		<a class="btn btn-primary" href="#/dashboard/accounting/account">Accounts</a>
-		<a class="btn btn-primary" href="#/dashboard/accounting/bill">bills</a>
+		<a class="btn btn-primary" href="#/dashboard/accounting/bill">Purchase Bills</a>
 		<a class="btn btn-primary" href="#/dashboard/accounting/balance">Balance Sheet</a>
 	</div>
 	<div class="col-sm-6">
@@ -12,6 +12,6 @@
 		<a ng-if="transactionView" class="btn btn-primary" ng-click="transfer('modules/accounting/transaction/transfer.html')"><span class="glyphicon glyphicon glyphicon-plus"></span>Transfer</a>
 		<a ng-if="account" class="btn btn-primary" ng-click="openAddaccount('modules/accounting/account/addaccount.html')">Add Account</a>
 		<a ng-if="invoice" class="btn btn-primary" ng-click="openGenerateinvoice('modules/accounting/invoice/addinvoice.html')">Add Invoice</a></span>
-		<a ng-if="bill" class="btn btn-primary" ng-click="openGenerateinvoice('modules/accounting/bill/addbill.html')">Add Bill</a></span>
+		<a ng-if="bill" class="btn btn-primary" ng-click="openGeneratebill('modules/accounting/bill/addbill.html')">Add Purchase Bill</a></span>
 	</div>
 </div>
