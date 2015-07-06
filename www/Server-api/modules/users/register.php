@@ -28,7 +28,6 @@
 	}
 	
 	function activateUser($email, $appPath){
-		
 		try{
 			$table = 'users';
 			$db = new dbHelper();
@@ -99,7 +98,6 @@
 		foreach ($input as $key => $value){
 			$where[$key] = $value;
 		}
-		//$where['id'] = $id;
 		$t0 = $db->setTable("users");
 		$db->setWhere($where, $t0);
 		$select = $db->select();
