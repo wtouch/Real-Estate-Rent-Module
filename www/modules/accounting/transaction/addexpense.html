@@ -128,6 +128,16 @@
 					</div>						
 			</div>
 			
+			<div class="form-group">
+				<label for="description" class="col-sm-2 control-label">Description</label>
+					<div class="col-sm-9">
+						<textarea type="text" id="description" ng-model="modalOptions.addexpence.description.description" class="form-control" name="Branch"   placeholder="Enter Description" required></textarea>
+						<span class="text-danger" ng-show="addExpenceForm.description.$dirty && addExpenceForm.description.$invalid">
+							<span ng-show="addExpenceForm.description.$error.required">Description is Required.</span>
+						</span>	
+					</div>		
+			</div>
+			
 			<div class="form-group modal-footer">
 				<div class="col-sm-offset-2 col-sm-9">
 					<button type="submit" class="btn btn-success" ng-disabled="addExpenceForm.$invalid" ng-click="modalOptions.postDataExpence(modalOptions.addexpence); modalOptions.ok()">Submit</button>

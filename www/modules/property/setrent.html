@@ -39,7 +39,7 @@
 		<div class="form-group">
 			<label for="deposit" class="col-sm-2 control-label">Deposit* </label>		
 			<div class="col-sm-9">
-				<input type="text" id="deposit" ng-pattern="/^[0-9]*$/" class="form-control" name="deposit" ng-model="modalOptions.setrent.deposit" placeholder="Enter Deposit Amount" required>
+				<input type="text" id="deposit" ng-pattern="/^[0-9]*$/" class="form-control" name="deposit" ng-model="modalOptions.setrent.deposit" placeholder="Enter Deposit Amount" ng-init="modalOptions.setrent.deposit = modalOptions.propertyData.deposit" required>
 				<span class="text-danger" ng-show="setrentForm.deposit.$dirty && setrentForm.deposit.$invalid">
 					<span ng-show="setrentForm.deposit.$error.pattern" class="text-danger">Enter Number only</span>
 					<span ng-show="setrentForm.deposit.$error.required">Deposit required.</span>
@@ -50,7 +50,7 @@
 		<div class="form-group">
 			<label for="rent" class="col-sm-2 control-label">Licence Fee *</label>		
 			<div class="col-sm-9">
-				<input type="text" id="rent" class="form-control" name="rent" placeholder="Set Licence Fee"  ng-pattern="/^[0-9]*$/" ng-model="modalOptions.setrent.rent" required>
+				<input type="text" id="rent" class="form-control" name="rent" placeholder="Set Licence Fee"  ng-pattern="/^[0-9]*$/" ng-model="modalOptions.setrent.rent" ng-init="modalOptions.setrent.rent = modalOptions.propertyData.price" required>
 				<span class="help-block" ng-show="setrentForm.rent.$dirty && setrentForm.rent.$invalid">
 					<span ng-show="setrentForm.rent.$error.pattern" class="text-danger">Enter Number only</span>
 					<span ng-show="setrentForm.rent.$error.required" class="text-danger">Licence Fee Required</span>
@@ -61,7 +61,7 @@
 		<div class="form-group">
 			<label for="maintenance" class="col-sm-2 control-label">Maintenance *</label>		
 			<div class="col-sm-9">
-				<input type="text" id="maintenance" ng-pattern="/^[0-9]*$/" class="form-control" name="maintenance" placeholder="Enter Maintenance Amount" ng-model="modalOptions.setrent.maintenance" required>
+				<input type="text" id="maintenance" ng-pattern="/^[0-9]*$/" class="form-control" name="maintenance" placeholder="Enter Maintenance Amount" ng-model="modalOptions.setrent.maintenance" ng-init="modalOptions.setrent.maintenance = '0'" required>
 				<span class="text-danger" ng-show="setrentForm.maintenance.$dirty && setrentForm.maintenance.$invalid">
 					<span ng-show="setrentForm.maintenance.$error.pattern" class="text-danger">Enter Number only</span>
 					<span ng-show="setrentForm.maintenance.$error.required">Maintenance is required.</span>
@@ -89,7 +89,7 @@
 		<div class="form-group">
 			<label  for="duration" class="col-sm-2 control-label">Duration For*</label>
 				<div class="col-sm-3">
-					<select id="year" class="form-control" ng-model="duration.year" name="year" ng-options="item for item in [0,10] | range" required>
+					<select id="year" class="form-control" ng-model="duration.year" name="year" ng-options="item for item in [0,50] | range" required>
 						<option value="" selected>Select Year</option>
 					</select>
 					<span class="help-block" ng-show="setrentForm.year.$dirty && setrentForm.year.$invalid">
@@ -111,7 +111,7 @@
 		<div class="form-group">	
 			<label  for="escalation" class="col-sm-2 control-label">Escalation After*</label>
 				<div class="col-sm-3">
-					<select id="esc_year" class="form-control" ng-model="duration.esc_year" name="esc_year" ng-options="item for item in [0,10] | range" required>
+					<select id="esc_year" class="form-control" ng-model="duration.esc_year" name="esc_year" ng-options="item for item in [0,50] | range" required>
 						<option value="" selected>Select Year</option>
 					</select>
 					<span class="help-block" ng-show="setrentForm.esc_year.$dirty && setrentForm.esc_year.$invalid">

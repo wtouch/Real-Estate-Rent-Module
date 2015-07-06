@@ -24,6 +24,7 @@
 			$where = array();
 			$whereTrans = array();
 			$groupBy = array();
+			$orderBy = array();
 			if(isset($_GET['user_id'])) $userId = $_GET['user_id'];
 			if(isset($_GET['property_id'])) $where['property_id'] = $_GET['property_id'];
 			if(isset($_GET['invoice_id'])) $whereTrans['invoice_id'] = $_GET['invoice_id'];
@@ -56,8 +57,10 @@
 				($_GET['groupBy'] == 'invoice_id') ? $db->setGroupBy(array("id"), $table) : $db->setGroupBy(array("id"), $paid);
 			}
 			
-			$db->setOrderBy(array("id"=>"desc"), $table);
-			
+			if(isset($_GET['orderBy'])){
+				$orderBy[str_replace("-","",$_GET['orderBy'])] = ($_GET['orderBy'][0] == "-" ? "desc" : "asc");
+			}
+			$db->setOrderBy($orderBy, $table);
 			$data = $db->select();
 			if($data['status'] == "success"){
 				$total_due = 0;

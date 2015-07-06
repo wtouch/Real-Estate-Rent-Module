@@ -234,6 +234,47 @@ define(['app'], function (app) {
 			var min = today.getMinutes();
 			var sec = today.getSeconds();
 			var obj = {};
+			obj.serviceTax = function(amount){
+				var st = amount * parseFloat($rootScope.userDetails.config.rentsetting.service_tax) / 100;
+				//console.log(st, 'st');
+				var pec = st * parseFloat($rootScope.userDetails.config.rentsetting.primary_edu_cess) / 100;
+				//console.log(pec, 'pec');
+				var sec = st * parseFloat($rootScope.userDetails.config.rentsetting.secondary_edu_cess) / 100;
+				//console.log(sec, 'sec');
+				return parseFloat(st + pec + sec);
+			}
+			
+			obj.otherTax = function(amount){
+				var ot = amount * parseFloat($rootScope.userDetails.config.rentsetting.other_tax) / 100;
+				return parseFloat(ot);
+			}
+			
+			obj.tdsCalculate = function(amount){
+				if($rootScope.userDetails.config.rentsetting.tds == 0){ 
+					return 0;
+				}else{
+					return amount * parseFloat($rootScope.userDetails.config.rentsetting.tds) / 100;
+				}
+			}
+			
+			obj.calculateTax = function(taxObject, amount, tax){
+				console.log(tax);
+				var tax = (tax) ? tax : {service_tax:0,other_tax:0,tds:0};
+				angular.forEach(taxObject, function(value, key) {
+					if(value.name == "service_tax"){
+						tax.service_tax += obj.serviceTax(amount);
+					}
+					if(value.name == "tds"){
+						tax.tds += obj.tdsCalculate(amount);
+					}
+					if(value.name == "other_tax"){
+						tax.other_tax += obj.otherTax(amount);
+					}
+				})
+				return tax;
+			}
+			
+			
 			obj.currentDate = year + "-" + month + "-" + date + " " + hour + ":" + min + ":"+sec;
 			obj.setBase = function(path){
 				serviceBase = path;

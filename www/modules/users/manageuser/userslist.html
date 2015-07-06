@@ -16,10 +16,10 @@
 			<div class="bottomspace">
 				<label for="status" class="control-label">Filter By Status</label>
 					<select id="status" class="form-control" 
-					ng-change="changeStatus('status',showStatus)" ng-model="showStatus">
+					ng-change="usersList(usersListCurrentPage,'status',showStatus)" ng-model="showStatus">
 						<option value="">Select Status</option>
 						<option value="1">Active</option>
-						<option value="0">Baned</option>
+						<option value="0">Deleted</option>
 					</select>
 			</div>
 		</div>
@@ -27,7 +27,7 @@
 		<div class="col-sm-2">
 			<div class="bottomspace">
 				<label for="filterbycustomerid" class="control-label">Filter By Party</label>
-					<select id="filterbycustomerid" class="form-control" ng-model="filterbycustomerid"  ng-change="changeStatus('user_id', filterbycustomerid)" ng-options="user.id as user.name for user in customerList">
+					<select id="filterbycustomerid" class="form-control" ng-model="filterbycustomerid"  ng-change="usersList(usersListCurrentPage,'user_id', filterbycustomerid)" ng-options="user.id as user.name for user in customerList">
 						<option value="">Select Party</option>
 					</select>
 			</div>

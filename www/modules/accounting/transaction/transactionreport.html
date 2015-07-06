@@ -128,6 +128,7 @@
 							<td>{{ toDate(x.date) | date:'dd-MMM-yyyy'}}</td>
 							<td>{{x.category}}</td>
 							<td><strong>{{x.description.payment_type.type}}</strong> <span ng-if="x.description.payment_type.Bank"> - {{x.description.payment_type.Bank}}</span>
+							<span>{{x.description.description}}</span>
 							</td>
 							<td>{{x.type}}</td>
 							<td class="text-right">{{x.credit_amount}}</td>

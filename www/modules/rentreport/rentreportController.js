@@ -77,45 +77,8 @@ define(['app'], function (app) {
 			popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" /><link rel="stylesheet" type="text/css" href="css/style.css" /></head><body onload="window.print()">' + printContents + '</html>');
 			popupWin.document.close();
 		} 
-		
-/**************************************************************************/
-/*Generate Invoice Modal function Open Rent*/
-		$scope.openRent = function (url,invoice) {
-			console.log(invoice);
-			$scope.rentYear = [];
-				var modalDefaults = {
-					templateUrl: url,	
-					size : 'lg'
-				};
-				var modalOptions = {
-					rentList : invoice,
-					rentDate: { date : $scope.currentDate, due_date : $scope.dueDate },
-					accountConfig : $rootScope.userDetails.config.rentsetting,
-					total_amount : 0,
-					rentData : {},
-					getTotal : function(rentData, modalOptions){
-						if(rentData.perticulars == undefined) rentData.perticulars = {};
-						rentData.perticulars.tax = $scope.serviceTax(rentData.perticulars.rent);
-						rentData.perticulars.tds = $scope.tds(rentData.perticulars.rent);
-						rentData.perticulars.other_tax = $scope.otherTax(rentData.perticulars.rent);
-						rentData.perticulars.primaryeducation = $scope.primaryEduCess(rentData.perticulars.rent);
-						rentData.perticulars.secondaryeducation = $scope.secondaryEduCess(rentData.perticulars.rent);
-						
-						var rent = parseFloat(rentData.perticulars.rent);
-						var maintenance = (rentData.perticulars.maintenance) ? rentData.perticulars.maintenance : 0;
-						var electricity_bill = (rentData.perticulars.electricity_bill) ? rentData.perticulars.electricity_bill : 0;
-						var water_charge = (rentData.perticulars.water_charge) ? rentData.perticulars.water_charge : 0;
-						
-						var totalAmount = ((parseFloat(rent) + parseFloat($scope.serviceTax(rent)) + parseFloat($scope.otherTax(rent)) + parseFloat($scope.primaryEduCess(rent)) + parseFloat($scope.secondaryEduCess(rent)) + parseFloat(maintenance) + parseFloat(electricity_bill) + parseFloat(water_charge))  - parseFloat($scope.tds(rent)));
-						modalOptions.service_tax = parseFloat(service_tax);
-						modalOptions.other_tar = parseFloat(other_tax);
-						modalOptions.total_amount = parseFloat(totalAmount);
-					},
-					formData : function(rentData, total_amount){
-						rentData.user_id = modalOptions.rentList.user_id;
-						rentData.property_id = modalOptions.rentList.property_id;
-						rentData.total_amount = total_amount;
-						var generatedMonth = new Date(rentData.generated_date);
+/****************************************************************************/
+var generatedMonth = new Date($scope.currentDate);
 						var month = new Array();
 						month[0] = "January";
 						month[1] = "February";
@@ -130,7 +93,106 @@ define(['app'], function (app) {
 						month[10] = "November";
 						month[11] = "December";
 						var monthName = month[generatedMonth.getMonth()];
-						rentData.remark = "Being Invoice for " + monthName + "-" + generatedMonth.getFullYear()+ " " + "Licence Fee & Maintance Charges against Agr. for" + " "+ modalOptions.rentList.title + " "+modalOptions.rentList.address.address + ", premise area " + modalOptions.rentList.address.area + ", " + modalOptions.rentList.address.city + ", "+ modalOptions.rentList.address.location + "-" + modalOptions.rentList.address.pincode;
+					
+		$scope.getParticulars = function(invoice){
+			var particulars = [];
+			if(invoice.rent){
+				var rent = {
+					"label" : "Licence Fee",
+					"price" : invoice.rent,
+					"quantity" : 1,
+					"amount" : parseFloat(invoice.rent),
+					"tax" : [{
+						"name" : "service_tax",
+						"value" : $scope.config.service_tax
+					}]
+				}
+				particulars.push(rent);
+			}
+			if(invoice.electricity_bill != 0){
+				var rent = {
+					"label" : "Electricity Bill",
+					"price" : invoice.electricity_bill,
+					"quantity" : 1,
+					"amount" : parseFloat(invoice.electricity_bill)
+				}
+				particulars.push(rent);
+			}
+			
+			if(invoice.water_charge != 0){
+				var rent = {
+				"label" : "Water Bill",
+				"price" : invoice.water_charge,
+				"quantity" : 1,
+				"amount" : parseFloat(invoice.water_charge)
+				}
+				particulars.push(rent);
+			}
+			if(invoice.maintenance != 0){
+				var rent = {
+				"label" : "Maintenance",
+				"price" : invoice.maintenance,
+				"quantity" : 1,
+				"amount" : parseFloat(invoice.maintenance)
+				}
+				particulars.push(rent);
+			}
+			return particulars;
+		}
+/**************************************************************************/
+/*Generate Invoice Modal function Open Rent*/
+		$scope.openRent = function (url,invoice) {
+			console.log(invoice);
+			$scope.rentYear = [];
+				var modalDefaults = {
+					templateUrl: url,	
+					size : 'lg'
+				};
+				var modalOptions = {
+					rentList : invoice,
+					accountConfig : $rootScope.userDetails.config.rentsetting,
+					taxes :[{'name':'other_tax', 'value':accountConfig.other_tax},
+						{'name':'service_tax', 'value':accountConfig.service_tax},
+						{'name':'tds', 'value':accountConfig.tds
+					}],
+					rentData: {
+						remark : "Being Invoice for " + monthName + "-" + generatedMonth.getFullYear()+ " " + "Licence Fee & Maintenance Charges against Agr. for" + " "+ invoice.title + " "+invoice.address.address + ", premise area " + invoice.address.area + ", " + invoice.address.city + ", "+ invoice.address.location + "-" + invoice.address.pincode,
+						particulars : $scope.getParticulars(invoice)
+					},
+					totalCalculate : function(modalOptions){
+						modalOptions.subTotal = 0;
+						modalOptions.total = 0;
+						modalOptions.tax = {service_tax:0,other_tax:0,tds:0};
+						for(var x in modalOptions.rentData.particulars){
+							modalOptions.tax = dataService.calculateTax(modalOptions.rentData.particulars[x].tax, modalOptions.rentData.particulars[x].amount, modalOptions.tax);
+							modalOptions.subTotal += modalOptions.rentData.particulars[x].amount;
+							modalOptions.total = modalOptions.subTotal + modalOptions.tax.service_tax + modalOptions.tax.other_tax - modalOptions.tax.tds;
+						}
+						return modalOptions;
+					},
+					add : function(modalOptions){
+						modalOptions.rentData.particulars = (modalOptions.rentData.particulars) ? modalOptions.rentData.particulars : [];
+						
+						var dtlObj = JSON.stringify(modalOptions.singleparticular);
+						modalOptions.rentData.particulars.push(JSON.parse(dtlObj));
+						
+						var subTotal = modalOptions.totalCalculate(modalOptions);
+						
+						modalOptions.singleparticular = { label : " ", price : 0, quantity : 1};
+					},
+					remove : function(item, modalOptions) {
+						console.log(modalOptions);
+						var index = modalOptions.rentData.particulars.indexOf(item);
+						modalOptions.rentData.particulars.splice(index, 1);   
+						var subTotal = modalOptions.totalCalculate(modalOptions);
+					},
+					rentDate: { date : $scope.currentDate, due_date : $scope.dueDate },
+					accountConfig : $rootScope.userDetails.config.rentsetting,
+					total_amount : 0,
+					formData : function(rentData, total_amount){
+						rentData.user_id = modalOptions.rentList.user_id;
+						rentData.property_id = modalOptions.rentList.property_id;
+						rentData.total_amount = total_amount;
 						modalOptions.invoice = rentData;
 					},
 					

@@ -1,0 +1,87 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="main-content">
+			<ng-include src="'modules/component/toolbar.html'"></ng-include>
+			<ng-include src="'modules/accounting/navbar.html'"></ng-include>
+			<h3>Balance Sheet</h3>
+			<div class="row">
+				<div class="col-sm-2">
+						<div class="bottomspace" ng-init="type = 'year'; calcDuration(type, duration);">
+							<label for="year" class="control-label" >View Report</label>
+								<select id="year" class="form-control" ng-model="type" ng-init="type = 'year'">
+									<option value="daily">Daily Report</option>	
+									<option value="montd">Montdly Report</option>	
+									<option value="year">Yearly Report</option>
+									<option value="custom">Custom Report</option>
+								</select>
+						</div>
+				</div>
+				<div class="col-sm-2" ng-if="type == 'year'">
+					<div class="bottomspace">
+						<label for="year1" class="control-label">View  duration report</label>
+							<select id="year1" class="form-control" ng-model="duration" ng-init="duration = today.getFullYear(); calcDuration(type, duration)" ng-options="item for item in [2010,2019] | range"
+							ng-change="calcDuration(type, duration)"> 
+								<option value="">Select Year</option>
+							</select> 
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<button type="button" class="btn btn-primary pull-right buttondistance" ng-click="printDiv('balance')">Print</button>
+				</div>
+			</div>
+	<div id="balance">
+		<div  style="padding:10px;border:2px solid black;">	
+			<div class="row">
+			<div class="col-sm-6">
+			<h3>Assets</h3>
+			<div class="table-responsive">
+				<table class="table table-bordered">
+					<tr>
+						<td>Account</td>
+						<td>Main Account</td>
+					</tr>
+					<tr>
+						<td>Current Assets</td>
+						<td>{{credit}}</td>
+					</tr>
+				</table>
+			</div>
+			</div>
+			<div class="col-sm-6">
+					<h3>Liabilities</h3>
+					<div class="table-responsive">
+						<table class="table table-bordered">
+							<tr>
+								<td>Account</td>
+								<td>Main Account</td>
+							</tr>
+							<tr>
+								<td>Current Liabilities</td>
+								<td>{{debit}}</td>
+							</tr>
+						</table>
+					</div>
+			</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6 col-sm-offset-3">
+					<h3>Equity</h3>
+					<div class="table-responsive">
+						<table class="table table-bordered">
+							<tr>
+								<td>Account</td>
+								<td>Main Account</td>
+							</tr>
+							<tr>
+								<td>Current Yearly Earning</td>
+								<td>{{remaining}}</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+			</div>
+			</div>
+		</div>
+	</div>
+</div> 

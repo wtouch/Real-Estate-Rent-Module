@@ -343,19 +343,37 @@ define(['app'], function (app) {
 				};
 			}
 		}	
-		
-		// code  for users list
-		var usersList = function(){
-			dataService.get("getmultiple/user/"+$scope.usersListCurrentPage+"/"+$scope.pageItems, $scope.userInfo).then(function(response) {
+/******************************************************************************/
+$scope.usersList = function(page, column, value, search){
+			$scope.filterStatus = ($scope.filterStatus) ? $scope.filterStatus : {status: 1, user_id : $rootScope.userDetails.id};
+			(value == "none") ? delete $scope.filterStatus[column] : $scope.filterStatus[column] = value;
+			
+			if(column == 'user_id' && value == null) {
+				angular.extend($scope.filterStatus, $scope.userInfo);
+			}
+			
+			if(search == true && value == ""){
+				delete $scope.filterStatus.search;
+				delete $scope.filterStatus[column];
+			}else{
+				$scope.filterStatus.search = search;
+			}
+
+			if((search == true && value.length <= 3 && value.length != 0)){
+				return false;
+			}
+			dataService.get("getmultiple/user/"+$scope.usersListCurrentPage+"/"+$scope.pageItems,$scope.filterStatus)
+			.then(function(response) {  
 				if(response.status == 'success'){
 					$scope.userList = response.data;
 					$scope.totalRecords = response.totalRecords;
 				}else{
 					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$notification[response.status]("Get Users List", response.message);
+					$scope.userList = {};
 				}
 			});
-		}
+}
+/******************************************************************************/
 		//code for users group list
 		var usersgroupList = function(){
 			dataService.get("getmultiple/usergroup/"+$scope.usersGroupCurrentPage+"/"+$scope.pageItems).then(function(response) { 
@@ -379,7 +397,7 @@ define(['app'], function (app) {
 				break;
 				
 			case 'userslist':
-				usersList();
+				$scope.usersList();
 				break;
 				
 			case 'usersgroup':
@@ -387,7 +405,7 @@ define(['app'], function (app) {
 				break;
 				
 			default:
-				usersList();
+				$scope.usersList();
 		};
 	};
 	// Inject controller's dependencies

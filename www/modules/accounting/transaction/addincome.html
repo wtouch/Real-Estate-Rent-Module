@@ -148,6 +148,16 @@
 					</div>						
 			</div>
 			
+			<div class="form-group">
+				<label for="description" class="col-sm-2 control-label">Description</label>
+					<div class="col-sm-9">
+						<textarea type="text" id="description" ng-model="modalOptions.addincome.description.description" class="form-control" name="Branch"   placeholder="Enter Description" required></textarea>
+						<span class="text-danger" ng-show="addIncomeForm.description.$dirty && addIncomeForm.description.$invalid">
+							<span ng-show="addIncomeForm.description.$error.required">Description is Required.</span>
+						</span>	
+					</div>		
+			</div>
+			
 			<div class="form-group modal-footer">
 				<div class="col-sm-11"><!--ng-disabled="addIncomeForm.$invalid"-->
 					<button type="submit" class="btn btn-success"  ng-click="modalOptions.postData(modalOptions.addincome); modalOptions.ok()">Submit</button>
