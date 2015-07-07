@@ -13,6 +13,29 @@
 			</div>
 			
 			<div class="form-group">
+				<label for="account_no" class="col-sm-2 control-label">Account Name* </label>
+					<div class="col-sm-9">
+					<select class="form-control" name="account_no" id="account_no" ng-model="modalOptions.billPayment.account_no" ng-change="modalOptions.getData(modalOptions.billPayment.account_no, modalOptions)" ng-options="item.id as item.account_name for item in modalOptions.accountList" required>
+						<option value="" selected>Select Account Name</option>
+					</select>
+					<span class="help-block" ng-show="addIncomeForm.account_no.$dirty && addIncomeForm.account_no.$invalid">
+						<span ng-show="addIncomeForm.account_no.$error.required" class="text-danger">Account Name is required.</span>
+						<span ng-show="(addIncomeForm.account_no.$dirty || submitted)" class="text-danger">Enter Name Only!</span>
+					</span>
+					</div>
+			</div>
+			
+			
+			<div class="form-group" ng-if="modalOptions.previousBalance || modalOptions.previousBalance == 0">
+				<label for="previous_amount" class="col-sm-2 control-label">Previous Amount</label>
+				<div class="col-sm-9">
+					<input type="text" id="" name="" readonly class="form-control" ng-model="modalOptions.previousBalance"/>			
+					</div>
+			</div>
+			
+			<input type="hidden"  ng-model="modalOptions.billPayment.balance"/>
+			
+			<div class="form-group">
 				<label for="payment_type" class="col-sm-2 control-label">Payment Type </label>
 					<div class="col-sm-9">
 						<select id="payment_type" class="form-control" name="payment_type"  ng-model="modalOptions.billPayment.description.payment_type.type" required>
@@ -82,13 +105,15 @@
 			<div class="form-group">
 				<label  for="credit_amount" class="col-sm-2 control-label">Amount</label>
 					<div class="col-sm-9">
-						<input type="text" id="credit_amount" class="form-control"  ng-pattern="/^\d{0,9}[0-9]$/" ng-model="modalOptions.billPayment.debit_amount" name="amount" placeholder="Amount" ng-init="modalOptions.billPayment.debit_amount = modalOptions.rentList.due_amount"required />
+						<input type="text" id="credit_amount" class="form-control"  ng-pattern="/^\d{0,9}[0-9]$/" ng-model="modalOptions.billPayment.debit_amount" name="amount" placeholder="Amount" ng-init="modalOptions.billPayment.debit_amount = modalOptions.rentList.due_amount" ng-change="modalOptions.totalAmount(modalOptions)" required/>
 						<span class="help-block" ng-show="payBillForm.amount.$dirty && payBillForm.amount.$invalid">
 							<span ng-show="payBillForm.amount.$error.required" class="text-danger">Amount is required.</span>
 							<span ng-show="payBillForm.amount.$error.pattern" class="text-danger">Enter Numbers Only!</span>
 						</span>
 					</div>						
 			</div>
+			
+			<input type="hidden" id="user_id" class="form-control" ng-model="modalOptions.billPayment.user_id" name="user_id" placeholder="User ID" ng-init="modalOptions.billPayment.user_id = modalOptions.rentList.user_id" required/>
 			
 			<div class="form-group modal-footer">
 				<div class="col-sm-11">

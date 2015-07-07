@@ -94,6 +94,7 @@ define(['app'], function (app) {
 		
 		/***********************************************************************************/
 		$scope.openGeneratebill = function (url,bill) {
+			dataService.get("getmultiple/account/1/100", {status: 1, user_id : $rootScope.userDetails.id}).then(function(account){
 			$scope.rentYear = [];
 				var modalDefaults = {
 					templateUrl: url,	
@@ -103,6 +104,7 @@ define(['app'], function (app) {
 					var genDate = (bill.generated_date) ? new Date(bill.generated_date) : {};
 				}
 				var modalOptions = {
+					accountList : account.data,
 					rentList : (bill) ? bill : {},
 					rentDate: { date : $scope.currentDate, due_date : $scope.dueDate },
 					total_amount : 0,
@@ -209,6 +211,25 @@ define(['app'], function (app) {
 							$notification[response.status]("Rent Receipt Generated", response.message);
 						});
 					},
+					getData : function(id, modalOptions) {
+						var account = {account : "account_name"};
+						 dataService.get("getsingle/transaction/"+id,account)
+						.then(function(response) { 
+							
+							if(response.status == "success"){
+								modalOptions.previousBalance = response.data.balance;
+								modalOptions.totalAmount(modalOptions);
+							}else{
+								modalOptions.previousBalance = 0;
+								if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+								$notification[response.status]("", response.message);
+							}
+						});   
+					},
+					totalAmount : function(modalOptions){
+						if(modalOptions.billPayment == undefined) modalOptions.billPayment = {};
+						modalOptions.billPayment.balance = Math.round(parseFloat(modalOptions.previousBalance) - parseFloat(modalOptions.billPayment.debit_amount));
+					},
 					formData : function(rentData,total_amount,subtotal,tax){
 						if(modalOptions.rentList.property_id) rentData.property_id = modalOptions.rentList.property_id;
 						rentData.user_id
@@ -259,6 +280,7 @@ define(['app'], function (app) {
 					if(modalOptions.bill.id){modalOptions.updateData(modalOptions.bill.id,modalOptions.bill);}
 					else{modalOptions.postData(modalOptions.bill);}
 				});
+			});
 		};
 /*************************************************************************************/
 /*Receipt Generation Modal*/

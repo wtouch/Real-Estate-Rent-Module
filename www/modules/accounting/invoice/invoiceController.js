@@ -94,6 +94,7 @@ define(['app'], function (app) {
 		
 		/***********************************************************************************/
 		$scope.openGenerateinvoice = function (url,invoice) {
+			dataService.get("getmultiple/account/1/100", {status: 1, user_id : $rootScope.userDetails.id}).then(function(account){
 			$scope.rentYear = [];
 				var modalDefaults = {
 					templateUrl: url,	
@@ -103,6 +104,7 @@ define(['app'], function (app) {
 					var genDate = (invoice.generated_date) ? new Date(invoice.generated_date) : {};
 				}
 				var modalOptions = {
+					accountList : account.data,
 					rentList : (invoice) ? invoice : {},
 					rentDate: { date : $scope.currentDate, due_date : $scope.dueDate },
 					total_amount : 0,
@@ -217,6 +219,25 @@ define(['app'], function (app) {
 						rentData.tax = tax;
 						modalOptions.invoice = rentData;
 					},
+					getData : function(id, modalOptions) {
+						var account = {account : "account_name"};
+						 dataService.get("getsingle/transaction/"+id,account)
+						.then(function(response) { 
+							
+							if(response.status == "success"){
+								modalOptions.previousBalance = response.data.balance;
+								modalOptions.totalAmount(modalOptions);
+							}else{
+								modalOptions.previousBalance = 0;
+								if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+								$notification[response.status]("", response.message);
+							}
+						});   
+					},
+					totalAmount : function(modalOptions){
+						if(modalOptions.invoicePayment == undefined) modalOptions.invoicePayment = {};
+						modalOptions.invoicePayment.balance = Math.round(parseFloat(modalOptions.previousBalance) + parseFloat(modalOptions.invoicePayment.credit_amount));
+					},
 					updateData : function(id,invoice){
 							dataService.put("put/invoice/"+id,invoice)
 							.then(function(response) {  
@@ -259,6 +280,7 @@ define(['app'], function (app) {
 					if(modalOptions.invoice.id){modalOptions.updateData(modalOptions.invoice.id,modalOptions.invoice);}
 					else{modalOptions.postData(modalOptions.invoice);}
 				});
+			});
 		};
 /*************************************************************************************/
 /*Receipt Generation Modal*/
