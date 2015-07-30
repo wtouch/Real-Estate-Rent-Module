@@ -5,17 +5,6 @@
 			<ng-include src="'modules/accounting/navbar.html'"></ng-include>
 			<h3>Balance Sheet</h3>
 			<div class="row">
-				<div class="col-sm-2">
-						<div class="bottomspace" ng-init="type = 'year'; calcDuration(type, duration);">
-							<label for="year" class="control-label" >View Report</label>
-								<select id="year" class="form-control" ng-model="type" ng-init="type = 'year'">
-									<option value="daily">Daily Report</option>	
-									<option value="montd">Montdly Report</option>	
-									<option value="year">Yearly Report</option>
-									<option value="custom">Custom Report</option>
-								</select>
-						</div>
-				</div>
 				<div class="col-sm-2" ng-if="type == 'year'">
 					<div class="bottomspace">
 						<label for="year1" class="control-label">View  duration report</label>
@@ -36,37 +25,25 @@
 			<h3>Assets</h3>
 			<div class="table-responsive">
 				<table class="table table-bordered">
-					<tr>
+					<tr class="bg-info">
 						<th>Current Assets</th>
-						<td>{{credit}}</td>
-					</tr>
-					<tr>
-						<td>Receivable</td>
-						<td>15000</td>
+						<th class="text-right">{{totalReceivables + balance}}</th>
 					</tr>
 					<tr>
 						<th colspan="2">Bank Accounts</th>
 					</tr>
-					<tr>
-						<td>HDFC</td>
-						<td>50000</td>
+					<tr ng-repeat="x in transaction">
+						<td>{{x.account_name}}</td>
+						<td class="text-right">{{x.credit_amount - x.debit_amount}}</td>
+					</tr>
+					<tr ng-init="getReceivables()">
+						<th colspan="2">Receivables</th>
 					</tr>
 					<tr>
-						<td>ICICI</td>
-						<td>50000</td>
+						<td>Invoice Payment</td>
+						<td class="text-right">{{totalReceivables}}</td>
 					</tr>
-					<tr>
-						<td>Union</td>
-						<td>50000</td>
-					</tr>
-					<tr>
-						<td>Cash</td>
-						<td>50000</td>
-					</tr>
-					<tr>
-						<th>Total</th>
-						<td>50000</td>
-					</tr>
+					
 				</table>
 			</div>
 			</div>

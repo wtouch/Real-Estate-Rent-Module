@@ -8,13 +8,12 @@ define(['app'], function (app) {
 		
 		//global scope objects
 		$scope.invoice = true;
-		$scope.year = "year";
+		$scope.type = "year";
 		$scope.maxSize = 5;
 		$scope.totalRecords = "";
 		$scope.page = 1;
 		$scope.pageItems = 10000;
 		$scope.numPages = "";		
-		$scope.alerts = [];
 		$scope.userInfo = {user_id : $rootScope.userDetails.id}; 
 		$scope.currentDate = dataService.currentDate;
 		
@@ -24,7 +23,7 @@ define(['app'], function (app) {
 		$scope.todayDt = $scope.today.getFullYear() + "-" + ($scope.today.getMonth() + 1) + "-" + $scope.today.getDate();
 		$scope.duration = {start : $scope.todayDt};
 
-		$scope.transactionParams = {status: 1, user_id : $rootScope.userDetails.id};
+		$scope.transactionParams = {status: 1, user_id : $rootScope.userDetails.id, group_by : 'account_no'};
 		
 		$scope.toDate = function(date){
 			return new Date(date);
@@ -39,25 +38,45 @@ define(['app'], function (app) {
 			popupWin.document.close();
 		}
 /*******************************************************************/
-		$scope.getTransaction = function(page, transactionParams){
-					transactionParams = (transactionParams) ? transactionParams : $scope.transactionParams;
-					
-					dataService.get("getmultiple/transaction/1/10000", transactionParams)
-					.then(function(response) {
-						if(response.status == 'success'){
-							$scope.transaction = response.data;
-							$scope.credit = response.credit_amount;
-							$scope.debit = response.debit_amount;
-							$scope.remaining = $scope.credit - $scope.debit;
-							$scope.totalRecords = response.totalRecords;
-						}else{
-							$scope.transaction = [];
-							$scope.totalRecords = 0;
-							if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-							$notification[response.status]("Get Transactions", response.message);
-						}
-					});
+		$scope.getTransaction = function(page, transactionParams, group_by){
+			transactionParams = (transactionParams) ? transactionParams : $scope.transactionParams;
+
+			dataService.get("getmultiple/transaction/1/10000", transactionParams)
+			.then(function(response) {
+				if(response.status == 'success'){
+					$scope.transaction = response.data;
+					$scope.credit = response.credit_amount;
+					$scope.debit = response.debit_amount;
+					$scope.balance = $scope.credit - $scope.debit;
+					$scope.totalRecords = response.totalRecords;
+				}else{
+					$scope.transaction = [];
+					$scope.totalRecords = 0;
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Get Transactions", response.message);
 				}
+			});
+		}
+		
+		$scope.getReceivables = function(){
+			var Params = {user_id : $rootScope.userDetails.id};
+			
+			dataService.get("getmultiple/invoice/1/10000", Params)
+			.then(function(response) {
+				if(response.status == 'success'){
+					$scope.totalReceivables = 0;
+					for(var x in response.data){
+						$scope.totalReceivables += parseFloat(response.data[x].due_amount);
+					}
+					$scope.totalRecords = response.totalRecords;
+				}else{
+					$scope.transaction = [];
+					$scope.totalRecords = 0;
+					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+					$notification[response.status]("Get Transactions", response.message);
+				}
+			});
+		}
 /***************************************************************************************/
 		$scope.calcDuration = function(type, duration){
 			//console.log(type, duration);

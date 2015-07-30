@@ -150,6 +150,11 @@ var generatedMonth = new Date($scope.currentDate);
 				};
 				var modalOptions = {
 					rentList : invoice,
+					/* getParty: function(modalOptions){
+						dataService.get("getmultiple/user/1/100", {status: 1, user_id : $rootScope.userDetails.id}).then(function(response){
+							modalOptions.customerList = (response.data);
+						});
+					}, */
 					accountConfig : $rootScope.userDetails.config.rentsetting,
 					taxes :[{'name':'other_tax', 'value':accountConfig.other_tax},
 						{'name':'service_tax', 'value':accountConfig.service_tax},
@@ -187,7 +192,6 @@ var generatedMonth = new Date($scope.currentDate);
 						var subTotal = modalOptions.totalCalculate(modalOptions);
 					},
 					rentDate: { date : $scope.currentDate, due_date : $scope.dueDate },
-					accountConfig : $rootScope.userDetails.config.rentsetting,
 					total_amount : 0,
 					formData : function(rentData, total_amount){
 						rentData.user_id = modalOptions.rentList.user_id;

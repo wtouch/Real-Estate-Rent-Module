@@ -9,7 +9,7 @@
 				<div class="form-group">
 				<label for="customer" class="col-sm-2 control-label">Select Party *</label>
 				<div class="col-sm-3">
-					<select class="form-control" name="customer" id="customer" ng-model="modalOptions.rentData.user_id" ng-options="item.id as item.name for item in modalOptions.customerList" >
+					<select class="form-control" name="customer" id="customer" ng-model="modalOptions.rentData.user_id" ng-options="item.id as item.name for item in modalOptions.customerList"  ng-init="modalOptions.rentData.user_id = modalOptions.rentList.user_id">
 					<option value="">Select Party</option>
 					</select>
 					<span class="help-block" ng-show="generalForm.customer.$dirty && generalForm.customer.$invalid">

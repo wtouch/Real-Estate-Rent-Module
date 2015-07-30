@@ -40,17 +40,26 @@
 			if(isset($_GET['type'])) $where['type'] = $_GET['type'];
 			if(isset($_GET['category'])) $where['category'] = $_GET['category'];
 			if(isset($_GET['account_no'])) $where['account_no'] = $_GET['account_no'];
-			
+			$t0 = $db->setTable("transaction");
 			if(isset($_GET['startDt']) && isset($_GET['endtDt'])){
 				$sDate = date('Y-m-d H:i:s',strtotime($_GET['startDt']));
 				$eDate = date('Y-m-d H:i:s',strtotime($_GET['endtDt']));
 				//echo $sDate;
-				$db->setWhere(array("(date BETWEEN '".$sDate."' AND '".$eDate."')"), "transaction", false, true);
+				$db->setWhere(array("(".$t0.".date BETWEEN '".$sDate."' AND '".$eDate."')"), $t0, false, true);
 			}
-			$t0 = $db->setTable("transaction");
+			
+			;
 			$db->setWhere($where, $t0);
 			$db->setWhere($like, "transaction", true);
 			$db->setLimit($limit);
+			$db->setColumns($t0, array("*"));
+			if(isset($_GET['group_by'])){
+				$db->setGroupBy(array($_GET['group_by']), $t0);
+				$db->setColumns($t0, array("sum(".$t0.".credit_amount) as credit_amount, sum(".$t0.".debit_amount) as debit_amount"), true);
+			}
+			
+			$account = $db->setJoinString("LEFT JOIN", "account", array("id"=>$t0.".account_no"));
+			$db->setColumns($account, array("account_name"=>"account_name"));
 			
 			$data = $db->select();
 			if($data['status'] == "success"){
