@@ -120,6 +120,10 @@ define(['angular',
 				 .when('/dashboard/accounting/balance', route.resolve({controller: 'balance', template: 'balance',
 				 label: "Balance Sheet"}, 'accounting/balance/'))
 				 
+				 .when('/dashboard/accounting/stock', route.resolve({controller: 'stock', template: 'stock',
+				 label: "Stock"}, 'accounting/stock/'))
+				 
+				 
 				 .when('/dashboard/userreport', route.resolve({controller: 'viewreport', template: 'userreport',
 				 label: "User Report"}, 'viewreport/'))
 				 

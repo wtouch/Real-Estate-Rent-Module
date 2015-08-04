@@ -1,12 +1,13 @@
 <div class="row">
-	<div class="col-sm-6">
+	<div class="col-sm-8">
 		<a class="btn btn-primary" href="#/dashboard/accounting/invoice">Invoices</a>
 		<a class="btn btn-primary" href="#/dashboard/accounting/transaction">Transactions</a>
 		<a class="btn btn-primary" href="#/dashboard/accounting/account">Accounts</a>
 		<a class="btn btn-primary" href="#/dashboard/accounting/bill">Purchase Bills</a>
 		<a class="btn btn-primary" href="#/dashboard/accounting/balance">Balance Sheet</a>
+		<a class="btn btn-primary" href="#/dashboard/accounting/stock">Stock</a>
 	</div>
-	<div class="col-sm-6">
+	<div class="col-sm-4">
 		<a ng-if="transactionView" class="btn btn-primary" ng-click="openAddincome('modules/accounting/transaction/addincome.html')"><span class="glyphicon glyphicon glyphicon-plus"></span>  Add Income</a>
 		<a ng-if="transactionView" class="btn btn-primary" ng-click="openAddexpense('modules/accounting/transaction/addexpense.html')"><span class="glyphicon glyphicon glyphicon-plus"></span>  Add Expense</a>
 		<a ng-if="transactionView" class="btn btn-primary" ng-click="transfer('modules/accounting/transaction/transfer.html')"><span class="glyphicon glyphicon glyphicon-plus"></span>Transfer</a>
