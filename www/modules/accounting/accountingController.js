@@ -47,7 +47,33 @@ define(['app'], function (app) {
 				}
 			});
 			}
-/*****************************************************************/		
+/*****************************************************************/	
+	//code to get transaction details
+	 $scope.getTrans = function(page){
+		 $scope.filterStatus = {status: 1, user_id: $rootScope.userDetails.id, groupBy : 'account_no', orderBy : 'type', type: "income" };
+		dataService.get("getmultiple/transaction/"+page+"/"+$scope.pageItems,$scope.filterStatus)
+		.then(function(response) {  
+			if(response.status == 'success'){
+				$scope.transdata = response.data;
+				console.log(response.data);
+				/* $scope.total_paid = response.total_paid;
+				$scope.total_due = response.total_due;
+				$scope.total_amount = response.total_rent;
+				$scope.totalRecords = response.totalRecords; */
+			}else{
+				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+				$scope.invoices = {};
+				console.log(response.message);
+			/* 	$scope.total_paid = 0;
+				$scope.total_due = 0;
+				$scope.total_amount = 0;
+				$scope.totalRecords = response.totalRecords; */
+			}
+		});
+	}
+	
+/******************************************************************/
+	
 	};
 		
 	// Inject controller's dependencies

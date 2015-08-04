@@ -35,11 +35,17 @@
 			$limit[0] = $pageNo;
 			$limit[1] = $records;
 			$where = array();
+			$whereTrans = array();
 			
 			if(isset($_GET['user_id'])) $where['user_id'] = $_GET['user_id'];
 			if(isset($_GET['type'])) $where['type'] = $_GET['type'];
 			if(isset($_GET['category'])) $where['category'] = $_GET['category'];
 			if(isset($_GET['account_no'])) $where['account_no'] = $_GET['account_no'];
+			
+			if(isset($_GET['account_no'])) $whereTrans['account_no'] = $_GET['account_no'];
+			if(isset($_GET['type'])) $whereTrans['type'] = "income";
+		/* 	print_r($whereTrans);
+			//echo $whereTrans; */
 			$t0 = $db->setTable("transaction");
 			if(isset($_GET['startDt']) && isset($_GET['endtDt'])){
 				$sDate = date('Y-m-d H:i:s',strtotime($_GET['startDt']));
@@ -47,6 +53,11 @@
 				//echo $sDate;
 				$db->setWhere(array("(".$t0.".date BETWEEN '".$sDate."' AND '".$eDate."')"), $t0, false, true);
 			}
+			
+		/* 	SELECT Shippers.ShipperName,COUNT(Orders.OrderID) AS NumberOfOrders FROM Orders
+LEFT JOIN Shippers
+ON Orders.ShipperID=Shippers.ShipperID
+GROUP BY ShipperName; */
 			
 			;
 			$db->setWhere($where, $t0);
