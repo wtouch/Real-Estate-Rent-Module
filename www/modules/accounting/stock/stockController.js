@@ -29,37 +29,48 @@ define(['app'], function (app) {
 			return new Date(date);
 		}
 		
-		$scope.openAddstock = function (url) {
+		$scope.openAddstock = function (url,addstock) {
 		var modalDefaults = {
 				templateUrl: url,	// apply template to modal
 				size : 'lg'
 			};
 			var modalOptions = {
+				addstock : (addstock) ? addstock : {},
 				postData : function(addstock) {
 					 dataService.post("post/stock",addstock)
 					.then(function(response) {  
 						if(response.status == "success"){
-							
+							$scope.getStock($scope.Currentpage)
 						}
 						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
 						$notification[response.status]("Add record", response.message);
 					}); 
 				},
 				getData : function(id, modalOptions) {
-						var stock = {stock : "goods_name"};
-						 dataService.get("getsingle/stock/"+id,stock)
-						.then(function(response) { 
+					var stock = {stock : "goods_name"};
+					 dataService.get("getsingle/stock/"+id,stock)
+					.then(function(response) { 
+						
+						if(response.status == "success"){
+							modalOptions.previousBalance = response.data.balance;
 							
-							if(response.status == "success"){
-								modalOptions.previousBalance = response.data.balance;
-								
-							}else{
-								modalOptions.previousBalance = 0;
-								if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-								$notification[response.status]("", response.message);
-							}
-						});   
-					}
+						}else{
+							modalOptions.previousBalance = 0;
+							if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+							$notification[response.status]("", response.message);
+						}
+					});   
+				},
+				updateData : function(id,addstock) {
+					dataService.put("put/stock/"+id,addstock)
+					.then(function(response) {
+						if(response.status == "success"){
+							/*$scope.getStock($scope.Currentpage)*/
+						}
+						if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+						$notification[response.status]("Add record", response.message);
+					});
+			   }
 			};
 			modalService.showModal(modalDefaults, modalOptions).then(function (result) {
 			/* modalOptions.addstock.date = dataService.currentDate; */
@@ -70,22 +81,39 @@ define(['app'], function (app) {
 		
 /***************************************************************/
 	$scope.getStock = function(page){
-			
-			dataService.get("getmultiple/stock/"+page+"/"+$scope.pageItems)
-			.then(function(response) {
-				if(response.status == 'success'){
-					$scope.addstock = response.data;
-					console.log(addstock);
-					$scope.totalRecords = response.totalRecords;
-				}else{
-					$scope.addstock = [];
-					$scope.totalRecords = 0;
-					if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
-					$notification[response.status]("Get Transactions", response.message);
-				}
-			});
-		}	
+		dataService.get("getmultiple/stock/"+page+"/"+$scope.pageItems)
+		.then(function(response) {
+			if(response.status == 'success'){
+				$scope.addstock = response.data;
+				$scope.totalRecords = response.totalRecords;
+			}else{
+				$scope.addstock = [];
+				$scope.totalRecords = 0;
+				if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+				$notification[response.status]("Get Transactions", response.message);
+			}
+		});
+	}	
 /************************************************************/
+	$scope.deleted = function(id, status){
+		 var x = confirm("Do you really want to delete this.");
+		 if(x){
+		$scope.deletedData = {status : status};
+		dataService.delete("delete/stock/"+id, $scope.deletedData)
+		.then(function(response) { 
+			console.log(response);
+			if(response.status == 'success'){
+				//$scope.hideDeleted = 1;
+			}
+			if(response.status == undefined) response = {status :"error", message:"Unknown Error"};
+			$notification[response.status]("The Account is deleted", response.message);
+		});
+		 }
+		 else{
+			 alert("cancelled");
+		 }
+	};
+/******************************************************************************/
 //Print function for printing purpose		
 		$scope.printDiv = function(divName) {
 			var printContents = document.getElementById(divName).innerHTML;
