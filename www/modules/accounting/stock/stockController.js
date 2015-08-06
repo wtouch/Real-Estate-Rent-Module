@@ -35,6 +35,7 @@ define(['app'], function (app) {
 				size : 'lg'
 			};
 			var modalOptions = {
+				date : $scope.currentDate,
 				addstock : (addstock) ? addstock : {},
 				postData : function(addstock) {
 					 dataService.post("post/stock",addstock)
@@ -73,7 +74,7 @@ define(['app'], function (app) {
 			   }
 			};
 			modalService.showModal(modalDefaults, modalOptions).then(function (result) {
-			/* modalOptions.addstock.date = dataService.currentDate; */
+			modalOptions.addstock.date = dataService.currentDate; 
 				console.log("modalOpened");
 		
 		});	

@@ -11,6 +11,9 @@
 			<label  for="goods_name" class="col-sm-2 control-label">Goods Name</label>
 				<div class="col-sm-9">
 					<input type="text" id="goods_name" class="form-control"  ng-model="modalOptions.addstock.goods_name" name="goods_name" placeholder="goods_name" required />
+					<span class="help-block" ng-show="addStockForm.goods_name.$dirty && addStockForm.goods_name.$invalid">
+						<span ng-show="(addStockForm.goods_name.$dirty)" class="text-danger">Required Field</span>
+					</span>
 				</div>						
 		</div>
 		
@@ -50,19 +53,32 @@
 			<label  for="quantity" class="col-sm-2 control-label">Quantity</label>
 				<div class="col-sm-9">
 					<input type="text" id="quantity" class="form-control"  ng-pattern="/^\d{0,9}[0-9]$/" ng-model="modalOptions.addstock.quantity" name="quantity" placeholder="Quantity" required />
+					<span class="help-block" ng-show="addStockForm.quantity.$dirty && addStockForm.quantity.$invalid">
+						<span ng-show="(addStockForm.quantity.$dirty)" class="text-danger">Required Field</span>
+					</span>
 				</div>						
 		</div>
 		
 		<div class="form-group">
 			<label  for="unit" class="col-sm-2 control-label">Unit</label>
 				<div class="col-sm-9">
-					<input type="text" id="unit" class="form-control" ng-model="modalOptions.addstock.unit" name="unit" placeholder="Amount" required />
+					<input type="text" id="unit" class="form-control" ng-model="modalOptions.addstock.unit" name="unit" placeholder="Amount" ng-pattern="/^\d{0,100}[0-9]$/" required />
+					<span class="help-block" ng-show="addStockForm.unit.$dirty && addStockForm.unit.$invalid">
+						<span ng-show="(addStockForm.unit.$dirty)" class="text-danger">Enter Number Only!</span>
+					</span>
 				</div>						
+		</div>
+		
+		<div class="form-group">
+			<label  for="date" class="col-sm-2 control-label">Date * </label>
+			<div class="col-sm-9">
+				<input type="text" class="form-control " placeholder="YYYY-DD-MM" id="date" name="date" ng-model="modalOptions.addstock.date" ng-init="modalOptions.addstock.date = modalOptions.date" required=""/>
+			</div>
 		</div>
 		
 		<div class="form-group modal-footer">
 			<div class="col-sm-11">
-				<button type="submit" class="btn btn-success"  ng-if="!modalOptions.addstock.id" ng-click="modalOptions.postData(modalOptions.addstock); modalOptions.ok()">Submit</button>
+				<button type="submit" class="btn btn-success"  ng-if="!modalOptions.addstock.id" ng-click="modalOptions.postData(modalOptions.addstock); modalOptions.ok()" ng-disabled="addStockForm.$invalid">Submit</button>
 				
 				<button type="submit" ng-if="modalOptions.addstock.id" class="btn btn-success"  ng-click="modalOptions.updateData(modalOptions.addstock.id, modalOptions.addstock); modalOptions.ok()">Update</button>
 				
