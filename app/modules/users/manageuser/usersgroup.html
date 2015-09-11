@@ -1,0 +1,106 @@
+<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+<div class="table-responsive">		
+	<table class="table table-bordered">
+		<thead>
+			<th>Sr.No.</th>
+			<th>User Group</th>
+			<th>Users in</th>
+			<th class="col-sm-8">Access/Permission</th>
+			<th>Manage</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="groups in usergroupList">
+				<td>{{((usersGroupCurrentPage - 1) * pageItems ) + $index + 1}}</td>
+				<td>{{groups.group_name}}</td>
+				<td>{{groups.usersCount}}</td>
+				<td>
+					<accordion close-others="true">
+						<accordion-group heading="User Module">
+							<div class="checkbox col-sm-3" ng-repeat="(key, value) in manage_user.user_module">
+								<label>
+									<input ng-disabled="!disablelist" type="checkbox" ng-model="groups.group_permission.user_module[key]" ng-value="value">{{value}}
+								</label>
+							</div>
+						</accordion-group>
+						
+						<accordion-group heading="Template Module">
+							<div class="checkbox col-sm-3" ng-repeat="(key, value) in manage_user.template_module">
+								<label>
+									<input ng-disabled="!disablelist" type="checkbox" ng-model="groups.group_permission.template_module[key]" ng-value="value">{{value}}
+								</label>
+							</div>
+						</accordion-group>
+						
+						<accordion-group heading="Business Module">
+							<div class="checkbox col-sm-3" ng-repeat="(key, value) in manage_user.business_module">
+								<label>
+									<input ng-disabled="!disablelist" type="checkbox" ng-model="groups.group_permission.business_module[key]" ng-value="value">{{value}}
+								</label>
+							</div>
+						</accordion-group>
+						
+						<accordion-group heading="Website Module">
+							<div class="checkbox col-sm-3" ng-repeat="(key, value) in manage_user.website_module">
+								<label>
+									<input ng-disabled="!disablelist" type="checkbox" ng-model="groups.group_permission.website_module[key]" ng-value="value">{{value}}
+								</label>
+							</div>
+						</accordion-group>
+						
+						<accordion-group heading="Enquiry Module">
+							<div class="checkbox col-sm-3" ng-repeat="(key, value) in manage_user.enquiry_module">
+								<label>
+									<input ng-disabled="!disablelist" type="checkbox" ng-model="groups.group_permission.enquiry_module[key]" ng-value="value">{{value}}
+								</label>
+							</div>
+						</accordion-group>
+						
+						<accordion-group heading="Dashboard">
+							<div class="checkbox col-sm-3" ng-repeat="(key, value) in manage_user.dashboard">
+								<label>
+									<input ng-disabled="!disablelist" type="checkbox" ng-model="groups.group_permission.dashboard[key]" ng-value="value">{{value}}
+								</label>
+							</div>
+						</accordion-group>
+						
+						<accordion-group heading="Product Module">
+							<div class="checkbox col-sm-3" ng-repeat="(key, value) in manage_user.product_module">
+								<label>
+									<input ng-disabled="!disablelist" type="checkbox" ng-model="groups.group_permission.product_module[key]" ng-value="value">{{value}}
+								</label>
+							</div>
+						</accordion-group>
+						
+						<accordion-group heading="group_access">
+							<div class="checkbox col-sm-3" ng-repeat="(key, value) in manage_user.group_access">
+								<label>
+									<input ng-disabled="!disablelist" type="checkbox" ng-model="groups.group_permission.group_access[key]" ng-value="value">{{value}}
+								</label>
+							</div>
+						</accordion-group>						
+					</accordion>
+				</td>
+				<td>
+					<div ng-if="permission.edit_group" class="btn-group" role="group" aria-label="first group">
+						<a href="#/dashboard/users/createusergroup/{{groups.id}}" class="btn btn-info" tooltip="Edit Group">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</a>
+					</div>
+					
+					<div class="btn-group" role="group" aria-label="third group">
+						<button type="button" tooltip="{{dynamicTooltip(groups.status, 'Remove group','Active user group')}}" ng-class="(groups.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="groups.status" ng-change="changeStatusFn('status', groups.status, groups.id)" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'">
+							<span ng-if="groups.status==1" class="glyphicon glyphicon-ok"></span>
+							<span ng-if="groups.status==0" class="glyphicon glyphicon-remove"></span>
+						</button>
+					</div>					
+				</td>
+			</tr>					
+		</tbody>					
+	</table>
+</div>
+
+<div class="text-center">				
+	<pagination total-items="totalRecords" items-per-page="pageItems"  ng-model="usersGroupCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged(usersGroupCurrentPage)"></pagination>
+	
+	<pre>Page: {{usersGroupCurrentPage}} / {{numPages}}</pre>
+</div>

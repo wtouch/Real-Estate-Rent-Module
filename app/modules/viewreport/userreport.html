@@ -1,0 +1,93 @@
+<div class="main-content">
+	<ng-include src="'modules/component/toolbar.html'"></ng-include>
+	<h3 class="text-center">User Report</h3>
+	<div class="row">			  
+		<div class="col-sm-3">
+			<div class="bottomspace">
+				<label for="year" class="control-label">View Report</label>
+					<select id="year" class="form-control" ng-model="type" ng-init="type = 'user'; getUsers(); getProperties()">
+						<option value="user" selected>User Report</option>	
+						<option value="property">Property Report</option>	
+					</select>
+			</div>
+		</div>
+
+		<div class="col-sm-3" ng-if="type == 'user'"><!--ng-model="duration.start"-->
+			<div class="bottomspace">
+				<label for="year" class="control-label"></label>
+				<!--ng-init="addincome.description.user_id = '17'"-->
+						<select class="form-control" name="customer" id="customer" ng-model="addincome.description.user_id" ng-options="item.id as item.name for item in customerList | filter: { group_name : 'customer'} " ng-change="getPropertylist(addincome.description.user_id, 'user')" required>
+							<option value="">Select User</option>
+						</select>
+			</div>
+		</div>
+		
+		<div class="col-sm-3" ng-if="type == 'property'">
+			<div class="bottomspace">
+				<label for="property" class="control-label"></label>
+					<select class="form-control" name="property" id="property"  ng-model="addincome.id" ng-options="item.id as item.title for item in propertyList" ng-change="getPropertylist(addincome.id, 'property')" required>
+						<option value="">Select Property Id</option>
+					</select>	
+			</div>
+		</div> 
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="table-responsive">
+			<!--ng-if="addincome.description.user_id || addincome.id"-->
+				<table class="table table-bordered">
+					<thead><th colspan ="6" class="text-center">Rent Details</th></thead>
+					<tbody>
+						<tr>
+							<th>Sr.No.</th>
+							<th>Property Id</th>
+							<th>Due Date</th>
+							<th>Rent Details</th>
+						</tr>
+						<tr ng-repeat="x in receiptList">
+							<td>{{ $index + 1}}</td>
+							<td>{{x.property_id}}</td>
+							<td>{{x.due_date}}</td>
+							<td>
+							<table class="table table-bordered table-responsive">
+								<tr>
+									<td><b>Total Amount</b></td>
+									<td>{{x.total_amount}}</td>		
+								</tr>
+								
+								<tr>
+									<td><b>Received Amount</b></td>
+									<td>{{x.paid}}</td>
+								</tr>
+								
+								<tr>
+									<td><b>Outstanding Amount</b></td>
+									<td>{{x.due_amount}}</td>
+								</tr>
+								
+								
+							</table>
+							</td>
+				<table>
+					<tr ng-if="receiptList" >
+						<td><b>Total Rent:</b>{{total_rent}}</td>
+						<td><b>Total Received:</b>{{total_paid}}</td>
+						<td><b>Total Dues:</b>{{total_due}}</td>
+					</tr>
+				</table> 
+						</tr>
+					</tbody>
+				</table>
+				<div>
+				</div>
+				<div ng-if="!receiptList">
+				<h2 class="text-center">No Data Found</h2>
+				</div>		
+			</div>
+		</div>
+	</div>
+</div>
+<div class="text-center">				
+	<pagination total-items="totalRecords" items-per-page="pageItems"  ng-model="rentreportCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged(rentreportCurrentPage,rentParam)"></pagination>
+	<pre>Page: {{rentreportCurrentPage}} / {{numPages}}</pre>
+</div>

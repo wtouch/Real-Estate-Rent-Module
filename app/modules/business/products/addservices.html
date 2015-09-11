@@ -1,0 +1,68 @@
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="bottomspace">
+				<div class="product"> 
+					<h3 ng-if="!editServForm" class="col-sm-offset-2 col-sm-9">Add New Services</h3>
+					<h3 ng-if="editServForm" class="col-sm-offset-2 col-sm-9">Edit Service</h3>
+					
+					<form class="form-horizontal" role="form" name="addserviceForm" ng-submit="addserviceForm.$valid" novalidate="novalidate">
+						<div class="form-group">
+							<label for="product_service_name" class="col-sm-2 control-label">Service Name* </label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="product_service_name" name="product_service_name" ng-model="addservice.product_service_name" placeholder="Enter Service Name here" required>
+									<span class="help-block" ng-show="addserviceForm.product_service_name.$dirty && addserviceForm.product_service_name.$invalid">
+										<span ng-show="addserviceForm.product_service_name.$error.required" class="text-danger">Service name is required</span>
+									</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="productImages" class="col-sm-2 control-label">Select Image </label>
+							<div class="col-sm-9">
+								<input type="file" id="productImages" ng-file-select ng-multiple="true" accept="image/jpeg,image/png, image/gif" ng-file-change="upload($files,path,userInfo,addservice.product_image)" ng-model="productImages">
+							
+								<!-- This hidden input will store image path in array after successful uploading -->
+								<input type="hidden" ng-model="addservice.product_image">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<div class="col-sm-9 col-sm-offset-2">
+								<span class="thumbs" ng-repeat="(key, value) in addservice.product_image">
+									<img class="img-thumbnail" width="40px" ng-src="{{appConfig.assetPath + value.file_relative_path}}"/>
+									<span class="close" ng-click="removeImg(key, addservice.product_image)">X</span>
+								</span>
+							</div>
+						</div>	
+						
+						<input type="hidden" ng-model="addservice.user_id" value="{{addservice.user_id}}">
+						<input type="hidden" ng-model="addservice.date">
+												
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="description">Service Description* </label>
+							<div class="col-sm-9">
+								<textarea type="text" class="form-control" id="description" name="description" ng-model="addservice.description" cols="30" rows="4" ng-maxlength="2500" placeholder="Enter Service Description" ui-tinymce ng-required="true">
+								</textarea>
+									<p ng-hide="addserviceForm.description.$error.maxlength">
+										{{ 2500 - addservice.description.length + " Chars left" }}
+									</p>							
+									<span class="help-block" ng-show="addserviceForm.description.$dirty && addserviceForm.description.$invalid">
+										<span class="text-danger" ng-show="addserviceForm.description.$error.maxlength">Sorry You are Exceeding the Limit</span>
+										<span class="text-danger" ng-show="addserviceForm.description.$error.required">Service Description required.</span>
+									</span>
+							</div>
+							<input type="hidden" ng-model="addservice.type" ng-init="addservice.type='service'"/>
+						</div>
+						
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-9">
+								<button ng-if="!editServeForm" type="submit" class="btn btn-default btn-success" ng-disabled="addserviceForm.$invalid" ng-click="postData(addservice)" title="submit">Submit</button>
+								
+								<button ng-if="editServeForm" type="button" class="btn btn-default btn-success" ng-disabled="addserviceForm.$invalid" ng-click="updateData(addservice)" title="submit">	Update</button>
+								<button type="reset" class="btn btn-danger">Cancel</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>

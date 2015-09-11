@@ -1,0 +1,30 @@
+<div class="main-content">	 	
+	<ng-include src="'modules/component/toolbar.html'"></ng-include>
+	<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+		
+		<div class="row">
+			<div class="col-sm-2" ng-include="'modules/enquiry/sidebar.html'"></div>
+			<div class="col-sm-10">
+				<ng-include src="'modules/enquiry/toolbars.html'"></ng-include>
+				 <!--This is conditional include if not mailId set in url this html includes in view 
+				
+				<!--this conditional include for composemailview{trupti}-->
+				<ng-include ng-if="mailId=='composemailview'" src="'modules/enquiry/composemailview.html'"></ng-include>
+				
+				<!-- if mailId set in url this html includes in view -->
+				<ng-include ng-if="mailId=='mails'" src="'modules/enquiry/mails.html'"></ng-include>
+				
+				<!--this is conditional include for sentmailview-->
+				<ng-include ng-if="mailId=='mailview'" src="'modules/enquiry/mailview.html'"></ng-include> 
+				
+				<ng-include ng-if="mailId=='sentmail'" src="'modules/enquiry/sentmail.html'"></ng-include> 
+				
+				<ng-include ng-if="mailId=='delete'" src="'modules/enquiry/delete.html'"></ng-include> 
+				
+				<ng-include ng-if="mailId=='inbox'" src="'modules/enquiry/mails.html'"></ng-include>
+				
+			</div>
+		</div>
+</div>
+
+

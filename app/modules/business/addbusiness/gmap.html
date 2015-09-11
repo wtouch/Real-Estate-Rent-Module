@@ -1,0 +1,35 @@
+<form name="businessGmapForm" role="form" class="form-horizontal">
+	<div class="form-group">	
+		<div class="col-md-9 col-md-offset-2"><strong>Google Map</strong></div>
+	</div>{{addbusiness.contact_profile.google_map}}
+	
+	<div class="form-group">	
+		<label  for="Latitude" class="col-sm-2 control-label">Latitude</label>
+		<div class="col-sm-9">
+			<input type="text" id="Latitude" class="form-control" name="google_map" placeholder="Google Latitude" ng-model="addbusiness.contact_profile.google_map.latitude" readonly>
+				<span class="text-danger" ng-show="businessGmapForm.Latitude.$dirty && businessGmapForm.Latitude.$invalid">
+					<span ng-show="businessGmapForm.Latitude.$error.required">Domain Name is required.</span>
+				</span>
+		</div>
+	</div>
+	
+	<div class="form-group">	
+		<label  for="Longitude" class="col-sm-2 control-label">Longitude</label>
+		<div class="col-sm-9">
+			<input type="text" id="Longitude" class="form-control" name="Longitude" placeholder="Google Latitude" ng-model="addbusiness.contact_profile.google_map.longitude" readonly >
+				<span class="text-danger" ng-show="businessGmapForm.Longitude.$dirty && businessGmapForm.Longitude.$invalid">
+					<span ng-show="businessGmapForm.Longitude.$error.required">Domain Name is required.</span>
+				</span>
+		</div>						
+	</div>
+	
+	<div class="form-group">
+		<label for="seo" class="col-sm-2 control-label">Title</label>
+		<div class="col-sm-9" id="map_canvas">
+			<ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" control="googleMap">
+				<ui-gmap-search-box template="searchbox.template" events="searchbox.events" position="TOP_LEFT"></ui-gmap-search-box>
+				<ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
+			</ui-gmap-google-map>
+		</div>					
+	</div>
+</form>

@@ -1,0 +1,74 @@
+	<div class="row" ng-if="selectBusiness">
+		<div class="col-sm-12">
+			<div class="bottomspace">
+				<div class="product">
+					<h3 ng-if="!editProdForm" class="col-sm-offset-2 col-sm-9">Add New Product</h3>
+					<h3 ng-if="editProdForm" class="col-sm-offset-2 col-sm-9">Edit Product</h3>
+					<form class="form-horizontal" role="form" name="addproductForm" ng-submit=		"addproductForm.$valid" novalidate="novalidate">
+						<div class="form-group">
+							<label for="product_service_name" class="col-sm-2 control-label">Product Name* </label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control" id="product_service_name" name="product_service_name" ng-model="addproduct.product_service_name" placeholder="Enter Product Name here" required>
+								<span class="help-block" ng-show="addproductForm.product_service_name.$dirty && addproductForm.product_service_name.$invalid">
+									<span ng-show="addproductForm.product_service_name.$error.required" class="text-danger">Product name is required</span>
+								</span>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="productImages" class="col-sm-2 control-label">Select Image </label>
+							<div class="col-sm-9">
+								<input type="file" id="productImages" ng-file-select ng-multiple="true" accept="image/jpeg,image/png, image/gif" ng-file-change="upload($files,path,userInfo,addproduct.product_image)" ng-model="productImages">
+							
+								<!-- This hidden input will store image path in array after successful uploading -->
+								<input type="hidden" ng-model="addproduct.product_image">
+							</div>
+						</div>
+						
+						<div class="form-group">						 
+							<div class="col-sm-9 col-sm-offset-2">
+								<span class="thumbs" ng-repeat="(key, value) in addproduct.product_image">
+									<img class="img-thumbnail" width="40px" ng-src="{{appConfig.assetPath + value.file_relative_path}}" ng-click="addproduct.imgkey = key; "/>
+									<span class="close" ng-click="removeImg(key, addproduct.product_image)">X</span>
+								</span>
+							</div>
+						</div>						
+						
+						<input type="hidden" ng-model="addproduct.user_id" value="{{addproduct.user_id}}">		
+						<input type="hidden" ng-model="addproduct.business_id">
+						<input type="hidden" ng-model="addproduct.business_name">
+						<input type="hidden" ng-model="addproduct.date">
+												
+						<div class="form-group">
+							<label class="col-sm-2 control-label" for="description">Product Description* 
+							</label>
+							<div  class="col-sm-9">
+								<textarea type="text" class="form-control" id="description" name="description" ng-model="addproduct.description" cols="30" rows="4" ng-maxlength="2500" placeholder ="Enter Product Description" ui-tinymce required>
+								</textarea>
+								
+								<p ng-hide="addproductForm.description.$error.maxlength">
+									{{ 2500 - addproduct.description.length + " Chars left" }}
+								</p>
+								<span class="help-block" ng-show="addproductForm.description.$dirty && addproductForm.description.$invalid">
+									<span class="text-danger" ng-show="addproductForm.description.$error.maxlength">Sorry You are Exceeding the Limit</span>
+									
+									<!-- <span ng-show="addproductForm.description.$error.required" class="text-danger">Product Description is required.</span> -->
+									<span class="text-danger" ng-show="addproductForm.description.$error.required">Product Description required.</span>
+									
+								</span> 
+							</div>
+							<input type="hidden" ng-model="addproduct.type" ng-init="addproduct.type='product'">
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-9">
+								<button ng-if="!editProdForm" type="submit" class="btn btn-default btn-success" ng-disabled="addproductForm.$invalid" ng-click="postData(addproduct)" title="submit">Submit	</button>
+								
+								<button ng-if="editProdForm" type="submit" class="btn btn-default btn-success" ng-disabled="addproductForm.$invalid" ng-click="updateData(addproduct)" title="submit">Edit Product</button>
+								<button type="reset" class="btn btn-danger">Cancel</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>

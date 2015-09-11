@@ -1,0 +1,28 @@
+<div class="row">
+	<div class="col-md-12">
+		<ul class="nav nav-pills nav-stacked">
+			<li ng-class="{active: mailId=='composemailview'}">
+				<a href="#/dashboard/enquiry/composemailview">
+					<span class="glyphicon glyphicon-inbox"></span> Compose
+				</a>
+			</li>
+			<li  ng-class="{active: mailId=='mails'}">
+				<a href="#/dashboard/enquiry/mails">  
+					<span class="glyphicon glyphicon-inbox"></span> Inbox
+				</a>
+			</li>
+			
+			<li ng-class="{active: mailId=='sentmail'}">
+				<a href="#/dashboard/enquiry/sentmail"> 
+					<span class="glyphicon glyphicon-circle-arrow-down"></span> Sent
+				</a>
+			</li>
+			
+			<li ng-class="{active: mailId=='delete'}">
+				<a href="#/dashboard/enquiry/delete"> 
+					<span class="glyphicon glyphicon-trash"></span> Trash
+				</a>
+			</li>			
+		</ul>
+	</div>
+</div>

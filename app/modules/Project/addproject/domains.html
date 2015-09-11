@@ -1,0 +1,21 @@
+<div class="form-group">
+	<div class="col-sm-12 ">					
+		<h3>Domains</h3>
+		<div class="table-responsive">
+			<table class="table table-bordered">
+				<tr>
+					<td class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="selectAll" ng-change="checkAll(websites, selectAll)"> Select all
+						</label>
+					</td>
+				</tr>
+				<tr ng-repeat="website in websites">
+					<td>	
+					  <input type="checkbox" checklist-model="project.domain" checklist-value="website"> {{website.domain_name}}
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>

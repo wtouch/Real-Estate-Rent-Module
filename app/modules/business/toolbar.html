@@ -1,0 +1,10 @@
+	<ng-include src="'modules/component/toolbar.html'"></ng-include>
+	
+	<!-- This is Global Breadcrumb Toolbar -->
+	<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+	<div class="text-right bottomspace">
+		<a ng-if="permission.business_list" href="#/dashboard/business/addbusiness" class="btn btn-default">Add Business</a>
+		<a ng-if="permission.add_business" href="#/dashboard/business/businesslist" class="btn btn-default" ng-click="addAlert()">Business List</a>
+		<a ng-if="permission.business_list"  href="#/dashboard/business/products" class="btn btn-default">Manage Products/Services</a>
+		<a ng-if="permission.delete_business"  href="#/dashboard/business/deletedbusiness" class="btn btn-default" ng-click="addAlert()">Deleted Business</a>
+	</div>

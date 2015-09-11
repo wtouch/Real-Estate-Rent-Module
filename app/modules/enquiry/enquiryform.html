@@ -1,0 +1,65 @@
+<div class="row">
+	<div class="col-sm-12">
+		<div class="main-content">	
+		
+			<form class="form-horizontal" role="form" name="enquiryForm" novalidate="novalidate">
+				<h3> Enquiry Form</h3>
+				<div class="form-group">
+					<label for="from" class="col-sm-2 control-label">From</label>
+					<div class="col-sm-9">
+						<input type="text" value="{{enquiry.from_email}}" class="form-control"  readonly ng-model="enquiry.from_email.from">
+						<input type="hidden" class="form-control" ng-model="enquiry.from_email.cc">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="subject" class="col-sm-2 control-label">Enquiry For</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" ng-model="enquiry.subject" required>
+						<span class="help-block" ng-show="enquiryForm.subject.$dirty && enquiryForm.subject.$invalid">
+							<span class="text-danger" ng-show="enquiryForm.subject.$error.required">Please Enter Enquiry subject.</span>
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="phone" class="col-sm-2 control-label">Mobile Number </label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control help-block" id="phone" ng-model="enquiry.phone" name="phone" placeholder="Your Phone number"  ng-pattern="/(7|8|9)\d{9}$/" maxlength="10"  required >							
+						<p ng-show="enquiryForm.phone.$error.pattern && (enquiryForm.phone.$dirty || submitted)" class="text-danger" >Enter a valid contact no.</p>
+					</div>						
+				</div>	
+				<div class="form-group">
+					<label for="email" class="col-sm-2 control-label">Email ID</label>
+					<div class="col-sm-9">
+						<input type="email" class="form-control" id="email" name="email" placeholder="example@gmail.com" ng-model="enquiry.email" required>
+						<span  ng-show="enquiryForm.email.$dirty && enquiryForm.email.$invalid">
+							<span class="text-danger" ng-show="enquiryForm.email.$error.required">Email is required.</span>
+							<span class="text-danger" ng-show="enquiryForm.email.$error.email">Invalid Email address.</span>
+						</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="subject" class="col-sm-2 control-label">Message</label>
+					<div class="col-sm-9">
+						<textarea id="message" name="message" class="form-control" rows="3" ng-model="enquiry.message" ng-minlength="2" ng-maxlength="356" required>
+						</textarea>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-9">
+						<input type="hidden" name="status" ng-model="enquiry.status" ng-init="enquiry.status = 2" value="{{enquiry.status}}">
+					</div>
+				</div>
+				<div class="from-group">
+					<input type="hidden" name="reply_date" ng-model="enquiry.date" value="enquiry.date =  today.date()" value="{{enquiry.date}}">
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-9">
+						<button type="button" class="btn btn-primary" ng-click="postData(enquiry)" ng-disabled="enquiryForm.$dirty && enquiryForm.$invalid">Send</button>
+						<button type="reset" class="btn btn-danger" title="Cancel Sending">Cancel</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

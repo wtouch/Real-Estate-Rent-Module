@@ -1,0 +1,71 @@
+<form name="businessProfileForm" role="form" class="form-horizontal">
+	<div class="form-group">
+		<label for="business_type" class="col-sm-3 control-label" name="business_type" >Primary Business Type*</label>
+		<div class="col-sm-9">
+			<select class="form-control" name="business_type" id="business_type"  ng-model="addbusiness.business_profile.business_type" required ng-options="item as item for item in biz.business_type">	
+				<option value="">Select Type</option>
+			</select>
+			<span class="help-block" ng-show="businessProfileForm.business_type.$dirty && businessProfileForm.business_type.$invalid">
+				<span ng-show="businessProfileForm.business_type.$error.required" class="text-danger">Primary Business Type is required.</span>
+			</span>				
+		</div>
+	</div>	
+	
+	<div class="form-group">
+		<label for="establishment" class="col-sm-3 control-label">Establishment Year*</label>
+		<div class="col-sm-9">
+		<select class="form-control" name="establishment" id="establishment"  ng-model="addbusiness.business_profile.establishment" required ng-options="item as item for item in estyear">	
+				<option value="">Select Establish Year</option>		
+			</select>
+			
+			<span class="help-block" ng-show="businessProfileForm.establishment.$dirty && businessProfileForm.establishment.$invalid">
+				<span ng-show="businessProfileForm.establishment.$error.required" class="text-danger">Year Of Establishment is required.</span>
+			</span>				
+		</div>
+	</div>	
+	
+	<div class="form-group">
+		<label for="no_of_employees" class="col-sm-3 control-label">Team Size*</label>
+		<div class="col-sm-9">
+			<select class="form-control" name="no_of_employees" id="no_of_employees"  ng-model="addbusiness.business_profile.no_of_employees" required ng-options="item as item for item in biz.employees">		
+				<option value="">--Choose One--</option>
+			</select>
+			<span class="help-block" ng-show="businessProfileForm.no_of_employees.$dirty && businessProfileForm.no_of_employees.$invalid">
+				<span ng-show="businessProfileForm.no_of_employees.$error.required" class="text-danger">No. Of Employees is required.</span>
+			</span>				
+		</div>
+	</div>	
+	
+	<div class="form-group">
+		<label class="col-sm-3 control-label">Additional Business</label>
+		<div class="col-sm-9">
+		<div class="checkbox col-sm-3" ng-repeat="x in biz.additional_business">
+			<label class="ng-binding">
+				<input id="check" type="checkbox" checklist-model="addbusiness.business_profile.additional_business" checklist-value="x"> {{x}}
+			</label>
+			</div>
+		</div> 
+	</div>
+	
+	<div class="form-group">
+		<label for="aboutDescription" class="col-sm-3 control-label">About Us*</br>
+		<small>This will show on Website About Us Page</small></label>
+		<div class="col-sm-9">
+			<textarea type="text" class="form-control" id="aboutDescription" name="aboutDescription" ng-model="addbusiness.business_info.aboutDescription" cols="30" rows="4" ng-maxlength="5000" placeholder="Detailed Description of Company" ui-tinymce required></textarea>
+				<p ng-bind-html="" ng-hide="businessProfileForm.aboutDescription.$error.maxlength">
+					{{ 5000 - addbusiness.business_profile.aboutDescription.length + " Chars left"}} 
+				</p>
+				<span class="help-block" ng-show="businessProfileForm.aboutDescription.$dirty && businessProfileForm.aboutDescription.$invalid">
+					<span class="text-danger" ng-show="businessProfileForm.aboutDescription.$error.maxlength">Sorry You are Exceeding the Limit</span>
+				<span ng-show="businessProfileForm.aboutDescription.$error.required" class="text-danger">Please write Description of your company.</span>
+				</span>		
+		</div>
+	</div>  
+	
+	<div class="form-group">
+		<div class="col-sm-offset-3 col-sm-9">
+		  <button type="submit" class="btn btn-primary btn-default" ng-disabled="businessProfileForm.$invalid" title="Save" ng-click="showFormPart('contact',2)">Next</button>
+		  <button ng-if="id" type="submit" class="btn btn-success" ng-disabled="businessProfileForm.$invalid" ng-click="updateData(addbusiness)">Update</button> 
+		</div>
+	</div>
+</form>

@@ -1,0 +1,6 @@
+//code for change profile 
+		dataService.get("getsingle/business/"+$scope.bizId)
+		.then(function(response) {
+			$scope.addbusiness = dataService.parse(response.data);
+			if($scope.addbusiness.business_logo == (undefined)) $scope.addbusiness.business_logo = "";
+		});

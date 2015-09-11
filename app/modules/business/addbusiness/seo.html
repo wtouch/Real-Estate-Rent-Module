@@ -1,0 +1,81 @@
+<form name="businessSeoForm" role="form" class="form-horizontal">
+	<div class="form-group">
+	<label  for="seo" class="col-sm-3 control-label">Title*</label>
+	<div class="col-sm-9">
+		<input type="hidden" ng-model="addbusiness.created_date">
+		<input type="text" ng-disabled="bizId" id="seo" class="form-control" name="seo" placeholder="SEO Title" ng-model="addbusiness.seo.title" required>
+		<span class="help-block" ng-show="businessSeoForm.seo.$dirty && businessSeoForm.seo.$invalid">
+			<span ng-show="businessSeoForm.seo.$error.required" class="text-danger">Title is required.</span>
+		</span>
+	</div>						
+</div>
+<div class="form-group">
+	<label for="category" class="col-sm-3 control-label" name="category" >Category* <span tooltip="Click on search button to search Keywords/Business Categories" class="glyphicon glyphicon-info-sign"></span></label>
+	<div class="col-sm-9">
+	<script type="text/ng-template" id="categoryTemp.html">
+			<a>
+				<span bind-html-unsafe="match.model.keyword | typeaheadHighlight:query"></span> 
+				<span>(<small bind-html-unsafe="match.model.type | typeaheadHighlight:query"></small> - <small bind-html-unsafe="match.model.category_name | typeaheadHighlight:query"></small>)</span>
+			</a>
+		</script>
+		
+		<div class="input-group">
+			<select ng-hide="searchCat" class="form-control" name="category" id="category"  ng-model="addbusiness.category" ng-change="getTypes(addbusiness.category)" required ng-options="item.id as item.category_name for item in businessCategories">		
+				<option value="">Select Category</option>
+			</select>
+			
+			<input ng-show="searchCat" typeahead-template-url="categoryTemp.html" type="text" name="location" id="location" ng-model="category" typeahead-on-select="setCategoryType($item); searchCat = !searchCat" placeholder="Search keyword/business category" typeahead="item.id as item.category_name for item in searchCategory($viewValue)" typeahead-loading="locationLoading" typeahead-editable="false" class="form-control" autocomplete="off">
+			
+			<span class="input-group-btn">
+				<button ng-class="(!searchCat) ? 'btn btn-info' : 'btn btn-danger'" type="button" ng-click="searchCat = !searchCat">
+				<span ng-hide="searchCat" class="glyphicon glyphicon-search"></span>
+				<span ng-show="searchCat" class="glyphicon glyphicon-remove-sign"></span>
+				</button>
+			</span>
+		</div>
+		<i ng-show="locationLoading" class="glyphicon glyphicon-refresh"></i>
+		<span class="help-block" ng-show="businessSeoForm.category.$dirty && businessSeoForm.category.$invalid">
+			<span ng-show="businessSeoForm.category.$error.required" class="text-danger">Category is required.</span>
+			</span>
+	</div>
+</div>
+<div class="form-group">
+	<label for="type" class="col-sm-3 control-label" name="type">Type*</label>
+	<div class="col-sm-9">
+		<select class="form-control" name="type" id="type"  ng-model="addbusiness.type" ng-change="getKeywords(addbusiness.type)" required ng-options="item.id as item.category_name for item in businessTypes">
+			<option value="">Select Type</option>
+		</select>
+		<span class="help-block" ng-show="businessSeoForm.type.$dirty && businessSeoForm.type.$invalid">
+		<span ng-show="businessSeoForm.type.$error.required" class="text-danger">Type is required.</span>
+		</span>				
+	</div>
+</div>	
+	<div class="form-group">
+		<label for="keyword" class="col-sm-3 control-label">Keywords*</label>
+		<div class="col-sm-9">
+			<select class="form-control" multiple name="keyword" id="keyword"  ng-model="addbusiness.keywords" required ng-options="item.category_name as item.category_name for item in businessKyewords">		
+				<option value="">Select Keywords</option>
+			</select>
+		</div>
+	</div> 
+	<div class="form-group">
+		<label for="description" class="col-sm-3 control-label">Description*</label>
+		<div class="col-sm-9">
+			<textarea type="text" class="form-control" id="description" name="description" ng-model="addbusiness.seo.description" cols="30" rows="4" ng-maxlength="256" placeholder="Enter Description of company" required></textarea>
+				<p ng-hide="businessSeoForm.description.$error.maxlength">
+					{{ 256 - addbusiness.seo.description.length + " Chars left" }}
+				</p> 
+				<span class="help-block" ng-show="businessSeoForm.description.$dirty && businessSeoForm.description.$invalid">
+					<span class="text-danger" ng-show="businessSeoForm.description.$error.maxlength">Sorry You are Exceeding the Limit</span>
+					<span ng-show="businessSeoForm.description.$error.required" class="text-danger">description are  required.</span>
+				</span>	
+		</div>
+	</div>  
+	
+	<div class="form-group">
+		<div class="col-sm-offset-3 col-sm-9">
+			<button ng-if="!id"type="submit" class="btn btn-success" ng-disabled="businessSeoForm.$invalid || formSteps !== 3" ng-click="postData(addbusiness)">Submit</button>
+			<button ng-if="id" type="submit" class="btn btn-success" ng-disabled="businessSeoForm.$invalid" ng-click="updateData(addbusiness)">Update</button>
+		</div>
+	</div> 												
+</form>

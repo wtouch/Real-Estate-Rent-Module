@@ -1,0 +1,115 @@
+<h3>Floor Plans</h3>
+<div class="form-group">
+	<div class="col-sm-offset-3 col-sm-9">
+		<button type="button" class="btn btn-default btn-primary pull-right" ng-click="addToObject(addfloor_plan, project.floor_plan.details)" title="Add Floor Plans">Add Floor Plan</button>
+	</div>
+</div>
+<div>
+	<input type="hidden" required name="floor_plan" ng-model="project.floor_plan" />
+	<span class="help-block" ng-show="addProject.floor_plan.$dirty && addProject.floor_plan.$invalid">
+		<span ng-show="addProject.floor_plan.$error.required" class="text-danger">Floor Plan Description is required.</span>
+	</span>
+</div>
+<div class="form-group">
+		<label  for="floorTitle" class="col-sm-2 control-label">* Title</label>
+		<div class="col-sm-9">		
+			<textarea type="text"  id="floorTitle" class="form-control" name="floorTitle" ng-model="addfloor_plan.title"    cols="20" rows="4" ng-maxlength="356"  required></textarea>
+			<p ng-hide="addProject.floorTitle.$error.maxlength">{{ 356 - addfloor_plan.title + " Chars left" }}</p>
+				 <span class="text-danger" ng-show="addProject.floorTitle.$error.maxlength">
+				Sorry You are Exceeding the Limit</span>
+					<span class="text-danger" ng-show="addProject.floorTitle.$dirty && addProject.floorTitle.$invalid">
+				  <span ng-show="addProject.floorTitle.$error.required"> title is required .</span>
+		</div>
+	</div>
+	<div class="form-group"> 
+		<label for="floorDescription" class="col-sm-2 control-label"> * Description</label> 
+		<div class="col-sm-9">
+				<textarea class="form-control" id="floorDescription"  name="floorDescription" ng-model="addfloor_plan.description.description" cols="20" rows="4" ng-maxlength="356" required ></textarea>
+			<p ng-hide="addProject.floorDescription.$error.maxlength">{{ 356 - addfloor_plan.description.description.length + " Chars left" }}</p>
+			 <span class="text-danger" ng-show="addProject.floorDescription.$error.maxlength">
+					Sorry You are Exceeding the Limit</span>
+			<span class="text-danger" ng-show="addProject.floorDescription.$dirty && addProject.floorDescription.$invalid">
+					<span ng-show="addProject.floorDescription.$error.required"> Description is required .</span>
+			</span>
+		</div>
+	</div>	
+	<div class="form-group">
+		<label for="floor_image" class="col-sm-2 control-label">* &nbsp Floor Image</label>
+		<div class="col-sm-9">
+			<input type="file" id="floor_image" name="floor_image" ng-file-select ng-multiple="true" accept="image/jpeg,image/png, image/gif" ng-file-change="generateThumb($files)" ng-model="floor_image">	
+		<!-- This will show thumbnails & progress of images -->
+			<file-preview url="floor_image"></file-preview>
+			<!-- This button will show if file/s selected -->
+			<button ng-show="floor_image" ng-click="upload(floor_image,path,userinfo, addfloor_plan.description.floor_image)" type="button">Upload</button>
+			<!-- This hidden input will store image path in array after successful uploading -->
+			<input type="hidden" ng-model="addfloor_plan.description.floor_image">
+	</div>
+	</div>	
+	<div class="form-group"> 
+		<label for="floorImageDesc" class="col-sm-2 control-label"> Image Description</label> 
+		<div class="col-sm-9">
+				<textarea class="form-control" id="floorImageDesc"  name="floorImageDesc" ng-model="addfloor_plan.image_description" cols="20" rows="4" ng-maxlength="356" required ></textarea>
+			<p ng-hide="addProject.floorImageDesc.$error.maxlength">{{ 356 - addfloor_plan.image_description.length + " Chars left" }}</p>
+			 <span class="text-danger" ng-show="addProject.floorImageDesc.$error.maxlength">
+					Sorry You are Exceeding the Limit</span>
+			<span class="text-danger" ng-show="addProject.floorImageDesc.$dirty && addProject.floorImageDesc.$invalid">
+					<span ng-show="addProject.floorImageDesc.$error.required"> Description is required .</span>
+			</span>
+		</div>
+	</div>	
+	<h4>SEO</h4>
+	<div class="form-group">
+			<label for="floorBrowserTitle" class="col-sm-2 control-label">* &nbsp Browser Title</label>
+		<div class="col-sm-9">
+			 <textarea class="form-control" id="floorBrowserTitle" rows="1" name="floorBrowserTitle" ng-model="project.floor_plan.seo.browser_title"   cols="20" rows="4" ng-maxlength="356"  ></textarea>	
+
+			<p ng-hide="addProject.floorBrowserTitle.$error.maxlength">{{ 356 - project.floor_plan.seo.browser_title + " Chars left" }}</p>
+			
+			<span class="text-danger" ng-show="addProject.floorBrowserTitle.$error.maxlength">
+					Sorry You are Exceeding the Limit</span>
+			<span class="text-danger" ng-show="addProject.floorBrowserTitle.$dirty && addProject.floorBrowserTitle.$invalid">
+					<span ng-show="addProject.floorBrowserTitle.$error.required">Browser is required .</span>
+			</span>
+		</div>							
+	</div>				
+	<div class="form-group">
+		<label for="floorMetaKey" class="col-sm-2 control-label">* Meta Keywords</label> 
+		<div class="col-sm-9"> 
+			<textarea class="form-control" name="floorMetaKey" ng-model="project.floor_plan.seo.meta_key"  id="floorMetaKey" cols="20" rows="4" ng-maxlength="356" required> </textarea>
+			<p ng-hide="addProject.floorMetaKey.$error.maxlength">{{ 356 - project.floor_plan.seo.meta_key.length + " Chars left" }}</p>
+					 <span class="text-danger" ng-show="addProject.floorMetaKey.$error.maxlength">
+					Sorry You are Exceeding the Limit</span>
+					<span class="text-danger" ng-show="addProject.floorMetaKey.$dirty && addProject.floorMetaKey.$invalid">
+					<span ng-show="addProject.floorMetaKey.$error.required">Meta Keywords is required .</span>
+			</span>
+		</div>							
+	</div>
+	<div class="form-group"> 
+			<label for="floorMetaDesc" class="col-sm-2 control-label">* Meta Description</label> 
+		<div class="col-sm-9">
+				<textarea class="form-control" id="floorMetaDesc"  name="floorMetaDesc" ng-model="project.floor_plan.seo.meta_desc" cols="20" rows="4" ng-maxlength="356" required ></textarea>
+			<p ng-hide="addProject.floorMetaDesc.$error.maxlength">{{ 356 - project.floor_plan.seo.meta_desc.length + " Chars left" }}</p>
+			<span class="text-danger" ng-show="addProject.floorMetaDesc.$error.maxlength">
+					Sorry You are Exceeding the Limit</span>
+			<span class="text-danger" ng-show="addProject.floorMetaDesc.$dirty && addProject.floorMetaDesc.$invalid">
+					<span ng-show="addProject.floorMetaDesc.$error.required">Meta Description is required .</span>
+			</span>
+		</div>
+	</div>	
+	<div class="col-sm-12">
+		<div class="table-responsive">
+			<table class="table table-bordered " ng-if="project.floor_plan.details">
+				<tr>
+					<th>Floor Plan Title</th>
+					<th>Floor Plan Description</th>
+					<th>Remove </th>
+				</tr>
+				<tr ng-repeat="(key, value) in project.floor_plan.details">
+					<td>{{key}}</td>
+					<td>{{value}}</td>
+					<td><button ng-click="removeObject(key,project.floor_plan.details)">Remove</button></td>
+					
+				</tr>
+			</table>
+		</div>
+	</div>

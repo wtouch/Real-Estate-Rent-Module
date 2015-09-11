@@ -1,0 +1,61 @@
+
+  <h3>Optional Property Details:</h3>
+		<div class="form-group">
+			<label for="prop_age" class="col-sm-2 control-label">Property Age</label>
+			<div class="col-sm-9">
+				<select class="form-control"  id="prop_age" ng-model="property.optional_property_details.property_age"  ng-options="item for item in propertyConfig.propertyAge" required>
+					<option value="" selected>Select One</option>	
+				</select>
+			</div>					
+		</div>				
+		<div class="form-group">
+			<label for="furnished" class="col-sm-2 control-label">Furnished</label>
+			<div class="col-sm-9">
+				<select class="form-control" id="furnished" ng-model="property.optional_property_details.furnished" ng-options="item for item in propertyConfig.furnished" required>
+					<option value="" selected>Select One</option>				
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+				<label for="prop_owner" class="col-sm-2 control-label">Ownership</label>
+				<div class="col-sm-9">
+					<select class="form-control" id="prop_owner" ng-model="property.optional_property_details.ownership" ng-options="item for item in propertyConfig.ownership" required>
+						<option value="" selected>Select One</option>					
+					</select>
+				</div>
+		</div>
+		<div class="form-group">
+				<label for="floors" class="col-sm-2 control-label">Total Number of Floors</label>
+				<div class="col-sm-9">
+					<select class="form-control" id="floors" ng-model="property.optional_property_details.property_floor" ng-options="item for item in propertyConfig.floors" required>
+						<option value="" selected>Select One</option>
+						
+					</select>
+				</div>
+		</div>
+		<div class="form-group">
+				<label for="facing" class="col-sm-2 control-label">Facing</label>
+				<div class="col-sm-9">
+					<select class="form-control" id="facing" ng-model="property.optional_property_details.facing" ng-options="item for item in propertyConfig.facing" required>
+						<option value="">Select One</option>										
+					</select>
+				</div>
+		</div>
+		
+		<div class="form-group">
+				<label for="parking" class="col-sm-2 control-label">Parking</label>
+				<div class="col-sm-9">
+					<select class="form-control" id="parking" ng-model="property.optional_property_details.parking" ng-options="item for item in propertyConfig.parking" required>
+						<option value="" selected>Select One</option>				
+					</select>
+				</div>
+		</div>
+		
+		<div class="form-group">
+			<label for=" transType" class="col-sm-2 control-label">Transaction Type</label>
+			<div class="col-sm-9">
+				<select class="form-control" id="transType" ng-model="property.optional_property_details.transType" ng-options="item for item in propertyConfig.transaction_type" required>							
+					<option value="">Select Transaction Type</option>				
+				</select>
+			</div>
+		</div>						

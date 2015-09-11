@@ -1,0 +1,147 @@
+<div class="modal-header" ng-init="modalOptions.getAccountConfig();modalOptions.getParty(modalOptions); modalOptions.totalCalculate(modalOptions)">
+	<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
+	<h3 ng-if="!modalOptions.rentData.id">Add Invoice</h3>
+	<h3 ng-if="modalOptions.rentData.id">Update Invoice</h3>
+</div>
+<div class="modal-body">
+	<!--THE HIDDEN Generate Date and Due_date and User ID-->
+	<form name="generalForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="generalForm.$valid" id="generalForm">
+				<div class="form-group">
+				<label for="customer" class="col-sm-2 control-label">Select Party *</label>
+				<div class="col-sm-3">
+					<select class="form-control" name="customer" id="customer" ng-model="modalOptions.rentData.user_id" ng-options="item.id as item.name for item in modalOptions.customerList"  ng-init="modalOptions.rentData.user_id = modalOptions.rentList.user_id">
+					<option value="">Select Party</option>
+					</select>
+					<span class="help-block" ng-show="generalForm.customer.$dirty && generalForm.customer.$invalid">
+						<span ng-show="generalForm.customer.$error.required" class="text-danger">Customer is required.</span>
+					</span>	
+				</div>
+				<label  for="generated_date" class="col-sm-2 control-label">Generate Date *</label>
+				<div class="col-sm-3">
+					<input type="text" class="form-control " placeholder="YYYY-DD-MM" id="generated_date" name="generated_date" ng-model="modalOptions.rentData.generated_date" ng-init="modalOptions.rentData.generated_date = modalOptions.rentDate.date"/>
+				</div>
+				<a class="btn btn-default" ng-click="modalOptions.close()" href="/#/dashboard/users/adduser">Add Party</a>
+				<input type="hidden" class="form-control " placeholder="YYYY-DD-MM" id="due_date" name="due_date" ng-model="modalOptions.rentData.due_date" ng-init="modalOptions.rentData.due_date = modalOptions.rentDate.due_date" readonly/>
+			</div>
+		</form>
+	<!--THE HIDDEN Generate Date and Due_date and User ID Ends Here-->
+	<div class="row">
+		<div class="col-sm-12">
+			<form name="addInvoiceForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="addInvoiceForm.$valid" id="addInvoiceForm">
+			<div class="table-responsive">
+				<table class="table table-bordered" >
+					<thead>
+						<tr>
+							<th>Particular Name</th>
+							<th>Price</th>
+							<th>Quantity</th>
+							<th>Amount</th>
+							<th colspan="3">Tax</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<input type="text" class="form-control" id="label" name="label" ng-model="modalOptions.singleparticular.label" required>
+								<span class="help-block" ng-show="addInvoiceForm.label.$dirty && addInvoiceForm.label.$invalid">
+									<span ng-show="addInvoiceForm.label.$error.required" class="text-danger">Particular Name is necessary.</span>
+								</span>
+							</td>
+							
+							<td>
+								<input type="text" class="form-control" id="price" name="price" ng-model="modalOptions.singleparticular.price" ng-init="modalOptions.singleparticular.price = 0" ng-change="modalOptions.singleparticular.amount = (modalOptions.singleparticular.quantity * modalOptions.singleparticular.price)"  ng-pattern="/^\d{0,9}(\.\d{0,2}){0,1}$/" required>
+								<span class="help-block" ng-show="addInvoiceForm.price.$dirty && addInvoiceForm.price.$invalid">
+									<span ng-show="addInvoiceForm.price.$error.required" class="text-danger">Price Required.</span>
+									<span ng-show="addInvoiceForm.price.$error.pattern" class="text-danger">Enter like 0.00 only</span>
+								</span>
+							</td>
+							
+							<td>
+								<input type="number" class="form-control" id="quantity"  ng-change="modalOptions.singleparticular.amount = (modalOptions.singleparticular.quantity * modalOptions.singleparticular.price)" name="quantity" ng-model="modalOptions.singleparticular.quantity" ng-init="modalOptions.singleparticular.quantity = 1" ng-pattern="/^[1-9]\d{0,9}(\.\d{0,2}){0,1}$/"  required>
+								<span class="help-block" ng-show="addInvoiceForm.quantity.$dirty && addInvoiceForm.quantity.$invalid">
+									<span ng-show="addInvoiceForm.quantity.$error.required" class="text-danger">Quantity Required</span>
+									<span ng-show="addInvoiceForm.quantity.$error.pattern" class="text-danger">Enter like 0.00 only</span>
+								</span>
+							</td>
+							
+							<td>
+								<input type="text" class="form-control" id="amount" name="amount" ng-model="modalOptions.singleparticular.amount" ng-init="modalOptions.singleparticular.amount" required readonly>
+							</td>
+							<td ng-repeat="x in modalOptions.taxes">
+									<label class="col-sm-3">
+									<input type="checkbox" checklist-model="modalOptions.singleparticular.tax" checklist-value="x"/>{{x.name | uppercase | replace : {"_" : " "} }}</label>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<button type="submit" class="btn btn-success"  ng-disabled="addInvoiceForm.$invalid;generalForm.$invalid" ng-click="modalOptions.add(modalOptions)">+Add This Particular</button>
+			</form>
+		</div>
+	</div>
+	<br>
+			<div class="table-responsive">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th class="col-sm-2">Sr.No.</th>
+							<th class="col-sm-3">Particular Name</th>
+							<th class="col-sm-2 text-right">Price</th>
+							<th class="col-sm-2 text-right">Quantity</th>
+							<th class="col-sm-2 text-right">Amount</th>
+							<th class="col-sm-2 text-right">Remove</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="x in modalOptions.rentData.particulars">
+							<td>{{ $index + 1 }}</td>
+							<td>{{x.label}}<br><small ng-if="x.tax.length">(<span ng-repeat="y in x.tax">{{y.name | replace : {"_" : " "} }} = {{y.value}} %,</span>)</small></td>
+							<td class="text-right">{{x.price | number : 2}}</td>
+							<td class="text-right">{{x.quantity | number : 2}}</td>
+							<td class="text-right">{{x.amount | number : 2}}</td>
+							<td><a tooltip="Remove This Particular" ng-click="modalOptions.remove(x,modalOptions)"><span class="glyphicon glyphicon-remove"></span></a></td>
+						</tr>
+						<tr ng-if="modalOptions.subTotal">
+							<td colspan="3"></td>
+							<td class="text-right"><strong>Sub Total</strong></td>
+							<td class="text-right">{{ modalOptions.subTotal  | number : 2}}</td>
+							<td></td>
+						</tr>
+						<tr ng-if="modalOptions.tax.service_tax">
+							<td colspan="3"></td>
+							<td class="text-right"><strong>Total Service Tax</strong></td>
+							<td class="text-right">{{ modalOptions.tax.service_tax  | number : 2}}</td>
+							<td></td>
+						</tr>
+						<tr ng-if="modalOptions.tax.other_tax">
+							<td colspan="3"></td>
+							<td class="text-right"><strong>Total Other Tax</strong></td>
+							<td class="text-right">{{ modalOptions.tax.other_tax  | number : 2}}</td>
+							<td></td>
+						</tr>
+						<tr ng-if="modalOptions.tax.tds">
+							<td colspan="3"></td>
+							<td class="text-right"><strong>Less TDS</strong></td>
+							<td class="text-right">{{ modalOptions.tax.tds  | number : 2}}</td>
+							<td></td>
+						</tr>
+						<tr ng-if="modalOptions.total">
+							<td colspan="3"></td>
+							<td class="text-right"><strong>Total</strong></td>
+							<td class="text-right">{{ modalOptions.total  | number : 2}}</td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="form-group">
+				<label  for="remark" class="col-sm-3 control-label">Remark *</label>
+				<textarea class="col-sm-9" id="remark" name="remark" ng-model="modalOptions.rentData.remark"></textarea>
+			</div>
+			<br>
+</div>
+<div class="modal-footer">
+	<button type="submit" ng-if="modalOptions.rentData.id" class="btn btn-success" ng-click="modalOptions.formData(modalOptions.rentData,modalOptions.total,modalOptions.subTotal,modalOptions.tax); modalOptions.ok()">Update Invoice</button>
+	<button type="submit"  ng-if="!modalOptions.rentData.id" class="btn btn-success" ng-click="modalOptions.formData(modalOptions.rentData,modalOptions.total,modalOptions.subTotal,modalOptions.tax); modalOptions.ok()">Add Invoice</button>
+	<button type="button" class="btn btn-warning" ng-click="modalOptions.close()">Cancel</button>
+</div>

@@ -1,0 +1,91 @@
+<h3>Overview</h3>
+<div class="form-group">
+	<div class="col-sm-offset-3 col-sm-9">
+		<button type="button" class="btn btn-default btn-primary pull-right" ng-click="addToObject(addoverview, project.overview.details)" title="Add Overview">Add Overview</button>
+	</div>
+</div>
+<div>
+	<input type="hidden" required name="overview" ng-model="project.overview" />
+	<span class="help-block" ng-show="addProject.overview.$dirty && addProject.overview.$invalid">
+		<span ng-show="addProject.overview.$error.required" class="text-danger">Overview Description is required.</span>
+	</span>
+</div>
+<div class="form-group">
+		<label  for="overviewTitle" class="col-sm-2 control-label">* Title</label>
+		<div class="col-sm-9">		
+			<textarea type="text"  id="overviewTitle" class="form-control" name="overviewTitle" ng-model="addoverview.title"    cols="20" rows="4" ng-maxlength="356"  required></textarea>
+			<p ng-hide="addProject.overviewTitle.$error.maxlength">{{ 356 - addoverview.title.length + " Chars left" }}</p>
+				 <span class="text-danger" ng-show="addProject.overviewTitle.$error.maxlength">
+				Sorry You are Exceeding the Limit</span>
+					<span class="text-danger" ng-show="addProject.overviewTitle.$dirty && addProject.overviewTitle.$invalid">
+				  <span ng-show="addProject.overviewTitle.$error.required"> title is required .</span>
+		</div>
+</div>
+<div class="form-group"> 
+		<label for="overviewDiscription" class="col-sm-2 control-label">  * Description</label> 
+	<div class="col-sm-9">
+			<textarea class="form-control" id="overviewDiscription"  name="overviewDiscription" ng-model="addoverview.description.description" cols="20" rows="4" ng-maxlength="356" required ui-tinymce></textarea>
+		<p ng-hide="addProject.overviewDiscription.$error.maxlength">{{ 356 - addoverview.description.description.length + " Chars left" }}</p>
+				 <span class="text-danger" ng-show="addProject.overviewDiscription.$error.maxlength">
+				Sorry You are Exceeding the Limit</span>
+		<span class="text-danger" ng-show="addProject.overviewDiscription.$dirty && addProject.overviewDiscription.$invalid">
+				<span ng-show="addProject.overviewDiscription.$error.required"> Description is required .</span>
+		</span>
+	</div>
+</div>	
+<h4>SEO</h4>
+<div class="form-group">
+		<label for="overviewBrowserTitle" class="col-sm-2 control-label">* Browser Title</label>
+	<div class="col-sm-9">
+		 <textarea class="form-control" id="overviewBrowserTitle"  name="overviewBrowserTitle" ng-model="project.overview.seo.browser_title"   cols="20" rows="4" ng-maxlength="356" required></textarea>	
+
+		<p ng-hide="addProject.overviewBrowserTitle.$error.maxlength">{{ 356 - project.overview.seo.browser_title + " Chars left" }}</p>
+		
+		<span class="text-danger" ng-show="addProject.overviewBrowserTitle.$error.maxlength">
+				Sorry You are Exceeding the Limit</span>
+		<span class="text-danger" ng-show="addProject.overviewBrowserTitle.$dirty && addProject.overviewBrowserTitle.$invalid">
+				<span ng-show="addProject.overviewBrowserTitle.$error.required">Browser is required .</span>
+		</span>
+	</div>							
+</div>				
+<div class="form-group">
+	<label for="overviewMetaKey" class="col-sm-2 control-label">* Meta Keywords</label> 
+	<div class="col-sm-9"> 
+		<textarea class="form-control" name="overviewMetaKey" ng-model="project.overview.seo.meta_key"  id="overviewMetaKey" cols="20" rows="4" ng-maxlength="356" required> </textarea>
+		<p ng-hide="addProject.overviewMetaKey.$error.maxlength">{{ 356 - project.overview.seo.meta_key.length + " Chars left" }}</p>
+				 <span class="text-danger" ng-show="addProject.overviewMetaKey.$error.maxlength">
+				Sorry You are Exceeding the Limit</span>
+				<span class="text-danger" ng-show="addProject.overviewMetaKey.$dirty && addProject.overviewMetaKey.$invalid">
+				<span ng-show="addProject.overviewMetaKey.$error.required">Meta Keywords is required .</span>
+		</span>
+	</div>							
+</div>
+<div class="form-group"> 
+		<label for="overviewMetaDisc" class="col-sm-2 control-label">* Meta Discription</label> 
+	<div class="col-sm-9">
+			<textarea class="form-control" id="overviewMetaDisc"  name="overviewMetaDisc" ng-model="project.overview.seo.meta_desc" cols="20" rows="4" ng-maxlength="356" required ></textarea>
+		<p ng-hide="addProject.overviewMetaDisc.$error.maxlength">{{ 356 - project.overview.seo.meta_desc.length + " Chars left" }}</p>
+				 <span class="text-danger" ng-show="addProject.overviewMetaDisc.$error.maxlength">
+				Sorry You are Exceeding the Limit</span>
+			<span class="text-danger" ng-show="addProject.overviewMetaDisc.$dirty && addProject.overviewMetaDisc.$invalid">
+				<span ng-show="addProject.overviewMetaDisc.$error.required">Meta Discription is required .</span>
+		</span>
+	</div>
+</div>
+<div class="col-sm-12">
+	<div class="table-responsive">
+		<table class="table table-bordered " ng-if="project.overview.details">
+			<tr>
+				<th>Overview Title</th>
+				<th>Overview Description</th>
+				<th>Remove </th>
+			</tr>
+			<tr ng-repeat="(key, value) in project.overview.details">
+				<td>{{key}}</td>
+				<td>{{value}}</td>
+				<td><button ng-click="removeObject(key,project.overview.details)">Remove</button></td>
+				
+			</tr>
+		</table>
+	</div>
+</div>

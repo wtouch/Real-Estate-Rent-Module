@@ -1,0 +1,96 @@
+<div class="modal-header" ng-init="modalOptions.getData(modalOptions.invoice)">
+		<button type="button" class="close buttondistance" ng-click="modalOptions.close()">
+			<span aria-hidden="true">&times;</span></button>
+		<button type="button" class="btn btn-primary pull-right buttondistance" ng-click="modalOptions.printDiv('invoice')">Print</button>
+		<button type="button" class="btn btn-danger pull-right buttondistance" ng-click="modalOptions.close()">Close</button>
+		<h3>RECEIPT</h3>
+</div>
+<br>
+<div class="form-group">
+				<label for="receipts" class="col-sm-2 control-label">Receipt Date</label>
+				<div class="col-sm-9">
+					<select class="form-control" name="receipts" id="receipts" ng-model="receipts" ng-options="item as item.receipt_date for item in modalOptions.receiptList" ng-init="receipts = modalOptions.receiptList[0]; modalOptions.rentList = receipts" ng-change="modalOptions.rentList = receipts">
+						<option value="">Select Date</option>
+					</select>
+				</div>
+</div>
+</br>
+<div class="modal-body">
+		<div id="invoice">
+	<div class="panel panel-default"ng-if="modalOptions.rentList">
+		<div class="panel-heading text-center"><h2>Receipt</h2></div>
+		<div class="panel-body row">
+			<div class="col-xs-6">
+				<address class="text-center">
+					<strong>{{userDetails.name | uppercase}}</strong><br>
+					{{userDetails.address.address}}<br>
+					E-Mail : {{userDetails.email}}
+				</address>
+				<hr>
+				<p>To,<br>
+					<strong>{{modalOptions.rentList.name | uppercase}}</strong><br>
+					{{modalOptions.rentList.address.address}}<br>{{modalOptions.rentList.address.location}}<br>{{modalOptions.rentList.address.city}}<br>{{modalOptions.rentList.address.area}}<br>{{modalOptions.rentList.address.pincode}}<br>				
+				</P>
+			</div>
+			<div class="col-xs-6">
+				<div class="table-responsive">
+					<table class="table table-bordered">
+						<tr class="amt">
+							<td><strong>Receipt No.</strong><br>{{modalOptions.rentList.receipt_id}}
+							</td>
+							<td><strong>Dated</strong><br>
+							{{modalOptions.rentList.receipt_date}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			
+			<div class="table-responsive col-xs-12">
+				<table class="table table-bordered">
+					<thead>
+						<tr class="head">
+							<th class=" col-xs-12">Particulars</th>
+							<th class=" col-xs-12">Amount</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Paid By <strong>{{modalOptions.rentList.description.payment_type.type}}</strong> Against Invoice No.<strong>{{modalOptions.rentList.id}}</strong>
+							<p ng-if="modalOptions.rentList.description.payment_type.type != 'Cash'">
+								<span ng-repeat="(key, value) in modalOptions.rentList.description.payment_type">
+									<strong>{{key}}</strong><span> {{value}} </span></br>
+								</span>
+							</p>
+							</td>
+							<td>{{modalOptions.rentList.paid | number : 2}}</td>
+						</tr>
+						<!-- <tr>
+							<td class="text-right"><strong>Total Invoice Amount</strong></td>
+							<td class="text-right">{{modalOptions.rentList.total_amount | number : 2}}</td>
+						</tr> -->
+						<tr>
+							<td class="text-right"><strong>Received Amount</strong></td>
+							<td class="text-right">{{modalOptions.rentList.paid | number : 2}}</td>
+						</tr>
+						<!-- <tr>
+							<td class="text-right"><strong>Balance Amount</strong></td>
+							<td class="text-right">{{modalOptions.rentList.due_amount | number : 2}}</td>
+						</tr> -->
+					</tbody>
+				</table>
+			</div>
+			
+			<div class="col-xs-12">
+				<p>Received Amount (in words):
+				<strong><em>{{ modalOptions.inWords(modalOptions.rentList.paid) | uppercase}}</em></strong></p>
+				
+				<hr/>
+				<p><strong>Company's Service Tax No: </strong>{{modalOptions.accountConfig.service_tax_no}}</p>
+				<p><strong>Company's Pan: </strong>{{modalOptions.accountConfig.pan_no}} </strong></p>
+				<p class="text-right">For <strong><em>{{userDetails.name}}</em></strong><br><br><br>
+				Authorised Signatory</p>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>

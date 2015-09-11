@@ -1,0 +1,43 @@
+<h3>Builder Details</h3>
+<div class="form-group">
+	<label for="builderName" class="col-sm-2 control-label">* &nbsp Builder Name</label>
+	<div class="col-sm-9">
+			<input type="text"  class="form-control" id="builderName" name="builderName" ng-model="project.builder.builder_name" required>
+			<span class="text-danger" ng-show="addProject.builderName.$dirty && addProject.builderName.$invalid">
+				<span ng-show="addProject.builderName.$error.required">Builder name is required .</span>
+		</span>
+	</div>	
+</div>
+<div class="form-group">
+	<label for="builder_logo" class="col-sm-2 control-label">* &nbsp Builder  Logo</label>
+	<div class="col-sm-9">
+		<input type="file" id="builder_logo" name="builder_logo" ng-file-select ng-multiple="true" accept="image/jpeg,image/png, image/gif" ng-file-change="generateThumb($files)" ng-model="builder_logo">	
+	<!-- This will show thumbnails & progress of images -->
+		<file-preview url="builder_logo"></file-preview>
+		<!-- This button will show if file/s selected -->
+		<button ng-show="builder_logo" ng-click="upload(builder_logo,path,userinfo, project.builder.builder_logo)" type="button">Upload</button>
+		<!-- This hidden input will store image path in array after successful uploading -->
+		<input type="hidden" ng-model="project.builder.builder_logo">
+	</div>
+</div>		
+<div class="form-group">
+	<label for="OwnerName" class="col-sm-2 control-label">* &nbsp Owner Name</label>
+	<div class="col-sm-9">
+			<input type="text"  class="form-control" id="OwnerName" name="OwnerName" ng-model="project.builder.owner_name" required>
+			<span class="text-danger" ng-show="addProject.OwnerName.$dirty && addProject.OwnerName.$invalid">
+				<span ng-show="addProject.OwnerName.$error.required">Builder name is required .</span>
+		</span>
+	</div>	
+</div>
+<div class="form-group">
+	<label for="owner_logo" class="col-sm-2 control-label">* &nbsp Owner  Logo</label>
+		<div class="col-sm-9">
+			<input type="file" id="owner_logo" name="owner_logo" ng-file-select  accept="image/jpeg,image/png, image/gif" ng-file-change="generateThumb($files)" ng-model="owner_logo">	
+		<!-- This will show thumbnails & progress of images -->
+			<file-preview url="owner_logo"></file-preview>
+			<!-- This button will show if file/s selected -->
+			<button ng-show="owner_logo" ng-click="upload(owner_logo,path,userinfo, project.builder.owner_logo)" type="button">Upload</button>
+			<!-- This hidden input will store image path in array after successful uploading -->
+			<input type="hidden" ng-model="project.builder.owner_logo">
+	</div>
+</div>		

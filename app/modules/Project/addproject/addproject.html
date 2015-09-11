@@ -1,0 +1,72 @@
+<div class="row">	
+	<div class="col-sm-12">
+		<div class="main-content">		
+			<ng-include src="'modules/component/toolbar.html'"></ng-include>	
+			<!-- <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>	 -->
+			<h3 class="text-center" title="Add project">Add Project Details</h3>
+			<form class="form-horizontal" role="form" name="addProject" ng-submit="addProject.$valid">			
+				<tabset>
+					<p class="paraMand">* Fields are mandatory</p>		
+					<tab heading="Project" title="Project information">
+						<ng-include  src="'modules/project/addproject/projectdetails.html'">
+						</ng-include> 
+					</tab>
+					<tab heading="Project Image " title="Project Image">	
+						<ng-include  src="'modules/project/addproject/projectimage.html'">
+						</ng-include> 
+					</tab>
+					<tab heading="Overview" title="Overview">
+						<ng-include  src="'modules/project/addproject/overview.html'">
+						</ng-include> 
+					</tab>
+					
+					<tab heading="Builder" title="Builder Details">
+					<ng-include  src="'modules/project/addproject/builder.html'">
+						</ng-include> 
+						
+					
+					</tab>
+					<tab heading="Amenities" title="Amenities">
+						<ng-include  src="'modules/project/addproject/amenities.html'">
+						</ng-include> 
+					</tab>
+					<tab heading="Specifications" title="Specification">
+						<ng-include  src="'modules/project/addproject/specification.html'">
+						</ng-include> 
+					</tab>
+						<tab heading="Location Map" title="This is location map">
+							<ng-include  src="'modules/project/addproject/locationmap.html'">
+						</ng-include> 
+						</tab>
+						<tab heading="Layout Map" title="This is Layout Map">	
+							<ng-include  src="'modules/project/addproject/layoutmap.html'">
+						</ng-include> 
+					</tab>
+					<tab heading="Floor Plans" title="Floor plans">
+						<ng-include  src="'modules/project/addproject/floorplan.html'">
+						</ng-include> 
+					</tab>
+					<tab heading=" Gallery" title="Project Gallery">
+						<ng-include  src="'modules/project/addproject/projectgallery.html'">
+						</ng-include> 
+					</tab>
+						
+						
+					<tab heading="Contact" title="Contact">
+						<ng-include  src="'modules/project/addproject/contactdetails.html'">
+						</ng-include> 
+					</tab>
+				</tabset>
+				<ng-include  src="'modules/project/addproject/domains.html'">
+				</ng-include> 	
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-9">
+						<button type="submit" ng-click="addproject(project)" ng-disabled="addProject.$invalid" title="Add your new project" class="btn btn-primary text-center">Add new Project</button>
+							<button type="submit" ng-click="update()" title="Edit your project Details" class="btn btn-success text-center">Edit Project</button>
+							<button type="reset" ng-click="reset()" title="cancel Details" class="btn btn-danger text-center">Cancel</button>
+					</div>
+				</div>						
+			</form>	
+		</div>	
+	</div>
+</div>

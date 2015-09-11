@@ -1,0 +1,68 @@
+<h3>Project Image</h3>
+<div class="form-group">
+	<div class="col-sm-offset-3 col-sm-9">
+		<button type="button" class="btn btn-default btn-primary pull-right" ng-click="addToObject(addimage, project.project_images)" title="Add Overview">Add Image</button>
+	</div>
+</div>
+<div class="form-group">
+	<label  for="ImageTitle" class="col-sm-2 control-label">* Title</label>
+	<div class="col-sm-9">		
+		<textarea type="text"  id="ImageTitle" class="form-control" name="ImageTitle" ng-model="addimage.title"    cols="20" rows="4" ng-maxlength="356"  ></textarea>
+		<p ng-hide="addProject.ImageTitle.$error.maxlength">{{ 356 - addimage.title.length + " Chars left" }}</p>
+			 <span class="text-danger" ng-show="addProject.ImageTitle.$error.maxlength">
+			Sorry You are Exceeding the Limit</span>
+				<span class="text-danger" ng-show="addProject.ImageTitle.$dirty && addProject.ImageTitle.$invalid">
+			  <span ng-show="addProject.ImageTitle.$error.required"> title is required .</span>
+	</div>
+</div>
+<div class="form-group">
+	<label for="project_images" class="col-sm-2 control-label">* &nbsp Project Image</label>
+	<div class="col-sm-9">
+			<input type="file" id="project_images" name="project_images" ng-file-select ng-multiple="true" accept="image/jpeg,image/png, image/gif" ng-file-change="generateThumb($files)" ng-model="project_images">	
+		<!-- This will show thumbnails & progress of images -->
+			<file-preview url="project_images"></file-preview>
+			<!-- This button will show if file/s selected -->
+			<button ng-show="project_images" ng-click="upload(project_images,path,userinfo, addimage.description.project_images)" type="button">Upload</button>
+			<!-- This hidden input will store image path in array after successful uploading -->
+			<input type="hidden" ng-model="addimage.description.project_images">
+	</div>
+
+</div>	
+<div class="form-group"> 
+	<label for="projImageDescription" class="col-sm-2 control-label">  * Description</label> 
+	<div class="col-sm-9">
+		<textarea class="form-control" id="projImageDescription"  name="projImageDescription" ng-model="addimage.description.description" cols="20" rows="4" ng-maxlength="356" required ui-tinymce></textarea>
+		<p ng-hide="addProject.projImageDescription.$error.maxlength">{{ 356 - addimage.description.description.length + " Chars left" }}</p>
+				 <span class="text-danger" ng-show="addProject.projImageDescription.$error.maxlength">
+				Sorry You are Exceeding the Limit</span>
+		<span class="text-danger" ng-show="addProject.projImageDescription.$dirty && addProject.projImageDescription.$invalid">
+				<span ng-show="addProject.projImageDescription.$error.required"> Description is required .</span>
+		</span>
+	</div>
+	<input type="hidden" required name="project_images" ng-model="project.project_images" />
+	<span class="help-block" ng-show="addProject.project_images.$dirty && addProject.project_images.$invalid">
+		<span ng-show="addProject.project_images.$error.required" class="text-danger">Project Images Description is required.</span>
+	</span>
+</div>	
+<div class="col-sm-12">
+	<div class="table-responsive">
+		<table class="table table-bordered " ng-if="project.project_images">
+			<tr>
+				<th>Image Title</th>
+				<th>Image Description</th>
+				<th>Remove </th>
+			</tr>
+			
+			<tr ng-repeat="(key, value) in project.project_images">
+				<td>{{key}}</td>
+				<td>
+					<span ng-repeat="(key, value) in addimage.description.project_images">
+					 <img width='150px' ng-src="{{appConfig.assetPath+value.file_name}}"/>
+				   </span>
+					
+				</td>
+				<td><button ng-click="removeObject(key,project.project_images)">Remove</button></td>
+			</tr>
+		</table>
+	</div>
+</div>

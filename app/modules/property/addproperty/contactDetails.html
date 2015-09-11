@@ -1,0 +1,44 @@
+
+<!-- property contact details -->				
+	<h3>Property contact Detail:</h3>
+		<div class="form-group">
+			<label for="contact_person" class="col-sm-2 control-label">* Name:</label>
+			<div class="col-sm-9">
+				<input type="text" id="contact_person" class="form-control" name="contact_person" ng-model="property.contact_details.contact_person" required>
+				
+				<span class="text-danger" ng-show="addProperty.contact_details.$dirty && addProperty.contact_details.$invalid">
+				  <span ng-show="addProperty.contact_details.$error.required">Name is required .</span>
+				</span>
+			</div>						
+		</div>
+		
+	  <div class="form-group">
+			<label for="mobile" class="col-sm-2 control-label"> * Contact No:</label>
+			<div class="col-sm-9">
+				<input type="text"  id="mobile" class="form-control help-block"  name="mobile" ng-model="property.contact_details.mobile" placeholder="Enter Your Mobile Number" maxlength="10" ng-pattern="/^[789]\d{9}$/" required>							
+				<p class="text-danger" ng-show="addProperty.contact_details.$error.pattern && (addProperty.contact_details.$dirty || submitted)" class="text-danger">Enter a valid mobile no.</p>
+			</div>						
+	  </div>
+	  
+	  <div class="form-group">
+			<label for="email" class="col-sm-2 control-label">* Email ID:</label>
+			<div class="col-sm-9">
+				<input type="email"  id="email" class="form-control" name="email" ng-model="property.contact_details.email" ng-pattern=" /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" required>					
+				<span class="text-danger" ng-show="addProperty.email.$error.pattern && (addProperty.contact_details.$dirty || submitted)"> invalid email! </span>
+				
+				<p class="text-danger" ng-show="addProperty.contact_details.$error.required && (addProperty.contact_details.$dirty || submitted)" class="help-block">Email is required.</p>								
+			</div>							
+	  </div>
+	  
+	  <div class="form-group">
+			<label for="cont_address" class="col-sm-2 control-label"> * Address </label>
+			<div class="col-sm-9">
+				<textarea class="form-control"  id="cont_address" name="cont_address" ng-model="property.contact_details.cont_address" cols="30" rows="4" ng-maxlength="356" required></textarea>
+		<p ng-hide="addProperty.contact_details.$error.maxlength">{{ 356 - property.contact_details.length + " Chars left" }}</p>
+		 <span class="text-danger" ng-show="addProperty.contact_details.$error.maxlength">
+			Sorry You are Exceeding the Limit
+		</span>	
+		<span class="text-danger" ng-show="addProperty.contact_details.$dirty && addProperty.contact_details.$invalid">
+		  <span ng-show="addProperty.contact_details.$error.required">Contactor is required .</span>
+			</div>				
+	  </div>				 

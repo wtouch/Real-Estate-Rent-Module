@@ -1,0 +1,32 @@
+	<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+	<form class="form-horizontal" name="changepassForm" novalidate>
+		<h3 class="col-sm-offset-2 col-sm-9">Change Password</h3>	
+		<div class="form-group">
+			<label for="password" class="col-sm-2 control-label">New Password*</label>
+			<div class="col-sm-9">
+				<input type="Password" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[@!~#$%^&*])(?=.*[A-Z]).{6,}/" id="password" class="form-control" name="password" ng-model="changepass.password" placeholder="Your Password" required>
+				<span  class="help-block" ng-show="changepassForm.password.$dirty && changepassForm.password.$invalid">
+					<span class="text-danger" ng-show="changepassForm.password.$error.required && (changepassForm.password.$dirty || submitted)">Your password is required.</span>
+					<span class="text-danger" ng-show="changepassForm.password.$error.pattern && (changepassForm.password.$dirty || submitted)">Your password must have 1) one upper case 2) one lower case 3) special char [@!~#$%^&*] 4) number 5) At least 6 char </span>
+				</span>
+			</div>						
+		</div>
+		
+		<div class="form-group">
+			<label for="confirmPassword" class="col-sm-2 control-label">Retype Password *</label>
+			<div class="col-sm-9">
+				<input type="Password" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[@!~#$%^&*])(?=.*[A-Z]).{6,}/" id="confirmPassword" class="form-control" name="confirmPassword" ng-model="confirmPassword" placeholder="Confirm Your Password" ng-change="passMatch(changepass.password, confirmPassword)" required>
+				<span class="help-block" ng-show="changepassForm.confirmPassword.$dirty && !pass || changepassForm.confirmPassword.$dirty && changepassForm.confirmPassword.$invalid">
+					<span class="text-danger" ng-show="changepassForm.confirmPassword.$error.required && (changepassForm.confirmPassword.$dirty )">Your confirm password is required.</span>
+					<span class="text-danger" ng-show="changepassForm.password.$error.pattern && (changepassForm.password.$dirty || submitted)">Your password must have 1) one upper case 2) one lower case 3) special char [@!~#$%^&*] 4) number 5) At least 6 char </span>
+					<span class="text-danger" ng-show="!pass">Confirm password does not match.</span>
+				</span>
+			</div>						
+		</div>
+		
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-9">
+				<button type="submit" ng-disabled="changepassForm.$invalid" class="btn btn-success" ng-click="changepasswd(changepass)">Save</button>
+			</div>
+		</div>
+	</form>

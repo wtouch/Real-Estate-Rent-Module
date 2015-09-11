@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="fragment" content="!" /> <!-- For SEO _fragment_ Read: http://www.yearofmoo.com/2012/11/angularjs-and-seo.html -->
+    <title ng-bind="appConfig.metaTitle"></title>
+	<meta name="keyword" content="">
+</head>
+
+<body>
+<div notifications="bottom right"></div>
+	<div  ng-include="'modules/component/header.html'">
+	</div>
+	<div class="ng-cloak container" ng-cloak ng-view></div>
+	<div ng-show="loading" style="display: block; position: fixed; top: 0; right: 0; left: 0; bottom: 0; background: rgba(0, 0, 0, 0.05);z-index: 10000;">
+		<div style="margin: 0 auto;font-size: 26px;color: transparent;width: 128px;text-align: center;margin-top: 10%;font-family: arial, helvetica, sans-serif;background: url(img/loader-leaf-purple.gif) no-repeat center center;height: 128px;">
+			Loading...
+		</div>
+	</div>
+<footer class="navbar navbar-default text-center"><p>&copy 2015 Apna Site.in</p></footer>
+    <!-- Require JS -->
+    <script data-main="js/main" src="lib/requirejs/require.js"></script>
+</body>
+
+</html>

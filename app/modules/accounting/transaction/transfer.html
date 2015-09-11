@@ -1,0 +1,74 @@
+<div class="main-content" ng-init="modalOptions.transfer.user_id = userDetails.id;modalOptions.getAccounts()">
+	<div class="modal-header" style="margin-bottom: 14px">
+		<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
+		<h3>Transfer</h3>
+	</div>
+		<form name="transferForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="transferForm.$valid">
+			<div class="form-group">
+					<label for="transfer_from" class="col-sm-2 control-label">Transfer From* </label>
+					<div class="col-sm-9">
+					<select class="form-control" name="transfer_from" id="transfer_from" ng-model="modalOptions.transfer_from"  ng-change="modalOptions.getFrom(modalOptions.transfer_from, modalOptions)"ng-options="item.id as item.account_name for item in modalOptions.accountList" required>
+						<option value="" selected>Select Account Name</option>
+					</select>
+					<span class="help-block" ng-show="transferForm.transfer_from.$dirty && transferForm.transfer_from.$invalid">
+						<span ng-show="transferForm.transfer_from.$error.required" class="text-danger">Account No is required.</span>
+						<span ng-show="(transferForm.transfer_from.$dirty || submitted)" class="text-danger">Enter Numbers Only!</span>
+					</span>
+					</div>
+			</div>
+			<div class="form-group" ng-if="modalOptions.previousBalancefrom || modalOptions.previousBalancefrom == 0">
+				<label for="previous_amount" class="col-sm-2 control-label">Previous Amount</label>
+				<div class="col-sm-9">
+					<input type="text" id="" name="" readonly class="form-control" ng-model="modalOptions.previousBalancefrom"/>		
+					</div>
+			</div>
+			<div class="form-group">
+				<label for="transfer_to" class="col-sm-2 control-label">Transfer To* </label>
+					<div class="col-sm-9">
+					<select class="form-control" name="transfer_to" id="transfer_to" ng-model="modalOptions.transfer_to"   ng-change="modalOptions.getTo(modalOptions.transfer_to, modalOptions)"ng-options="item.id as item.account_name for item in modalOptions.accountList" required>
+						<option value="" selected>Select Account Name</option>
+					</select>
+					<span class="help-block" ng-show="transferForm.transfer_to.$dirty && transferForm.transfer_to.$invalid">
+						<span ng-show="transferForm.transfer_to.$error.required" class="text-danger">Account No is required.</span>
+						<span ng-show="(transferForm.transfer_to.$dirty || submitted)" class="text-danger">Enter Numbers Only!</span>
+					</span>
+					</div>
+			</div>
+			<div class="form-group" ng-if="modalOptions.previousBalanceto || modalOptions.previousBalanceto == 0">
+				<label for="previous_amount" class="col-sm-2 control-label">Previous Amount</label>
+				<div class="col-sm-9">
+					<input type="text" id="" name="" readonly class="form-control" ng-model="modalOptions.previousBalanceto"/>			
+					</div>
+			</div>
+			<div class="form-group">	
+				<label  for="amount" class="col-sm-2 control-label">Transfer Amount</label>
+				<div class="col-sm-9">
+					<input type="text" id="amount" class="form-control" ng-model="modalOptions.amount" ng-change="modalOptions.totalAmount(modalOptions)" name="amount">
+				</div>						
+			</div>
+			<div class="form-group">	
+				<label  for="date" class="col-sm-2 control-label">Date</label>
+					<div class="col-sm-9">
+						<input type="text" id="date" class="form-control" ng-model="modalOptions.transfer.date" ng-init="modalOptions.transfer.date = modalOptions.date"  name="date" readonly 
+						placeholder="date">
+					</div>						
+			</div>
+			<input type="hidden" ng-model="modalOptions.transfer.category" ng-init="modalOptions.transfer.category = 'Transfer'"  name="category">
+			<input type="hidden" ng-model="modalOptions.transfer.type" ng-init="modalOptions.transfer.type = 'Transfer'"  name="type">
+			<div class="form-group">
+				<label for="description" class="col-sm-2 control-label">Description</label>
+					<div class="col-sm-9">
+						<textarea type="text" id="description" ng-model="modalOptions.transfer.description.description" class="form-control" name="Branch"   placeholder="Enter Description" required></textarea>
+						<span class="text-danger" ng-show="addIncomeForm.description.$dirty && addIncomeForm.description.$invalid">
+							<span ng-show="addIncomeForm.description.$error.required">Description is Required.</span>
+						</span>	
+					</div>		
+			</div>
+			<div class="form-group modal-footer">
+				<div class="col-sm-11"><!--ng-disabled="addIncomeForm.$invalid"-->
+					<button type="submit" class="btn btn-success"  ng-click="modalOptions.postData(modalOptions);modalOptions.ok()">Submit</button>
+					<button type="reset" class="btn btn-danger" ng-click="modalOptions.close()">Cancel</button>
+				</div>
+			</div>
+		</form>
+</div>

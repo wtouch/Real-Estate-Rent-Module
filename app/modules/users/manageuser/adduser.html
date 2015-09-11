@@ -1,0 +1,128 @@
+<div class="row">
+	<div class="col-sm-12">	
+		<h3 class="col-sm-offset-2 col-sm-9"> Add New User</h3>
+		<form class="form-horizontal" name="adduserForm" role="form" ng-submit="adduserForm.$valid" novalidate="novalidate">
+			<div class="form-group">
+				<label for="name" class="col-sm-2 control-label">Name *</label>
+				<div class="col-sm-9">
+					<input type="hidden" ng-model="adduser.adduser_date">
+					<input type="hidden" ng-model="adduser.status" ng-init="adduser.status = '1'">
+					<input type="text" id="name" class="form-control" name="name" placeholder="Name" ng-model="adduser.name" required>
+					<span class="help-block" ng-show="adduserForm.name.$dirty && adduserForm.name.$invalid">
+						<span class="text-danger" ng-show="adduserForm.name.$error.required">Name is required.</span>
+					</span>
+				</div>
+			</div>
+			
+			<div>
+				<input type="hidden" ng-model="adduser.user_id">
+			</div>	
+			
+			<div class="form-group">	
+				<label  for="email" class="col-sm-2 control-label">Email *</label>
+				<div class="col-sm-9">
+					<input type="Email" class="form-control" id="email" ng-model="adduser.email" name="email" placeholder="Enter Email" ng-blur="checkuserAvailable('email', adduser.email)" required >
+					<span class="help-block">
+						<span class="text-success" ng-show="adduserForm.email.$dirty && adduserForm.email.$valid && EmailAvailable">{{availabilityMsg}}</span>
+					</span>
+					
+					<span class="help-block" ng-show="adduserForm.email.$dirty && adduserForm.email.$invalid || EmailAvailable == false">
+						<span class="text-danger" ng-show="adduserForm.email.$dirty && EmailAvailable == false">{{availabilityMsg}}</span>
+						<span class="text-danger" ng-show="adduserForm.email.$error.required">Email is required.</span>
+						<span class="text-danger" ng-show="adduserForm.email.$error.email">Invalid Email address.</span>
+					</span>
+				</div>
+			</div> 
+			<div class="form-group">
+				<label for="phone" class="col-sm-2 control-label">Phone *</label>
+				<div class="col-sm-9">
+					<input type="text" id="phone" name="phone" class="form-control" ng-model="adduser.phone" placeholder="Enter your Phone Number" ng-pattern="/^[789]\d{9}$/" maxlength="10" required>
+					<span class="help-block" ng-show="adduserForm.phone.$dirty && adduserForm.phone.$invalid">
+						<span ng-show="adduserForm.phone.$error.required" class="text-danger">Phone Number is required.</span>
+						<span class="text-danger" ng-show="adduserForm.phone.$error.pattern && (adduserForm.phone.$dirty || submitted)">Enter a valid Contact Number</span>
+					</span>
+				</div>						
+			</div>
+			
+			<div class="form-group">
+				<label for="address" class="col-sm-2 control-label">Address *</label>
+				<div class="col-sm-9">
+					<textarea  class="form-control" id="address" ng-model="adduser.address.address" name="address" placeholder="Enter address" ng-maxlength="75" required></textarea>
+					<p ng-hide="adduserForm.address.$error.maxlength">{{ 75 - adduser.address.address.length + " Characters left"}}</p>
+					<span class="help-block" ng-show="adduserForm.address.$dirty &&  adduserForm.address.$invalid">
+						<span class="text-danger" ng-show="adduserForm.address.$error.maxlength">Sorry You are Exceeding the Limit</span>
+						<span class="text-danger" ng-show="adduserForm.address.$error.required">Address is required.</span>
+					</span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="location" class="col-sm-2 control-label">Location *</label>
+					<div class="col-sm-9">
+						<input type="text" name="location" id="location" ng-model="adduser.address.location" placeholder="Enter your location" class="form-control" required>
+						<span class="help-block" ng-show="adduserForm.location.$dirty && adduserForm.location.$invalid">
+							<span ng-show="adduserForm.location.$error.required" class="text-danger">Location is required.</span>
+						</span>
+					</div>						
+			</div>
+			
+			<div class="form-group">
+				<label for="area" class="col-sm-2 control-label">Area *</label>
+				<div class="col-sm-9">
+					<input type="text" id="area" name="area" class="form-control" ng-model="adduser.address.area" placeholder="Enter area" required>
+					<span class="help-block" ng-show="adduserForm.area.$dirty && adduserForm.area.$invalid">
+					<span ng-show="adduserForm.area.$error.required" class="text-danger">Area is Required</span>					
+					</span>
+				</div>						
+			</div>			
+			
+			<div class="form-group">
+				<label for="city" class="col-sm-2 control-label">City *</label>
+				<div class="col-sm-4" >
+					<input type="text" id="city" name="city" class="form-control" ng-model="adduser.address.city" placeholder="Enter city" required>
+					<span class="help-block" ng-show="adduserForm.city.$dirty && adduserForm.state.$invalid">
+						<span ng-show="adduserForm.city.$error.required" class="text-danger">City is required.</span>
+					</span>						
+				</div>
+				<label for="state" class="col-sm-1 control-label">State *</label>
+				<div class="col-sm-4">
+				<input type="text" id="state" name="state" class="form-control" ng-model="adduser.state" placeholder="Enter state" required>
+					<span class="help-block" ng-show="adduserForm.state.$dirty && adduserForm.state.$invalid">
+						<span ng-show="adduserForm.state.$error.required" class="text-danger">State is required.</span>
+					</span>				
+				</div>
+			</div> 
+
+			<div class="form-group">
+				<label for="Country" class="col-sm-2 control-label">Country *</label>
+				<div class="col-sm-9">
+					<input type="text" required name="Country" id="Country" ng-model="adduser.country" placeholder="Enter Your Country" ng-disabled="readOnly" class="form-control">
+					<span class="help-block" ng-show="adduserForm.Country.$dirty && adduserForm.Country.$invalid">
+						<span ng-show="adduserForm.Country.$error.required"class="text-danger">Country is required.</span>
+					</span>				
+				</div>
+			</div>	
+			
+			<div class="form-group">
+				<label for="pincode" class="col-sm-2 control-label">Pin Code *</label>
+				<div class="col-sm-9">
+					<input ng-disabled="readOnly" type="text" id="pincode" name="pincode" class="form-control" ng-model="adduser.address.pincode" placeholder="Enter Pin Code" ng-pattern="/^\d{0,9}[0-9]$/" maxlength="6"  ng-minlength="6">
+					<span class="help-block" ng-show="adduserForm.pincode.$dirty && adduserForm.pincode.$invalid">
+						<span ng-show="adduserForm.pincode.$error.pattern && (adduserForm.pincode.$dirty || submitted)" class="text-danger">Enter a valid Pin Code</span>
+						<span class="text-danger" ng-show="adduserForm.pincode.$error.minlength && (adduserForm.pincode.$dirty || submitted)">Enter Valid Length Of Pin Code.</span>
+					</span>
+				</div>						
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-9">
+					<button type="submit" class="btn btn-success" ng-disabled="adduserForm.$invalid || EmailAvailable==false || UserAvailable==false" ng-click="postData(adduser)" ng-if="!editUserId">Add User</button>
+					
+					<button type="submit" class="btn btn-success" ng-disabled="adduserForm.$invalid" ng-click="update(adduser)" ng-if="editUserId">Update User</button>
+					
+					<a href="#/dashboard/users/userslist" class="btn btn-danger">Cancel</a>
+				</div>
+			</div>						
+		</form>			
+	</div>
+</div>

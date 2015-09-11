@@ -1,0 +1,153 @@
+<div class="modal-header">
+	<button type="button" class="close" ng-click="modalOptions.close()">
+		<span aria-hidden="true">&times;</span></button>
+	<h3>Rent This Property</h3>
+</div>
+<form name="setrentForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="setrentForm.$valid">
+	<div class="modal-body">
+		<div class="form-group">
+			<label  class="col-sm-2"></label>
+			<div class="col-sm-7">
+				<p> <small>Note that Fields Marked * are Required.</small></p>
+			</div>
+		</div>
+		
+		<div class="form-group" ng-init="modalOptions.getCustomer(modalOptions)">
+			<label for="customer" class="col-sm-2 control-label">Select Party* </label>
+			<div class="col-sm-7">
+				<select class="form-control" name="partyName" id="partyName"  ng-model="modalOptions.setrent.user_id" ng-options="item.id as item.name for item in modalOptions.customerList | filter: { group_name : 'customer'} " required>
+					<option value="">Select Party</option>
+				</select>
+				<span class="help-block" ng-show="setrentForm.partyName.$dirty && setrentForm.partyName.$invalid">
+					<span ng-show="setrentForm.partyName.$error.required" class="text-danger">Party Name is required.</span>
+				</span>	
+			</div>
+			<div class="col-sm-2">
+				<a class="btn btn-default" ng-click="modalOptions.close()" href="/#/dashboard/users/adduser">Add Party</a>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="title" class="col-sm-2 control-label">Property Name* </label>		
+				<div class="col-sm-9">
+					<input type="text" id="title" class="form-control" name="propertyName" placeholder="property Name" ng-model="modalOptions.setrent.title" ng-init="modalOptions.setrent.title = modalOptions.propertyData.title" readonly required />
+				</div>
+		</div>
+		
+		<input type="hidden" ng-model="modalOptions.setrent.property_id" ng-init="modalOptions.setrent.property_id = modalOptions.propertyData.id" />
+		
+		<div class="form-group">
+			<label for="deposit" class="col-sm-2 control-label">Deposit* </label>		
+			<div class="col-sm-9">
+				<input type="text" id="deposit" ng-pattern="/^[0-9]*$/" class="form-control" name="deposit" ng-model="modalOptions.setrent.deposit" placeholder="Enter Deposit Amount" ng-init="modalOptions.setrent.deposit = modalOptions.propertyData.deposit" required>
+				<span class="text-danger" ng-show="setrentForm.deposit.$dirty && setrentForm.deposit.$invalid">
+					<span ng-show="setrentForm.deposit.$error.pattern" class="text-danger">Enter Number only</span>
+					<span ng-show="setrentForm.deposit.$error.required">Deposit required.</span>
+				</span>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="rent" class="col-sm-2 control-label">Licence Fee *</label>		
+			<div class="col-sm-9">
+				<input type="text" id="rent" class="form-control" name="rent" placeholder="Set Licence Fee"  ng-pattern="/^[0-9]*$/" ng-model="modalOptions.setrent.rent" ng-init="modalOptions.setrent.rent = modalOptions.propertyData.price" required>
+				<span class="help-block" ng-show="setrentForm.rent.$dirty && setrentForm.rent.$invalid">
+					<span ng-show="setrentForm.rent.$error.pattern" class="text-danger">Enter Number only</span>
+					<span ng-show="setrentForm.rent.$error.required" class="text-danger">Licence Fee Required</span>
+				</span>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label for="maintenance" class="col-sm-2 control-label">Maintenance *</label>		
+			<div class="col-sm-9">
+				<input type="text" id="maintenance" ng-pattern="/^[0-9]*$/" class="form-control" name="maintenance" placeholder="Enter Maintenance Amount" ng-model="modalOptions.setrent.maintenance" ng-init="modalOptions.setrent.maintenance = '0'" required>
+				<span class="text-danger" ng-show="setrentForm.maintenance.$dirty && setrentForm.maintenance.$invalid">
+					<span ng-show="setrentForm.maintenance.$error.pattern" class="text-danger">Enter Number only</span>
+					<span ng-show="setrentForm.maintenance.$error.required">Maintenance is required.</span>
+				</span>
+			</div>
+		</div>
+		
+		<div class="form-group">	
+			<label for="taken_date" class="col-sm-2 control-label">Taken Date*</label>
+			<div class="col-sm-4">
+				<input type="text" id="taken_date" class="form-control" name="taken_date" ng-model="modalOptions.setrent.taken_date"  ng-init="modalOptions.setrent.taken_date = modalOptions.propDate" readonly  placeholder="date" required/>
+			</div>						
+		
+			<label for="taken_date" class="col-sm-2 control-label">Licence Fee Day*</label>
+			<div class="col-sm-3">
+				<select type="text" id="date_of_rent" class="form-control" name="date_of_rent" ng-model="modalOptions.setrent.date_of_rent" ng-options="item for item in [0,31] | range" placeholder="date" required>
+					<option value="">Select Licence Fee Day</option>
+				</select>
+				<span class="text-danger" ng-show="setrentForm.date_of_rent.$dirty && setrentForm.date_of_rent.$invalid">
+					<span ng-show="setrentForm.date_of_rent.$error.required">Licence Fee Day required.</span>
+				</span>
+			</div>						
+		</div>
+		
+		<div class="form-group">
+			<label  for="duration" class="col-sm-2 control-label">Duration For*</label>
+				<div class="col-sm-3">
+					<select id="year" class="form-control" ng-model="duration.year" name="year" ng-options="item for item in [0,50] | range" required>
+						<option value="" selected>Select Year</option>
+					</select>
+					<span class="help-block" ng-show="setrentForm.year.$dirty && setrentForm.year.$invalid">
+						<span ng-show="setrentForm.year.$error.required" class="text-danger">Year required.</span>
+					</span>	
+				</div>
+				<div class="col-sm-3">
+					<select id="month" class="form-control" ng-model="duration.month" name="month"ng-options="item for item in [0,11] | range" required>
+						<option value="" selected>Select Month</option>
+					</select>
+					<span class="help-block" ng-show="setrentForm.month.$dirty && setrentForm.month.$invalid">
+						<span ng-show="setrentForm.month.$error.required" class="text-danger">Month  required.</span>
+					</span>	
+				</div>		
+		</div>
+		
+		<input type="hidden" ng-model="modalOptions.setrent.duration"/>
+		
+		<div class="form-group">	
+			<label  for="escalation" class="col-sm-2 control-label">Escalation After*</label>
+				<div class="col-sm-3">
+					<select id="esc_year" class="form-control" ng-model="duration.esc_year" name="esc_year" ng-options="item for item in [0,50] | range" required>
+						<option value="" selected>Select Year</option>
+					</select>
+					<span class="help-block" ng-show="setrentForm.esc_year.$dirty && setrentForm.esc_year.$invalid">
+						<span ng-show="setrentForm.esc_year.$error.required" class="text-danger">Escalation Year required.</span>
+					</span>	
+				</div>	
+				<div class="col-sm-3">
+					<select id="esc_month" class="form-control" name="esc_month" ng-model="duration.esc_month" ng-options="item for item in [0,11] | range" required>
+						<option value="" selected>Select Month</option>
+					</select>
+					<span class="help-block" ng-show="setrentForm.esc_month.$dirty && setrentForm.esc_month.$invalid">
+						<span ng-show="setrentForm.esc_month.$error.required" class="text-danger">Escalation Month required.</span>
+					</span>	
+				</div>		
+		</div>
+		
+		<input type="hidden" ng-model="modalOptions.setrent.escduration"/>
+		
+		<div class="form-group">
+			<label for="escalation_amount" class="col-sm-2 control-label">Escalation Amount (%) * </label>		
+			<div class="col-sm-9">
+				<input type="text" id="escalation_amount" class="form-control" name="escalation_amount" placeholder="Set Escalation Percentage" ng-model="modalOptions.setrent.escalation_amount" ng-pattern="/^[0-9]*$/" required />
+				<span class="text-danger" ng-show="setrentForm.escalation_amount.$dirty && setrentForm.escalation_amount.$invalid">
+					<span ng-show="setrentForm.escalation_amount.$error.pattern" class="text-danger">Enter Number only</span>
+					<span ng-show="setrentForm.escalation_amount.$error.required">Escalation Amount is required.</span>
+				</span>
+			</div>
+		</div> 
+	</div> 
+	
+	<div class="modal-footer">
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-9">
+				<button type="submit" class="btn btn-success" ng-disabled="setrentForm.$invalid" ng-click="modalOptions.postData(modalOptions.setrent,duration); modalOptions.ok()">Submit</button>
+				<button type="button" class="btn btn-danger" ng-click="modalOptions.close()">Cancel</button>
+			</div>
+		</div>					
+	</div>					
+</form>	

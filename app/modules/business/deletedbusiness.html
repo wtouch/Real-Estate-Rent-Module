@@ -1,0 +1,67 @@
+	<h3>Deleted Business List</h3>
+	<div class="row">
+		<div class="col-sm-4">
+			<label for="search" class="control-label">Search </label>
+			<div class="input-group bottomspace">		
+				<input id="search" type="text" class="form-control" ng-change="searchFilter('business_name', searchProp)" ng-model="searchProp" placeholder="search"/>
+				<span class="input-group-btn">
+				<button class="btn btn-success" type="button">
+					<span class="glyphicon glyphicon-search iconsearch"></span>
+				</span>	
+			</div>	
+		</div>			 				  
+		<div class="col-sm-4">
+			<div class="bottomspace">
+				<label for="sort" class="control-label">Sort by Order</label>
+					<select id="sort" class="form-control" ng-model="id"> 
+						<option value="">Select Order</option>		<!-- added value & selected attr -->	
+						<option value="-business_name">Desending</option>
+						<option value="business_name">Asending</option>   
+					</select>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="bottomspace">
+				<label for="verified" class="control-label">Filter By Verified</label>
+					<select id="verified" class="form-control" ng-model="verifiedFilter" ng-change="changeStatus('verified',verifiedFilter)">
+						<option value="" selected>Select Verified</option><!-- added value & selected attr -->
+						<option value="1" >Verified</option>
+						<option value="0">Not Verified</option>
+					</select>
+			</div>
+		</div>		
+	</div>	
+	<div class="table-responsive">	
+		<table class="table table-bordered">
+			<thead>
+				<th>Sr.No</th>
+				<th>Business Name</th>
+				<th>Created Date</th>
+				<th>Owner Name</th>
+				<th>Salesman</th>
+				<th>Manager</th>
+				<th>Manage</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="x in bizList | orderBy:id  | filter: { status : hideDeleted}">
+					<td>{{ ((delBizCurrentPage - 1) * pageItems) + $index + 1 }}</td>
+					<td>{{x.business_name}}</td>
+					<td>{{x.created_date}}</td>
+					<td>{{x.name}}</td>
+					<td><span ng-if="x.manager==null">-</span><span ng-if="x.manager!=null">{{x.manager}}</span></td>
+					<td><span ng-if="x.admin==null">-</span><span ng-if="x.admin!=null">{{x.admin}}</span></td>
+					<td>
+						<div class="btn-toolbar" role="toolbar" aria-label="...">
+							<div class="btn-group">
+								<button type="button" tooltip="{{dynamicTooltip(x.status, 'Delete', 'Active')}}" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'"><span class="glyphicon glyphicon-remove"></span></button>								
+							</div>							
+						</div>
+					</td>
+				</tr>
+			</tbody>					
+		</table>
+	</div>
+	<div class="text-center">				
+		<pagination total-items="totalRecords" items-per-page="pageItems" ng-model="delBizCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged(delBizCurrentPage)"></pagination>
+		<pre>Page: {{delBizCurrentPage}} / {{numPages}}</pre>
+	</div>	

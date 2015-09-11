@@ -1,0 +1,142 @@
+<div class="row"> 
+	<div class="col-sm-12">	
+		<div class="main-content">	
+			<ng-include src="'modules/component/toolbar.html'"></ng-include>
+				<div class="row bottom-space">
+					<div class="col-sm-2"> 
+						<label class="control-label"> </label><br>
+						<a ng-click="openProperty('modules/property/addproperty/property.html')" class="btn btn-primary" title="Add new property">Add New Property</a>	
+					</div>	
+					<div class="col-sm-2"> 
+						<label for="searchProp" class="control-label">Search </label>		
+						<div class="input-group">					
+							<input id="searchProp" type="text" class="form-control" placeholder="Search for..." ng-model="searchProp" ng-change="getProperties(currentPage,'title', searchProp,true)">
+							<span class="input-group-btn">
+								<button class="btn btn-success" type="button">Go!</button>
+							</span>
+						</div>
+					</div>	
+			
+					<div class="col-sm-2">
+						<div class="bottomspace">
+							<label for="sort" class="control-label">Sort by Property</label>
+								<select id="sort" class="form-control" ng-model="property_name" ng-change="orderBy('title', property_name, true)">
+									<option value="">Select Order</option>	
+									<option value="-title">Desending</option>
+									<option value="title">Asending</option>
+								</select>
+						</div>
+					</div>
+					
+					<div class="col-sm-2">
+						<label for="status" class="control-label">Select Status</label>
+						<select id="status" class="form-control" ng-model="status" title="status"  ng-change="getProperties(currentPage,'status',status)">
+							<option value="" selected>Select Status</option> <!-- add value attribute empty & selected for initial selected option -->
+							<option value="1">Active</option>
+							<option value="0">Deleted</option>   
+						</select>
+					</div>
+					
+					<div class="col-sm-2">
+						<label for="availability" class="control-label">Filter By Availability</label>
+						<select id="availability" class="form-control" ng-model="availability" ng-change="getProperties(currentPage,'availability',availability)">
+							<option value="" selected>Select Availability</option><!--added value & selected attr -->
+							<option value="1">Available</option>
+							<option value="0">Not Available</option> 
+						</select>
+					</div>		
+				</div>		
+			
+			<h3> Property List</h3>
+			<div class="row" ng-init="getProperties(currentPage)">
+				<div class="col-sm-12 ">
+					<div class="table-responsive">
+						<table class="table table-bordered ">
+							<thead>
+								<tr>
+									<th>Sr. No.</th>
+									<th>Image</th>
+									<th>Property Details</th>
+									<th>Availability</th>
+									<th>Status</th>
+									<th>Manage</th> 
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="x in properties | orderBy:sort">
+									<td>{{((currentPage - 1) * pageItems) + $index + 1}}</td>
+									<td class="col-sm-2">
+										<div class="media-left">
+										<div class="media-object text-center">
+											<img class="imgwidths"  ng-model="x.imgkey" ng-src="{{appConfig.assetPath + x.property_images[x.imgkey].file_relative_path}}" ng-init="x.imgkey = 0"/>
+											<span class="thumbs" ng-repeat="(key, value) in x.property_images">
+												<img class="img-thumbnail imgpropwidth" ng-src="{{appConfig.assetPath + value.file_relative_path}}" ng-click="x.imgkey = key"/>
+											</span>
+										</div>
+										</div>
+									</td>
+									<td>
+										<table class="table table-bordered table-responsive">
+											<tr>
+												<td><b>Property Title</b></td>
+												<td>{{x.title}}</td>
+											</tr>
+											<tr>
+												<td><b>Property For</b></td>
+												<td>{{x.property_for}}</td>
+											</tr>
+											<tr>
+												<td><b>Property Type</b></td>
+												<td>{{x.type}}</td>		
+											</tr>
+											<tr>
+												<td><b>Address</b></td>
+												<td><b>Country :</b>{{x.property_location.country}}<br>
+												<b>State :</b>{{x.property_location.state}}<br>
+												<b>City :</b>{{x.property_location.city}}<br>
+												</td>
+											</tr>
+										</table>  
+									</td>	
+									<td>								
+										<a ng-show="x.availability==1" title="Available"  popover-placement="top" popover="Owner Name-Trupti Misal">Available</a>
+										
+										<a class="text-danger" ng-show="x.availability==0" title="Not available" popover-placement="top" popover="Duration-1Year Rent-12000"> Not Available </a>
+									</td>
+									<td>
+										<div class="btn-group">
+											<button type="button" tooltip="{{dynamicTooltip(x.status, 'Delete Property', 'Make Active')}}" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'"><span class="glyphicon glyphicon-remove"></span></button>
+										</div>
+									</td>
+									
+									<td class="col-sm-3" style="max-width:150px">
+										<div class="btn-group">
+											<a type="button" ng-disabled="x.availability==0" disabled="disabled" tooltip="Rent This Property" class="btn btn-info" ng-click="openProperty('modules/property/setrent.html', x)">Rent This</a>
+										</div>
+										<a ng-click="openProperty('modules/property/addproperty/property.html', x)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="Update Property"> 
+											<span class="glyphicon glyphicon-pencil"></span>
+										</a>
+										
+										<a ng-click="openProperty('modules/property/addproperty/property.html', x, true)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="Copy Property"> Copy
+											<!-- <span class="glyphicon glyphicon-pencil"></span> -->
+										</a>
+										
+										<a ng-click="openProperty('modules/property/viewProperty.html', x)" class="btn btn-success responsive" title="View">View</a> 
+									</td>
+								</tr>				
+							</tbody>
+						</table>
+					</div>					
+					<div class="text-center">
+						<pagination total-items="totalRecords" items-per-page="pageItems"  ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="getProperties(currentPage,propertyParam)"></pagination>	<pre>Page: {{currentPage}} / {{numPages}}</pre>
+					</div>
+				</div>
+			</div>
+		</div>		
+	</div>
+</div>			
+								
+										 
+
+							
+												

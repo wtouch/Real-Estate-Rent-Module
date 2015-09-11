@@ -1,0 +1,44 @@
+	<div class="row">
+		<div class="col-sm-12"  ng-repeat="x in products">
+			<div class="bottomspace">
+				<div class="product">
+					<div class="row">
+						<div class="col-sm-9">
+							<h3>{{x.business_name}}</h3>
+							<div class="media">
+								<div class="media-left">
+									<div class="media-object text-center"><!--width="150px"-->
+										<img class="imgwidths"  ng-model="x.imgkey" ng-src="{{appConfig.assetPath + x.product_image[x.imgkey].file_relative_path}}" ng-init="x.imgkey = 0"/>
+										<span class="thumbs" ng-repeat="(key, value) in x.product_image">
+											<img class="img-thumbnail" width="40px" ng-src="{{appConfig.assetPath + value.file_relative_path}}" ng-click="x.imgkey = key"/>
+										</span>
+									</div>
+								</div>
+								<div class="panel panel-default media-body">
+									<div class="panel-heading">
+										<h3 class="panel-title">{{x.product_service_name}}</h3>
+									</div>
+									<div class="panel-body scroll" ng-bind-html="x.description"></div>
+								</div>
+							</div>
+						</div>	
+						<div class="col-sm-3">
+							<div class="btn-group">
+								<button  type="button" tooltip="{{dynamicTooltip(x.featured, 'Non Featured', 'Featured')}}" ng-class="(x.featured==1) ? 'btn btn-info' : 'btn btn-danger'" ng-model="x.featured" ng-change="feature(x.id, x.featured)" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'">
+									<span class="glyphicon glyphicon-star"></span>
+								</button>
+								<!--ng-if="permission.featured_product"-->
+								<button type="button" tooltip="{{dynamicTooltip(x.status, 'Delete', 'Active')}}" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'">
+									<span class="glyphicon glyphicon-remove"></span>
+								</button>
+								<button type="button" tooltip="Edit" class="btn btn-warning" ng-click="editProductForm(x)">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</button>
+							</div>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- ng-if="permission.delete_product" -->

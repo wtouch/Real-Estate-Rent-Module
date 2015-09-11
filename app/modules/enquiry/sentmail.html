@@ -1,0 +1,22 @@
+<div class="table-responsive">
+	<table class="table table-striped table-bordered">
+		<thead> 
+			<th>Sr.No.</th>
+			<th>Subject</th>
+			<th>To</th>
+			<th>Date</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="mail in mailList">
+				<td>{{$index + 1}}</td>
+				<td><a href="#/dashboard/enquiry/mailview/{{mail.id}}">{{mail.subject}}</a></td>
+				<td><a>{{mail.to_email.to}}</a></td>
+				<td>{{mail.date}}</td>
+			</tr>
+		</tbody>					
+	</table>
+</div>
+<div class="text-center">				
+	<pagination total-items="totalRecords" items-per-page="pageItems"  ng-model="sentmailListCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged(sentmailListCurrentPage,statusParam)"></pagination>				
+	<pre>Page: {{sentmailListCurrentPage}} / {{numPages}}</pre>
+</div>

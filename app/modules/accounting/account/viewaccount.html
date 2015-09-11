@@ -1,0 +1,44 @@
+<h3>Accounts</h3>
+<div class="row">
+	<div class="col-sm-2">
+		<div class="bottomspace">
+			<label for="type" class="control-label">Select Account Type</label>
+				<select id="type" class="form-control" ng-model="types" title="type"  ng-change="changeStatus(currentPage,'category',types)" ng-init="types = 'none'">
+					<option value="none" selected>Select Type</option>
+					<option value="Bank">Bank Account</option>
+					<option value="Party">Party Account</option>   
+				</select>
+		</div>
+	</div>
+	<div class="col-sm-2">
+		<div class="bottomspace">
+			<label for="type" class="control-label">Search</label>
+				<input type="text" id="type" class="form-control" ng-model="accountName" title="type" placeholder="Search by Account Name" ng-change="changeStatus(currentPage,'account_name',accountName, true)" />
+		</div>
+	</div>
+</div>
+<div class="table-responsive" ng-init="changeStatus(currentPage)">
+  <table class="table  table-hover table-bordered">
+	<thead>
+	<th>Sr. No.</th>
+	<th>Account Name</th>
+	<th>Category</th>
+	<th>Description</th>
+	<th>Manage</th>
+	</thead>
+	<tbody>
+	<tr ng-repeat="x in accounts | orderBy:sort">
+	<td>{{ ((currentPage - 1) * pageItems ) +$index+1 }}</td>
+	<td>{{ x.account_name }}</td>
+	<td>{{ x.category }}</td>
+	<td>{{ x.description}}</td>
+	<td><a ng-click="openAddaccount('modules/accounting/account/addaccount.html',x)" class="btn btn-primary" type="button" tooltip-animation="true" tooltip="Edit Account Information"> <span class="glyphicon glyphicon-pencil"></span></a>
+	<a type="button" tooltip="Delete Account" ng-class="(x.status==1) ? 'btn btn-success' : 'btn btn-danger'" ng-model="x.status" ng-change="deleted(x.id, x.status)" btn-checkbox="" btn-checkbox-true="'1'" btn-checkbox-false="'0'" class="ng-pristine ng-valid active btn btn-success"><span class="glyphicon glyphicon-remove"></span></a></td>
+	</tr>
+	</tbody>
+  </table>
+</div>
+<div class="text-center">				
+		<pagination total-items="totalRecords" items-per-page="pageItems"  ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="changeStatus(currentPage)"></pagination>
+		<pre>Page: {{currentPage}} / {{numPages}}</pre>
+</div>

@@ -1,0 +1,120 @@
+<div class="row">
+	<div class="col-sm-12">	
+		<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">	{{alert.msg}}
+		</alert>
+		<h3 class="col-sm-offset-2 col-sm-9"> Create New User Group</h3>
+		<form name="usersgroupForm" class="form-horizontal" role="form" ng-submit="usersgroupForm.$valid" novalidate>		
+			<div class="form-group">
+				<label for="group_name" class="col-sm-2 control-label">Group Name *</label>
+				<div class="col-sm-9">
+					<input type="text" class="form-control" id="group_name" name="group_name" ng-model="usersgroup.group_name" placeholder="Enter Group Name" required>
+					<span class="help-block" ng-show="usersgroupForm.group_name.$dirty && usersgroupForm.group_name.$invalid">
+						<span class="text-danger" ng-show="usersgroupForm.group_name.$error.required">Group Name is required.</span>
+					</span>
+				</div>
+			</div>
+			
+			<div class="form-group">	
+				<label for="group_description" class="col-sm-2 control-label">Group Description *</label>
+				<div class="col-sm-9">
+					<input type="text" id="group_description" class="form-control" name="group_description" ng-model="usersgroup.group_description" placeholder="Enter Group Description" required >
+					<span class="help-block" ng-show="usersgroupForm.group_description.$dirty && usersgroupForm.group_description.$invalid">
+						<span class="text-danger" ng-show="usersgroupForm.group_description.$error.required">Group Description is required.</span>
+					</span>
+				</div>
+			</div>	
+			
+			<div class="form-group">
+				<label for="date" class="col-sm-2 control-label">Date</label>
+				<div class="col-sm-9">
+					<input readonly type="text" id="date" name="date" class="form-control" value="{{usersgroup.date}}" ng-model="usersgroup.date">
+				</div>
+			</div>	
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Group Permission/Access *</label>
+				<div class="col-sm-9">
+					<accordion close-others="true">
+						<accordion-group heading="User Module">
+							<div class="checkbox col-sm-3" ng-repeat="(key, value) in manage_user.user_module">
+								<label>
+									<input type="checkbox" ng-model="usersgroup.group_permission.user_module[key]" ng-value="value">{{value}}
+								</label>
+							</div>
+						</accordion-group>
+						<accordion-group heading="Template Module">
+							<div class="checkbox col-sm-3" ng-repeat="(key, value) in manage_user.template_module">
+								<label>
+									<input type="checkbox" ng-model="usersgroup.group_permission.template_module[key]" ng-value="value">{{value}}
+								</label>
+							</div>
+						</accordion-group>
+						<accordion-group heading="Business Module">
+							<div class="checkbox col-sm-3" ng-repeat="(key, value) in manage_user.business_module">
+								<label>
+									<input type="checkbox" ng-model="usersgroup.group_permission.business_module[key]" ng-value="value">{{value}}
+								</label>
+							</div>
+						</accordion-group>
+						<accordion-group heading="Website Module">
+							<div class="checkbox col-sm-3" ng-repeat="(key, value) in manage_user.website_module">
+								<label>
+									<input type="checkbox" ng-model="usersgroup.group_permission.website_module[key]" ng-value="value">{{value}}
+								</label>
+							</div>
+						</accordion-group>
+						<accordion-group heading="Enquiry Module">
+							<div class="checkbox col-sm-3" ng-repeat="(key, value) in manage_user.enquiry_module">
+								<label>
+									<input type="checkbox" ng-model="usersgroup.group_permission.enquiry_module[key]" ng-value="value">{{value}}
+								</label>
+							</div>
+						</accordion-group>
+						<accordion-group heading="Dashboard">
+							<div class="checkbox col-sm-3" ng-repeat="(key, value) in manage_user.dashboard">
+								<label>
+									<input type="checkbox" ng-model="usersgroup.group_permission.dashboard[key]" ng-value="value">{{value}}
+								</label>
+							</div>
+						</accordion-group>
+						<accordion-group heading="Product Module">
+							<div class="checkbox col-sm-3" ng-repeat="(key, value) in manage_user.product_module">
+								<label>
+									<input type="checkbox" ng-model="usersgroup.group_permission.product_module[key]" ng-value="value">{{value}}
+								</label>
+							</div>
+						</accordion-group>
+						<accordion-group heading="group_access">
+							<div class="checkbox col-sm-3" ng-repeat="(key, value) in manage_user.group_access">
+								<label>
+									<input type="checkbox" ng-model="usersgroup.group_permission.group_access[key]" ng-value="value">{{value}}
+								</label>
+							</div>
+						</accordion-group>
+					</accordion>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Other Settings</label>
+				<div class="col-sm-4">
+					<div class="checkbox" ng-repeat="(key, value) in manage_user.config">
+						<label>
+							<input type="checkbox" ng-model="usersgroup.config[key]" ng-value="value">{{value}}
+						</label>
+					</div>
+				</div>
+			</div>	
+			
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-9">
+					<button type="submit" class="btn btn-success" title="Add User" ng-disabled="usersgroupForm.$invalid" ng-click="postData(usersgroup)" ng-if="!editForm">Add User Group</button>
+					<button type="submit" class="btn btn-success" title="Add User" ng-disabled="usersgroupForm.$invalid" ng-click="update(usersgroup)" ng-if="editForm">Update User Group</button>
+					<button type="reset" class="btn btn-danger" title="Reset">Reset</button>
+				</div>
+			</div>
+			
+		</form>			
+	</div>
+</div>
+

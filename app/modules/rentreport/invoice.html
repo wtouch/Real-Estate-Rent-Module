@@ -1,0 +1,84 @@
+<div class="modal-header">
+	<button type="button" class="close" ng-click="modalOptions.close()">
+		<span aria-hidden="true">&times;</span></button>
+	<h3>Rent This Property</h3>
+</div>
+<div class="modal-body">
+<div class="clearfix">
+	<button type="button" class="btn btn-primary pull-right" ng-click="modalOptions.printDiv('invoice')">Print</button>
+	<button type="button" class="btn btn-danger pull-right" ng-click="modalOptions.close()">Close</button>
+</div>
+	<div class="panel panel-default" id="invoice" ng-if="modalOptions.rentList">
+		<div class="panel-heading text-center"><h2>INVOICE</h2></div>
+		<div class="panel-body row">
+			<div class="col-xs-6">
+				<address class="text-center">
+					<strong>{{userDetails.name | uppercase}}</strong><br>
+					{{userDetails.address.address}}<br>
+					E-Mail : {{userDetails.email}}
+				</address>
+				<hr>
+				<p>To,<br>
+					<strong>{{modalOptions.rentList.name | uppercase}}</strong><br>
+					{{modalOptions.rentList.address.address}}<br>{{modalOptions.rentList.address.location}}<br>{{modalOptions.rentList.address.city}}<br>{{modalOptions.rentList.address.area}}<br>{{modalOptions.rentList.address.pincode}}<br>				
+				</P>
+			</div>
+			<div class="col-xs-6">
+				<div class="table-responsive">
+					<table class="table table-bordered">
+						<tr class="amt">
+							<td><strong>Invoice No.</strong><br>{{modalOptions.rentList.id}}
+							</td>
+							<td><strong>Dated</strong><br>
+							{{modalOptions.rentList.generated_date}}</td>
+						</tr>
+						
+						<tr>
+							<td><strong>Invoice Month</strong><br> {{modalOptions.rentList.generated_date | date : 'MMM-yyyy'}}</td>
+							<td><strong>Due Date</strong><br>{{modalOptions.rentList.due_date}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="table-responsive col-xs-12">
+				<table class="table table-bordered">
+					<thead>
+						<tr class="head">
+							<th class=" col-xs-8">Particulars</th>
+							<th class=" col-xs-2">Amount</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="(key,value) in modalOptions.rentList.perticulars">
+							<td>{{key | uppercase | replace : {"_" : " "} }}</td>
+							<td class="text-right">{{ value | number : 2 }}</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td class="text-right"><strong>Total Rent</strong></td>
+							<td class="amt text-right">{{modalOptions.rentList.total_amount | number : 2}}</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+			<div class="col-xs-12">
+				<p>Amount Chargeable(in words) : 
+				<strong><em>{{modalOptions.inWords | uppercase}}</em></strong>
+				<!-- <p ng-if="modalOptions.rentList.remark">Remarks :</p> -->
+				<p><strong>Remarks:</strong> <span ng-bind-html="modalOptions.rentList.remark"></span></p>
+				
+				<hr/>
+				<p><strong>Company's Service Tax No: </strong>{{modalOptions.accountConfig.service_tax_no}}</p>
+				<p><strong>Company's Pan: </strong>{{modalOptions.accountConfig.pan_no}} </strong></p>
+				<p class="text-right">For <strong><em>{{userDetails.name}}</em></strong><br><br><br>
+				Authorised Signatory</p>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-default" id="invoice" ng-if="modalOptions.rentList.length <= 0">
+		<div class="panel-body">
+			<h2> No Data Found </h2>
+		</div>
+	</div>
+</div>

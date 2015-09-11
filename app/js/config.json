@@ -1,0 +1,358 @@
+	"business" : {
+			
+				"ownership" : ["Sole Proprietory(Individual)", "Partnership", "Professional Association", "Private Limited Company", "Public Limited Company"],
+				
+				"additional_business" : ["Trader", "Manufacturer", "Retailer", "Buying House", "Wholesaler", "Exporter", "Service Provider"],
+					
+				"infrastructure" : ["Customization Facilities", "Customized Packaging", "Distribution Network", "Infrastructural Set-Up", "Infrastructural & Manufacturing Facilities", "Infrastructure & Team", "Infrastructure Facilities", "Logistics", "Logistics & Transportation", "Logistics Facility & Timely Delivery", "Manufacturing Facilities", "Manufacturing Unit", "Our Infrastructure", "Our Machinery", "Our Vendor Base", "Our Warehouse", "Packaging & Delivery", "Packaging & Transportation", "Product Packaging", "Production Facility", "Reasearch & Development", "Reasearch & Development Activities", "Reasearch & Development Facilities", "Sales Network", "Warehouse & Packaging", "Warehouse Facilities", "Warehouse Unit", "Warehousing & Logistics", "Warehousing & Packaging", "Warehousing,Packaging & Logistics", "Warehousing,Packaging & Timely Delivery", "Warehousing,Packaging & Transportation", "Wide Distribution Network"],	
+				
+				
+				"year" : ["2010", "2011", "2012", "2013", "2014", "2015"],
+				
+				"employees" : ["10", "20", "30", "50", "100", "500+", "1000+"],
+				
+				"business_type" : ["Trader", "Manufacturer", "Retailer", "Buying House", "Wholesaler", "Exporter", "Service Provider"],
+				
+				"media_type" : ["Television", "News Paper"]
+				
+		},
+		
+		"manage_user" : {
+				
+				"group_access" : {"admin":"Admin Group", "salesman":"Salesman", "manager":"Manager", "customer":"Customer"},
+				
+				"user_module" : {
+					"user_list":"User List",
+					"add_user":"Add User",
+					"edit_user":"Edit User",
+					"ban_user":"Ban user",
+					"delete_user":"Delete User",
+					"reset_user_password":"Reset User Password",
+					"activate_user" : "Activate User",
+					"assign_user_group" : "Assign Group to User",
+					"add_group" : "Add Group",
+					"edit_group" : "Edit Group"
+				},
+				
+				"template_module" : {
+					"template_list":"Template List",
+					"my_template":"My template List",
+					"request_custom_template":"Request Custom Template",
+					"add_template":"Add Template",
+					"edit_template":"Edit Template",
+					"delete_template":"Delete Template",
+					"Make_Private" : "Make Private/Public Template",
+					"set_template_price" : "Set Template Price",
+					"rate_template" : "Rate to Template",
+					"filter_by_development_status" : "Filter by development status",
+					"assign_to_developer" : "assign to Developer",
+					"filter_by_developer" : "Filter By Developer",
+					"publish_template" : "Publish Template"
+				},
+				
+				"business_module" : {
+					"business_list":"Business List",
+					"add_business":"Add Business",
+					"approve_business":"Approve Business",
+					"verify_business":"Verify Business",
+					"edit_business":"Edit Business",
+					"delete_business":"Delete Business",
+					"featured_business":"Featured Business",
+					"filter_by_customer" : "filter by customer"
+				},
+				
+				"product_module" : {
+					"product_list" : "List of Products",
+					"reorder_products" : "Re-order Products",
+					"edit_product" : "Edit Product",
+					"add_product" : "Add Product",
+					"featured_product" : "Featured Product",
+					"delete_product" : "Delete Product"
+				},
+				
+				"dashboard" : {
+					"default_widgets" : "Default Widgets",
+					"create_moddule_widget" : "create Moddule Widget",
+					"create_statistics_widget" : "Create Statistics Widget",
+					"manage_widgets" : "Manage Widgets"
+				},
+				
+				"enquiry_module" : {
+					"all_enquiries" : "All Enquiries",
+					"filter_by_user" : "Filter Enquiries by Customer",
+					"filter_by_category" : "Filter By Category",
+					"filter_by_type" : "Filter Enquiries by Type",
+					"search_enquiries" : "Search Enquiries",
+					"Delete Mail" : "Delete Mail"
+				},
+				
+				"website_module" : {
+					 "website_list" : "Website List",
+					"manage_domain" : "Manage Domain",
+					"customer_filter" : "Customer Filter",
+					"validity_filter" : "Validity Filter",
+					"expiry" : "Set Expiry",
+					"change_settings" : "Change Website Settings",
+					"renew" : "Renew Website",
+					 "request_site" : "Request for New Website",
+					 "requested_sites" : "Requested Website List",
+					"edit_domain" : "Edit Domain Name",
+					"publish_domain" : "Publish/Active Domain",
+					"reject_domain" : "Reject Domain Registration"
+				},
+				
+				"config" : {"config":"Group Config", "config2":"Group Config2"}
+		},
+		
+		"template" : {
+		
+				"category" : [
+					{"id" : "1", "name" : "Jewellery", "system_name" : "jewellery"},
+					{"id" : "2", "name" : "Arts & Culture" ,"system_name" : "arts_culture" },
+					{"id" : "3", "name" : "Animals & Pets" ,"system_name" : "animals_pets" },
+					{"id" : "4", "name" : "Design & Photography","system_name" : "design_photography"},
+					{"id" : "5", "name" : "Educational & Books","system_name" : "educational_books"},
+					{"id" : "7", "name" : "Medical (Healthcare)Products & Services","system_name" : "medical_healthcare"},
+					{"id" : "8", "name" : "Furniture Products","system_name" : "furniture_products"},
+					{"id" : "9", "name" : "Business & Services","system_name" : "business_services"},
+					{"id" : "10", "name" : "Computers & Internet","system_name" : "computers_internet"},
+					{"id" : "11", "name" : "Fashion & Beauty","system_name" : "fashion_beauty"},
+					{"id" : "12", "name" : "Electronics & Electrical","system_name" : "electronics_electrical"},
+					{"id" : "14", "name" : "Industrial Supplies","system_name" : "industrial_supplies"},
+					{"id" : "15", "name" : "Food & Restaurant","system_name" : "food_restaurant"},
+					{"id" : "16", "name" : "Cars & Motorcycles","system_name" : "cars_motorcycles"},
+					{"id" : "17", "name" : "Sports,Outdoors & Travel","system_name" : "sports_outdoors_travel"},
+					{"id" : "18", "name" : "Home & Family","system_name" : "home_family"},
+					{"id" : "19", "name" : "Entertainment, Games & Nightlife","system_name" : "entertainment_games_nightlife"},
+					{"id" : "20", "name" : "Holidays, Gifts & Flowers","system_name" : "holidays_gifts_flowers"},
+					{"id" : "21", "name" : "Society & Peoples","system_name" : "society_peoples"},
+					{"id" : "22", "name" : "Travel & Tourism","system_name" : "travel_tourism"},
+					{"id" : "23", "name" : "Real Estate","system_name" : "real_estate"},
+					{"id" : "24", "name" : "Small Businesses","system_name" : "small_businesses"},
+					{"id" : "25", "name" : "Building & Construction","system_name" : "building_construction"},
+					{"id" : "26", "name" : "Ayurvedic & Herbal Products","system_name" : "ayurvedic_herbal_products"},
+					{"id" : "27", "name" : "Event Management Services","system_name" : "event_management_services"},
+					{"id" : "28", "name" : "Railway, Shipping & Aviation","system_name" : "railway_shipping_aviation"}
+				],
+
+				"template_params" : {
+					"slider" : "Slider",
+					"featured" : "Featured/Highlighted",
+					"product" : "Product/Service",
+					"template_color" : "Template Colors",
+					"enquiry_form" : "Enquiry Form",
+					"google_map":"Google Map"
+				},
+				
+				"development_status" : [
+				{"name" : "Order Placed", "system_name" : "order_placed"}, 
+				{"name" : "Rejected", "system_name" : "Rejected"},
+				{"name" : "Inprogress", "system_name" : "inprogress"},
+				{"name" : "Completed", "system_name" : "completed"}
+				]
+		},
+		"numbers" : ["1","2", "3","4","5","6","7","8","9","10","11","12"]
+	}
+	
+	
+	
+	
+	
+	
+	{
+	"country" : [{
+			"country_name" : "India",
+			"states" : [{
+					"state_name" : "Maharashtra",
+					"cities" : [{"city_name" : "Pune"},{"city_name" : "Mumbai"}]
+				},{
+					"state_name" : "Gujarat",
+					"cities" : [{"city_name" : "Nasik"},{"city_name" : "Ahmdabad"}]
+				},{
+					"state_name" : "Karnataka",
+					"cities" : [{"city_name" : "Nagpur"},{"city_name" : "Beed"}]
+				},{
+					"state_name" : "Kerala",
+					"cities" : [{"city_name" : "Virar"},{"city_name" : "Satara"}]
+				}
+			]},{
+			"country_name" : "Australia",
+			"states" : [{
+					"state_name" : "Uttar Pradesh",
+					"cities" : [{"city_name" : "Nanded"},{"city_name" : "Latur"}]
+				},{
+					"state_name" : "MadhyaPradesh",
+					"cities" : [{"city_name" : "Aurangabad"},{"city_name" : "Jalana"}]
+				},{
+					"state_name" : "Bihar",
+					"cities" : [{"city_name" : "Solapur"},{"city_name" : "Sangali"}]
+				},{
+					"state_name" : "Hariyana",
+					"cities" : [{"city_name" : "Vasai"},{"city_name" : "Thane"}]
+				}
+			]}	
+		],
+
+	"property" : {
+			"amenities" : ["Power Backup", "Water Storage", "Lift", "Reserve Parking", "Security", "Maintenance Staff", "GYM", "Park", "Private Terrace", "Swimming Pool", "Servant Quarters", "Club House"],
+			
+			"types" : [
+						{	"category_name" : "Residential Property",
+							"type" : "Flats & Apartment"
+						},
+						
+						{	"category_name" : "Residential Property",
+							 "type" :"Individual House/ Home"
+						},
+						
+						{   "category_name" : "Residential Property",
+							 "type" :"Society Housing"
+						},
+						
+						{	"category_name" : "Residential Property",
+							 "type" :  "Farm House"
+						},
+						
+						{	"category_name" : "Residential Property",
+							 "type" : "Builder Floor"
+						},
+						
+						{	"category_name" : "Residential Property",
+							 "type" : "Apartments"
+						},
+			
+						{	"category_name" : "Residential Property",
+							 "type" : "Residential Land/ Plot"
+						},
+			
+						{	"category_name" : "Residential Property",
+							 "type" : "Bunglaows/ Villas"
+						},
+						
+						{	"category_name" : "Residential Property",
+							 "type" :"Penthouses"
+						},					
+					
+						{	"category_name" : "Commercial Property",
+							"type" : "Commercial Shops"
+						},
+
+						{	"category_name" : "Commercial Property",
+							"type" : "Showrooms"
+						},
+						
+						{	"category_name" : "Commercial Property",
+							"type" : "Office Space"
+						},
+						
+						{	"category_name" : "Commercial Property",
+							"type" : "Office Complex"
+						},
+						
+						{	"category_name" : "Commercial Property",
+							"type" : "Banquet Hall & Guest House"
+						},
+						
+						{	"category_name" : "Commercial Property",
+							"type" : "Shopping Mall Space"
+						},
+						
+						{	"category_name" : "Commercial Property",
+							"type" : "Business Center"
+						},
+						
+						{	"category_name" : "Commercial Property",
+							"type" : "Commercial Lands & Plots"
+						},
+						
+						{	"category_name" : "Commercial Property",
+							"type" : "Hotel & Restaurant"
+						},
+						
+						{	"category_name" : "Commercial Property",
+							"type" : "Intitutional Land"
+						},				
+						
+						{	"category_name" : "Commercial Property",
+							"type" : "Clinic & Hospital Building"
+						},
+
+						{	"category_name" : "Agricultural Land",
+							"type" :"Farm Land"
+						},
+						
+						{	"category_name" : "Agricultural Land",
+							"type" :"Farm Land For Lease"
+						},	
+						
+						{	"category_name" : "Agricultural Land",
+							"type" :"Pasture"
+						},
+							
+						{	"category_name" : "Industrial Property",
+							"type" : "Industrial Land/Plot"
+						},
+
+						{	"category_name" : "Industrial Property",
+							"type" :  "Warehouse/Godown"
+						},
+						
+						{	"category_name" : "Industrial Property",
+							"type" :  "Factory"
+						},
+						
+						{	"category_name" : "Industrial Property",
+							"type" :  "Factory Plot/Land"
+					}],			
+			
+			"category" : [{
+				"category_name" : "Residential Property"				
+			},
+			{
+				"category_name" : "Commercial Property" 					
+			},
+			{
+				"category_name" : "Agricultural Land"					
+			},
+			{
+				"category_name" : "Industrial Property"				
+			}],	
+
+			"Bathrooms" :["1","2","3","4","5","6"],
+			
+			"Bedrooms" :["1","2","3","4","5","6"],
+			
+			"currency" : ["In-Rupees","Thousand","Lac","Carore"],
+			
+			"propertyAge" : ["under Construction", "New Construction", "0 to 5 years", "5 to 10 years", "10 to 15 years", "15 to 20 years", "Above 20 years"], 
+			
+			"furnished" : ["Furnished", "Unfurnished", "Semi-Furnished"],
+			
+			"transaction_type" : ["Resale Property", "New Property"],
+			
+			"ownership" :["Individual", "Others","Broker/Agent","Builder/Promoter"],
+			
+			"floors" : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"],
+			
+			"facing" : ["East", "West", "South", "North" , "South East", "South West", "North West", "North East"],
+			
+			"property_floor" : ["Ground", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" ],
+			
+			"parking" : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+			
+			"area_Details"	: ["Sq.Feet", "Cent", "Sq. Yards", "Ares", "Acre", "Sq. Meter","Bigha", "Hectares", "Guntha", "Marla"],
+			
+			"property_Price" : {
+				"Amount" : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"],
+				"In_Rupees" : ["Thousand", "Lac", "Crore"]
+			}        
+		
+	},
+		
+	
+	"manage_user" :{
+			"user_Module" : ["User List", "Add User", "Edit User", "Ban user", "Delete User"],
+			"template_Module" : ["Template List", "My template List", "Request Custom Template", "Add Template", "Edit Template", "Delete Template"],
+			"business_Module" : ["Business List", "Add Business", "Approve Business", "Varify Business", "Edit Business", "Delete Business"]
+	}
+}

@@ -1,0 +1,228 @@
+<section id="input">
+	<div class="row">
+		<div class="col-sm-12">	
+			<div class="main-content">
+				<div class="breadcrumb-back" ng-include="'modules/component/toolbar.html'"></div>				
+				<div ng-show="submitted" class="text-center">
+					<h2>You have registered successfully! Check your mail for activation link.</h2>
+					<small>If activated <a href="#/login">Click here</a> to login!</small>
+				</div>
+				<form ng-hide="submitted" class="form-horizontal center-block" role="form" name="registerForm" ng-submit="registerForm.$valid" novalidate="novalidate" >
+					<h3>Free Registration / Sign up</h3>
+					<hr>
+					<div class="form-group">
+						<label  class="col-sm-2"></label>
+							<div class="col-sm-7">
+								<p>Please register a free account,before you can start posting your ads. Registration is quick and free!Note that fields marked * are required.</p>		
+							</div>
+					</div>
+					<div class="form-group">
+						<label for="name" class="col-sm-2 control-label">Name *</label>
+						<div class="col-sm-9">
+							<input type="hidden" id="date" name="date" class="form-control" ng-model="register.register_date" value="{{register.register_date}}">
+							<input type="hidden" class="form-control" ng-model="register.config" ng-init="">
+							<input type="text" class="form-control" id="name" ng-model="register.name" name="name" placeholder="Enter Name" required>
+							<span class="help-block" ng-show="registerForm.name.$dirty && registerForm.name.$invalid">
+								<span class="text-danger" ng-show="registerForm.name.$error.required">Name required.</span>
+							</span>	
+						</div>
+					</div>	
+					
+					<div class="form-group">	
+						<label  for="email" class="col-sm-2 control-label">Email *</label>
+						<div class="col-sm-9">
+							<input type="Email" class="form-control" id="email" ng-model="register.email" name="email" placeholder="Enter Email" ng-blur="checkuserAvailable('email', register.email)" required>
+							
+							<span class="help-block">
+								<span class="text-success" ng-show="registerForm.email.$dirty && registerForm.email.$valid">{{availabilityMsg}}</span>
+							</span>	
+							
+							<span>e.g:example@wtouch.in</span>								
+							<span class="help-block" ng-show="registerForm.email.$dirty && registerForm.email.$invalid">
+								<span class="text-danger" ng-show="registerForm.email.$error.available">{{availabilityMsg}}</span>
+								<span class="text-danger" ng-show="registerForm.email.$error.required">Email address required.</span>
+								<span class="text-danger" ng-show="registerForm.email.$error.email">Invalid Email address.</span>
+							</span>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="address" class="col-sm-2 control-label">Address *</label>
+						<div class="col-sm-9">
+							<textarea  class="form-control" id="address" ng-model="register.address.address" name="address" placeholder="Enter address" ng-maxlength="75" required></textarea>
+							<p ng-hide="registerForm.address.$error.maxlength">{{ 75 - register.address.address.length + " Characters left"}}</p>
+							<span class="help-block" ng-show="registerForm.address.$dirty &&  registerForm.address.$invalid">
+								<span class="text-danger" ng-show="registerForm.address.$error.maxlength">Sorry You are Exceeding the Limit</span>
+								<span class="text-danger" ng-show="registerForm.address.$error.required">Address is required.</span>
+							</span>
+						</div>						
+					</div>		
+					
+					<script type="text/ng-template" id="customTemplate.html">
+						<a>
+							<span bind-html-unsafe="match.label | typeaheadHighlight:query"></span> 
+							<span><small> ({{match.model.area}} - {{match.model.pincode}})</small></span>
+						</a>
+					</script>
+					
+					<div class="form-group">
+						<label for="location" class="col-sm-2 control-label">Location *</label>
+							<div class="col-sm-9">
+								<input type="text" required name="location" id="location" ng-model="register.address.location" placeholder="Enter your location" class="form-control" required>
+								<span class="help-block" ng-show="registerForm.location.$dirty && registerForm.location.$invalid">
+									<span ng-show="registerForm.location.$error.required" class="text-danger">Location is required.</span>
+								</span>
+							</div>						
+					</div>
+					
+					<div class="form-group">
+						<label for="area" class="col-sm-2 control-label">Area *</label>
+						<div class="col-sm-9">
+							<input type="text" id="area" name="area" class="form-control" ng-model="register.address.area" placeholder="Enter area" required>
+							<span class="help-block" ng-show="registerForm.area.$dirty && registerForm.area.$invalid">
+							<span ng-show="registerForm.area.$error.required" class="text-danger">Area is Required</span>					
+							</span>
+						</div>						
+					</div>			
+							
+			<div class="form-group">
+					<label for="state" class="col-sm-2 control-label">State *</label>
+					<div class="col-sm-4">
+					<input type="text" id="state" name="state" class="form-control" ng-model="register.state" placeholder="Enter state" required>
+						<span class="help-block" ng-show="registerForm.state.$dirty && registerForm.state.$invalid">
+							<span ng-show="registerForm.state.$error.required" class="text-danger">State is required.</span>
+						</span>				
+					</div>	
+					<label for="city" class="col-sm-1 control-label">City *</label>
+					<div class="col-sm-4" >
+						<input type="text" id="city" name="city" class="form-control" ng-model="register.address.city" placeholder="Enter city" required>
+						<span class="help-block" ng-show="registerForm.city.$dirty && registerForm.state.$invalid">
+							<span ng-show="registerForm.city.$error.required" class="text-danger">City is required.</span>
+						</span>						
+					</div>
+			</div>
+							
+					<div class="form-group">
+						<label for="Country" class="col-sm-2 control-label">Country *</label>
+						<div class="col-sm-9">
+							<input type="text" required name="Country" id="Country" ng-model="register.country" placeholder="Enter Your Country" ng-disabled="readOnly" class="form-control">
+							<span class="help-block" ng-show="registerForm.Country.$dirty && registerForm.Country.$invalid">
+								<span ng-show="registerForm.Country.$error.required"class="text-danger">Country is required.</span>
+							</span>				
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="pincode" class="col-sm-2 control-label">Pin Code</label>
+						<div class="col-sm-9">
+							<input ng-disabled="readOnly" type="text" id="pincode" name="pincode" class="form-control" ng-model="register.address.pincode" placeholder="Enetr Pin Code" ng-pattern="/^\d{0,9}[0-9]$/" maxlength="6"  ng-minlength="6">
+							<span class="help-block" ng-show="registerForm.pincode.$dirty && registerForm.pincode.$invalid">
+								<span ng-show="registerForm.pincode.$error.pattern && (registerForm.pincode.$dirty || submitted)" class="text-danger">Enter a valid PIN Code</span>
+								<span class="text-danger" ng-show="registerForm.pincode.$error.minlength && (registerForm.pincode.$dirty || submitted)">Enter Valid Length Of Pin Code.</span>
+							</span>
+						</div>						
+					</div>
+					
+					<div class="form-group">
+						<label  for="dob" class="col-sm-2 control-label">Birth Date*</label>
+						<div class="col-sm-9">
+							<div class="input-group">
+								<input type="text" placeholder="YYYY-DD-MM" id="dob" name="dob" class="form-control" ng-model="register.dob" datepicker-popup="{{format}}" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-click="open($event)" />
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+								</span>
+							</div>
+							<span class="help-block" ng-show="registerForm.dob.$dirty && registerForm.dob.$invalid">
+								<span class="text-danger" ng-show="registerForm.dob.$error.required || submitted">Date of birth required in YYYY-DD-MM format.</span>
+							</span>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="phone" class="col-sm-2 control-label">Mobile No. *</label>
+						<div class="col-sm-9">
+							<input type="text" id="phone" class="form-control" name="phone" ng-model="register.phone" placeholder="Your Contact No" ng-pattern="/(7|8|9)\d{9}$/" maxlength="10" required>
+							<span class="help-block" ng-show="registerForm.phone.$dirty && registerForm.phone.$invalid">
+								<span class="text-danger" ng-show="registerForm.phone.$error.pattern && (registerForm.phone.$dirty || submitted)">Enter a Valid Contact Number.</span>
+							</span>
+                            <span>e.g: 9199999999</span>
+						</div>						
+					</div>
+					
+					<div class="form-group">
+						<label for="fax" class="col-sm-2 control-label">Fax</label>
+						<div class="col-sm-9">
+							<input type="text" id="fax" class="form-control" name="fax" ng-model="register.fax" placeholder="Your Fax " ng-pattern="/[0-9]\d$/" maxlength="12">
+							<span class="help-block" ng-show="registerForm.fax.$dirty && registerForm.fax.$invalid">
+								<span class="text-danger" ng-show="registerForm.fax.$error.pattern && (registerForm.fax.$dirty || submitted)">Enter a valid Fax.</span>
+							</span>
+						</div>						
+					</div>	
+					
+					<div class="form-group">
+						<label for="website" class="col-sm-2 control-label">Website</label>
+						<div class="col-sm-9">
+							<input type="url" class="form-control" id="website" name="website" ng-model="register.website" placeholder="Enter Website">
+							
+							<span class="help-block" ng-show="registerForm.website.$dirty && 	registerForm.website.$invalid">
+							
+								<span class="text-danger" ng-show="registerForm.website.$error.required">Website  is required.</span>
+								<span class="text-danger" ng-show="registerForm.website.$error.url">Invalid Web Site.</span>
+							</span>
+							<span>e.g http://www.google.com</span>
+						</div>						
+					</div>			
+					<h4>Login Details</h4>
+					<hr>
+					<div class="form-group">
+						<label for="username" class="col-sm-2 control-label">UserName  *</label>
+						<div class="col-sm-9">
+							<div class="input-group">
+								<input type="text" id="username" class="form-control" name="username" ng-model="register.username" ng-blur="checkuserAvailable('username', register.username)" placeholder="Your Username" ng-minlength="5" ng-maxlength="12" ng-required="true" >
+								<div class="input-group-btn">
+									<button type="submit" ng-click="checkuserAvailable('username', register.username)" class="btn btn-success">Check Availability</button>
+								</div>
+							</div>
+							<span class="help-block">	
+								<span class="text-success" ng-show="registerForm.username.$dirty && registerForm.username.$valid && registerForm.username.$error.available == false">Username available</span>
+							</span>
+							<span  class="help-block" ng-show="registerForm.username.$dirty && registerForm.username.$invalid">	
+								<span class="text-danger" ng-show="registerForm.username.$error.available == true && (registerForm.username.$dirty || submitted)">Please Select Another username.Username already exist.</span>
+								<span class="text-danger" ng-show="registerForm.username.$error.required && (registerForm.username.$dirty || submitted)">username is required.</span>
+								<span class="text-danger" ng-show="registerForm.username.$error.minlength && (registerForm.username.$dirty || submitted)">username is too short.</span>
+							</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="password" class="col-sm-2 control-label">Password *</label>
+						<div class="col-sm-9">
+							<input type="Password" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[@!~#$%^&*])(?=.*[A-Z]).{6,}/" id="password" class="form-control" name="password" ng-model="register.password" placeholder="Your Password" required>
+							<span  class="help-block" ng-show="registerForm.password.$dirty && registerForm.password.$invalid">
+								<span class="text-danger" ng-show="registerForm.password.$error.required && (registerForm.password.$dirty || submitted)">Your password is required.</span>
+								
+								<span class="text-danger" ng-show="registerForm.password.$error.pattern && (registerForm.password.$dirty || submitted)">Your password must have 1) one upper case 2) one lower case 3) special char [@!~#$%^&*] 4) number 5) At least 6 char </span>
+							</span>
+						</div>						
+					</div>
+					<div class="form-group">
+						<label for="confirmPassword" class="col-sm-2 control-label">Confirm Password *</label>
+						<div class="col-sm-9">
+							<input type="Password" id="confirmPassword" class="form-control" name="confirmPassword" ng-model="confirmPassword" placeholder="Confirm Your Password" ng-change="passMatch(register.password, confirmPassword)" required>
+							<span class="help-block" ng-show="registerForm.confirmPassword.$dirty && !pass || registerForm.confirmPassword.$dirty && registerForm.confirmPassword.$invalid">
+								<span class="text-danger" ng-show="registerForm.confirmPassword.$error.required && (registerForm.confirmPassword.$dirty )">Your confirm password is required.</span>
+								<span class="text-danger" ng-show="!pass">Confirm password doesnot match.</span>
+							</span>
+						</div>						
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button type="submit" ng-click="insert(register)" ng-disabled="registerForm.$invalid" class="btn btn-primary">Register</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</section>
+
+

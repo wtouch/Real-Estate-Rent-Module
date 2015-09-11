@@ -1,0 +1,61 @@
+<h3>Project Information</h3>
+				
+<div class="form-group">
+	<label  for="projectTitle" class="col-sm-2 control-label">* &nbsp Project Title</label>
+	<div class="col-sm-9">		
+		<textarea type="text"  id="projectTitle" class="form-control" name="projectTitle" ng-model="project.title"    cols="20" rows="4" ng-maxlength="356"  required></textarea>{{project.title|json}}
+		<p ng-hide="addProject.projectTitle.$error.maxlength">{{ 356 - project.title.length + " Chars left" }}</p>
+			 <span class="text-danger" ng-show="addProject.projectTitle.$error.maxlength">
+			Sorry You are Exceeding the Limit</span>
+				<span class="text-danger" ng-show="addProject.projectTitle.$dirty && addProject.projectTitle.$invalid">
+			  <span ng-show="addProject.projectTitle.$error.required">Project title is required .</span>
+	</div>
+	<input type="hidden" ng-model="project.user_id">
+	<input type="hidden" ng-model="project.status">
+	<input type="hidden" ng-model="project.date">
+	</div>
+	<div class="form-group"> 
+		<label for="featured" class="col-sm-2 control-label">* &nbsp Featured</label> 
+		<div class="col-sm-9">
+			<label class="radio-inline" >
+				<input type="radio" name="featured" id="yes" value="1"   ng-model="project.featured" checked> Yes
+			</label>
+			<label class="radio-inline" ng-model="project.featured">
+				<input type="radio" name="featured" id="no" value="0" ng-model="project.featured" > No
+			</label>										
+		</div>	
+
+	</div>	
+	<div class="form-group">
+		<label for="Category" class="col-sm-2 control-label">* &nbsp Category</label>
+		<div class="col-sm-9">
+			<select class="form-control" id="Category" name="Category" ng-model="project.category" required ng-change="getTypes(project.category)" ng-options="item.category_name as item.category_name for item in categories">		
+				<option value="">Select Category</option>
+			</select>
+			<span class="help-block" ng-show="addProject.Category.$dirty && addProject.Category.$invalid">
+				<span class="text-danger" ng-show="addProject.Category.$error.required">Category is required.</span>
+			</span>				
+		</div>
+	</div>
+	
+	
+	<div class="form-group">
+		<label for="projectType" class="col-sm-2 control-label"> * &nbsp Project Type</label>
+		<div class="col-sm-9">
+			<select class="form-control" id="projectType" name="projectType" ng-model="project.type" required ng-options="item.types as item.types for item in projtypes">	{{item.types}}	
+				<option value="">Select Project Type</option>
+			</select>
+			<span class="help-block" ng-show="addProject.projectType.$dirty && addProject.projectType.$invalid">
+				<span class="text-danger" ng-show="addProject.projectType.$error.required">Project type is required.</span>
+			</span>				
+		</div>				
+	</div>	
+	<div class="form-group">
+		<label for="projectLocation" class="col-sm-2 control-label">* &nbsp Location</label>
+	<div class="col-sm-9">
+			<input type="text" class="form-control" id="projectLocation" name="projectLocation" ng-model="project.location" required>
+			<span class="text-danger" ng-show="addProject.projectLocation.$dirty && addProject.projectLocation.$invalid">
+				<span ng-show="addProject.projectLocation.$error.required">Location is required .</span>
+		</span>
+	</div>							
+</div>

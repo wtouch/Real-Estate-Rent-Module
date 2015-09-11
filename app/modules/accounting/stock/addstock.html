@@ -1,0 +1,74 @@
+<div class="main-content" ng-init="modalOptions.addstock.user_id = userDetails.id">
+	<div class="modal-header" style="margin-bottom: 14px">
+		<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
+		<!-- <h3 class="text-center">Add Stock</h3> -->
+		{{modalOptions.addstock}}
+		<h3 class="text-center" ng-if="!modalOptions.addstock.id">Add Account</h3>
+		<h3 class="text-center" ng-if="modalOptions.addstock.id">Edit Account</h3>
+	</div>
+	<form name="addStockForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="addStockForm.$valid">
+		<div class="form-group">
+			<label  for="goods_name" class="col-sm-2 control-label">Goods Name</label>
+				<div class="col-sm-9">
+					<input type="text" id="goods_name" class="form-control"  ng-model="modalOptions.addstock.goods_name" name="goods_name" placeholder="goods_name" required />
+				</div>						
+		</div>
+		
+		<div class="form-group">
+			<label for="goods_type" class="col-sm-2 control-label">Type</label>
+				<div class="col-sm-9">
+					<select id="goods_type" class="form-control" name="goods_type"  ng-model="modalOptions.addstock.goods_type" required>
+						<option value="" selected>Select Type</option>
+						<option value="type1" >Type1</option>
+						<option value="type2">Type2</option>
+						<option value="type3">Type3</option>
+						<option value="type4">Type4</option>
+					</select>
+					<span class="help-block" ng-show="addStockForm.goods_type.$dirty && addStockForm.goods_type.$invalid">
+						<span ng-show="addStockForm.goods_type.$error.required" class="text-danger">Required field.</span>
+					</span>	
+				</div>
+		</div> 
+		
+		<div class="form-group">
+			<label for="category" class="col-sm-2 control-label">Category</label>
+				<div class="col-sm-9">
+					<select id="category" class="form-control" name="category"  ng-model="modalOptions.addstock.category" required>
+					<option value="" selected>Select Category</option>
+					<option value="category1">Category1</option>
+					<option value="category2">Category2</option>
+					<option value="category3">Category3</option>
+					<option value="category4">Category4</option>
+					</select>
+					<span class="help-block" ng-show="addStockForm.category.$dirty && addStockForm.category.$invalid">
+						<span ng-show="addStockForm.category.$error.required" class="text-danger">Required field.</span>
+					</span>	
+				</div>
+		</div> 
+		
+		<div class="form-group">
+			<label  for="quantity" class="col-sm-2 control-label">Quantity</label>
+				<div class="col-sm-9">
+					<input type="text" id="quantity" class="form-control"  ng-pattern="/^\d{0,9}[0-9]$/" ng-model="modalOptions.addstock.quantity" name="quantity" placeholder="Quantity" required />
+				</div>						
+		</div>
+		
+		<div class="form-group">
+			<label  for="unit" class="col-sm-2 control-label">Unit</label>
+				<div class="col-sm-9">
+					<input type="text" id="unit" class="form-control" ng-model="modalOptions.addstock.unit" name="unit" placeholder="Amount" required />
+				</div>						
+		</div>
+		
+		<div class="form-group modal-footer">
+			<div class="col-sm-11">
+				<button type="submit" class="btn btn-success"  ng-if="!modalOptions.addstock.id" ng-click="modalOptions.postData(modalOptions.addstock); modalOptions.ok()">Submit</button>
+				
+				<button type="submit" ng-if="modalOptions.addstock.id" class="btn btn-success"  ng-click="modalOptions.updateData(modalOptions.addstock.id, modalOptions.addstock); modalOptions.ok()">Update</button>
+				
+				<button type="reset" class="btn btn-danger" ng-click="modalOptions.close()">Cancel</button>
+			</div>
+		</div>	
+		
+	</form>
+</div>

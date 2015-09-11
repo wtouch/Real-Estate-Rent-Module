@@ -1,0 +1,28 @@
+$scope.postData = function(setrent) {
+			 console.log(setrent);
+				var duration = 0;
+				var year = setrent.year;
+				var month = setrent.month;
+				console.log(year);
+				console.log(month); 
+				var duration = parseInt((year * 12) + parseInt(month));
+				setrent.duration=duration;
+				console.log(duration);
+			
+				var escduration = 0;
+				var esc_year = setrent.esc_year;
+				var esc_month = setrent.esc_month;
+				console.log(esc_year);
+				console.log(esc_month); 
+				var escduration = parseInt((esc_year * 12) + parseInt(esc_month));
+				setrent.escduration = escduration;
+				console.log(escduration);
+				
+				dataService.post("post/rent/setrent",setrent)
+				.then(function(response) {  
+					if(response.status == "success"){
+						$scope.reset();
+					}
+					$scope.alerts.push({type: response.status, msg: response.message});
+				}); 
+		}   

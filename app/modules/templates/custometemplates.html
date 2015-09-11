@@ -1,0 +1,134 @@
+<h3>Custom Templates</h3>
+	<div class="row">
+		<div class="col-sm-3"> 
+			<div class="bottomspace">
+				<label for="search" class="control-label">Search </label>		
+				<input id="search" type="text" class="form-control" ng-change="searchFilter('template_name', searchProp)" ng-model="searchProp" placeholder="search"/>
+			</div>
+		</div>			 				  
+		<div class="col-sm-3">
+			<div class="bottomspace">
+				<label for="sort" class="control-label">Sort by Order</label>
+					<select id="sort" class="form-control" ng-model="sort"> 
+						<option value="">Select Order</option>		<!-- added value & selected attr -->	
+						<option value="-template_name">Desending</option>
+						<option value="template_name">Asending</option>  
+					</select>
+			</div>
+		</div>
+		<div class="col-sm-2">
+			<div class="bottomspace">
+				<label for="developmentstatus" class="control-label">Development Status</label>
+					<select id="developmentstatus" class="form-control" ng-model="developmentstatus"
+					ng-change="changeStatus('development_status',developmentstatus)" ng-init="showStatus='rejected'">
+						<option value="" selected>Select Status</option> <!-- add value attribute empty & selected for initial selected option -->
+						<option value="inprogress">Inprogress</option>
+						<option value="order_placed">Order Placed</option>  
+						<option value="completed">Completed</option> 
+						<option value="rejected">Rejecteted</option> 
+					</select>
+			</div>
+		</div>
+		<div class="col-sm-2">
+			<div class="bottomspace">
+				<label for="status" class="control-label">Select Status</label>
+					<select id="status" class="form-control" ng-change="changeStatus('status',featured)" ng-model="featured" ng-init="showStatus=1">
+						<option value="" selected>Select status</option> <!-- added value & selected attr -->
+						<option value="1" >Active</option>
+						<option value="0">Deleted</option> 
+					</select>
+			</div>
+		</div>
+		<div class="col-sm-2">
+			<div class="bottomspace">
+				<label for="filterbycustomerid" class="control-label">Select By Customer</label>
+					<select id="filterbycustomerid" class="form-control" ng-model="filterbycustomerid"  ng-change="changeStatus('user_id', filterbycustomerid)" ng-options="user.id as user.name for user in customerList">
+						<option value="">Select Customer</option>
+					</select>
+			</div>
+		</div>
+	</div>
+	<div class="table-responsive">	
+		<table class="table table-bordered">
+			<thead>
+				<th>Sr.No.</th>
+				<th>Template Name</th>
+				<th>Template Type</th> 
+				<th>Development Status</th>
+				<th>Owner Name</th>
+				<th>Salesman</th>
+				<th>Manager</th>
+				<th>Price</th>
+				<th>Create Date</th>
+				<th>Modified Date</th>
+				<th class="col-sm-3">Manage</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="x in templates | orderBy:sort">
+					<td>{{((customTempCurrentPage - 1) * pageItems) + $index + 1 }}</td>
+					<td>{{x.template_name}}</td>
+					<td class="col-sm-2">
+					<p class="form-control-static">{{x.template_type}}
+					<button ng-if="permission.Make_Private" type="button" tooltip= "{{dynamicTooltip(x.template_type, 'make public', 'make private')}}" ng-class="(x.template_type=='public') ? 'btn btn-warning glyphicon glyphicon-ok' : 'btn btn-danger glyphicon glyphicon-remove'" ng-model="x.template_type" ng-change="changeStatusFn('template_type', x.template_type,x.id)" btn-checkbox btn-checkbox-true="'private'" btn-checkbox-false="'public'">
+					</button></p>	
+					</td> 
+					<td style="max-width:150px">
+						<div class="input-group">
+							<p class="form-control-static" ng-hide="x.development_id ==1">{{x.development_status}}</p>
+							<select ng-hide="x.development_id ==0 || !x.development_id" class="form-control" id="development_status" name="development_status" ng-show="x.development_id == 1" ng-model="x.development_status" ng-options="item.system_name as item.name for item in temp.development_status" ng-required="true">
+									<option value="">Select Group</option>
+							</select>
+								
+							<div class="input-group-btn" ng-if="userDetails.group_name == 'admin' || userDetails.group_name == 'superadmin'">
+								<a type="button"  ng-class="(x.development_id == 0 || !x.development_id) ? 'btn btn-info' : 'btn btn-success'" ng-model="x.development_id" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'" ng-change="editDevelopmentStatus('development_status', x.development_status, x.id, x.development_id); x.development_status = changeDevelopmentStatus(x.development_status, development)" tooltip="Edit Development Status">
+									<span ng-class="(x.development_id ==1) ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-pencil'" ></span> 
+								</a>
+							</div>
+						</div>
+							
+						<td class="col-sm-2">{{x.name}}</td>
+						<td><span ng-if="x.manager==null">-</span><span ng-if="x.manager!=null">{{x.manager}}</span></td>
+						<td><span ng-if="x.admin==null">-</span><span ng-if="x.admin!=null">{{x.admin}}</span></td>
+				
+					</td>
+					<td style="max-width:150px">
+						<div class="input-group">
+							<p class="form-control-static" ng-hide="x.boxId ==1">{{x.template_price}}
+							<input type="text" id="template_price" class="form-control" name="template_price" ng-show="x.boxId == 1" ng-model="x.template_price" ng-required="true"/>
+							
+							<div class="input-group-btn" ng-if="userDetails.group_name == 'admin' || userDetails.group_name == 'superadmin'">
+								<a type="button" class="btn btn-warning pull-right" ng-model="x.boxId" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'" ng-click="showInput($event,'opened')" ng-change="editTemplatePrice('template_price', x.template_price, x.id,x.boxId)" tooltip="Edit Price">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</a>
+							</div></p>
+						</div>
+					</td>
+					
+					<td>{{x.date | date:'MM/dd/yyyy'}}</td>
+					<td>{{x.modified_date}}</td>					
+					<td>
+						<div>
+						<!--Apply Template-->
+							<a ng-click="openModel('modules/templates/applytemplate.html', x.id)" class="btn btn-success" ng-show="x.template_price=='free'">Apply</a>
+							
+							<button href="#" class="btn btn-warning" title="Buy Template" ng-show="x.template_price!='free'"> Buy </button>
+							
+							<button ng-if="permission.publish_template" type="button" tooltip="{{dynamicTooltip(x.status, 'Delete This','Make It Active')}}" ng-class="(x.status==1) ? 'btn btn-success glyphicon glyphicon-ok' : 'btn btn-danger glyphicon glyphicon-remove'" ng-model="x.status" ng-change="deleted( x.id,x.status)" btn-checkbox btn-checkbox-true="'1'" btn-checkbox-false="'0'">
+							</button>
+							
+							<a type="button" ng-click="openTemp('modules/templates/viewTemplate.html', x.id)" class="btn btn-primary glyphicon glyphicon-eye-open" tooltip="Preview Template Details"></a>
+							
+							<a ng-if="permission.edit_template" type="button" tooltip="Submit Template" class="btn btn-info glyphicon glyphicon-open" href="#/dashboard/templates/addtemplate/{{x.id}}"></a>
+							
+							<a ng-click="openTab('modules/templates/viewscrible.html',x.id)" class="btn btn-primary responsive glyphicon glyphicon-info-sign" tooltip="View Scrible Details"></a> 
+						</div>
+					</td>
+				</tr>		
+			</tbody>					
+		</table>
+	</div>
+	<div class="text-center">				
+		<pagination total-items="totalRecords" items-per-page="pageItems"  ng-model="customTempCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged(customTempCurrentPage,template_type)"></pagination>
+		<pre>Page: {{customTempCurrentPage}} / {{numPages}}</pre>
+	</div>		
+

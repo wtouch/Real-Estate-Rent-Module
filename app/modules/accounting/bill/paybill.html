@@ -1,0 +1,125 @@
+<div class="main-content">
+	<div class="modal-header" style="margin-bottom: 14px">
+		<button type="button" class="close" ng-click="modalOptions.close()"><span aria-hidden="true">&times;</span></button>
+		<h3>Pay Bill</h3>
+	</div>
+		<form name="payBillForm" class="form-horizontal" role="form" novalidate="novalidate" ng-submit="payBillForm.$valid">
+				<input type="hidden" ng-model="modalOptions.billPayment.bill_id" ng-init="modalOptions.billPayment.bill_id=modalOptions.rentList.id">
+			<div class="form-group">
+				<label  for="date" class="col-sm-2 control-label">Date</label>
+					<div class="col-sm-9">
+						<input type="text" id="date" class="form-control" ng-model="modalOptions.billPayment.date" ng-init="modalOptions.billPayment.date=modalOptions.rentDate.date" name="date" placeholder="date" readonly>
+					</div>						
+			</div>
+			
+			<div class="form-group">
+				<label for="account_no" class="col-sm-2 control-label">Account Name* </label>
+					<div class="col-sm-9">
+					<select class="form-control" name="account_no" id="account_no" ng-model="modalOptions.billPayment.account_no" ng-change="modalOptions.getData(modalOptions.billPayment.account_no, modalOptions)" ng-options="item.id as item.account_name for item in modalOptions.accountList" required>
+						<option value="" selected>Select Account Name</option>
+					</select>
+					<span class="help-block" ng-show="addIncomeForm.account_no.$dirty && addIncomeForm.account_no.$invalid">
+						<span ng-show="addIncomeForm.account_no.$error.required" class="text-danger">Account Name is required.</span>
+						<span ng-show="(addIncomeForm.account_no.$dirty || submitted)" class="text-danger">Enter Name Only!</span>
+					</span>
+					</div>
+			</div>
+			
+			
+			<div class="form-group" ng-if="modalOptions.previousBalance || modalOptions.previousBalance == 0">
+				<label for="previous_amount" class="col-sm-2 control-label">Previous Amount</label>
+				<div class="col-sm-9">
+					<input type="text" id="" name="" readonly class="form-control" ng-model="modalOptions.previousBalance"/>			
+					</div>
+			</div>
+			
+			<input type="hidden"  ng-model="modalOptions.billPayment.balance"/>
+			
+			<div class="form-group">
+				<label for="payment_type" class="col-sm-2 control-label">Payment Type </label>
+					<div class="col-sm-9">
+						<select id="payment_type" class="form-control" name="payment_type"  ng-model="modalOptions.billPayment.description.payment_type.type" required>
+						<option value="" selected>Select Type</option>
+						<option value="Cash" >Cash</option>
+						<option value="Cheque">Cheque</option>
+						<option value="Net Banking">Net Banking</option>
+						<option value="DD">DD</option>
+						</select>
+						<span class="help-block" ng-show="payBillForm.payment_type.$dirty && payBillForm.payment_type.$invalid">
+							<span ng-show="payBillForm.payment_type.$error.required" class="text-danger">Payment Type is required.</span>
+						</span>	
+					</div>
+			</div> 
+
+			<div class="form-group" ng-if="modalOptions.billPayment.description.payment_type.type == 'Cheque' || modalOptions.billPayment.description.payment_type.type == 'Net Banking' || modalOptions.billPayment.description.payment_type.type == 'DD'">
+				<label for="refferance no" ng-if="modalOptions.billPayment.description.payment_type.type == 'Net Banking'"class="col-sm-2 control-label">Transaction No</label>
+				<label for="refferance no" ng-if="modalOptions.billPayment.description.payment_type.type == 'Cheque'" class="col-sm-2 control-label">Check No</label>
+				<label for="refferance no" ng-if="modalOptions.billPayment.description.payment_type.type == 'DD'" class="col-sm-2 control-label">DD No</label>
+					<div class="col-sm-9">
+						<input type="text" id="refferance no" ng-if="modalOptions.billPayment.description.payment_type.type == 'Net Banking'" ng-model="modalOptions.billPayment.description.payment_type.transaction_No" class="form-control" name="refferance_no"   placeholder="Enter Transaction No" ng-pattern="/^\d{0,9}[0-9]$/" required/>
+						<span class="help-block" ng-show="payBillForm.refferance_no.$dirty && payBillForm.refferance_no.$invalid">
+							<span ng-show="payBillForm.refferance_no.$error.required" class="text-danger">Ref No is required.</span>
+							<span ng-show="payBillForm.refferance_no.$error.pattern" class="text-danger">Enter Numbers Only!</span>
+						</span>
+						<input type="text" id="refferance no" ng-if="modalOptions.billPayment.description.payment_type.type == 'Cheque'" ng-model="modalOptions.billPayment.description.payment_type.check_no" class="form-control" name="cheque_no"   placeholder="Enter Check No" ng-pattern="/^\d{0,9}[0-9]$/" required/>
+						<span class="help-block" ng-show="payBillForm.cheque_no.$dirty && payBillForm.cheque_no.$invalid">
+							<span ng-show="payBillForm.cheque_no.$error.required" class="text-danger">Cheque No is required.</span>
+							<span ng-show="payBillForm.cheque_no.$error.pattern" class="text-danger">Enter Numbers Only!</span>
+						</span>
+						<input type="text" id="refferance no" ng-if="modalOptions.billPayment.description.payment_type.type == 'DD'" ng-model="modalOptions.billPayment.description.payment_type.DD_no" class="form-control" name="DD_no"   placeholder="Enter DD No" ng-pattern="/^\d{0,9}[0-9]$/" required/>
+						<span class="help-block" ng-show="payBillForm.DD_no.$dirty && payBillForm.DD_no.$invalid">
+							<span ng-show="payBillForm.DD_no.$error.required" class="text-danger">DD no required.</span>
+							<span ng-show="payBillForm.DD_no.$error.pattern" class="text-danger">Enter Numbers Only!</span>
+						</span>
+					</div>		
+			</div> 
+
+			<div class="form-group" ng-if="modalOptions.billPayment.description.payment_type.type == 'Cheque' || modalOptions.billPayment.description.payment_type.type == 'Net Banking' || modalOptions.billPayment.description.payment_type.type == 'DD'">
+				<label for="Date" class="col-sm-2 control-label">Date</label>
+				 <div class="col-sm-9">
+					<input type="date" id="date" class="form-control" ng-model="modalOptions.billPayment.description.date" name="date" 
+					placeholder="date">
+				</div>					
+			</div>
+			
+			<div class="form-group" ng-if="modalOptions.billPayment.description.payment_type.type == 'Cheque' || modalOptions.billPayment.description.payment_type.type == 'Net Banking' || modalOptions.billPayment.description.payment_type.type == 'DD'">
+				<label for="Bank" class="col-sm-2 control-label">Bank Name</label>
+					<div class="col-sm-9">
+						<input type="text" id="Bank" ng-model="modalOptions.billPayment.description.payment_type.Bank" class="form-control" name="Bank"   placeholder="Enter Bank Name" required/>
+						<span class="text-danger" ng-show="payBillForm.Bank.$dirty && payBillForm.Bank.$invalid">
+							<span ng-show="payBillForm.Bank.$error.required">Bank Name is Required.</span>
+						</span>	
+					</div>		
+			</div>
+			
+			<div class="form-group" ng-if="modalOptions.billPayment.description.payment_type.type == 'Cheque' || modalOptions.billPayment.description.payment_type.type == 'Net Banking' || modalOptions.billPayment.description.payment_type.type == 'DD'">
+				<label for="Branch" class="col-sm-2 control-label">Branch</label>
+					<div class="col-sm-9">
+						<input type="text" id="Branch" ng-model="modalOptions.billPayment.description.payment_type.Branch" class="form-control" name="Branch"   placeholder="Enter Branch" required/>
+						<span class="text-danger" ng-show="payBillForm.Branch.$dirty && payBillForm.Branch.$invalid">
+							<span ng-show="payBillForm.Branch.$error.required">Branch Name is Required.</span>
+						</span>	
+					</div>		
+			</div>
+			
+			<div class="form-group">
+				<label  for="credit_amount" class="col-sm-2 control-label">Amount</label>
+					<div class="col-sm-9">
+						<input type="text" id="credit_amount" class="form-control"  ng-pattern="/^\d{0,9}[0-9]$/" ng-model="modalOptions.billPayment.debit_amount" name="amount" placeholder="Amount" ng-init="modalOptions.billPayment.debit_amount = modalOptions.rentList.due_amount" ng-change="modalOptions.totalAmount(modalOptions)" required/>
+						<span class="help-block" ng-show="payBillForm.amount.$dirty && payBillForm.amount.$invalid">
+							<span ng-show="payBillForm.amount.$error.required" class="text-danger">Amount is required.</span>
+							<span ng-show="payBillForm.amount.$error.pattern" class="text-danger">Enter Numbers Only!</span>
+						</span>
+					</div>						
+			</div>
+			
+			<input type="hidden" id="user_id" class="form-control" ng-model="modalOptions.billPayment.user_id" name="user_id" placeholder="User ID" ng-init="modalOptions.billPayment.user_id = modalOptions.rentList.user_id" required/>
+			
+			<div class="form-group modal-footer">
+				<div class="col-sm-11">
+					<button type="submit" class="btn btn-success" ng-disabled="payBillForm.$invalid" ng-click="modalOptions.payBill(modalOptions.billPayment);modalOptions.close()">Pay Bill</button>
+					<button type="reset" class="btn btn-danger" ng-click="modalOptions.close()">Cancel</button>
+				</div>
+			</div>		
+		</form>
+</div>

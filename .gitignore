@@ -1,3 +1,3 @@
-debug.log
-webcache/*
-debug.*
+data/
+System/Origins/LOCK: Permission denied
+app/output/

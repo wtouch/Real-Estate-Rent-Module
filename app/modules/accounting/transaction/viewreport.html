@@ -1,0 +1,157 @@
+<h3 class="text-center">Transaction Report</h3>
+	<div class="row" ng-init="getTransactions()" >		  
+		<div class="col-sm-3">
+			<div class="bottomspace" ng-init="type = 'daily'; calcDuration(type, duration);">
+				<label for="year" class="control-label" >View Report</label>
+					<select id="year" class="form-control" ng-model="type" ng-init="type = 'daily'">
+						<option value="daily">Daily Report</option>	
+						<option value="month">Monthly Report</option>	
+						<option value="year">Yearly Report</option>
+						<option value="custom">Custom Report</option>
+					</select>
+			</div>
+		</div>
+		
+		<div class="col-sm-3" ng-if="type == 'daily'"><!--ng-model="duration.start"-->
+			<div class="bottomspace">
+			<label for="year" class="control-label"></label>
+					<p class="input-group">
+					  <input class="form-control" type="text" ng-change="calcDuration(type,duration)" id="date" name="date" datepicker-popup="yyyy-MM-dd" ng-model="duration.start" is-open="rentdate1" min-date="minDate" ng-required="true" close-text="Close" ng-click="open($event,'rentdate1')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
+							<span class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate1')">
+								<i class="glyphicon glyphicon-calendar"></i></button>
+							</span>
+					</p>
+			</div>
+		</div>
+	
+		<div class="col-sm-3" ng-if="type == 'month'">
+			<div class="bottomspace">
+			<label for="year" class="control-label"></label>
+				<select id="month"  class="form-control " ng-model="duration" ng-init="start.getMonth(start)" ng-change="calcDuration(type, duration)"> 
+					<option value="1" selected>January</option>	
+					<option value="2">February</option>	
+					<option value="3">March</option>	
+					<option value="4">April</option>	
+					<option value="5">May</option>	
+					<option value="6">June</option>	
+					<option value="7">July</option>
+					<option value="8">August</option>
+					<option value="9">September</option>
+					<option value="10">October</option>
+					<option value="11">November</option>
+					<option value="12">December</option>
+				</select>
+			</div>
+		</div> 
+		
+		<div class="col-sm-3" ng-if="type == 'year'">
+			<div class="bottomspace">
+				<label for="year1" class="control-label">View  duration report</label>
+					<select id="year1" class="form-control " ng-model="duration" ng-init="duration.getFullYear(duration)"
+					ng-change="calcDuration(type, duration)"> 
+						<option value="2010">2010</option>	
+						<option value="2011">2011</option>	
+						<option value="2012">2012</option>
+						<option value="2013">2013</option>
+						<option value="2014">2014</option>
+						<option value="2015">2015</option>
+						<option value="2016">2016</option>
+						<option value="2017">2017</option>
+						<option value="2018">2018</option>
+						<option value="2019">2019</option>
+					</select> 
+			</div>
+		</div> 
+		<div  ng-if="type == 'custom'">
+			<div class="col-sm-3"><!--ng-model="duration.start"-->
+					<div class="bottomspace">
+					<label for="date1" class="control-label"></label><!--ng-change="calcDuration(type,start)"-->
+							<p class="input-group">
+							  <input class="form-control" type="text"  id="date1" name="date1" datepicker-popup="yyyy-MM-dd" ng-model="duration.start" is-open="rentdate2" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate2')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate2')">
+										<i class="glyphicon glyphicon-calendar"></i></button>
+									</span>
+							</p>
+					</div>
+			</div>
+			<div class="col-sm-3"><!--ng-model="duration.start"-->
+					<div class="bottomspace">
+					<label for="year" class="control-label"></label>
+							<p class="input-group">
+							  <input class="form-control" type="text" ng-change="calcDuration(type, duration)" id="date" name="date" datepicker-popup="yyyy-MM-dd" ng-model="duration.end" is-open="rentdate3" min-date="minDate" max-date="'2015-06-22'" ng-required="true" close-text="Close" ng-click="open($event,'rentdate3')" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" />
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="open($event, 'rentdate3')">
+										<i class="glyphicon glyphicon-calendar"></i></button>
+									</span>
+							</p>
+					</div>
+			</div>
+		</div>
+	
+	</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="table-responsive" ng-if="incomTotal">
+					<table class="table table-bordered">
+					<thead><th colspan ="6" class="text-center">Income</th></thead>
+					<tbody>
+						<tr>
+							<th>Sr.No.</th>
+							<th>Income Type</th>
+							<th>User Id</th>
+							<th>Amount</th>
+						</tr>
+						<tr ng-repeat="x in income">
+							<td>{{ $index + 1}}</td>
+							<td>{{x.income_expence_type}}</td>
+							<td>{{x.user_id}}</td>
+							<td>{{x.amount}}</td>
+						</tr>
+						<tr>
+						<th> Total Income :</th>
+						<td colspan="5">{{incomTotal}}</td>
+						</tr>
+					</tbody>
+					</table>
+				</div>
+				<div ng-if="!incomTotal">
+				<h2>No Data Found</h2>
+				</div>
+			</div>
+			<div class="col-md-6">
+				
+				<div ng-if="expenceTotal" class="table-responsive">
+					<table class="table table-bordered">
+					<thead><th colspan ="6" class="text-center">Expences</th></thead>
+						<tbody>
+						<tr>
+							<th>Sr.No.</th>
+							<th>Expenses Type</th>
+							<th>User Id</th>
+							<th>Amount</th>
+						</tr>
+						<tr ng-repeat="x in expence">
+							<td>{{$index + 1}}</td>
+							<td>{{x.income_expence_type}}</td>
+							<td>{{x.user_id}}</td>
+							<td>{{x.amount}}</td>
+						</tr>
+						<tr>
+						<th> Total Expences :</th>
+						<td colspan="3">{{expenceTotal}}</td>
+						</tr>
+					</tbody>
+					</table>
+				</div>
+				<div ng-if="!expenceTotal">
+				<h2>No Data Found</h2>
+				</div>
+			</div>
+		</div>
+
+<!-- <div class="text-center">				
+	<pagination total-items="totalRecords" items-per-page="pageItems"  ng-model="rentreportCurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged(rentreportCurrentPage,rentParam)"></pagination>
+	<pre>Page: {{rentreportCurrentPage}} / {{numPages}}</pre>
+</div> -->

@@ -1,0 +1,116 @@
+<h3>Layout Map</h3>
+<div class="form-group">
+	<div class="col-sm-offset-3 col-sm-9">
+		<button type="button" class="btn btn-default btn-primary pull-right" ng-click="addToObject(addlayout_map, project.layout_map.details)" title="Add Layout map">Add Layout map</button>
+	</div>
+</div>
+<div>
+	<input type="hidden" required name="layout_map" ng-model="project.layout_map" />
+	<span class="help-block" ng-show="addProject.layout_map.$dirty && addProject.layout_map.$invalid">
+		<span ng-show="addProject.layout_map.$error.required" class="text-danger">location_map Description is required.</span>
+	</span>
+</div>
+<div class="form-group">
+	<label  for="layoutTitle" class="col-sm-2 control-label">* Title</label>
+	<div class="col-sm-9">		
+		<textarea type="text"  id="layoutTitle" class="form-control" name="layoutTitle" ng-model="addlayout_map.title"    cols="20" rows="4" ng-maxlength="356"  required></textarea>
+		<p ng-hide="addProject.title.$error.maxlength">{{ 356 - addlayout_map.title + " Chars left" }}</p>
+			 <span class="text-danger" ng-show="addProject.layoutTitle.$error.maxlength">
+			Sorry You are Exceeding the Limit</span>
+				<span class="text-danger" ng-show="addProject.layoutTitle.$dirty && addProject.layoutTitle.$invalid">
+			  <span ng-show="addProject.layoutTitle.$error.required"> title is required .</span>
+	</div>
+</div>
+<div class="form-group"> 
+	<label for="layoutDiscription" class="col-sm-2 control-label"> *  Description</label> 
+	<div class="col-sm-9">
+			<textarea class="form-control" id="layoutDiscription"  name="layoutDiscription" ng-model="alayout_map.description.description" cols="20" rows="4" ng-maxlength="356" required ></textarea>
+		<p ng-hide="addProject.layoutDiscription.$error.maxlength">{{ 356 - alayout_map.description.description.length + " Chars left" }}</p>
+		 <span class="text-danger" ng-show="addProject.layoutDiscription.$error.maxlength">
+				Sorry You are Exceeding the Limit</span>
+		<span class="text-danger" ng-show="addProject.layoutDiscription.$dirty && addProject.layoutDiscription.$invalid">
+				<span ng-show="addProject.layoutDiscription.$error.required"> Description is required .</span>
+		</span>
+	</div>
+</div>	
+<div class="form-group">
+	<label for="layout_image" class="col-sm-2 control-label">* &nbsp Layout Image</label>
+	<div class="col-sm-9">
+			<input type="file" id="layout_image" name="layout_image" ng-file-select ng-multiple="true" accept="image/jpeg,image/png, image/gif" ng-file-change="generateThumb($files)" ng-model="layout_image">	
+		<!-- This will show thumbnails & progress of images -->
+			<file-preview url="layout_image"></file-preview>
+			<!-- This button will show if file/s selected -->
+			<button ng-show="layout_image" ng-click="upload(layout_image,path,userinfo, addlayout_map.description.layout_image)" type="button">Upload</button>
+			<!-- This hidden input will store image path in array after successful uploading -->
+			<input type="hidden" ng-model="addlayout_map.description.layout_image">
+	</div>
+
+</div>	
+<div class="form-group"> 
+	<label for="layoutImageDis" class="col-sm-2 control-label"> Image Description</label> 
+	<div class="col-sm-9">
+			<textarea class="form-control" id="layoutImageDis"  name="layoutImageDis" ng-model="addlayout_map.image_description" cols="20" rows="4" ng-maxlength="356" required ></textarea>
+		<p ng-hide="addProject.layoutImageDis.$error.maxlength">{{ 356 - addlayout_map.image_description.length + " Chars left" }}</p>
+		 <span class="text-danger" ng-show="addProject.layoutImageDis.$error.maxlength">
+				Sorry You are Exceeding the Limit</span>
+		<span class="text-danger" ng-show="addProject.layoutImageDis.$dirty && addProject.layoutImageDis.$invalid">
+				<span ng-show="addProject.layoutImageDis.$error.required"> Description is required .</span>
+		</span>
+	</div>
+</div>	
+<h4>SEO</h4>
+<div class="form-group">
+		<label for="layoutBrowserTitle" class="col-sm-2 control-label">* &nbsp Browser Title</label>
+	<div class="col-sm-9">
+		 <textarea class="form-control" id="layoutBrowserTitle" rows="1" name="layoutBrowserTitle" ng-model="project.layout_map.seo.browser_title"   cols="20" rows="4" ng-maxlength="356"  ></textarea>	
+
+		<p ng-hide="addProject.layoutBrowserTitle.$error.maxlength">{{ 356 - project.layout_map.seo.browser_title + " Chars left" }}</p>
+		
+		<span class="text-danger" ng-show="addProject.layoutBrowserTitle.$error.maxlength">
+				Sorry You are Exceeding the Limit</span>
+		<span class="text-danger" ng-show="addProject.layoutBrowserTitle.$dirty && addProject.layoutBrowserTitle.$invalid">
+				<span ng-show="addProject.layoutBrowserTitle.$error.required">Browser is required .</span>
+		</span>
+	</div>							
+</div>				
+<div class="form-group">
+	<label for="layoutMetakey" class="col-sm-2 control-label">* Meta Keywords</label> 
+	<div class="col-sm-9"> 
+		<textarea class="form-control" name="layoutMetakey" ng-model="project.layout_map.seo.meta_key"  id="layoutMetakey" cols="20" rows="4" ng-maxlength="356" required> </textarea>
+		<p ng-hide="addProject.layoutMetakey.$error.maxlength">{{ 356 - project.layout_map.seo.meta_key.length + " Chars left" }}</p>
+				 <span class="text-danger" ng-show="addProject.layoutMetakey.$error.maxlength">
+				Sorry You are Exceeding the Limit</span>
+				<span class="text-danger" ng-show="addProject.layoutMetakey.$dirty && addProject.layoutMetakey.$invalid">
+				<span ng-show="addProject.layoutMetakey.$error.required">Meta Keywords is required .</span>
+		</span>
+	</div>							
+</div>
+<div class="form-group"> 
+		<label for="layoutMetaDesc" class="col-sm-2 control-label">* Meta Description</label> 
+	<div class="col-sm-9">
+			<textarea class="form-control" id="layoutMetaDesc"  name="layoutMetaDesc" ng-model="project.layout_map.seo.meta_desc" cols="20" rows="4" ng-maxlength="356" required ></textarea>
+		<p ng-hide="addProject.layoutMetaDesc.$error.maxlength">{{ 356 - project.layout_map.seo.meta_desc.length + " Chars left" }}</p>
+		<span class="text-danger" ng-show="addProject.layoutMetaDesc.$error.maxlength">
+				Sorry You are Exceeding the Limit</span>
+		<span class="text-danger" ng-show="addProject.layoutMetaDesc.$dirty && addProject.layoutMetaDesc.$invalid">
+				<span ng-show="addProject.layoutMetaDesc.$error.required">Meta Description is required .</span>
+		</span>
+	</div>
+</div>	
+<div class="col-sm-12">
+	<div class="table-responsive">
+		<table class="table table-bordered " ng-if="project.layout_map.details">
+			<tr>
+				<th>Layout Map Heading</th>
+				<th>Layout Map Description</th>
+				<th>Remove </th>
+			</tr>
+			<tr ng-repeat="(key, value) in project.layout_map.details">
+				<td>{{key}}</td>
+				<td>{{value}}</td>
+				<td><button ng-click="removeObject(key,project.layout_map.details)">Remove</button></td>
+				
+			</tr>
+		</table>
+	</div>
+</div>

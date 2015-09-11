@@ -1,0 +1,77 @@
+<h3>Contact Details</h3>
+<div class="form-group">
+	<label for="personName" class="col-sm-2 control-label">Person Name </label>
+	<div class="col-sm-9">
+		<input type="text" class="form-control" id="personName" ng-model="project.contact_details.name" name="personName" placeholder="Enter Your Name" ng-required="true">	
+			<span class="text-danger" ng-show="addProject.personName.$error.required && (addProject.personName.$dirty || submitted)" class="help-block">Name is required.</span>						
+	</div>						
+</div>	
+<div class="form-group">
+	<label for="Phone" class="col-sm-2 control-label">Phone </label>
+	<div class="col-sm-9">
+		<input type="text" class="form-control help-block" id="Phone" ng-model="project.contact_details.phone" name="Phone" placeholder="Your Phone number"  ng-pattern="/(7|8|9)\d{9}$/" maxlength="10"  required >							
+		<p ng-show="addProject.Phone.$error.pattern && (addProject.Phone.$dirty || submitted)" class="text-danger" >Enter a valid contact no.</p>
+	</div>						
+</div>	
+<div class="form-group">
+	<label for="Email" class="col-sm-2 control-label">Email ID</label>
+	<div class="col-sm-9">
+		<input type="email" class="form-control" id="Email" name="Email" placeholder="example@gmail.com" ng-model="project.contact_details.email" required>
+		<span  ng-show="addProject.Email.$dirty && addProject.Email.$invalid">
+			<span class="text-danger" ng-show="addProject.Email.$error.required">Email is required.</span>
+			<span class="text-danger" ng-show="addProject.Email.$error.email">Invalid Email address.</span>
+		</span>
+	</div>
+</div>
+<div class="form-group">
+	<label for="Address" class="col-sm-2 control-label">Address</label>
+	<div class="col-sm-9">
+		<textarea  class="form-control" id="Address" ng-model="project.contact_details.address" name="Address" placeholder="Enter Address" required maxlength="50">
+		</textarea>
+		<p ng-hide="addProject.Address.$error.maxlength">{{ 50 - project.contact_details.address.length + " Chars left"}}</p>
+		<span class="text-danger" ng-show="addProject.Address.$dirty && 	addProject.Address.$invalid">
+		<span class="text-danger" ng-show="addProject.Address.$error.maxlength">
+		Sorry You are Exceeding the Limit</span>
+		<span ng-show="addProject.Address.$error.required">Address is required.</span>
+		</span>
+	</div>						
+</div>
+<h4>SEO</h4>
+	<div class="form-group">
+			<label for="contactBrowserTitle" class="col-sm-2 control-label">* &nbsp Browser Title</label>
+		<div class="col-sm-9">
+			 <textarea class="form-control" id="contactBrowserTitle"  name="contactBrowserTitle" ng-model="project.contact_details.seo.browser_title"   cols="20" rows="4" ng-maxlength="356"  ></textarea>	
+
+			<p ng-hide="addProject.contactBrowserTitle.$error.maxlength">{{ 356 - project.contact_details.seo.browser_title + " Chars left" }}</p>
+			
+			<span class="text-danger" ng-show="addProject.contactBrowserTitle.$error.maxlength">
+					Sorry You are Exceeding the Limit</span>
+			<span class="text-danger" ng-show="addProject.contactBrowserTitle.$dirty && addProject.contactBrowserTitle.$invalid">
+					<span ng-show="addProject.contactBrowserTitle.$error.required">Browser is required .</span>
+			</span>
+		</div>							
+	</div>				
+	<div class="form-group">
+		<label for="contactMetaKey" class="col-sm-2 control-label">* Meta Keywords</label> 
+		<div class="col-sm-9"> 
+			<textarea class="form-control" name="contactMetaKey" ng-model="project.contact_details.seo.meta_key"  id="contactMetaKey" cols="20" rows="4" ng-maxlength="356" required> </textarea>
+			<p ng-hide="addProject.contactMetaKey.$error.maxlength">{{ 356 - project.contact_details.seo.meta_key.length + " Chars left" }}</p>
+					 <span class="text-danger" ng-show="addProject.contactMetaKey.$error.maxlength">
+					Sorry You are Exceeding the Limit</span>
+					<span class="text-danger" ng-show="addProject.contactMetaKey.$dirty && addProject.contactMetaKey.$invalid">
+					<span ng-show="addProject.contactMetaKey.$error.required">Meta Keywords is required .</span>
+			</span>
+		</div>							
+	</div>
+	<div class="form-group"> 
+			<label for="contactMetaDesc" class="col-sm-2 control-label">* Meta Description</label> 
+		<div class="col-sm-9">
+				<textarea class="form-control" id="contactMetaDesc"  name="contactMetaDesc" ng-model="project.contact_details.seo.meta_desc" cols="20" rows="4" ng-maxlength="356" required ></textarea>
+			<p ng-hide="addProject.contactMetaDesc.$error.maxlength">{{ 356 - project.contact_details.seo.meta_desc.length + " Chars left" }}</p>
+			<span class="text-danger" ng-show="addProject.contactMetaDesc.$error.maxlength">
+					Sorry You are Exceeding the Limit</span>
+			<span class="text-danger" ng-show="addProject.contactMetaDesc.$dirty && addProject.contactMetaDesc.$invalid">
+					<span ng-show="addProject.contactMetaDesc.$error.required">Meta Description is required .</span>
+			</span>
+		</div>
+	</div>	
