@@ -2,7 +2,7 @@
 define(['app'], function (app) {
     var injectParams = ['$scope','$rootScope','$injector','modalService','$routeParams' ,'$notification', 'dataService'];
     
-    // This is controller for this view
+    //This is controller for this view
 	var transactionController = function ($scope, $rootScope, $injector, modalService, $routeParams, $notification, dataService) {
 		
 		//global scope objects

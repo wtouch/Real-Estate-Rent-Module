@@ -56,8 +56,11 @@
 	}
 	
 	if($reqMethod=="PUT" || $reqMethod=="DELETE"){
+		print_r($body);
 		$where['id'] = $id; // need where clause to update/delete record
 		$update = $db->update("stock", $body, $where);
+		
 		echo json_encode($update);
+		
 	}
  ?>

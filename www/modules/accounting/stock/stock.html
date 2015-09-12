@@ -1,4 +1,5 @@
-
+<div class="row">
+<div class="col-md-12">
 <div class="main-content">
 	<ng-include src="'modules/component/toolbar.html'"></ng-include>
 	<div class="row">
@@ -37,6 +38,8 @@
 <div class="text-center">
 	<pagination total-items="totalRecords" items-per-page="pageItems"  ng-model="CurrentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="getStock(CurrentPage)"></pagination>
 	<pre>Page: {{CurrentPage}} / {{numPages}}</pre>
+</div>
+</div>
 </div>
 </div>
 </div>

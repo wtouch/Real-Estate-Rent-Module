@@ -37,7 +37,7 @@
 			<div class="form-group">
 				<label for="account_no" class="col-sm-2 control-label">Account Name* </label>
 					<div class="col-sm-9">
-					<select class="form-control" name="account_no" id="account_no" ng-model="modalOptions.addincome.account_no" ng-change="modalOptions.getData(modalOptions.addincome.account_no, modalOptions)" ng-options="item.id as item.account_name for item in modalOptions.accountList" required>
+					<select class="form-control" name="account_no" id="account_no" ng-model="modalOptions.addincome.account_no"ng-change="modalOptions.getData(modalOptions.addincome.account_no, modalOptions)" ng-options="item.id as item.account_name for item in modalOptions.accountList" required>
 						<option value="" selected>Select Account Name</option>
 					</select>
 					<span class="help-block" ng-show="addIncomeForm.account_no.$dirty && addIncomeForm.account_no.$invalid">
