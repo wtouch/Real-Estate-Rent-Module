@@ -222,8 +222,8 @@ define(['app'], function (app) {
 	  /* $HTTP Service for server request
 	  *************************************************************************/
 	  
-	  app.factory("dataService", ['$http', '$window','$rootScope', '$cookieStore', '$cookies', '$location','$timeout','$notification',
-		function ($http, $window,$rootScope,$cookieStore,$cookies,$location,$timeout,$notification) { // This service connects to our REST API
+	  app.factory("dataService", ['$http', '$window','$rootScope', '$cookieStore', '$cookies', '$location','$timeout','$notification', '$q',
+		function ($http, $window,$rootScope,$cookieStore,$cookies,$location,$timeout, $notification, $q) { // This service connects to our REST API
 
 			var serviceBase = '../server-api/index.php/';
 			var today = new Date();
@@ -356,7 +356,7 @@ define(['app'], function (app) {
 			};
 			obj.setUserDetails = function(data){
 				if(data == (undefined || "")){
-					console.log("data undefined: "+data);
+					//console.log("data undefined: "+data);
 				}else{
 					localStorage.clear();
 					localStorage.userDetails = angular.isObject(data) ?  JSON.stringify(data) : data;
@@ -380,72 +380,218 @@ define(['app'], function (app) {
 					
 				});
 			};
-			obj.progressSteps = function(key, value){
-				$rootScope.userDetails.config[key] = value;
-				obj.put('put/user/'+$rootScope.userDetails.id, {config : $rootScope.userDetails.config}).then(function(response){
-					obj.setUserDetails(JSON.stringify($rootScope.userDetails));
-					$rootScope.userDetails = obj.parse(obj.userDetails);
-					if(response.status == "success"){
-						if($rootScope.userDetails.config.addbusiness == false){
-							$location.path("/dashboard/business/addbusiness");
-						}else if($rootScope.userDetails.config.addbusinessDetails != true){
-							$location.path("/dashboard/business/adddetails/"+$rootScope.userDetails.config.addbusinessDetails);
-						}else if($rootScope.userDetails.config.addProducts != true){
-							$location.path("/dashboard/business/products/"+$rootScope.userDetails.config.addProducts);
-						}else if($rootScope.userDetails.config.chooseTemplate == false){
-							$location.path("/dashboard/templates/listoftemplates");
-						}else if($rootScope.userDetails.config.requestSite == false){
-							$location.path("/dashboard/websites/requestnewsite");
-						}else if($rootScope.userDetails.config.requestSite == true){
-							$location.path("/dashboard");
+			var db = openDatabase('hoc', '1.0', 'HOC-Management', 2 * 1024 * 1024 * 1024);
+			
+			// Nodejs encryption with CTR
+			var crypto = require('crypto'),
+				algorithm = 'aes-256-ctr',
+				password = 'd6F3Efeq';
+
+			function encrypt(text){
+			  var cipher = crypto.createCipher(algorithm,password)
+			  var crypted = cipher.update(text,'utf8','hex')
+			  crypted += cipher.final('hex');
+			  return crypted;
+			}
+			 
+			function decrypt(text){
+			  var decipher = crypto.createDecipher(algorithm,password)
+			  var dec = decipher.update(text,'hex','utf8')
+			  dec += decipher.final('utf8');
+			  return dec;
+			}
+			 
+			var hw = encrypt("hello world")
+			console.log(hw);
+			 //outputs hello world
+			//console.log(decrypt(hw));
+			
+			obj.setWhere = function(params){
+				var whereString = " WHERE 1 = 1 ";
+				if(params){
+					// Set WHERE clause
+					if(params.where != undefined){
+						angular.forEach(params.where, function(value, key) {
+							whereString += " AND " + key + " = '" + value + "'";
+						});
+					}
+					if(params.whereRaw != undefined){
+						angular.forEach(params.whereRaw, function(value, key) {
+							whereString += " AND " + value;
+						});
+					}
+					
+					// For search LIKE clause
+					if(params.search != undefined){
+						angular.forEach(params.search, function(value, key) {
+							whereString += " AND " + key + " LIKE '%" + value + "%'";
+						});
+					}
+					
+					// For GroupBy clause
+					if(params.groupBy != undefined){
+						var groupBy = " GROUP BY ";
+						angular.forEach(params.groupBy, function(value, key) {
+							groupBy += key + ",";
+						});
+						groupBy = groupBy.slice(0,-1);
+						console.log(groupBy);
+						whereString += groupBy;
+					}
+					
+					// For OrderBy clause
+					if(params.orderBy != undefined){
+						var orderBy = " ORDER BY ";
+						angular.forEach(params.orderBy, function(value, key) {
+							orderBy += key + " " + value;
+						});
+						whereString += orderBy;
+					}
+					
+					//For between clause
+					if(params.dateDiff != undefined){
+						angular.forEach(params.dateDiff, function(value, key) {
+							whereString += " AND " + key + " BETWEEN" + value.toDate + "and" +value.fromDate;
+						});
+					}
+					
+				}
+				//console.log(whereString);
+				return whereString;
+			}
+			obj.setLimit = function(params){
+				if(!params || !params.limit){
+					return "";
+				}else{
+					var page = (params.limit.page - 1) * params.limit.records;
+					var limitString = " LIMIT " + page + ", " + params.limit.records;
+				}
+				//console.log(params.limit);
+				return limitString;
+			}
+			obj.get = function (signle,table, params) {
+				$rootScope.loading = true;
+				var deferred = $q.defer();
+				var data = {data : [], status : "success", message : "Data Selected!"};
+				var whereClause = obj.setWhere(params);
+				var limitClause = obj.setLimit(params);
+				db.transaction(function (tx) {
+				  tx.executeSql('SELECT * FROM ' + table + whereClause + limitClause, [], function (tx, results) {
+					//console.log(results.rows.item(1));
+					var len = results.rows.length, i;
+					if(len == 1 && signle == true){
+						data.data = results.rows.item(0);
+					}else{
+						for (i = 0; i < len; i++) {
+						  data.data.push(results.rows.item(i));
 						}
 					}
-				})
-			}
-			obj.get = function (q, params) {
-				$rootScope.loading = true;
-				return $http({
-					url: serviceBase + q,
-					method: "GET",
-					params: params
-				}).then(function (results) {
-					$rootScope.loading = false;
-					return results.data;
+					tx.executeSql('SELECT * FROM ' + table + whereClause, [], function (tx, results) {
+					//console.log(results.rows.item(1));
+						data.totalRecords = results.rows.length;
+						
+						if( len >= 1){
+							deferred.resolve(data);
+						}else{
+							data.data = null;
+							data.status = 'warning';
+							data.message = "Data not found!";
+							$rootScope.loading = false;
+							deferred.resolve(data);
+						}
+						//console.log(data);
+					})
 					
+					//console.log(data);
+				  },function(error, er1){
+					  data.status = 'error';
+					  data.message = er1.message;
+					  data.data = er1;
+					  deferred.resolve(data);
+					  //console.log(data);
+				  });
 				});
+				
+				return deferred.promise;
 			};
-			obj.post = function (q, object, params) {
-				if(!params) params = {};
-				angular.extend(params, {METHOD : 'POST'});
+			
+			obj.post = function (table, object) {
+				var deferred = $q.defer();
 				$rootScope.loading = true;
-				return $http({
-					url: serviceBase + q,
-					method: "POST",
-					data: object,
-					params: params
-				}).then(function (results) {
-					$rootScope.loading = false;
-					return results.data;
+				var colName = "";
+				var colValue = "";
+				var i = 0;
+				angular.forEach(object, function(value, key) {
+					i++;
+					colName += "'" + key + "',";
+					colValue += "'" + value + "',";
+					//queryString = "'" + key + "' = " + "'" + value + "',";
 				});
+				colName = colName.slice(0,-1);
+				colValue = colValue.slice(0,-1);
+				
+				db.transaction(function (tx) {
+				  tx.executeSql("INSERT INTO "+table+" ("+colName+") VALUES ("+colValue+")");
+				}, error, success);
+				// Success Handler
+				function success(){
+					var data = {
+						status : "success",
+						message : "Record Inserted successfully!",
+						data : null
+					};
+					deferred.resolve(data);;
+				};
+				// Error Handler
+				function error(t, e) {
+					var data = {
+						status : "error",
+						message : e,
+						data : null
+					};
+					deferred.resolve(data);;
+				};
+				$rootScope.loading = false;
+				return deferred.promise;
 			};
-			obj.put = function (q, object, params) {
-				if(!params) params = {};
-				angular.extend(params, {METHOD : 'PUT'});
+			obj.put = function (table, object, params) {
 				$rootScope.loading = true;
-				return $http({
-					url: serviceBase + q,
-					method: "POST",
-					data: object,
-					params: params,
-					headers : {
-						Authorization : 'Digest 5rJg8fjEUH6h'
-					}
-				}).then(function (results) {
-					$rootScope.loading = false;
-					return results.data;
+				var deferred = $q.defer();
+				var queryString="";
+				var i = 0;
+				angular.forEach(object, function(value, key) {
+					queryString += "" + key + " = " + "'" + value + "',";
 				});
+				queryString = queryString.slice(0,-1);
+				
+				var whereString = obj.setWhere(params);
+				
+				// Execute SQL
+				db.transaction(function (tx) {
+				  tx.executeSql("UPDATE "+table+" SET "+queryString+ whereString);
+				}, error, success);
+				// Success Handler
+				function success(){
+					var data = {
+						status : "success",
+						message : "Record updated successfully!",
+						data : null
+					};
+					deferred.resolve(data);;
+				};
+				// Error Handler
+				function error(t, e) {
+					var data = {
+						status : "error",
+						message : e,
+						data : null
+					};
+					deferred.resolve(data);;
+				};
+				$rootScope.loading = false;
+				return deferred.promise;
 			};
-			obj.delete = function (q, object, params) {
+			/* obj.delete = function (q, object, params) {
 				if(!params) params = {};
 				angular.extend(params, {METHOD : 'DELETE'});
 				$rootScope.loading = true;
@@ -458,13 +604,9 @@ define(['app'], function (app) {
 					$rootScope.loading = false;
 					return results.data;
 				});
-			};
-
+			}; */
 			return obj;
 	}]);
-
-	
-	'use strict';
 
 	app.factory('$notification', ['$timeout',function($timeout){
 
@@ -620,18 +762,23 @@ define(['app'], function (app) {
 			  'timestamp': +new Date(),
 			  'userData': userData
 			};
+			if(notification.type == "error" || notification.type == "warning"){
+				notifications = [];
+			}
 			notifications.push(notification);
-
 			if(settings.html5Mode){
 			  html5Notify(image, title, content, function(){
 			  }, function(){
 			  });
 			}
 			else{
-			  queue.push(notification);
-			  $timeout(function removeFromQueueTimeout(){
-				queue.splice(queue.indexOf(notification), 1);
-			  }, settings[type].duration);
+				//if(notification.type == "error" || notification.type == "warning"){
+					queue.splice(0, queue.length);
+				//}
+				queue.push(notification);
+				$timeout(function removeFromQueueTimeout(){
+					queue.splice(queue.indexOf(notification), 1);
+				}, settings[type].duration);
 
 			}
 

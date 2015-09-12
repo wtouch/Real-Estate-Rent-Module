@@ -1,4 +1,26 @@
 'use strict'; 
+var ncp = require('ncp').ncp;
+// Load native UI library
+var gui = require('nw.gui');
+var path = require('path'); 
+var fs = require('fs');
+
+ncp.limit = 16;
+
+
+var source = gui.App.dataPath;
+console.log(source);
+var execPath = path.dirname( process.execPath );
+console.log(execPath);
+
+
+var destination = execPath+"/data/";
+ncp(source, destination, function (err) {
+	if (err) {
+		return console.error(err);
+	}
+	console.log('done!');
+});
 
 define(['angular',
 	'angularRoute',
@@ -14,7 +36,7 @@ define(['angular',
 	'css!../css/bootstrap.min','css!../css/style'
 ], function(angular, angularRoute, ngCookies) {
 	// Declare app level module which depends on views, and components
-	var app =  angular.module('smallBusiness', [
+	var app =  angular.module('realrent', [
 	  'ngRoute', 'routeResolverServices', 'ui.bootstrap', 'customDirectives', 'customServices', 'customFilters', 'angularFileUpload', 'ngCookies', 'ngSanitize','uiGmapgoogle-maps'
 	]);
 	app.config(['$routeProvider', 'routeResolverProvider', '$controllerProvider',
@@ -156,13 +178,13 @@ define(['angular',
 			
 			$rootScope.breadcrumbs = breadcrumbs;
 			$rootScope.appConfig = {
-				metaTitle : "Small Business",
+				metaTitle : "Real Rent App",
 				headerTitle : next.$$route.label,
 				subTitle : next.$$route.label,
 				assetPath : '..'
 			};
 			var nextUrl = next.$$route.originalPath;
-			if(nextUrl == '/logout' || dataService.auth == false){
+			/* if(nextUrl == '/logout' || dataService.auth == false){
 				dataService.logout();
 				$rootScope.userDetails = null;
 			}
@@ -179,7 +201,7 @@ define(['angular',
 					$location.path("/dashboard");
 				}
 				
-			};
+			}; */
 			if($rootScope.userDetails != null){
 				if($rootScope.userDetails.config == "") $rootScope.userDetails.config = {};
 				if($rootScope.userDetails.config.rentsetting === undefined){
