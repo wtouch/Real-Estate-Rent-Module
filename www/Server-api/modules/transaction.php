@@ -42,24 +42,50 @@
 			if(isset($_GET['category'])) $where['category'] = $_GET['category'];
 			if(isset($_GET['account_no'])) $where['account_no'] = $_GET['account_no'];
 			
+			// code to get total income
 			if(isset($_GET['account_no'])) $whereTrans['account_no'] = $_GET['account_no'];
-			if(isset($_GET['type'])) $whereTrans['type'] = "income";
-		/* 	print_r($whereTrans);
-			//echo $whereTrans; */
+			if(isset($_GET['account_no'])) $whereTrans['type'] = "income";
+			if(isset($_GET['account_no'])) $like['type'] = "income";
+			if(isset($_GET['groupBy'])) $groupBy[] = $_GET['groupBy'];
+		
 			$t0 = $db->setTable("transaction");
+			$t1 = $db->setJoinString("INNER JOIN", "account", array("id"=>$t0.".account_no"));
+			$dbs=$db->setColumns($t0, array($t0.".account_no, sum(".$t0.".credit_amount) as totalIncome "), true);
+			$db->setColumns($t1, array("account_name"));
+			print_r($dbs);
+			print_r($t0);
+			print_r($t1);
+			
+			$db->setWhere($whereTrans, $t0);
+		
+			$selectInnerJoinCols[0] = "*";
+			$db->setColumns($t0, $selectInnerJoinCols);
+			if(isset($_GET['groupBy'])){
+				($_GET['groupBy'] == 'account_no') ? $db->setGroupBy(array("id"), $t0) : $db->setGroupBy(array("id"), $t0);
+			}
+			$data1 = $db->select();
+			print_r($data1);
+			if($data1['status'] == "success"){
+				$totalIncome = 0;
+				foreach($data1['data'] as $row){
+					$totalIncome  += (int) $row['credit_amount'];
+					print_r($totalIncome);
+			
+				}
+				$data1['totalIncome'] = $totalIncome;
+			}
+			print_r($data1);
+			echo json_encode($data1);
+			//end total income code here
+			
+			$db->setGroupBy(array("account_no"), $t0);
 			if(isset($_GET['startDt']) && isset($_GET['endtDt'])){
 				$sDate = date('Y-m-d H:i:s',strtotime($_GET['startDt']));
 				$eDate = date('Y-m-d H:i:s',strtotime($_GET['endtDt']));
 				//echo $sDate;
 				$db->setWhere(array("(".$t0.".date BETWEEN '".$sDate."' AND '".$eDate."')"), $t0, false, true);
 			}
-			
-		/* 	SELECT Shippers.ShipperName,COUNT(Orders.OrderID) AS NumberOfOrders FROM Orders
-LEFT JOIN Shippers
-ON Orders.ShipperID=Shippers.ShipperID
-GROUP BY ShipperName; */
-			
-			;
+		
 			$db->setWhere($where, $t0);
 			$db->setWhere($like, "transaction", true);
 			$db->setLimit($limit);
@@ -77,15 +103,19 @@ GROUP BY ShipperName; */
 				$credit_amount = 0;
 				$debit_amount = 0;
 				$total_balance = 0;
+				$totalIncome = 0;
 				foreach($data['data'] as $row){
 					$credit_amount += (int) $row['credit_amount'];
 					$debit_amount += (int) $row['debit_amount'];
+					
 				}
 				$data['credit_amount'] = $credit_amount;
 				$data['debit_amount'] = $debit_amount;
+				
 				$data['total_balance'] = $credit_amount - $debit_amount;
 			}
 			echo json_encode($data);
+			
 		}
 	}//end get
 	if($reqMethod=="POST" && $_GET['METHOD'] == 'PUT' || $reqMethod=="DELETE" && $_GET['METHOD'] == 'DELETE'){
