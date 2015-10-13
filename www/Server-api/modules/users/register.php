@@ -49,7 +49,7 @@
 					$message = "Dear User, <a href='http://".$appPath."#/activate/".$uniqueId."/".$email."/".$passEmpty."'>Activate your account</a>";
 					$sendMail = $db->sendMail($from, $recipients, $subject, $message);
 					if($sendMail['status'] == 'success'){
-						$dataCol['status'] = 0;
+						//$dataCol['status'] = 0;
 						$resetPass = $db->update($table, $dataCol, $where);
 						if($resetPass['status'] == 'error'){
 							throw new Exception("Update Error: ".$resetPass['message']);
